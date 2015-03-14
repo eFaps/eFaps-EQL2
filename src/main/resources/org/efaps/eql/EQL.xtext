@@ -1,11 +1,11 @@
-grammar org.efaps.eql.EQL
+grammar org.efaps.eql.EQL hidden(WS)
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate eQL "http://www.efaps.org/EQL"
 
 Statement:
-    (printPart=PrintPart)? (queryPart=QueryPart)? (wherePart=WherePart)? (selectPart=SelectPart)?
-    (orderPart=OrderPart)? (execPart=ExecPart)?;
+    (execPart=ExecPart)? (printPart=PrintPart)? (queryPart=QueryPart)? (wherePart=WherePart)? (selectPart=SelectPart)?
+    (orderPart=OrderPart)?;
 
 ExecPart:
     ('exec' | 'execute') className=CLASSNAME;
@@ -44,6 +44,12 @@ OrderPart:
 OneOrder:
     key=(ALIAS | KEY) (desc?=('desc'))?;
 
+terminal WS:
+    (' ' | '\t' | '\r' | '\n')+;
+
+terminal CLASSNAME:
+    (('a'..'z')+ ('.'))+ ('A'..'Z') ('A'..'Z' | 'a'..'z' | '0'..'9')+;
+
 terminal KEY:
     ('0'..'9')+;
 
@@ -52,9 +58,6 @@ terminal ALIAS:
 
 ATTRIBUTE:
     (ALIAS | '_')+;
-
-CLASSNAME:
-    ('a..z');
 
 terminal fragment KARET:
     '[' ('0'..'9' | 'a'..'z' | 'A'..'Z' | '.' | '_' | '#')+ ']';
@@ -68,3 +71,4 @@ terminal TYPE:
 terminal STRING:
     '"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
     "'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+

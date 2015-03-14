@@ -20,7 +20,9 @@
 
 package org.efaps.eql;
 
+import org.efaps.eql.eQL.ExecPart;
 import org.efaps.eql.eQL.Statement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -33,24 +35,24 @@ public class ExecTest
     extends AbstractTest
 {
 
+    @Test
     public void execEsjp()
-
     {
         final Statement stmt = getStatement("exec org.efaps.demo.Test");
-        System.out.println(stmt);
-
+        final ExecPart exec = stmt.getExecPart();
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
     }
 
     @Test
     public void executeEsjp()
-
     {
-        getStatement("execute org.efaps.demo.Test");
+        final Statement stmt = getStatement("execute org.efaps.demo.Test");
+        final ExecPart exec = stmt.getExecPart();
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
     }
 
     @Test
     public void execEsjpParameter()
-
     {
         getStatement("exec org.efaps.demo.Test 2");
 
@@ -58,16 +60,13 @@ public class ExecTest
 
     @Test
     public void execEsjpParameters()
-
     {
-        final Statement stmt = getStatement("exec org.efaps.demo.Test 2, 44");
-        System.out.println(stmt);
+        getStatement("exec org.efaps.demo.Test 2, 44");
 
     }
 
     @Test
     public void execEsjpParameters2()
-
     {
         getStatement("exec org.efaps.demo.Test \"Param1 with space\", 24");
 
@@ -75,45 +74,40 @@ public class ExecTest
 
     @Test
     public void execEsjpParameters3()
-
     {
-        final Statement stmt = getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\"");
-        System.out.println(stmt);
+        getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\"");
+
 
     }
 
     @Test
     public void execEsjpMapping()
-
     {
-        final Statement stmt = getStatement("exec org.efaps.demo.Test select 1 as Key");
-        System.out.println(stmt);
+        getStatement("exec org.efaps.demo.Test select 1 as Key");
+
 
     }
 
     @Test
     public void execEsjpMapping1()
-
     {
-        final Statement stmt = getStatement("exec org.efaps.demo.Test select 1 as Key, 5 as Demo");
-        System.out.println(stmt);
+        getStatement("exec org.efaps.demo.Test select 1 as Key, 5 as Demo");
+
     }
 
     @Test
     public void execEsjpParametersMapping()
-
     {
-        final Statement stmt = getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key");
-        System.out.println(stmt);
+        getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key");
+
 
     }
 
     @Test
     public void execEsjpParametersMapping2()
-
     {
-        final Statement stmt = getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key, 2 as Demo");
-        System.out.println(stmt);
+        getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key, 2 as Demo");
+
 
     }
 }
