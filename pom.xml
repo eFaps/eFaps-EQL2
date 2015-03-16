@@ -115,6 +115,11 @@
                     </execution>
                 </executions>
                 <dependencies>
+                    <dependency>
+                        <groupId>org.eclipse.xtext</groupId>
+                        <artifactId>org.eclipse.xtext.xtext</artifactId>
+                        <version>${xtext-version}</version>
+                    </dependency>
                 </dependencies>
             </plugin>
             <plugin>
@@ -171,6 +176,5 @@
             <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 </project>
