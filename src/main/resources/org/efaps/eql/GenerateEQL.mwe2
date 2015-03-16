@@ -7,7 +7,7 @@ import org.eclipse.xtext.ui.generator.*
 var projectName = "eFaps-EQL"
 var grammarURI = "./src/main/resources/org/efaps/eql/EQL.xtext"
 var fileExtensions = "eql"
-var runtimeProject = ""
+var runtimeProject = "."
 var encoding = "UTF-8"
 
 Workflow {
