@@ -22,11 +22,13 @@
 package org.efaps.eql;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.validation.AbstractInjectableValidator;
 import org.efaps.eql.eQL.Statement;
@@ -64,15 +66,27 @@ public abstract class AbstractTest
     protected final Statement getStatement(final CharSequence _stmt)
     {
         final IParseResult result = getParser().doParse(_stmt);
-        final Statement ret = (Statement) result.getRootASTElement();
+        if (result.hasSyntaxErrors()) {
+            final Iterator<INode> iter = result.getSyntaxErrors().iterator();
+            while (iter.hasNext()) {
+                final INode node = iter.next();
+                System.out.println( node.getSyntaxErrorMessage().getMessage());
+            }
 
-        setDiagnostic(new BasicDiagnostic());
-        final Map<Object, Object> context = new HashMap<>();
-        context.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, "org.efaps.eql.EQL");
-        this.validator.validate(ret, getDiagnostic(), context);
-        final TreeIterator<EObject> iterator = ret.eAllContents();
-        while (iterator.hasNext()) {
-            this.validator.validate(iterator.next(), getDiagnostic(), context);
+        }
+        final Statement ret = (Statement) result.getRootASTElement();
+        if (ret != null) {
+            setDiagnostic(new BasicDiagnostic());
+            final Map<Object, Object> context = new HashMap<>();
+            context.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, "org.efaps.eql.EQL");
+            this.validator.validate(ret, getDiagnostic(), context);
+            final TreeIterator<EObject> iterator = ret.eAllContents();
+            while (iterator.hasNext()) {
+                final EObject nextObj = iterator.next();
+                if (nextObj != null) {
+                    this.validator.validate(nextObj, getDiagnostic(), context);
+                }
+            }
         }
         return ret;
     }
