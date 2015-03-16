@@ -105,6 +105,12 @@
                 <version>3.5.1</version>
                 <configuration>
                     <workflowDescriptor>${project.basedir}/src/main/resources/org/efaps/eql/GenerateEQL.mwe2</workflowDescriptor>
+                    <jvmSettings>
+                        <jvmArgs>
+                            <jvmArg>-Xms100m</jvmArg>
+                            <jvmArg>-Xmx500m</jvmArg>
+                        </jvmArgs>
+                    </jvmSettings>
                 </configuration>
                 <executions>
                     <execution>
