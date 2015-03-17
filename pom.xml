@@ -109,6 +109,10 @@
                         <jvmArgs>
                             <jvmArg>-Xms100m</jvmArg>
                             <jvmArg>-Xmx500m</jvmArg>
+                            <jvmArg>-Xdebug</jvmArg>
+                            <jvmArg>-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8100</jvmArg>
+                            <jvmArg>-Xnoagent</jvmArg>
+                            <jvmArg>-Djava.compiler=NONE</jvmArg>
                         </jvmArgs>
                     </jvmSettings>
                 </configuration>
