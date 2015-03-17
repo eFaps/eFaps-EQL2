@@ -8,7 +8,7 @@ Statement:
     (orderPart=OrderPart)?;
 
 ExecPart:
-    ('exec' | 'execute') className=CLASSNAME;
+    ('exec' | 'execute') className=CLASSNAME (parameters+=KEY (',' parameters+=KEY)*)?;
 
 PrintPart:
     'print' oid=OID;

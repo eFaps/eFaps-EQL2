@@ -52,16 +52,30 @@ public class ExecTest
     }
 
     @Test
-    public void execEsjpParameter()
+    public void execEsjpOneNumericParameter()
     {
-        getStatement("exec org.efaps.demo.Test 2");
-
+        final Statement stmt = getStatement("exec org.efaps.demo.Test 2");
+        final ExecPart exec = stmt.getExecPart();
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(exec.getParameters().get(0), "2");
     }
 
     @Test
-    public void execEsjpParameters()
+    public void execEsjpTwoNumericParameter()
     {
-        getStatement("exec org.efaps.demo.Test 2, 44");
+        final Statement stmt = getStatement("exec org.efaps.demo.Test 2, 44");
+        final ExecPart exec = stmt.getExecPart();
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(exec.getParameters().toArray(), new String[] {"2", "44"});
+    }
+
+    @Test
+    public void execEsjpManyNumericParameter()
+    {
+        final Statement stmt = getStatement("exec org.efaps.demo.Test 2, 44, 4, 567");
+        final ExecPart exec = stmt.getExecPart();
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(exec.getParameters().toArray(), new String[] {"2", "44", "4", "567"});
 
     }
 
