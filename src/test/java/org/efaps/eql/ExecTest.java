@@ -76,21 +76,52 @@ public class ExecTest
         final ExecPart exec = stmt.getExecPart();
         Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
         Assert.assertEquals(exec.getParameters().toArray(), new String[] {"2", "44", "4", "567"});
-
     }
 
     @Test
-    public void execEsjpParameters2()
+    public void execEsjpOneStringParameter()
     {
-        getStatement("exec org.efaps.demo.Test \"Param1 with space\", 24");
-
+        final Statement stmt = getStatement("exec org.efaps.demo.Test \"ABC DE D \"");
+        final ExecPart exec = stmt.getExecPart();
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(exec.getParameters().get(0), "ABC DE D ");
     }
 
     @Test
-    public void execEsjpParameters3()
+    public void execEsjpTwoStringParameter()
     {
-        getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\"");
+        final Statement stmt = getStatement("exec org.efaps.demo.Test \"ABC DE D \", \"another string\"");
+        final ExecPart exec = stmt.getExecPart();
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(exec.getParameters().toArray(), new String[] {"ABC DE D ", "another string"});
+    }
 
+
+    @Test
+    public void execEsjpManyStringParameter()
+    {
+        final Statement stmt = getStatement("exec org.efaps.demo.Test \"ABC DE D \", \"another string\", \"Third one\"");
+        final ExecPart exec = stmt.getExecPart();
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(exec.getParameters().toArray(), new String[] {"ABC DE D ", "another string", "Third one"});
+    }
+
+    @Test
+    public void execEsjpMixedParameters()
+    {
+         final Statement stmt = getStatement("exec org.efaps.demo.Test \"Param1 with space\", 24");
+        final ExecPart exec = stmt.getExecPart();
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(exec.getParameters().toArray(), new String[] {"Param1 with space", "24"});
+    }
+
+    @Test
+    public void execEsjpManyMixedParameters()
+    {
+        final Statement stmt = getStatement("exec org.efaps.demo.Test \"Param1 with space\", 24, \"ABCDE\"");
+        final ExecPart exec = stmt.getExecPart();
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(exec.getParameters().toArray(), new String[] {"Param1 with space", "24", "ABCDE"});
 
     }
 
