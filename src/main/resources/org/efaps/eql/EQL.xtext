@@ -5,7 +5,11 @@ generate eQL "http://www.efaps.org/EQL"
 
 Statement:
     (execPart=ExecPart)? (printPart=PrintPart)? (queryPart=QueryPart)? (wherePart=WherePart)? (selectPart=SelectPart)?
-    (orderPart=OrderPart)?;
+    (orderPart=OrderPart)? (updatePart=UpdatePart)?;
+
+UpdatePart:
+    'update' oid=OID
+;
 
 ExecPart:
     ('exec' | 'execute') className=CLASSNAME (parameters+=(KEY | STRING) (',' parameters+=(KEY | STRING))*)? ('select'
