@@ -20,7 +20,11 @@
 
 package org.efaps.eql;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.efaps.eql.eQL.ExecPart;
+import org.efaps.eql.eQL.ExecSelect;
 import org.efaps.eql.eQL.Statement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -122,36 +126,89 @@ public class ExecTest
         final ExecPart exec = stmt.getExecPart();
         Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
         Assert.assertEquals(exec.getParameters().toArray(), new String[] {"Param1 with space", "24", "ABCDE"});
-
     }
 
     @Test
-    public void execEsjpMapping()
+    public void execEsjpOneMapping()
     {
-        getStatement("exec org.efaps.demo.Test select 1 as Key");
-
-
+        final Statement stmt = getStatement("exec org.efaps.demo.Test select 1 as Key");
+        final ExecPart exec = stmt.getExecPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+        for (final ExecSelect sel : exec.getExecSelect()) {
+            selects.add(sel.getSelect());
+            alias.add(sel.getAlias());
+        }
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(selects.toArray(), new String[] {"1"});
+        Assert.assertEquals(alias.toArray(), new String[] {"Key"});
     }
 
     @Test
-    public void execEsjpMapping1()
+    public void execEsjpTwoMapping()
     {
-        getStatement("exec org.efaps.demo.Test select 1 as Key, 5 as Demo");
+        final Statement stmt = getStatement("exec org.efaps.demo.Test select 1 as Key, 5 as Demo");
+        final ExecPart exec = stmt.getExecPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+        for (final ExecSelect sel : exec.getExecSelect()) {
+            selects.add(sel.getSelect());
+            alias.add(sel.getAlias());
+        }
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(selects.toArray(), new String[] {"1", "5"});
+        Assert.assertEquals(alias.toArray(), new String[] {"Key", "Demo"});
+    }
 
+    @Test
+    public void execEsjpManyMapping()
+    {
+        final Statement stmt = getStatement("exec org.efaps.demo.Test select 1 as Key, 5 as Demo, 8 as etwas");
+        final ExecPart exec = stmt.getExecPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+        for (final ExecSelect sel : exec.getExecSelect()) {
+            selects.add(sel.getSelect());
+            alias.add(sel.getAlias());
+        }
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(selects.toArray(), new String[] {"1", "5", "8"});
+        Assert.assertEquals(alias.toArray(), new String[] {"Key", "Demo", "etwas"});
     }
 
     @Test
     public void execEsjpParametersMapping()
     {
-        getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key");
-
+        final Statement stmt =  getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key");
+        final ExecPart exec = stmt.getExecPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+        for (final ExecSelect sel : exec.getExecSelect()) {
+            selects.add(sel.getSelect());
+            alias.add(sel.getAlias());
+        }
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(exec.getParameters().toArray(), new String[] {"Param1 with space", "ABCDE"});
+        Assert.assertEquals(selects.toArray(), new String[] {"1"});
+        Assert.assertEquals(alias.toArray(), new String[] {"Key"});
 
     }
 
     @Test
-    public void execEsjpParametersMapping2()
+    public void execEsjpManyParametersMapping2()
     {
-        getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key, 2 as Demo");
+        final Statement stmt =  getStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key, 2 as Demo");
+        final ExecPart exec = stmt.getExecPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+        for (final ExecSelect sel : exec.getExecSelect()) {
+            selects.add(sel.getSelect());
+            alias.add(sel.getAlias());
+        }
+        Assert.assertEquals(exec.getClassName(), "org.efaps.demo.Test");
+        Assert.assertEquals(exec.getParameters().toArray(), new String[] {"Param1 with space", "ABCDE"});
+        Assert.assertEquals(selects.toArray(), new String[] {"1", "2"});
+        Assert.assertEquals(alias.toArray(), new String[] {"Key", "Demo"});
 
 
     }
