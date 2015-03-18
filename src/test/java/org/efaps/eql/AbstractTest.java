@@ -59,6 +59,12 @@ public abstract class AbstractTest
             {
                 return new PrintStmt();
             }
+
+            @Override
+            protected IQueryStmt getIQuery()
+            {
+                return new QueryStmt();
+            }
         };
     }
 

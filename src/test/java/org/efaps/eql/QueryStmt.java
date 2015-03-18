@@ -20,6 +20,7 @@
 
 package org.efaps.eql;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,22 +30,34 @@ import java.util.Map;
  * @author The eFaps Team
  * @version $Id: $
  */
-public interface ISelectStmt
+public class QueryStmt
+    extends AbstractQueryStmt
 {
 
-    /**
-     * @param _select Select to be added to the Statement
-     * @param _alias alias for the related select
-     * @throws Exception on error
-     */
-    public void addSelect(final String _select,
-                          final String _alias)
-        throws Exception;
+    private final List<String> types = new ArrayList<>();
 
-    public Map<String, String> getAlias2Selects()
-        throws Exception;
-
+    @Override
     public List<Map<String, Object>> getData()
-        throws Exception;
+        throws Exception
+    {
+        return null;
+    }
+
+    @Override
+    public void addType(final String _type)
+    {
+        this.types.add(_type);
+    }
+
+
+    /**
+     * Getter method for the instance variable {@link #types}.
+     *
+     * @return value of instance variable {@link #types}
+     */
+    public List<String> getTypes()
+    {
+        return this.types;
+    }
 
 }

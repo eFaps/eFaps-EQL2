@@ -20,7 +20,6 @@
 
 package org.efaps.eql;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,22 +28,16 @@ import java.util.Map;
  * @author The eFaps Team
  * @version $Id: $
  */
-public interface ISelectStmt
+public interface IQueryStmt
+    extends ISelectStmt
 {
 
     /**
-     * @param _select Select to be added to the Statement
-     * @param _alias alias for the related select
-     * @throws Exception on error
+     * @param _type Type to be added to the Statement
      */
-    public void addSelect(final String _select,
-                          final String _alias)
-        throws Exception;
+    public void addType(final String _type);
 
-    public Map<String, String> getAlias2Selects()
-        throws Exception;
 
-    public List<Map<String, Object>> getData()
+    public Map<String, Boolean> getSortKey2ascDesc()
         throws Exception;
-
 }

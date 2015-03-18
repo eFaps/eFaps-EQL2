@@ -50,4 +50,14 @@ public class InvokeTest
         Assert.assertEquals(printStmt.getAlias().keySet().toArray(), new String[] { "attribute[Name]" });
         Assert.assertEquals(printStmt.getAlias().values().toArray(), new String[] { "name" });
     }
+
+    @Test
+    public void queryWithSelect()
+        throws Exception
+    {
+        final QueryStmt queryStmt = (QueryStmt) getInvoker().invoke("query type Sales_Invoice select attribute[Name] as name");
+        Assert.assertEquals(queryStmt.getAlias2Selects().keySet().toArray(), new String[] { "name" });
+        Assert.assertEquals(queryStmt.getAlias2Selects().values().toArray(), new String[] { "attribute[Name]" });
+        Assert.assertEquals(queryStmt.getTypes().toArray(), new String[] { "Sales_Invoice" });
+    }
 }

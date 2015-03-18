@@ -18,10 +18,12 @@
  * Last Changed By: $Author$
  */
 
+
 package org.efaps.eql;
 
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * TODO comment!
@@ -29,22 +31,21 @@ import java.util.Map;
  * @author The eFaps Team
  * @version $Id: $
  */
-public interface ISelectStmt
+public class NonOpQuery
+    extends AbstractQueryStmt
 {
 
-    /**
-     * @param _select Select to be added to the Statement
-     * @param _alias alias for the related select
-     * @throws Exception on error
-     */
-    public void addSelect(final String _select,
-                          final String _alias)
-        throws Exception;
-
-    public Map<String, String> getAlias2Selects()
-        throws Exception;
-
+    @Override
     public List<Map<String, Object>> getData()
-        throws Exception;
+        throws Exception
+    {
+     // Non operational implementation
+        return null;
+    }
 
+    @Override
+    public void addType(final String _type)
+    {
+     // Non operational implementation
+    }
 }

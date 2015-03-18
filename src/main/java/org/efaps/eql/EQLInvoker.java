@@ -23,6 +23,7 @@ package org.efaps.eql;
 import org.eclipse.xtext.parser.IParseResult;
 import org.efaps.eql.eQL.OneSelect;
 import org.efaps.eql.eQL.PrintPart;
+import org.efaps.eql.eQL.QueryPart;
 import org.efaps.eql.eQL.SelectPart;
 import org.efaps.eql.eQL.Statement;
 import org.efaps.eql.parser.antlr.EQLParser;
@@ -75,6 +76,13 @@ public class EQLInvoker
                 final IPrintStmt print = getIPrint();
                 print.setInstance(printPart.getOid());
                 ret = print;
+            } else if (stmt.getQueryPart() != null) {
+                final QueryPart queryPart = stmt.getQueryPart();
+                final IQueryStmt query = getIQuery();
+                for (final String type : queryPart.getTypes()) {
+                    query.addType(type);
+                }
+                ret = query;
             }
             if (stmt.getSelectPart() != null && ret != null) {
                 final SelectPart selectPart = stmt.getSelectPart();
@@ -99,5 +107,10 @@ public class EQLInvoker
     protected IPrintStmt getIPrint()
     {
         return new NonOpPrint();
+    }
+
+    protected IQueryStmt getIQuery()
+    {
+        return new NonOpQuery();
     }
 }

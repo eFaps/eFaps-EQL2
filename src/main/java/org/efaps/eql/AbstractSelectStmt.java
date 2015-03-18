@@ -35,8 +35,6 @@ public abstract class AbstractSelectStmt
 
     private final Map<String, String> alias2Selects = new LinkedHashMap<>();
 
-    private final Map<String, Boolean> sortKey2ascDesc = new LinkedHashMap<>();
-
     @Override
     public void addSelect(final String _select,
                           final String _alias)
@@ -56,12 +54,5 @@ public abstract class AbstractSelectStmt
         throws Exception
     {
         return this.alias2Selects;
-    }
-
-    @Override
-    public Map<String, Boolean> getSortKey2ascDesc()
-        throws Exception
-    {
-        return this.sortKey2ascDesc;
     }
 }
