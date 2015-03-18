@@ -35,6 +35,7 @@ public class InvokeTest
 
     @Test
     public void printOnly()
+        throws Exception
     {
         final PrintStmt printStmt = (PrintStmt) getInvoker().invoke("print 12312.2342");
         Assert.assertEquals(printStmt.getOid(), "12312.2342");
@@ -42,6 +43,7 @@ public class InvokeTest
 
     @Test
     public void printWithSelect()
+        throws Exception
     {
         final PrintStmt printStmt = (PrintStmt) getInvoker().invoke("print 12312.2342 select attribute[Name] as name");
         Assert.assertEquals(printStmt.getOid(), "12312.2342");

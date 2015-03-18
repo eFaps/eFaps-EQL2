@@ -21,6 +21,7 @@
 package org.efaps.eql;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +31,7 @@ import java.util.Map;
  * @version $Id: $
  */
 public class PrintStmt
+    extends AbstractSelectStmt
     implements IPrintStmt
 {
     private String oid;
@@ -60,7 +62,6 @@ public class PrintStmt
         return this.oid;
     }
 
-
     /**
      * Getter method for the instance variable {@link #alias}.
      *
@@ -69,6 +70,13 @@ public class PrintStmt
     public Map<String, String> getAlias()
     {
         return this.alias;
+    }
+
+    @Override
+    public List<Map<String, Object>> getData()
+        throws Exception
+    {
+        return null;
     }
 
 }
