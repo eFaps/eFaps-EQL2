@@ -21,8 +21,10 @@
 package org.efaps.eql;
 
 import org.eclipse.xtext.parser.IParseResult;
+import org.efaps.eql.eQL.OneOrder;
 import org.efaps.eql.eQL.OneSelect;
 import org.efaps.eql.eQL.OneWhere;
+import org.efaps.eql.eQL.OrderPart;
 import org.efaps.eql.eQL.PrintPart;
 import org.efaps.eql.eQL.QueryPart;
 import org.efaps.eql.eQL.SelectPart;
@@ -112,6 +114,12 @@ public class EQLInvoker
                                     break;
                             }
                         }
+                    }
+                }
+                if (stmt.getOrderPart() != null) {
+                    final OrderPart orderPart = stmt.getOrderPart();
+                    for (final OneOrder oneOrder : orderPart.getOneOrder()) {
+                        query.addOrder(oneOrder.getKey(), oneOrder.isDesc());
                     }
                 }
             }

@@ -35,12 +35,20 @@ public abstract class AbstractQueryStmt
     extends AbstractSelectStmt
     implements IQueryStmt
 {
-    private final Map<String, Boolean> sortKey2ascDesc = new LinkedHashMap<>();
+    private final Map<String, Boolean> sortKey2desc = new LinkedHashMap<>();
 
     @Override
-    public Map<String, Boolean> getSortKey2ascDesc()
+    public Map<String, Boolean> getSortKey2desc()
         throws Exception
     {
-        return this.sortKey2ascDesc;
+        return this.sortKey2desc;
+    }
+
+    @Override
+    public void addOrder(final String _key,
+                         final Boolean _desc)
+        throws Exception
+    {
+        getSortKey2desc().put(_key, _desc);
     }
 }

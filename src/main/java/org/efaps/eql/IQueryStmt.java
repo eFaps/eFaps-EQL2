@@ -36,51 +36,62 @@ public interface IQueryStmt
     /**
      * @param _type Type to be added to the Statement
      */
-    public void addType(final String _type);
-
-    public Map<String, Boolean> getSortKey2ascDesc()
+    public void addType(final String _type)
         throws Exception;
+
+    public Map<String, Boolean> getSortKey2desc()
+        throws Exception;
+
+    public void addOrder(final String _key,
+                         final Boolean _desc)
+        throws Exception;
+
 
     /**
      * @param _attr Select to be added to the Statement
      * @param _value alias for the related select
      */
     public void addWhereAttrEq(final String _attr,
-                               final String _value);
+                               final String _value)
+        throws Exception;
 
     /**
      * @param _attr Select to be added to the Statement
      * @param _value alias for the related select
      */
     public void addWhereAttrNotEq(final String _attr,
-                                  final String _value);
+                                  final String _value)
+        throws Exception;
 
     /**
      * @param _select Select to be added to the Statement
      * @param _alias alias for the related select
      */
     public void addWhereAttrGreater(final String _attr,
-                                    final String _value);
+                                    final String _value)
+        throws Exception;
 
     /**
      * @param _select Select to be added to the Statement
      * @param _alias alias for the related select
      */
     public void addWhereAttrLess(final String _attr,
-                                 final String _value);
+                                 final String _value)
+        throws Exception;
 
     /**
      * @param _select Select to be added to the Statement
      * @param _alias alias for the related select
      */
     public void addWhereAttrLike(final String _attr,
-                                 final String _value);
+                                 final String _value)
+        throws Exception;
 
     /**
      * @param _attr Name of the Attribute
      * @param _values list of values
      */
     public void addWhereAttrIn(final String _attr,
-                               final Collection<String> _values);
-
+                               final Collection<String> _values)
+        throws Exception;
 }
