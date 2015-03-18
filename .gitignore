@@ -2,3 +2,5 @@
 /model/
 /META-INF/
 /plugin.xml
+/.classpath
+/.project
