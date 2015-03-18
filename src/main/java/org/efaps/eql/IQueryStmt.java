@@ -20,6 +20,7 @@
 
 package org.efaps.eql;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -37,7 +38,49 @@ public interface IQueryStmt
      */
     public void addType(final String _type);
 
-
     public Map<String, Boolean> getSortKey2ascDesc()
         throws Exception;
+
+    /**
+     * @param _attr Select to be added to the Statement
+     * @param _value alias for the related select
+     */
+    public void addWhereAttrEq(final String _attr,
+                               final String _value);
+
+    /**
+     * @param _attr Select to be added to the Statement
+     * @param _value alias for the related select
+     */
+    public void addWhereAttrNotEq(final String _attr,
+                                  final String _value);
+
+    /**
+     * @param _select Select to be added to the Statement
+     * @param _alias alias for the related select
+     */
+    public void addWhereAttrGreater(final String _attr,
+                                    final String _value);
+
+    /**
+     * @param _select Select to be added to the Statement
+     * @param _alias alias for the related select
+     */
+    public void addWhereAttrLess(final String _attr,
+                                 final String _value);
+
+    /**
+     * @param _select Select to be added to the Statement
+     * @param _alias alias for the related select
+     */
+    public void addWhereAttrLike(final String _attr,
+                                 final String _value);
+
+    /**
+     * @param _attr Name of the Attribute
+     * @param _values list of values
+     */
+    public void addWhereAttrIn(final String _attr,
+                               final Collection<String> _values);
+
 }

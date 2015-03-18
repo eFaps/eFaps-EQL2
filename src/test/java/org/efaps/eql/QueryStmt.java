@@ -21,6 +21,7 @@
 package org.efaps.eql;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,6 @@ public class QueryStmt
         this.types.add(_type);
     }
 
-
     /**
      * Getter method for the instance variable {@link #types}.
      *
@@ -58,6 +58,48 @@ public class QueryStmt
     public List<String> getTypes()
     {
         return this.types;
+    }
+
+    @Override
+    public void addWhereAttrEq(final String _attr,
+                               final String _value)
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrNotEq(final String _attr,
+                                  final String _value)
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrGreater(final String _attr,
+                                    final String _value)
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrLess(final String _attr,
+                                 final String _value)
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrLike(final String _attr,
+                                 final String _value)
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrIn(final String _attr,
+                               final Collection<String> _values)
+    {
+        // Non operational implementation
     }
 
 }

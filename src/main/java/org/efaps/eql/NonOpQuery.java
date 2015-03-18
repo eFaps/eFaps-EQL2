@@ -18,12 +18,11 @@
  * Last Changed By: $Author$
  */
 
-
 package org.efaps.eql;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * TODO comment!
@@ -39,13 +38,55 @@ public class NonOpQuery
     public List<Map<String, Object>> getData()
         throws Exception
     {
-     // Non operational implementation
+        // Non operational implementation
         return null;
     }
 
     @Override
     public void addType(final String _type)
     {
-     // Non operational implementation
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrEq(final String _attr,
+                               final String _value)
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrNotEq(final String _attr,
+                                  final String _value)
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrGreater(final String _attr,
+                                    final String _value)
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrLess(final String _attr,
+                                 final String _value)
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrLike(final String _attr,
+                                 final String _value)
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereAttrIn(final String _attr,
+                               final Collection<String> _values)
+    {
+        // Non operational implementation
     }
 }

@@ -22,10 +22,12 @@ package org.efaps.eql;
 
 import org.eclipse.xtext.parser.IParseResult;
 import org.efaps.eql.eQL.OneSelect;
+import org.efaps.eql.eQL.OneWhere;
 import org.efaps.eql.eQL.PrintPart;
 import org.efaps.eql.eQL.QueryPart;
 import org.efaps.eql.eQL.SelectPart;
 import org.efaps.eql.eQL.Statement;
+import org.efaps.eql.eQL.WherePart;
 import org.efaps.eql.parser.antlr.EQLParser;
 import org.efaps.eql.validation.EQLJavaValidator;
 
@@ -83,6 +85,35 @@ public class EQLInvoker
                     query.addType(type);
                 }
                 ret = query;
+                if (stmt.getWherePart() != null) {
+                    final WherePart wherePart = stmt.getWherePart();
+                    for (final OneWhere oneWhere : wherePart.getWheres()) {
+                        if (oneWhere.getAttribute() != null) {
+                            switch (oneWhere.getComparison()) {
+                                case EQUAL:
+                                    query.addWhereAttrEq(oneWhere.getAttribute(), oneWhere.getValue());
+                                    break;
+                                case GREATER:
+                                    query.addWhereAttrGreater(oneWhere.getAttribute(), oneWhere.getValue());
+                                    break;
+                                case LESS:
+                                    query.addWhereAttrLess(oneWhere.getAttribute(), oneWhere.getValue());
+                                    break;
+                                case LIKE:
+                                    query.addWhereAttrLike(oneWhere.getAttribute(), oneWhere.getValue());
+                                    break;
+                                case UNEQUAL:
+                                    query.addWhereAttrNotEq(oneWhere.getAttribute(), oneWhere.getValue());
+                                    break;
+                                case IN:
+                                    query.addWhereAttrIn(oneWhere.getAttribute(), oneWhere.getValues());
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
             }
             if (stmt.getSelectPart() != null && ret != null) {
                 final SelectPart selectPart = stmt.getSelectPart();
