@@ -48,7 +48,7 @@ public abstract class AbstractSelectStmt
         } else {
             alias = _alias;
         }
-        getAlias2Selects().put(_select, alias);
+        getAlias2Selects().put(alias, _select);
     }
 
     @Override
