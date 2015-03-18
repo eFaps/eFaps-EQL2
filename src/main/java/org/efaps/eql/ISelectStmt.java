@@ -20,26 +20,33 @@
 
 package org.efaps.eql;
 
-import com.google.inject.Injector;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Initialization support for running Xtext languages without equinox extension
- * registry
+ * TODO comment!
+ *
+ * @author The eFaps Team
+ * @version $Id: $
  */
-public class EQLStandaloneSetup
-    extends EQLStandaloneSetupGenerated
+public interface ISelectStmt
 {
 
-    public static void doSetup()
-    {
-        doSetup(null);
-    }
+    /**
+     * @param _select Select to be added to the Statement
+     * @param _alias alias for the related select
+     * @throws Exception on error
+     */
+    public void addSelect(final String _select,
+                          final String _alias)
+        throws Exception;
 
-    public static void doSetup(final Object _instance)
-    {
-        final Injector injector = new EQLStandaloneSetup().createInjectorAndDoEMFRegistration();
-        if (_instance != null) {
-            injector.injectMembers(_instance);
-        }
-    }
+    public Map<String, String> getAlias2Selects()
+        throws Exception;
+
+    public List<Map<String, Object>> getData()
+        throws Exception;
+
+    public Map<String, Boolean> getSortKey2ascDesc()
+        throws Exception;
 }

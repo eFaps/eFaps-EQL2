@@ -18,7 +18,6 @@
  * Last Changed By: $Author$
  */
 
-
 package org.efaps.eql;
 
 import java.util.HashMap;
@@ -36,10 +35,6 @@ import org.efaps.eql.parser.antlr.EQLParser;
 import org.efaps.eql.validation.EQLJavaValidator;
 import org.testng.annotations.BeforeClass;
 
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-
-
 /**
  * TODO comment!
  *
@@ -48,19 +43,23 @@ import com.google.inject.Injector;
  */
 public abstract class AbstractTest
 {
-    @Inject
-    private EQLParser parser;
 
-    @Inject
-    private EQLJavaValidator validator;
+    private EQLInvoker invoker;
 
     private BasicDiagnostic diagnostic;
 
     @BeforeClass
-    public void setupParser() {
-        final Injector injector = new EQLStandaloneSetup()
-                .createInjectorAndDoEMFRegistration();
-        injector.injectMembers(this);
+    public void setupParser()
+    {
+        this.invoker = new EQLInvoker()
+        {
+
+            @Override
+            protected IPrintStmt getIPrint()
+            {
+                return new PrintStmt();
+            }
+        };
     }
 
     protected final Statement getStatement(final CharSequence _stmt)
@@ -70,7 +69,7 @@ public abstract class AbstractTest
             final Iterator<INode> iter = result.getSyntaxErrors().iterator();
             while (iter.hasNext()) {
                 final INode node = iter.next();
-                System.out.println( node.getSyntaxErrorMessage().getMessage());
+                System.out.println(node.getSyntaxErrorMessage().getMessage());
             }
 
         }
@@ -79,12 +78,12 @@ public abstract class AbstractTest
             setDiagnostic(new BasicDiagnostic());
             final Map<Object, Object> context = new HashMap<>();
             context.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, "org.efaps.eql.EQL");
-            this.validator.validate(ret, getDiagnostic(), context);
+            getInvoker().getValidator().validate(ret, getDiagnostic(), context);
             final TreeIterator<EObject> iterator = ret.eAllContents();
             while (iterator.hasNext()) {
                 final EObject nextObj = iterator.next();
                 if (nextObj != null) {
-                    this.validator.validate(nextObj, getDiagnostic(), context);
+                    getInvoker().getValidator().validate(nextObj, getDiagnostic(), context);
                 }
             }
         }
@@ -98,9 +97,8 @@ public abstract class AbstractTest
      */
     public EQLParser getParser()
     {
-        return this.parser;
+        return getInvoker().getParser();
     }
-
 
     /**
      * Getter method for the instance variable {@link #validator}.
@@ -109,9 +107,8 @@ public abstract class AbstractTest
      */
     public EQLJavaValidator getValidator()
     {
-        return this.validator;
+        return getInvoker().getValidator();
     }
-
 
     /**
      * Getter method for the instance variable {@link #diagnostic}.
@@ -123,7 +120,6 @@ public abstract class AbstractTest
         return this.diagnostic;
     }
 
-
     /**
      * Setter method for instance variable {@link #diagnostic}.
      *
@@ -132,5 +128,25 @@ public abstract class AbstractTest
     public void setDiagnostic(final BasicDiagnostic _diagnostic)
     {
         this.diagnostic = _diagnostic;
+    }
+
+    /**
+     * Getter method for the instance variable {@link #invoker}.
+     *
+     * @return value of instance variable {@link #invoker}
+     */
+    public EQLInvoker getInvoker()
+    {
+        return this.invoker;
+    }
+
+    /**
+     * Setter method for instance variable {@link #invoker}.
+     *
+     * @param _invoker value for instance variable {@link #invoker}
+     */
+    public void setInvoker(final EQLInvoker _invoker)
+    {
+        this.invoker = _invoker;
     }
 }

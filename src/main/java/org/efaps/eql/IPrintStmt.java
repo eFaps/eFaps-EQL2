@@ -20,26 +20,19 @@
 
 package org.efaps.eql;
 
-import com.google.inject.Injector;
-
 /**
- * Initialization support for running Xtext languages without equinox extension
- * registry
+ * TODO comment!
+ *
+ * @author The eFaps Team
+ * @version $Id: $
  */
-public class EQLStandaloneSetup
-    extends EQLStandaloneSetupGenerated
+public interface IPrintStmt
+    extends ISelectStmt
 {
 
-    public static void doSetup()
-    {
-        doSetup(null);
-    }
+    /**
+     * @param _oid set the object the Statement will be executed for
+     */
+    public void setInstance(final String _oid) throws Exception;
 
-    public static void doSetup(final Object _instance)
-    {
-        final Injector injector = new EQLStandaloneSetup().createInjectorAndDoEMFRegistration();
-        if (_instance != null) {
-            injector.injectMembers(_instance);
-        }
-    }
 }
