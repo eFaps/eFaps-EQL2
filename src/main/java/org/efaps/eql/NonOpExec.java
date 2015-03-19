@@ -29,12 +29,12 @@ import java.util.Map;
  * @author The eFaps Team
  * @version $Id: $
  */
-public class NonOpPrint
-    extends AbstractPrintStmt
+public class NonOpExec
+    extends AbstractExecStmt
 {
-
     @Override
     public List<Map<String, Object>> getData()
+        throws Exception
     {
         // Non operational implementation
         return null;

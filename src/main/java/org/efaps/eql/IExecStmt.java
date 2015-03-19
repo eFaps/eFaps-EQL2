@@ -18,9 +18,7 @@
  * Last Changed By: $Author$
  */
 
-
 package org.efaps.eql;
-
 
 /**
  * TODO comment!
@@ -28,7 +26,17 @@ package org.efaps.eql;
  * @author The eFaps Team
  * @version $Id: $
  */
-public interface IExecute
+public interface IExecStmt
+    extends ISelectStmt
 {
+
+    public void setESJPName(final String _className)
+        throws Exception;
+
+    /**
+     * @param _parameter parameter to be added to the Statement
+     */
+    public void addParameter(final String _parameter)
+        throws Exception;
 
 }

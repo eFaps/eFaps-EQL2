@@ -65,19 +65,4 @@ public interface IStatement
     public void addWhereSelectLess(final String _select,
                                    final String _value);
 
-    /**
-     * @param _className set the esjp to be executed
-     */
-    public void setEsjp(final String _className);
-
-    /**
-     * @param _parameter parameter to be added to the Statement
-     */
-    public void addParameter(final String _parameter);
-
-    /**
-     * @param _parameter parameter to be added to the Statement
-     */
-    public void addOrderBy(final String _para, boolean _asc);
-
 }

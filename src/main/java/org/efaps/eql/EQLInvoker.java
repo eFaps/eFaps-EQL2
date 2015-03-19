@@ -21,6 +21,7 @@
 package org.efaps.eql;
 
 import org.eclipse.xtext.parser.IParseResult;
+import org.efaps.eql.eQL.ExecPart;
 import org.efaps.eql.eQL.OneOrder;
 import org.efaps.eql.eQL.OneSelect;
 import org.efaps.eql.eQL.OneWhere;
@@ -80,6 +81,14 @@ public class EQLInvoker
                 final IPrintStmt print = getIPrint();
                 print.setInstance(printPart.getOid());
                 ret = print;
+            } else if (stmt.getExecPart() != null) {
+                final ExecPart execPart = stmt.getExecPart();
+                final IExecStmt exec = getIExec();
+                exec.setESJPName(execPart.getClassName());
+                for (final String parameter : execPart.getParameters()) {
+                    exec.addParameter(parameter);
+                }
+                ret = exec;
             } else if (stmt.getQueryPart() != null) {
                 final QueryPart queryPart = stmt.getQueryPart();
                 final IQueryStmt query = getIQuery();
@@ -151,5 +160,10 @@ public class EQLInvoker
     protected IQueryStmt getIQuery()
     {
         return new NonOpQuery();
+    }
+
+    protected IExecStmt getIExec()
+    {
+        return new NonOpExec();
     }
 }

@@ -20,23 +20,33 @@
 
 package org.efaps.eql;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * TODO comment!
  *
  * @author The eFaps Team
  * @version $Id: $
  */
-public class NonOpPrint
-    extends AbstractPrintStmt
+public abstract class AbstractPrintStmt
+    extends AbstractSelectStmt
+    implements IPrintStmt
 {
 
+    private String instance;
+
     @Override
-    public List<Map<String, Object>> getData()
+    public void setInstance(final String _oid)
+        throws Exception
     {
-        // Non operational implementation
-        return null;
+        this.instance = _oid;
+    }
+
+    /**
+     * Getter method for the instance variable {@link #instance}.
+     *
+     * @return value of instance variable {@link #instance}
+     */
+    public String getInstance()
+    {
+        return this.instance;
     }
 }
