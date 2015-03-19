@@ -89,4 +89,28 @@ public class NonOpQuery
     {
         // Non operational implementation
     }
+
+    @Override
+    public void addWhereSelectEq(final String _select,
+                                 final String _value)
+        throws Exception
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereSelectGreater(final String _select,
+                                      final String _value)
+        throws Exception
+    {
+        // Non operational implementation
+    }
+
+    @Override
+    public void addWhereSelectLess(final String _select,
+                                   final String _value)
+        throws Exception
+    {
+        // Non operational implementation
+    }
 }

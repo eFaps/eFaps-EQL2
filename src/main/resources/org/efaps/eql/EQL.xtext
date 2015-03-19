@@ -28,7 +28,7 @@ WherePart:
     'where' wheres+=OneWhere ('and' wheres+=OneWhere)*;
 
 OneWhere:
-    attribute=ATTRIBUTE => comparison=Comparison (value=(Value | OID | STRING) | '(' values+=(Value | OID | STRING)
+    (attribute=ATTRIBUTE | select=SELECTSTR) => comparison=Comparison (value=(Value | OID | STRING) | '(' values+=(Value | OID | STRING)
     ("," values+=(Value | OID | STRING))* ')');
 
 Value:

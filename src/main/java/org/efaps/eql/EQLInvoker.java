@@ -126,6 +126,23 @@ public class EQLInvoker
                                 default:
                                     break;
                             }
+                        } else if (oneWhere.getSelect() != null) {
+                            switch (oneWhere.getComparison()) {
+                                case EQUAL:
+                                    query.addWhereSelectEq(oneWhere.getAttribute(), oneWhere.getValue());
+                                    break;
+                                case GREATER:
+                                    query.addWhereSelectGreater(oneWhere.getAttribute(), oneWhere.getValue());
+                                    break;
+                                case LESS:
+                                    query.addWhereSelectLess(oneWhere.getAttribute(), oneWhere.getValue());
+                                    break;
+                                case LIKE:
+                                case UNEQUAL:
+                                case IN:
+                                default:
+                                    break;
+                            }
                         }
                     }
                 }

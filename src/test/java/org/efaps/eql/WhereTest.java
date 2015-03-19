@@ -262,7 +262,7 @@ public class WhereTest
                         new String[] { "4", "das it ein langer etxt", "Bla bal bal" });
     }
 
-    @Test(description = "comination test includingin ")
+    @Test(description = "combination test for attributes ")
     public void eqLessGreaterUnequalLikeIn()
         throws Exception
     {
@@ -288,5 +288,83 @@ public class WhereTest
         Assert.assertEquals(where.getWheres().get(4).getValue(), "459");
     }
 
+    @Test(description = "where SELECT eq NUMBER")
+    public void selectEqNum()
+        throws Exception
+    {
+        final Statement stmt = getStatement("where linkto[DocumentLink].attribute[Code] eq 4");
+        final WherePart where = stmt.getWherePart();
+        Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
+        Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
+        Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
+    }
+
+    @Test(description = "where SELECT == NUMBER and SELECT == number")
+    public void selectEqualsNumAndEqualsNum()
+        throws Exception
+    {
+        final Statement stmt = getStatement("where linkto[DocumentLink].attribute[Code] == 4 and "
+                        + "linkto[DocumentLink].attribute[Descriptiobn] == 567");
+        final WherePart where = stmt.getWherePart();
+        Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
+        Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
+        Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
+        Assert.assertEquals(where.getWheres().get(1).getSelect(), "linkto[DocumentLink].attribute[Descriptiobn]");
+        Assert.assertEquals(where.getWheres().get(1).getComparison(), Comparison.EQUAL);
+        Assert.assertEquals(where.getWheres().get(1).getValue(), "567");
+    }
+
+    @Test(description = "where SELECT < NUMBER")
+    public void selectLessNum()
+        throws Exception
+    {
+        final Statement stmt = getStatement("where linkto[DocumentLink].attribute[Code] < 4");
+        final WherePart where = stmt.getWherePart();
+        Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
+        Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.LESS);
+        Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
+    }
+
+    @Test(description = "where SELECT > STRING")
+    public void selectGreaterString()
+        throws Exception
+    {
+        final Statement stmt = getStatement("where linkto[DocumentLink].attribute[Code] > \"Blaues Hause\"");
+        final WherePart where = stmt.getWherePart();
+        Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
+        Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.GREATER);
+        Assert.assertEquals(where.getWheres().get(0).getValue(), "Blaues Hause");
+    }
+
+
+    @Test(description = "combination test for selects ")
+    public void selectEqLessGreaterUnequalLikeIn()
+        throws Exception
+    {
+        final Statement stmt = getStatement("where linkto[DocumentLink].attribute[Code] == 4 "
+                        + "and linkto[DocumentLink].attribute[Description]  < 567 "
+                        + "and linkto[DocumentLink].attribute[House]  like \"%Blaues Hause\" "
+                        + "and linkto[DocumentLink].attribute[DocLink] in (\"4\",\"das it ein langer etxt\",\"Bla bal bal\") "
+                        + "and linkto[DocumentLink].attribute[HouseNumber] > 459");
+        final WherePart where = stmt.getWherePart();
+        Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
+        Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
+        Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
+        Assert.assertEquals(where.getWheres().get(1).getSelect(), "linkto[DocumentLink].attribute[Description]");
+        Assert.assertEquals(where.getWheres().get(1).getComparison(), Comparison.LESS);
+        Assert.assertEquals(where.getWheres().get(1).getValue(), "567");
+        Assert.assertEquals(where.getWheres().get(2).getSelect(), "linkto[DocumentLink].attribute[House]");
+        Assert.assertEquals(where.getWheres().get(2).getComparison(), Comparison.LIKE);
+        Assert.assertEquals(where.getWheres().get(2).getValue(), "%Blaues Hause");
+
+        Assert.assertEquals(where.getWheres().get(3).getSelect(), "linkto[DocumentLink].attribute[DocLink]");
+        Assert.assertEquals(where.getWheres().get(3).getComparison(), Comparison.IN);
+        Assert.assertEquals(where.getWheres().get(3).getValues().toArray(),
+                        new String[] { "4", "das it ein langer etxt", "Bla bal bal" });
+
+        Assert.assertEquals(where.getWheres().get(4).getSelect(), "linkto[DocumentLink].attribute[HouseNumber]");
+        Assert.assertEquals(where.getWheres().get(4).getComparison(), Comparison.GREATER);
+        Assert.assertEquals(where.getWheres().get(4).getValue(), "459");
+    }
 
 }

@@ -29,69 +29,81 @@ import java.util.Map;
  * @author The eFaps Team
  * @version $Id: $
  */
-public interface IQueryStmt
+interface IQueryStmt
     extends ISelectStmt
 {
 
     /**
      * @param _type Type to be added to the Statement
      */
-    public void addType(final String _type)
+    void addType(final String _type)
         throws Exception;
 
-    public Map<String, Boolean> getSortKey2desc()
+    Map<String, Boolean> getSortKey2desc()
         throws Exception;
 
-    public void addOrder(final String _key,
-                         final Boolean _desc)
-        throws Exception;
-
-
-    /**
-     * @param _attr Select to be added to the Statement
-     * @param _value alias for the related select
-     */
-    public void addWhereAttrEq(final String _attr,
-                               final String _value)
+    void addOrder(final String _key,
+                  final Boolean _desc)
         throws Exception;
 
     /**
      * @param _attr Select to be added to the Statement
      * @param _value alias for the related select
      */
-    public void addWhereAttrNotEq(final String _attr,
-                                  final String _value)
+    void addWhereAttrEq(final String _attr,
+                        final String _value)
+        throws Exception;
+
+    /**
+     * @param _attr Select to be added to the Statement
+     * @param _value alias for the related select
+     */
+    void addWhereAttrNotEq(final String _attr,
+                           final String _value)
         throws Exception;
 
     /**
      * @param _select Select to be added to the Statement
      * @param _alias alias for the related select
      */
-    public void addWhereAttrGreater(final String _attr,
-                                    final String _value)
+    void addWhereAttrGreater(final String _attr,
+                             final String _value)
         throws Exception;
 
     /**
      * @param _select Select to be added to the Statement
      * @param _alias alias for the related select
      */
-    public void addWhereAttrLess(final String _attr,
-                                 final String _value)
+    void addWhereAttrLess(final String _attr,
+                          final String _value)
         throws Exception;
 
     /**
      * @param _select Select to be added to the Statement
      * @param _alias alias for the related select
      */
-    public void addWhereAttrLike(final String _attr,
-                                 final String _value)
+    void addWhereAttrLike(final String _attr,
+                          final String _value)
         throws Exception;
 
     /**
      * @param _attr Name of the Attribute
      * @param _values list of values
      */
-    public void addWhereAttrIn(final String _attr,
-                               final Collection<String> _values)
+    void addWhereAttrIn(final String _attr,
+                        final Collection<String> _values)
         throws Exception;
+
+    void addWhereSelectEq(final String _select,
+                          final String _value)
+        throws Exception;
+
+    void addWhereSelectGreater(final String _select,
+                               final String _value)
+        throws Exception;
+
+    void addWhereSelectLess(final String _select,
+                            final String _value)
+        throws Exception;
+
 }
