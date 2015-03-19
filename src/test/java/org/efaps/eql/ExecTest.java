@@ -209,7 +209,26 @@ public class ExecTest
         Assert.assertEquals(exec.getParameters().toArray(), new String[] {"Param1 with space", "ABCDE"});
         Assert.assertEquals(selects.toArray(), new String[] {"1", "2"});
         Assert.assertEquals(alias.toArray(), new String[] {"Key", "Demo"});
+    }
 
 
+    @Test
+    public void execEsjpManyParametersMapping3()
+    {
+        final Statement stmt =  getStatement("execute net.moxter.clientName.eql.SalesDataQuery 3, 2014 "
+                        + "select 1 as productName, 2 as productDescr,\n 3 as productClass, 4 as employeeName, "
+                        + "25 as costGroup");
+        final ExecPart exec = stmt.getExecPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+        for (final ExecSelect sel : exec.getExecSelect()) {
+            selects.add(sel.getSelect());
+            alias.add(sel.getAlias());
+        }
+        Assert.assertEquals(exec.getClassName(), "net.moxter.clientName.eql.SalesDataQuery");
+        Assert.assertEquals(exec.getParameters().toArray(), new String[] {"3", "2014"});
+        Assert.assertEquals(selects.toArray(), new String[] {"1", "2", "3" ,"4", "25"});
+        Assert.assertEquals(alias.toArray(), new String[] {"productName", "productDescr",
+            "productClass" ,"employeeName", "costGroup"});
     }
 }
