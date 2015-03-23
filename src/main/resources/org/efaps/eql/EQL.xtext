@@ -8,7 +8,11 @@ Statement:
     (orderPart=OrderPart)? (updatePart=UpdatePart)?;
 
 UpdatePart:
-    'update' oid=OID
+    'update' oid=OID 'set' (updates+=OneUpdate) (',' updates+=OneUpdate)*
+;
+
+OneUpdate:
+    attribute=ATTRIBUTE '=' value=(KEY | STRING)
 ;
 
 ExecPart:

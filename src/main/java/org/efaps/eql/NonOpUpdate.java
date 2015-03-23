@@ -20,8 +20,6 @@
 
 package org.efaps.eql;
 
-import java.util.List;
-import java.util.Map;
 
 /**
  * TODO comment!
@@ -29,33 +27,14 @@ import java.util.Map;
  * @author The eFaps Team
  * @version $Id: $
  */
-public interface ISelectStmt
-    extends IEQLStmt
+public class NonOpUpdate
+    extends AbstractUpdateStmt
 {
 
-    /**
-     * @param _select Select to be added to the Statement
-     * @param _alias alias for the related select
-     * @throws Exception on error
-     */
-    void addSelect(final String _select,
-                   final String _alias)
-        throws Exception;
-
-    /**
-     * Get the Mapping between alias and selects.
-     * @return mapping
-     * @throws Exception on error
-     */
-    Map<String, String> getAlias2Selects()
-        throws Exception;
-
-    /**
-     * Get the Data.
-     * @return List of maps containing the data
-     * @throws Exception on error
-     */
-    List<Map<String, Object>> getData()
-        throws Exception;
-
+    @Override
+    public void execute()
+        throws Exception
+    {
+        // Non Operational Implementation
+    }
 }

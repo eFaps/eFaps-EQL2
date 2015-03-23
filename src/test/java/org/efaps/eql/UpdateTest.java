@@ -20,6 +20,10 @@
 
 package org.efaps.eql;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.efaps.eql.eQL.OneUpdate;
 import org.efaps.eql.eQL.Statement;
 import org.efaps.eql.eQL.UpdatePart;
 import org.testng.Assert;
@@ -34,12 +38,89 @@ import org.testng.annotations.Test;
 public class UpdateTest
     extends AbstractTest
 {
+
     @Test(description = "update 124.879")
-    public void eqNum()
+    public void update()
         throws Exception
     {
         final Statement stmt = getStatement("update 124.879");
         final UpdatePart update = stmt.getUpdatePart();
         Assert.assertEquals(update.getOid(), "124.879");
+    }
+
+    @Test(description = "update 124.879 set ATTR=NUM")
+    public void setAttrNum()
+        throws Exception
+    {
+        final Statement stmt = getStatement("update 124.879 set Code=22");
+        final UpdatePart update = stmt.getUpdatePart();
+
+        final List<String> attributes = new ArrayList<>();
+        final List<String> values = new ArrayList<>();
+        for (final OneUpdate oneUpdate : update.getUpdates()) {
+            attributes.add(oneUpdate.getAttribute());
+            values.add(oneUpdate.getValue());
+        }
+
+        Assert.assertEquals(update.getOid(), "124.879");
+        Assert.assertEquals(attributes.toArray(), new String[] { "Code" });
+        Assert.assertEquals(values.toArray(), new String[] { "22" });
+    }
+
+    @Test(description = "update 124.879 set ATTR=NUM")
+    public void setManyAttrNum()
+        throws Exception
+    {
+        final Statement stmt = getStatement("update 124.879 set Code=22, Name=234234,Level=3453");
+        final UpdatePart update = stmt.getUpdatePart();
+
+        final List<String> attributes = new ArrayList<>();
+        final List<String> values = new ArrayList<>();
+        for (final OneUpdate oneUpdate : update.getUpdates()) {
+            attributes.add(oneUpdate.getAttribute());
+            values.add(oneUpdate.getValue());
+        }
+
+        Assert.assertEquals(update.getOid(), "124.879");
+        Assert.assertEquals(attributes.toArray(), new String[] { "Code", "Name", "Level" });
+        Assert.assertEquals(values.toArray(), new String[] { "22", "234234", "3453" });
+    }
+
+    @Test(description = "update 124.879 set ATTR=STR")
+    public void setAttrStr()
+        throws Exception
+    {
+        final Statement stmt = getStatement("update 124.879 set Code=\"asdasd2\"");
+        final UpdatePart update = stmt.getUpdatePart();
+
+        final List<String> attributes = new ArrayList<>();
+        final List<String> values = new ArrayList<>();
+        for (final OneUpdate oneUpdate : update.getUpdates()) {
+            attributes.add(oneUpdate.getAttribute());
+            values.add(oneUpdate.getValue());
+        }
+
+        Assert.assertEquals(update.getOid(), "124.879");
+        Assert.assertEquals(attributes.toArray(), new String[] { "Code" });
+        Assert.assertEquals(values.toArray(), new String[] { "asdasd2" });
+    }
+
+    @Test(description = "update 124.879 set ATTR=Str, ATRR=STR2")
+    public void setManyAttrStr()
+        throws Exception
+    {
+        final Statement stmt = getStatement("update 124.879 set Code=\"asdsd\", Name=\"asdaddds\",Level=\"welt\"");
+        final UpdatePart update = stmt.getUpdatePart();
+
+        final List<String> attributes = new ArrayList<>();
+        final List<String> values = new ArrayList<>();
+        for (final OneUpdate oneUpdate : update.getUpdates()) {
+            attributes.add(oneUpdate.getAttribute());
+            values.add(oneUpdate.getValue());
+        }
+
+        Assert.assertEquals(update.getOid(), "124.879");
+        Assert.assertEquals(attributes.toArray(), new String[] { "Code", "Name", "Level" });
+        Assert.assertEquals(values.toArray(), new String[] { "asdsd", "asdaddds", "welt" });
     }
 }

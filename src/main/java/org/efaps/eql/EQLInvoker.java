@@ -25,12 +25,14 @@ import org.efaps.eql.eQL.ExecPart;
 import org.efaps.eql.eQL.ExecSelect;
 import org.efaps.eql.eQL.OneOrder;
 import org.efaps.eql.eQL.OneSelect;
+import org.efaps.eql.eQL.OneUpdate;
 import org.efaps.eql.eQL.OneWhere;
 import org.efaps.eql.eQL.OrderPart;
 import org.efaps.eql.eQL.PrintPart;
 import org.efaps.eql.eQL.QueryPart;
 import org.efaps.eql.eQL.SelectPart;
 import org.efaps.eql.eQL.Statement;
+import org.efaps.eql.eQL.UpdatePart;
 import org.efaps.eql.eQL.WherePart;
 import org.efaps.eql.parser.antlr.EQLParser;
 import org.efaps.eql.validation.EQLJavaValidator;
@@ -70,10 +72,10 @@ public class EQLInvoker
         return this.parser;
     }
 
-    public ISelectStmt invoke(final String _stmt)
+    public IEQLStmt invoke(final String _stmt)
         throws Exception
     {
-        ISelectStmt ret = null;
+        IEQLStmt ret = null;
         final IParseResult result = getParser().doParse(_stmt);
         final Statement stmt = (Statement) result.getRootASTElement();
         if (stmt != null) {
@@ -152,11 +154,20 @@ public class EQLInvoker
                         query.addOrder(oneOrder.getKey(), oneOrder.isDesc());
                     }
                 }
+            } else if (stmt.getUpdatePart() != null) {
+                final UpdatePart updatePart = stmt.getUpdatePart();
+                final IUpdateStmt update = getIUpdate();
+                update.setInstance(updatePart.getOid());
+                for (final OneUpdate oneUpdate : updatePart.getUpdates()) {
+                    update.addUpdate(oneUpdate.getAttribute(), oneUpdate.getValue());
+                }
+                ret = update;
             }
-            if (stmt.getSelectPart() != null && ret != null) {
+
+            if (stmt.getSelectPart() != null && ret != null && ret instanceof ISelectStmt) {
                 final SelectPart selectPart = stmt.getSelectPart();
                 for (final OneSelect sel : selectPart.getSelects()) {
-                    ret.addSelect(sel.getSelect(), sel.getAlias());
+                    ((ISelectStmt) ret).addSelect(sel.getSelect(), sel.getAlias());
                 }
             }
         }
@@ -186,5 +197,10 @@ public class EQLInvoker
     protected IExecStmt getIExec()
     {
         return new NonOpExec();
+    }
+
+    protected IUpdateStmt getIUpdate()
+    {
+        return new NonOpUpdate();
     }
 }
