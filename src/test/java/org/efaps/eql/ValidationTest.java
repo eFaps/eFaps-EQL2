@@ -21,7 +21,7 @@
 
 package org.efaps.eql;
 
-import org.eclipse.xtext.validation.FeatureBasedDiagnostic;
+import org.efaps.eql.validation.EFapsDiagnostic;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -41,6 +41,6 @@ public class ValidationTest
             throws Exception
         {
             getStatement("where DocumentLink in ()");
-            Assert.assertEquals(((FeatureBasedDiagnostic) getDiagnostic().getChildren().get(0)).getIssueCode(), "E001");
+            Assert.assertEquals(((EFapsDiagnostic) getDiagnostic().getChildren().get(0)).getIssueCode(), "E001");
         }
 }

@@ -20,8 +20,10 @@
 
 package org.efaps.eql;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
+
+import org.eclipse.emf.common.util.Diagnostic;
 
 /**
  * TODO comment!
@@ -29,31 +31,14 @@ import java.util.Map;
  * @author The eFaps Team
  * @version $Id: $
  */
-public abstract class AbstractSelectStmt
-    extends AbstractEQLStmt
-    implements ISelectStmt
+public class AbstractEQLStmt
+    implements IEQLStmt
 {
 
-    private final Map<String, String> alias2Selects = new LinkedHashMap<>();
-
     @Override
-    public void addSelect(final String _select,
-                          final String _alias)
-        throws Exception
+    public List<Diagnostic> getDiagnostics()
     {
-        String alias;
-        if (_alias == null) {
-            alias = Integer.valueOf(getAlias2Selects().size() + 1).toString();
-        } else {
-            alias = _alias;
-        }
-        getAlias2Selects().put(alias, _select);
+        return Collections.<Diagnostic>emptyList();
     }
 
-    @Override
-    public Map<String, String> getAlias2Selects()
-        throws Exception
-    {
-        return this.alias2Selects;
-    }
 }

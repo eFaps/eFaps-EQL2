@@ -21,6 +21,10 @@
 
 package org.efaps.eql;
 
+import java.util.List;
+
+import org.eclipse.emf.common.util.Diagnostic;
+
 
 /**
  * TODO comment!
@@ -30,5 +34,5 @@ package org.efaps.eql;
  */
 public interface IEQLStmt
 {
-
+    List<Diagnostic> getDiagnostics();
 }

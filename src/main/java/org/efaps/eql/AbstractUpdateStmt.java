@@ -30,6 +30,7 @@ import java.util.Map;
  * @version $Id: $
  */
 public abstract class AbstractUpdateStmt
+    extends AbstractEQLStmt
     implements IUpdateStmt
 {
 

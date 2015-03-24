@@ -18,10 +18,9 @@
  * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+package org.efaps.eql.validation;
+
 
 /**
  * TODO comment!
@@ -29,31 +28,13 @@ import java.util.Map;
  * @author The eFaps Team
  * @version $Id: $
  */
-public abstract class AbstractSelectStmt
-    extends AbstractEQLStmt
-    implements ISelectStmt
+public interface IValidation
 {
 
-    private final Map<String, String> alias2Selects = new LinkedHashMap<>();
+    /**
+     * @param _data data used to evaluate
+     * @return true is passed, else false
+     */
+    boolean validate(final String... _data);
 
-    @Override
-    public void addSelect(final String _select,
-                          final String _alias)
-        throws Exception
-    {
-        String alias;
-        if (_alias == null) {
-            alias = Integer.valueOf(getAlias2Selects().size() + 1).toString();
-        } else {
-            alias = _alias;
-        }
-        getAlias2Selects().put(alias, _select);
-    }
-
-    @Override
-    public Map<String, String> getAlias2Selects()
-        throws Exception
-    {
-        return this.alias2Selects;
-    }
 }
