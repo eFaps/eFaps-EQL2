@@ -7,18 +7,20 @@ import org.eclipse.xtext.ui.generator.*
 var projectName = "eFaps-EQL"
 var grammarURI = "./src/main/resources/org/efaps/eql/EQL.xtext"
 var fileExtensions = "eql"
-var runtimeProject = "../${projectName}"
+var runtimeProject = "."
 var encoding = "UTF-8"
 
 Workflow {
     bean = StandaloneSetup {
         scanClassPath = true
         platformUri = "${runtimeProject}"
-
+        projectMapping = {
+            projectName = "${projectName}"
+            path = '.'
+        }
     }
 
     component = Generator {
-
         pathRtProject = runtimeProject
         projectNameRt = projectName
         encoding = encoding
