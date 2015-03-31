@@ -14,10 +14,13 @@ Workflow {
     bean = StandaloneSetup {
         scanClassPath = true
         platformUri = "${runtimeProject}"
+<<<<<<< HEAD
         projectMapping = {
             projectName = "${projectName}"
             path = '.'
         }
+=======
+>>>>>>> branch 'master' of https://github.com/eFaps/eFaps-EQL.git
     }
 
     component = Generator {
