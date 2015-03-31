@@ -14,13 +14,22 @@ Workflow {
     bean = StandaloneSetup {
         scanClassPath = true
         platformUri = "${runtimeProject}"
-<<<<<<< HEAD
         projectMapping = {
             projectName = "${projectName}"
             path = '.'
         }
-=======
->>>>>>> branch 'master' of https://github.com/eFaps/eFaps-EQL.git
+        projectMapping = {
+            projectName = "src-gen"
+            path = "${runtimeProject}/src-gen"
+        }
+    }
+
+    component = DirectoryCleaner {
+        directory = "/src-gen"
+    }
+
+    component = DirectoryCleaner {
+        directory = "/model"
     }
 
     component = Generator {
@@ -28,7 +37,7 @@ Workflow {
         projectNameRt = projectName
         encoding = encoding
         srcPath = "/src/main/java"
-        srcGenPath = "/target/generated-sources/mwe2"
+        //srcGenPath = "/target/generated-sources/mwe2"
         mergeManifest = false
         language = auto-inject {
             uri = grammarURI
