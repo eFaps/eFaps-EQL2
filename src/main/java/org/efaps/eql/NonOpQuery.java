@@ -113,4 +113,12 @@ public class NonOpQuery
     {
         // Non operational implementation
     }
+
+    @Override
+    public void addWhereSelectLike(final String _select,
+                                   final String _value)
+        throws Exception
+    {
+        // Non operational implementation
+    }
 }

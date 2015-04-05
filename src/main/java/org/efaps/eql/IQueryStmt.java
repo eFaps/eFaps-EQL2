@@ -98,6 +98,10 @@ interface IQueryStmt
                           final String _value)
         throws Exception;
 
+    void addWhereSelectLike(final String _select,
+                            final String _value)
+        throws Exception;
+
     void addWhereSelectGreater(final String _select,
                                final String _value)
         throws Exception;

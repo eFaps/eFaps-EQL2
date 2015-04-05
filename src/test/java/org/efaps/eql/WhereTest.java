@@ -336,6 +336,17 @@ public class WhereTest
         Assert.assertEquals(where.getWheres().get(0).getValue(), "Blaues Hause");
     }
 
+    @Test(description = "where SELECT like STRING")
+    public void selectLikeString()
+        throws Exception
+    {
+        final Statement stmt = getStatement("where linkto[DeliveryNote].attribute[Name] like \"099*\"");
+        final WherePart where = stmt.getWherePart();
+        Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DeliveryNote].attribute[Name]");
+        Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.LIKE);
+        Assert.assertEquals(where.getWheres().get(0).getValue(), "099*");
+    }
+
 
     @Test(description = "combination test for selects ")
     public void selectEqLessGreaterUnequalLikeIn()

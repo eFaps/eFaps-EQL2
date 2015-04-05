@@ -143,15 +143,17 @@ public class EQLInvoker
                             } else if (oneWhere.getSelect() != null) {
                                 switch (oneWhere.getComparison()) {
                                     case EQUAL:
-                                        query.addWhereSelectEq(oneWhere.getAttribute(), oneWhere.getValue());
+                                        query.addWhereSelectEq(oneWhere.getSelect(), oneWhere.getValue());
                                         break;
                                     case GREATER:
-                                        query.addWhereSelectGreater(oneWhere.getAttribute(), oneWhere.getValue());
+                                        query.addWhereSelectGreater(oneWhere.getSelect(), oneWhere.getValue());
                                         break;
                                     case LESS:
-                                        query.addWhereSelectLess(oneWhere.getAttribute(), oneWhere.getValue());
+                                        query.addWhereSelectLess(oneWhere.getSelect(), oneWhere.getValue());
                                         break;
                                     case LIKE:
+                                        query.addWhereSelectLike(oneWhere.getSelect(), oneWhere.getValue());
+                                        break;
                                     case UNEQUAL:
                                     case IN:
                                     default:

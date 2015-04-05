@@ -126,4 +126,16 @@ public class QueryStmt
         // Non operational implementation
     }
 
+    /* (non-Javadoc)
+     * @see org.efaps.eql.IQueryStmt#addWhereSelectLike(java.lang.String, java.lang.String)
+     */
+    @Override
+    public void addWhereSelectLike(final String _select,
+                                   final String _value)
+        throws Exception
+    {
+        // TODO Auto-generated method stub
+
+    }
+
 }
