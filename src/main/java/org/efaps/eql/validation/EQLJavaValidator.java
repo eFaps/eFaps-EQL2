@@ -36,8 +36,9 @@ public class EQLJavaValidator
     @Check
     public void inMustNotBeEmpty(final OneWhere _oneWhere)
     {
-        if (Comparison.IN.equals(_oneWhere.getComparison())) {
-            error("In must not be empty", EQLPackage.Literals.ONE_WHERE__VALUES, "E001", _oneWhere.getAttribute());
+        if (Comparison.IN.equals(_oneWhere.getComparison()) && _oneWhere.getValues().isEmpty()) {
+            error("In must not be empty", EQLPackage.Literals.ONE_WHERE__VALUES, "E001", _oneWhere.getAttribute(),
+                            _oneWhere.getSelect());
         }
     }
 
