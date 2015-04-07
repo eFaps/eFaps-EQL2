@@ -72,7 +72,7 @@ ATTRIBUTE:
     (ALIAS | '_')+;
 
 terminal fragment KARET:
-    '[' ('0'..'9' | 'a'..'z' | 'A'..'Z' | '.' | '_' | '#')+ ']';
+    '[' ('0'..'9' | 'a'..'z' | 'A'..'Z' | '.' | '_' | '-' | '/' | '#')+ ']';
 
 terminal SELECTSTR:
     ('a'..'z') ('a'..'z' | 'A'..'Z' | '.' | '_' | KARET)*;

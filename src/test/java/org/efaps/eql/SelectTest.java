@@ -119,4 +119,19 @@ public class SelectTest
         Assert.assertEquals(new String[] { "Type", "Name", "code" }, alias.toArray());
     }
 
+    @Test(description = "Format select")
+    public void formatSelects()
+        throws Exception
+    {
+        final Statement stmt = getStatement("select attribute[Date].format[YYYY-MM-dd], linkto[DeliveryNote].attribute[Date].format[YYYY/MM/dd]");
+        final SelectPart select = stmt.getSelectPart();
+        final List<String> selects = new ArrayList<>();
+
+        for (final OneSelect part : select.getSelects()) {
+            selects.add(part.getSelect());
+        }
+        Assert.assertEquals(new String[] { "attribute[Date].format[YYYY-MM-dd]", "linkto[DeliveryNote].attribute[Date].format[YYYY/MM/dd]" },
+                        selects.toArray());
+    }
+
 }
