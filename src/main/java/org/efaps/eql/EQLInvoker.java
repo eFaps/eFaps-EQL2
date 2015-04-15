@@ -30,6 +30,7 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.validation.AbstractInjectableValidator;
 import org.efaps.eql.eQL.ExecPart;
 import org.efaps.eql.eQL.ExecSelect;
+import org.efaps.eql.eQL.InsertPart;
 import org.efaps.eql.eQL.OneOrder;
 import org.efaps.eql.eQL.OneSelect;
 import org.efaps.eql.eQL.OneUpdate;
@@ -53,10 +54,10 @@ import org.efaps.eql.stmt.impl.NonOpExec;
 import org.efaps.eql.stmt.impl.NonOpInsert;
 import org.efaps.eql.stmt.impl.NonOpPrint;
 import org.efaps.eql.stmt.impl.NonOpUpdate;
+import org.efaps.eql.stmt.parts.IQueryStmtPart;
 import org.efaps.eql.validation.EQLJavaValidator;
 
 import com.google.inject.Inject;
-
 /**
  * TODO comment!
  *
@@ -139,54 +140,9 @@ public class EQLInvoker
                         print.addType(type);
                     }
                     ret = print;
-                    if (queryPart.getWherePart() != null) {
-                        final WherePart wherePart = queryPart.getWherePart();
-                        for (final OneWhere oneWhere : wherePart.getWheres()) {
-                            if (oneWhere.getAttribute() != null) {
-                                switch (oneWhere.getComparison()) {
-                                    case EQUAL:
-                                        print.addWhereAttrEq(oneWhere.getAttribute(), oneWhere.getValue());
-                                        break;
-                                    case GREATER:
-                                        print.addWhereAttrGreater(oneWhere.getAttribute(), oneWhere.getValue());
-                                        break;
-                                    case LESS:
-                                        print.addWhereAttrLess(oneWhere.getAttribute(), oneWhere.getValue());
-                                        break;
-                                    case LIKE:
-                                        print.addWhereAttrLike(oneWhere.getAttribute(), oneWhere.getValue());
-                                        break;
-                                    case UNEQUAL:
-                                        print.addWhereAttrNotEq(oneWhere.getAttribute(), oneWhere.getValue());
-                                        break;
-                                    case IN:
-                                        print.addWhereAttrIn(oneWhere.getAttribute(), oneWhere.getValues());
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            } else if (oneWhere.getSelect() != null) {
-                                switch (oneWhere.getComparison()) {
-                                    case EQUAL:
-                                        print.addWhereSelectEq(oneWhere.getSelect(), oneWhere.getValue());
-                                        break;
-                                    case GREATER:
-                                        print.addWhereSelectGreater(oneWhere.getSelect(), oneWhere.getValue());
-                                        break;
-                                    case LESS:
-                                        print.addWhereSelectLess(oneWhere.getSelect(), oneWhere.getValue());
-                                        break;
-                                    case LIKE:
-                                        print.addWhereSelectLike(oneWhere.getSelect(), oneWhere.getValue());
-                                        break;
-                                    case UNEQUAL:
-                                    case IN:
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                    }
+
+                    addWherePart(print, queryPart.getWherePart());
+
                     if (queryPart.getSelectPart() != null) {
                         final SelectPart selectPart = queryPart.getSelectPart();
                         for (final OneSelect sel : selectPart.getSelects()) {
@@ -201,17 +157,28 @@ public class EQLInvoker
                     }
                 } else if (stmt.getUpdatePart() != null) {
                     final UpdatePart updatePart = stmt.getUpdatePart();
-                     final AbstractUpdateStmt update = getUpdate();
+                    final AbstractUpdateStmt update = getUpdate();
                     if (updatePart.getOid() != null) {
                         update.addInstance(updatePart.getOid());
                     }
                     if (updatePart.getOids() != null && !updatePart.getOids().isEmpty()) {
                         update.addInstance(updatePart.getOids().toArray(new String[updatePart.getOids().size()]));
                     }
+                    if (updatePart.getQueryPart() != null) {
+                        addWherePart(update, updatePart.getQueryPart().getWherePart());
+                    }
                     for (final OneUpdate oneUpdate : updatePart.getUpdates()) {
-                        update.addUpdate(oneUpdate.getAttribute(), oneUpdate.getValue());
+                        update.addAttribute(oneUpdate.getAttribute(), oneUpdate.getValue());
                     }
                     ret = update;
+                } else if (stmt.getInsertPart() != null) {
+                    final InsertPart insertPart = stmt.getInsertPart();
+                    final AbstractInsertStmt insert = getInsert();
+                    insert.setType(insertPart.getType());
+                    for (final OneUpdate oneUpdate : insertPart.getUpdates()) {
+                        insert.addAttribute(oneUpdate.getAttribute(), oneUpdate.getValue());
+                    }
+                    ret = insert;
                 }
             } else {
                 ret = new IEQLStmt()
@@ -226,6 +193,59 @@ public class EQLInvoker
             }
         }
         return ret;
+    }
+
+    protected void addWherePart(final IQueryStmtPart _queryPart,
+                                final WherePart _wherePart)
+        throws Exception
+    {
+        if (_wherePart != null) {
+            for (final OneWhere oneWhere : _wherePart.getWheres()) {
+                if (oneWhere.getAttribute() != null) {
+                    switch (oneWhere.getComparison()) {
+                        case EQUAL:
+                            _queryPart.addWhereAttrEq(oneWhere.getAttribute(), oneWhere.getValue());
+                            break;
+                        case GREATER:
+                            _queryPart.addWhereAttrGreater(oneWhere.getAttribute(), oneWhere.getValue());
+                            break;
+                        case LESS:
+                            _queryPart.addWhereAttrLess(oneWhere.getAttribute(), oneWhere.getValue());
+                            break;
+                        case LIKE:
+                            _queryPart.addWhereAttrLike(oneWhere.getAttribute(), oneWhere.getValue());
+                            break;
+                        case UNEQUAL:
+                            _queryPart.addWhereAttrNotEq(oneWhere.getAttribute(), oneWhere.getValue());
+                            break;
+                        case IN:
+                            _queryPart.addWhereAttrIn(oneWhere.getAttribute(), oneWhere.getValues());
+                            break;
+                        default:
+                            break;
+                    }
+                } else if (oneWhere.getSelect() != null) {
+                    switch (oneWhere.getComparison()) {
+                        case EQUAL:
+                            _queryPart.addWhereSelectEq(oneWhere.getSelect(), oneWhere.getValue());
+                            break;
+                        case GREATER:
+                            _queryPart.addWhereSelectGreater(oneWhere.getSelect(), oneWhere.getValue());
+                            break;
+                        case LESS:
+                            _queryPart.addWhereSelectLess(oneWhere.getSelect(), oneWhere.getValue());
+                            break;
+                        case LIKE:
+                            _queryPart.addWhereSelectLike(oneWhere.getSelect(), oneWhere.getValue());
+                            break;
+                        case UNEQUAL:
+                        case IN:
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
     }
 
     /**

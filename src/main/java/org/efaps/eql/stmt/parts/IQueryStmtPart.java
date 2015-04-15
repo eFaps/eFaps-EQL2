@@ -24,7 +24,7 @@ import java.util.Collection;
  *
  * @author The eFaps Team
  */
-interface IQueryStmtPart
+public interface IQueryStmtPart
 {
 
     /**

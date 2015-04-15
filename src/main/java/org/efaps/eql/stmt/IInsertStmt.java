@@ -15,9 +15,7 @@
  *
  */
 
-
 package org.efaps.eql.stmt;
-
 
 /**
  * TODO comment!
@@ -25,7 +23,12 @@ package org.efaps.eql.stmt;
  * @author The eFaps Team
  */
 public interface IInsertStmt
-    extends IModifyStmt
+    extends IUpdateStmt
 {
-
+    /**
+     * @param _type type to be inserted
+     * @throws Exception on error
+     */
+    void setType(final String _type)
+        throws Exception;
 }

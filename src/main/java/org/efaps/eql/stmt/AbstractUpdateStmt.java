@@ -42,8 +42,8 @@ public abstract class AbstractUpdateStmt
     private final Map<String, String> attr2Value = new LinkedHashMap<>();
 
     @Override
-    public void addUpdate(final String _attribute,
-                          final String _value)
+    public void addAttribute(final String _attribute,
+                             final String _value)
         throws Exception
     {
         this.attr2Value.put(_attribute, _value);

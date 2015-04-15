@@ -37,7 +37,7 @@ public interface IUpdateStmt
      * @param _value value for the related Attribute
      * @throws Exception on error
      */
-    void addUpdate(final String _attribute,
-                   final String _value)
+    void addAttribute(final String _attribute,
+                      final String _value)
         throws Exception;
 }

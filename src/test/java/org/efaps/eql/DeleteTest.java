@@ -39,7 +39,7 @@ public class DeleteTest
         throws Exception
     {
         final Statement stmt = getStatement("delete 124.879");
-        final DeletePart delete = stmt.getDeletPart();
+        final DeletePart delete = stmt.getDeletePart();
         Assert.assertEquals(delete.getOid(), "124.879");
         Assert.assertTrue(getSyntaxErrors().isEmpty());
     }
@@ -49,7 +49,7 @@ public class DeleteTest
         throws Exception
     {
         final Statement stmt = getStatement("delete obj 124.879");
-        final DeletePart delete = stmt.getDeletPart();
+        final DeletePart delete = stmt.getDeletePart();
         Assert.assertEquals(delete.getOid(), "124.879");
         Assert.assertTrue(getSyntaxErrors().isEmpty());
     }
@@ -59,7 +59,7 @@ public class DeleteTest
         throws Exception
     {
         final Statement stmt = getStatement("delete object 124.879");
-        final DeletePart delete = stmt.getDeletPart();
+        final DeletePart delete = stmt.getDeletePart();
         Assert.assertEquals(delete.getOid(), "124.879");
         Assert.assertTrue(getSyntaxErrors().isEmpty());
     }
@@ -69,7 +69,7 @@ public class DeleteTest
         throws Exception
     {
         final Statement stmt = getStatement("delete list (124.879)");
-        final DeletePart delete = stmt.getDeletPart();
+        final DeletePart delete = stmt.getDeletePart();
         Assert.assertEquals(delete.getOids().toArray(), new String[] { "124.879" });
         Assert.assertTrue(getSyntaxErrors().isEmpty());
     }
@@ -79,7 +79,7 @@ public class DeleteTest
         throws Exception
     {
         final Statement stmt = getStatement("delete list (124.879, 123.456, 786.999)");
-        final DeletePart delete = stmt.getDeletPart();
+        final DeletePart delete = stmt.getDeletePart();
         Assert.assertEquals(delete.getOids().toArray(), new String[] { "124.879", "123.456", "786.999" });
         Assert.assertTrue(getSyntaxErrors().isEmpty());
     }
@@ -89,7 +89,7 @@ public class DeleteTest
         throws Exception
     {
         final Statement stmt = getStatement("delete query type Sales_Invoice");
-        final DeletePart delete = stmt.getDeletPart();
+        final DeletePart delete = stmt.getDeletePart();
         Assert.assertEquals(delete.getQueryPart().getTypes().toArray(), new String[] { "Sales_Invoice" });
     }
 
@@ -98,7 +98,7 @@ public class DeleteTest
         throws Exception
     {
         final Statement stmt = getStatement("delete query type Sales_Invoice where Name == 3");
-        final DeletePart delete = stmt.getDeletPart();
+        final DeletePart delete = stmt.getDeletePart();
 
         Assert.assertEquals(delete.getQueryPart().getTypes().toArray(), new String[] { "Sales_Invoice" });
         Assert.assertEquals(delete.getQueryPart().getWherePart().getWheres().get(0).getAttribute(), "Name");
@@ -111,7 +111,7 @@ public class DeleteTest
         throws Exception
     {
         final Statement stmt = getStatement("delete query type Sales_Invoice where DocumentLink == 4 and Description < 567 and House like \"%Blaues Hause\" and HouseNumber > 459");
-        final DeletePart delete = stmt.getDeletPart();
+        final DeletePart delete = stmt.getDeletePart();
         final WherePart where = delete.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);

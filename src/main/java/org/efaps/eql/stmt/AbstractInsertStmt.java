@@ -17,6 +17,8 @@
 
 package org.efaps.eql.stmt;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * TODO comment!
@@ -25,7 +27,51 @@ package org.efaps.eql.stmt;
  */
 public abstract class AbstractInsertStmt
     extends AbstractEQLStmt
-    implements IDeleteStmt
+    implements IInsertStmt
 {
 
+    /**
+     * Tyep to be inserted.
+     */
+    private String type;
+
+    /**
+     * Mapping of Attribute to Value.
+     */
+    private final Map<String, String> attr2Value = new LinkedHashMap<>();
+
+    @Override
+    public void setType(final String _type)
+        throws Exception
+    {
+        this.type = _type;
+    }
+
+    @Override
+    public void addAttribute(final String _attribute,
+                             final String _value)
+        throws Exception
+    {
+        this.attr2Value.put(_attribute, _value);
+    }
+
+    /**
+     * Getter method for the instance variable {@link #attr2Value}.
+     *
+     * @return value of instance variable {@link #attr2Value}
+     */
+    public Map<String, String> getAttr2Value()
+    {
+        return this.attr2Value;
+    }
+
+    /**
+     * Getter method for the instance variable {@link #type}.
+     *
+     * @return value of instance variable {@link #type}
+     */
+    public String getType()
+    {
+        return this.type;
+    }
 }
