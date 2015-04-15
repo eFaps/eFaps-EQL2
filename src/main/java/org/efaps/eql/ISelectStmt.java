@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Revision:        $Rev$
- * Last Changed:    $Date$
- * Last Changed By: $Author$
  */
 
 package org.efaps.eql;
@@ -27,7 +24,6 @@ import java.util.Map;
  * TODO comment!
  *
  * @author The eFaps Team
- * @version $Id: $
  */
 public interface ISelectStmt
     extends IEQLStmt
@@ -44,6 +40,7 @@ public interface ISelectStmt
 
     /**
      * Get the Mapping between alias and selects.
+     *
      * @return mapping
      * @throws Exception on error
      */
@@ -52,10 +49,27 @@ public interface ISelectStmt
 
     /**
      * Get the Data.
+     *
      * @return List of maps containing the data
      * @throws Exception on error
      */
     List<Map<String, Object>> getData()
+        throws Exception;
+
+    /**
+     * @return map of alias/key to be ordered by with asc or desc
+     * @throws Exception on error
+     */
+    Map<String, Boolean> getSortKey2desc()
+        throws Exception;
+
+    /**
+     * @param _key  key to add to the order map
+     * @param _desc desc or asc
+     * @throws Exception on error
+     */
+    void addOrder(final String _key,
+                  final Boolean _desc)
         throws Exception;
 
 }

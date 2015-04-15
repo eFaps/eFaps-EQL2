@@ -20,8 +20,10 @@
 
 package org.efaps.eql;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -48,6 +50,8 @@ public abstract class AbstractTest
 
     private BasicDiagnostic diagnostic;
 
+    private final List<String> syntaxErrors = new ArrayList<>();
+
     @BeforeClass
     public void setupParser()
     {
@@ -71,11 +75,12 @@ public abstract class AbstractTest
     protected final Statement getStatement(final CharSequence _stmt)
     {
         final IParseResult result = getParser().doParse(_stmt);
+        this.syntaxErrors.clear();
         if (result.hasSyntaxErrors()) {
             final Iterator<INode> iter = result.getSyntaxErrors().iterator();
             while (iter.hasNext()) {
                 final INode node = iter.next();
-                System.out.println(node.getSyntaxErrorMessage().getMessage());
+                this.syntaxErrors.add(node.getSyntaxErrorMessage().getMessage());
             }
 
         }
@@ -154,5 +159,15 @@ public abstract class AbstractTest
     public void setInvoker(final EQLInvoker _invoker)
     {
         this.invoker = _invoker;
+    }
+
+    /**
+     * Getter method for the instance variable {@link #syntaxErrors}.
+     *
+     * @return value of instance variable {@link #syntaxErrors}
+     */
+    public List<String> getSyntaxErrors()
+    {
+        return this.syntaxErrors;
     }
 }

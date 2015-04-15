@@ -53,7 +53,27 @@ public class PrintTest
     {
         final Statement stmt = getStatement("print 123.456 select attribute[Name]");
         final PrintPart print = stmt.getPrintPart();
-        final SelectPart select = stmt.getSelectPart();
+        final SelectPart select = print.getSelectPart();
+        Assert.assertEquals(print.getOid(), "123.456");
+        Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
+    }
+
+    @Test
+    public void printObjWithSelect()
+    {
+        final Statement stmt = getStatement("print obj 123.456 select attribute[Name]");
+        final PrintPart print = stmt.getPrintPart();
+        final SelectPart select = print.getSelectPart();
+        Assert.assertEquals(print.getOid(), "123.456");
+        Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
+    }
+
+    @Test
+    public void printObjectWithSelect()
+    {
+        final Statement stmt = getStatement("print object 123.456 select attribute[Name]");
+        final PrintPart print = stmt.getPrintPart();
+        final SelectPart select = print.getSelectPart();
         Assert.assertEquals(print.getOid(), "123.456");
         Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
     }
@@ -64,7 +84,7 @@ public class PrintTest
     {
         final Statement stmt = getStatement("print 234123.456 select type.label as Type, attribute[Name] as Name, linkto[Object].attribute[Code] as code");
         final PrintPart print = stmt.getPrintPart();
-        final SelectPart select = stmt.getSelectPart();
+        final SelectPart select = print.getSelectPart();
         final List<String> selects = new ArrayList<>();
         final List<String> alias = new ArrayList<>();
 
@@ -79,4 +99,23 @@ public class PrintTest
         Assert.assertEquals(new String[] { "Type", "Name", "code" }, alias.toArray());
     }
 
+    @Test
+    public void printListWithSelect()
+    {
+        final Statement stmt = getStatement("print list (124.879 select attribute[Name]");
+        final PrintPart print = stmt.getPrintPart();
+        final SelectPart select = print.getSelectPart();
+        Assert.assertEquals(print.getOids().toArray(), new String[] { "124.879" });
+        Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
+    }
+
+    @Test
+    public void printListManyWithSelect()
+    {
+        final Statement stmt = getStatement("print list (124.879, 546.234, 646.77) select attribute[Name]");
+        final PrintPart print = stmt.getPrintPart();
+        final SelectPart select = print.getSelectPart();
+        Assert.assertEquals(print.getOids().toArray(), new String[] { "124.879", "546.234", "646.77" });
+        Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
+    }
 }

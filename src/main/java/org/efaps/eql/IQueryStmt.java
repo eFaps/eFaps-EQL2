@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Revision:        $Rev$
- * Last Changed:    $Date$
- * Last Changed By: $Author$
  */
 
 package org.efaps.eql;
 
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * TODO comment!
  *
  * @author The eFaps Team
- * @version $Id: $
  */
 interface IQueryStmt
     extends ISelectStmt
@@ -37,13 +32,6 @@ interface IQueryStmt
      * @param _type Type to be added to the Statement
      */
     void addType(final String _type)
-        throws Exception;
-
-    Map<String, Boolean> getSortKey2desc()
-        throws Exception;
-
-    void addOrder(final String _key,
-                  final Boolean _desc)
         throws Exception;
 
     /**

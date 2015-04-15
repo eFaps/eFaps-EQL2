@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Revision:        $Rev$
- * Last Changed:    $Date$
- * Last Changed By: $Author$
  */
 
 package org.efaps.eql;
@@ -53,7 +50,6 @@ import com.google.inject.Inject;
  * TODO comment!
  *
  * @author The eFaps Team
- * @version $Id: $
  */
 public class EQLInvoker
 {
@@ -96,6 +92,18 @@ public class EQLInvoker
                     final IPrintStmt print = getIPrint();
                     print.setInstance(printPart.getOid());
                     ret = print;
+                    if (printPart.getSelectPart() != null) {
+                        final SelectPart selectPart = printPart.getSelectPart();
+                        for (final OneSelect sel : selectPart.getSelects()) {
+                            ((ISelectStmt) ret).addSelect(sel.getSelect(), sel.getAlias());
+                        }
+                    }
+                    if (printPart.getOrderPart() != null) {
+                        final OrderPart orderPart = printPart.getOrderPart();
+                        for (final OneOrder oneOrder : orderPart.getOneOrder()) {
+                            print.addOrder(oneOrder.getKey(), oneOrder.isDesc());
+                        }
+                    }
                 } else if (stmt.getExecPart() != null) {
                     final ExecPart execPart = stmt.getExecPart();
                     final IExecStmt exec = getIExec();
@@ -106,6 +114,12 @@ public class EQLInvoker
                     for (final ExecSelect exSel : execPart.getExecSelect()) {
                         exec.addSelect(exSel.getSelect(), exSel.getAlias());
                     }
+                    if (execPart.getOrderPart() != null) {
+                        final OrderPart orderPart = execPart.getOrderPart();
+                        for (final OneOrder oneOrder : orderPart.getOneOrder()) {
+                            exec.addOrder(oneOrder.getKey(), oneOrder.isDesc());
+                        }
+                    }
                     ret = exec;
                 } else if (stmt.getQueryPart() != null) {
                     final QueryPart queryPart = stmt.getQueryPart();
@@ -114,8 +128,8 @@ public class EQLInvoker
                         query.addType(type);
                     }
                     ret = query;
-                    if (stmt.getWherePart() != null) {
-                        final WherePart wherePart = stmt.getWherePart();
+                    if (queryPart.getWherePart() != null) {
+                        final WherePart wherePart = queryPart.getWherePart();
                         for (final OneWhere oneWhere : wherePart.getWheres()) {
                             if (oneWhere.getAttribute() != null) {
                                 switch (oneWhere.getComparison()) {
@@ -162,8 +176,14 @@ public class EQLInvoker
                             }
                         }
                     }
-                    if (stmt.getOrderPart() != null) {
-                        final OrderPart orderPart = stmt.getOrderPart();
+                    if (queryPart.getSelectPart() != null) {
+                        final SelectPart selectPart = queryPart.getSelectPart();
+                        for (final OneSelect sel : selectPart.getSelects()) {
+                            ((ISelectStmt) ret).addSelect(sel.getSelect(), sel.getAlias());
+                        }
+                    }
+                    if (queryPart.getOrderPart() != null) {
+                        final OrderPart orderPart = queryPart.getOrderPart();
                         for (final OneOrder oneOrder : orderPart.getOneOrder()) {
                             query.addOrder(oneOrder.getKey(), oneOrder.isDesc());
                         }
@@ -176,13 +196,6 @@ public class EQLInvoker
                         update.addUpdate(oneUpdate.getAttribute(), oneUpdate.getValue());
                     }
                     ret = update;
-                }
-
-                if (stmt.getSelectPart() != null && ret != null && ret instanceof ISelectStmt) {
-                    final SelectPart selectPart = stmt.getSelectPart();
-                    for (final OneSelect sel : selectPart.getSelects()) {
-                        ((ISelectStmt) ret).addSelect(sel.getSelect(), sel.getAlias());
-                    }
                 }
             } else {
                 ret = new IEQLStmt() {

@@ -40,6 +40,7 @@ public class QueryTest
         final Statement stmt = getStatement("query type Sales_Invoice");
         final QueryPart query = stmt.getQueryPart();
         Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice");
+        Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input '<EOF>' expecting 'select'" });
     }
 
     @Test()
@@ -49,6 +50,7 @@ public class QueryTest
         final QueryPart query = stmt.getQueryPart();
         Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice");
         Assert.assertEquals(query.getTypes().get(1), "Contacts_Contact");
+        Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input '<EOF>' expecting 'select'" });
     }
 
     @Test()
@@ -59,5 +61,6 @@ public class QueryTest
         Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice");
         Assert.assertEquals(query.getTypes().get(1), "Contacts_Contact");
         Assert.assertEquals(query.getTypes().get(2), "HumanResource_Employee");
+        Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input '<EOF>' expecting 'select'" });
     }
 }

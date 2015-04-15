@@ -25,11 +25,11 @@ Workflow {
     }
 
     component = DirectoryCleaner {
-        directory = "/src-gen"
+        directory = "${runtimeProject}/src-gen"
     }
 
     component = DirectoryCleaner {
-        directory = "/model"
+        directory = "${runtimeProject}/model"
     }
 
     component = Generator {

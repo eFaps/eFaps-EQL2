@@ -40,7 +40,7 @@ public class ValidationTest
         public void inEmpty()
             throws Exception
         {
-            getStatement("where DocumentLink in ()");
+            getStatement("print query type Sales_Invoice where DocumentLink in ()");
             Assert.assertEquals(((EFapsDiagnostic) getDiagnostic().getChildren().get(0)).getIssueCode(), "E001");
         }
 }

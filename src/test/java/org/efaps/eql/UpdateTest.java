@@ -46,6 +46,7 @@ public class UpdateTest
         final Statement stmt = getStatement("update 124.879");
         final UpdatePart update = stmt.getUpdatePart();
         Assert.assertEquals(update.getOid(), "124.879");
+        Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input '<EOF>' expecting 'set'" });
     }
 
     @Test(description = "update 124.879 set ATTR=NUM")
@@ -123,4 +124,43 @@ public class UpdateTest
         Assert.assertEquals(attributes.toArray(), new String[] { "Code", "Name", "Level" });
         Assert.assertEquals(values.toArray(), new String[] { "asdsd", "asdaddds", "welt" });
     }
+
+    @Test(description = "update LIST set ATTR=NUM")
+    public void setListAttrNum()
+        throws Exception
+    {
+        final Statement stmt = getStatement("update list (124.879) set Code=22");
+        final UpdatePart update = stmt.getUpdatePart();
+
+        final List<String> attributes = new ArrayList<>();
+        final List<String> values = new ArrayList<>();
+        for (final OneUpdate oneUpdate : update.getUpdates()) {
+            attributes.add(oneUpdate.getAttribute());
+            values.add(oneUpdate.getValue());
+        }
+
+        Assert.assertEquals(update.getOids().toArray(), new String[] { "124.879" });
+        Assert.assertEquals(attributes.toArray(), new String[] { "Code" });
+        Assert.assertEquals(values.toArray(), new String[] { "22" });
+    }
+
+    @Test(description = "update LIST set ATTR=NUM")
+    public void setListManyAttrNum()
+        throws Exception
+    {
+        final Statement stmt = getStatement("update list (124.879, 546.234, 646.77) set Code=22");
+        final UpdatePart update = stmt.getUpdatePart();
+
+        final List<String> attributes = new ArrayList<>();
+        final List<String> values = new ArrayList<>();
+        for (final OneUpdate oneUpdate : update.getUpdates()) {
+            attributes.add(oneUpdate.getAttribute());
+            values.add(oneUpdate.getValue());
+        }
+
+        Assert.assertEquals(update.getOids().toArray(), new String[] { "124.879", "546.234", "646.77" });
+        Assert.assertEquals(attributes.toArray(), new String[] { "Code" });
+        Assert.assertEquals(values.toArray(), new String[] { "22" });
+    }
+
 }

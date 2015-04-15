@@ -42,7 +42,17 @@ public class QuerySelectTest extends AbstractTest
     {
         final Statement stmt = getStatement("query type Sales_Invoice select attribute[Name]");
         final QueryPart query = stmt.getQueryPart();
-        final SelectPart select = stmt.getSelectPart();
+        final SelectPart select = query.getSelectPart();
+        Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice");
+        Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
+    }
+
+    @Test
+    public void printOneTypeOneAttribute()
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice select attribute[Name]");
+        final QueryPart query = stmt.getQueryPart();
+        final SelectPart select = query.getSelectPart();
         Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice");
         Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
     }
@@ -52,7 +62,7 @@ public class QuerySelectTest extends AbstractTest
     {
         final Statement stmt = getStatement("query type Sales_Invoice, Contacts_Contact select attribute[Name], linkto[DocLink].instance");
         final QueryPart query = stmt.getQueryPart();
-        final SelectPart select = stmt.getSelectPart();
+        final SelectPart select = query.getSelectPart();
         Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice");
         Assert.assertEquals(query.getTypes().get(1), "Contacts_Contact");
         Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
@@ -65,7 +75,7 @@ public class QuerySelectTest extends AbstractTest
     {
         final Statement stmt = getStatement("query type Sales_Invoice select attribute[Name] as Name");
         final QueryPart query = stmt.getQueryPart();
-        final SelectPart select = stmt.getSelectPart();
+        final SelectPart select = query.getSelectPart();
         Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice");
         Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
         Assert.assertEquals(select.getSelects().get(0).getAlias(), "Name");
@@ -76,7 +86,7 @@ public class QuerySelectTest extends AbstractTest
     {
         final Statement stmt = getStatement("query type Sales_Invoice select attribute[Name] as Name, linkto[DocumentLink].instance as instance");
         final QueryPart query = stmt.getQueryPart();
-        final SelectPart select = stmt.getSelectPart();
+        final SelectPart select = query.getSelectPart();
         Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice");
         Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
         Assert.assertEquals(select.getSelects().get(0).getAlias(), "Name");

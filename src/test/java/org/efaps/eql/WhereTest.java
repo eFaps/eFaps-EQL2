@@ -40,8 +40,8 @@ public class WhereTest
     public void eqNum()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink eq 4");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink eq 4");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -51,8 +51,8 @@ public class WhereTest
     public void eqNumAndEqNum()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink eq 4 and Description eq 567");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink eq 4 and Description eq 567");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -65,8 +65,8 @@ public class WhereTest
     public void equalsNum()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink == 4");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink == 4");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -76,8 +76,8 @@ public class WhereTest
     public void equalsNumAndEqualsNum()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink == 4 and Description == 567");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink == 4 and Description == 567");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -90,8 +90,8 @@ public class WhereTest
     public void lessNum()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink < 4");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink < 4");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.LESS);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -101,8 +101,8 @@ public class WhereTest
     public void greaterNum()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink > 4");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink > 4");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.GREATER);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -112,8 +112,8 @@ public class WhereTest
     public void unequalNum()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink != 4");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink != 4");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.UNEQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -123,8 +123,8 @@ public class WhereTest
     public void eqOID()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink eq 123.567");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink eq 123.567");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "123.567");
@@ -134,8 +134,8 @@ public class WhereTest
     public void equalsOID()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink == 123.567");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink == 123.567");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "123.567");
@@ -145,8 +145,8 @@ public class WhereTest
     public void unequalOID()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink != 123.567");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink != 123.567");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.UNEQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "123.567");
@@ -156,8 +156,8 @@ public class WhereTest
     public void eqString()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink eq \"Blaues Hause\"");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink eq \"Blaues Hause\"");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "Blaues Hause");
@@ -167,8 +167,8 @@ public class WhereTest
     public void equalsString()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink == \"Blaues Hause\"");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink == \"Blaues Hause\"");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "Blaues Hause");
@@ -178,8 +178,8 @@ public class WhereTest
     public void lessString()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink < \"Blaues Hause\"");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink < \"Blaues Hause\"");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.LESS);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "Blaues Hause");
@@ -189,8 +189,8 @@ public class WhereTest
     public void greaterString()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink > \"Blaues Hause\"");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink > \"Blaues Hause\"");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.GREATER);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "Blaues Hause");
@@ -200,8 +200,8 @@ public class WhereTest
     public void unequalString()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink != \"Blaues Hause\"");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink != \"Blaues Hause\"");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.UNEQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "Blaues Hause");
@@ -211,8 +211,8 @@ public class WhereTest
     public void likeString()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink like \"%Blaues Hause\"");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink like \"%Blaues Hause\"");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.LIKE);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "%Blaues Hause");
@@ -222,8 +222,8 @@ public class WhereTest
     public void eqLessGreaterUnequalLike()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink == 4 and Description < 567 and House like \"%Blaues Hause\" and HouseNumber > 459");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink == 4 and Description < 567 and House like \"%Blaues Hause\" and HouseNumber > 459");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -242,8 +242,8 @@ public class WhereTest
     public void inNums()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink in (4,7,12318)");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink in (4,7,12318)");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.IN);
         Assert.assertEquals(where.getWheres().get(0).getValues().toArray(),
@@ -254,8 +254,8 @@ public class WhereTest
     public void inStrings()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink in (\"4\",\"das it ein langer etxt\",\"Bla bal bal\")");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink in (\"4\",\"das it ein langer etxt\",\"Bla bal bal\")");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.IN);
         Assert.assertEquals(where.getWheres().get(0).getValues().toArray(),
@@ -266,8 +266,8 @@ public class WhereTest
     public void eqLessGreaterUnequalLikeIn()
         throws Exception
     {
-        final Statement stmt = getStatement("where DocumentLink == 4 and Description < 567 and House like \"%Blaues Hause\" and DocLink in (\"4\",\"das it ein langer etxt\",\"Bla bal bal\") and HouseNumber > 459");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink == 4 and Description < 567 and House like \"%Blaues Hause\" and DocLink in (\"4\",\"das it ein langer etxt\",\"Bla bal bal\") and HouseNumber > 459");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -292,8 +292,8 @@ public class WhereTest
     public void selectEqNum()
         throws Exception
     {
-        final Statement stmt = getStatement("where linkto[DocumentLink].attribute[Code] eq 4");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where linkto[DocumentLink].attribute[Code] eq 4");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -303,9 +303,9 @@ public class WhereTest
     public void selectEqualsNumAndEqualsNum()
         throws Exception
     {
-        final Statement stmt = getStatement("where linkto[DocumentLink].attribute[Code] == 4 and "
+        final Statement stmt = getStatement("print query type Sales_Invoice where linkto[DocumentLink].attribute[Code] == 4 and "
                         + "linkto[DocumentLink].attribute[Descriptiobn] == 567");
-        final WherePart where = stmt.getWherePart();
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -318,8 +318,8 @@ public class WhereTest
     public void selectLessNum()
         throws Exception
     {
-        final Statement stmt = getStatement("where linkto[DocumentLink].attribute[Code] < 4");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where linkto[DocumentLink].attribute[Code] < 4");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.LESS);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");
@@ -329,8 +329,8 @@ public class WhereTest
     public void selectGreaterString()
         throws Exception
     {
-        final Statement stmt = getStatement("where linkto[DocumentLink].attribute[Code] > \"Blaues Hause\"");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where linkto[DocumentLink].attribute[Code] > \"Blaues Hause\"");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.GREATER);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "Blaues Hause");
@@ -340,8 +340,8 @@ public class WhereTest
     public void selectLikeString()
         throws Exception
     {
-        final Statement stmt = getStatement("where linkto[DeliveryNote].attribute[Name] like \"099*\"");
-        final WherePart where = stmt.getWherePart();
+        final Statement stmt = getStatement("print query type Sales_Invoice where linkto[DeliveryNote].attribute[Name] like \"099*\"");
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DeliveryNote].attribute[Name]");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.LIKE);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "099*");
@@ -352,12 +352,12 @@ public class WhereTest
     public void selectEqLessGreaterUnequalLikeIn()
         throws Exception
     {
-        final Statement stmt = getStatement("where linkto[DocumentLink].attribute[Code] == 4 "
+        final Statement stmt = getStatement("print query type Sales_Invoice where linkto[DocumentLink].attribute[Code] == 4 "
                         + "and linkto[DocumentLink].attribute[Description]  < 567 "
                         + "and linkto[DocumentLink].attribute[House]  like \"%Blaues Hause\" "
                         + "and linkto[DocumentLink].attribute[DocLink] in (\"4\",\"das it ein langer etxt\",\"Bla bal bal\") "
                         + "and linkto[DocumentLink].attribute[HouseNumber] > 459");
-        final WherePart where = stmt.getWherePart();
+        final WherePart where = stmt.getQueryPart().getWherePart();
         Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");

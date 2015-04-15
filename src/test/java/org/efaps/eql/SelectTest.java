@@ -34,50 +34,50 @@ public class SelectTest
     extends AbstractTest
 {
 
-    @Test(description = "Select one Attribute")
+    @Test(description = "print query type Sales_Invoice select one Attribute")
     public void oneAttribute()
         throws Exception
     {
-        final Statement stmt = getStatement("select attribute[Name]");
-        final SelectPart select = stmt.getSelectPart();
+        final Statement stmt = getStatement("print query type Sales_Invoice select attribute[Name]");
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
         Assert.assertEquals("attribute[Name]", select.getSelects().get(0).getSelect());
     }
 
-    @Test(description = "Select one Attribute with Alias")
+    @Test(description = "print query type Sales_Invoice select one Attribute with Alias")
     public void oneAttributeWithAlias()
         throws Exception
     {
-        final Statement stmt = getStatement("select attribute[Name] as name");
-        final SelectPart select = stmt.getSelectPart();
+        final Statement stmt = getStatement("print query type Sales_Invoice select attribute[Name] as name");
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
         Assert.assertEquals("attribute[Name]", select.getSelects().get(0).getSelect());
         Assert.assertEquals("name", select.getSelects().get(0).getAlias());
     }
 
-    @Test(description = "Select one Attribute with capitalized Alias")
+    @Test(description = "print query type Sales_Invoice select one Attribute with capitalized Alias")
     public void oneAttributeWithAliasCapitalize()
         throws Exception
     {
-        final Statement stmt = getStatement("select attribute[Name] as Name");
-        final SelectPart select = stmt.getSelectPart();
+        final Statement stmt = getStatement("print query type Sales_Invoice select attribute[Name] as Name");
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
         Assert.assertEquals("attribute[Name]", select.getSelects().get(0).getSelect());
         Assert.assertEquals("Name", select.getSelects().get(0).getAlias());
     }
 
-    @Test(description = "Select one type.label with Alias")
+    @Test(description = "print query type Sales_Invoice select one type.label with Alias")
     public void oneTypeLabel()
         throws Exception
     {
-        final Statement stmt = getStatement("select type.label");
-        final SelectPart select = stmt.getSelectPart();
+        final Statement stmt = getStatement("print query type Sales_Invoice select type.label");
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
         Assert.assertEquals("type.label", select.getSelects().get(0).getSelect());
     }
 
-    @Test(description = "Select two type.label with Alias")
+    @Test(description = "print query type Sales_Invoice select two type.label with Alias")
     public void twoTypeLabel()
         throws Exception
     {
-        final Statement stmt = getStatement("select status.label, type.name");
-        final SelectPart select = stmt.getSelectPart();
+        final Statement stmt = getStatement("print query type Sales_Invoice select status.label, type.name");
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
         final List<String> selects = new ArrayList<>();
 
         for (final OneSelect part : select.getSelects()) {
@@ -90,8 +90,8 @@ public class SelectTest
     public void manySelects()
         throws Exception
     {
-        final Statement stmt = getStatement("select type.label, attribute[Name], linkto[Object].attribute[Code]");
-        final SelectPart select = stmt.getSelectPart();
+        final Statement stmt = getStatement("print query type Sales_Invoice select type.label, attribute[Name], linkto[Object].attribute[Code]");
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
         final List<String> selects = new ArrayList<>();
 
         for (final OneSelect part : select.getSelects()) {
@@ -105,8 +105,8 @@ public class SelectTest
     public void manySelectsWithAlias()
         throws Exception
     {
-        final Statement stmt = getStatement("select type.label as Type, attribute[Name] as Name, linkto[Object].attribute[Code] as code");
-        final SelectPart select = stmt.getSelectPart();
+        final Statement stmt = getStatement("print query type Sales_Invoice select type.label as Type, attribute[Name] as Name, linkto[Object].attribute[Code] as code");
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
         final List<String> selects = new ArrayList<>();
         final List<String> alias = new ArrayList<>();
 
@@ -123,8 +123,8 @@ public class SelectTest
     public void formatSelects()
         throws Exception
     {
-        final Statement stmt = getStatement("select attribute[Date].format[YYYY-MM-dd], linkto[DeliveryNote].attribute[Date].format[YYYY/MM/dd]");
-        final SelectPart select = stmt.getSelectPart();
+        final Statement stmt = getStatement("print query type Sales_Invoice select attribute[Date].format[YYYY-MM-dd], linkto[DeliveryNote].attribute[Date].format[YYYY/MM/dd]");
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
         final List<String> selects = new ArrayList<>();
 
         for (final OneSelect part : select.getSelects()) {
