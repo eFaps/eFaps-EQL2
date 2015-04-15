@@ -219,7 +219,8 @@ public class EQLInvoker
                             _queryPart.addWhereAttrNotEq(oneWhere.getAttribute(), oneWhere.getValue());
                             break;
                         case IN:
-                            _queryPart.addWhereAttrIn(oneWhere.getAttribute(), oneWhere.getValues());
+                            _queryPart.addWhereAttrIn(oneWhere.getAttribute(),
+                                            oneWhere.getValues().toArray(new String[ oneWhere.getValues().size()]));
                             break;
                         default:
                             break;

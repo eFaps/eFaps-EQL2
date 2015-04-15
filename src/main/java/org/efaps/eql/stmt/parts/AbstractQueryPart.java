@@ -18,8 +18,10 @@
 package org.efaps.eql.stmt.parts;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
+
+import org.efaps.eql.eQL.Comparison;
 
 /**
  * TODO comment!
@@ -30,10 +32,13 @@ public class AbstractQueryPart
     extends AbstractObjectSelectPart
     implements IQueryStmtPart
 {
+
     /**
      * List of types for the Query.
      */
     private final List<String> types = new ArrayList<>();
+
+    private final List<Where> wheres = new ArrayList<>();
 
     @Override
     public void addType(final String _type)
@@ -42,156 +47,85 @@ public class AbstractQueryPart
         this.types.add(_type);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.efaps.eql.stmt.parts.IQueryStmtPart#addWhereAttrEq(java.lang.String,
-     * java.lang.String)
-     */
     @Override
     public void addWhereAttrEq(final String _attr,
                                final String _value)
         throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.wheres.add(new Where().setAttribute(_attr).addValue(_value).setComparison(Comparison.EQUAL));
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.efaps.eql.stmt.parts.IQueryStmtPart#addWhereAttrNotEq(java.lang.String
-     * , java.lang.String)
-     */
     @Override
     public void addWhereAttrNotEq(final String _attr,
                                   final String _value)
         throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.wheres.add(new Where().setAttribute(_attr).addValue(_value).setComparison(Comparison.UNEQUAL));
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.efaps.eql.stmt.parts.IQueryStmtPart#addWhereAttrGreater(java.lang
-     * .String, java.lang.String)
-     */
     @Override
     public void addWhereAttrGreater(final String _attr,
                                     final String _value)
         throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.wheres.add(new Where().setAttribute(_attr).addValue(_value).setComparison(Comparison.GREATER));
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.efaps.eql.stmt.parts.IQueryStmtPart#addWhereAttrLess(java.lang.String
-     * , java.lang.String)
-     */
     @Override
     public void addWhereAttrLess(final String _attr,
                                  final String _value)
         throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.wheres.add(new Where().setAttribute(_attr).addValue(_value).setComparison(Comparison.LESS));
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.efaps.eql.stmt.parts.IQueryStmtPart#addWhereAttrLike(java.lang.String
-     * , java.lang.String)
-     */
     @Override
     public void addWhereAttrLike(final String _attr,
                                  final String _value)
         throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.wheres.add(new Where().setAttribute(_attr).addValue(_value).setComparison(Comparison.LIKE));
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.efaps.eql.stmt.parts.IQueryStmtPart#addWhereAttrIn(java.lang.String,
-     * java.util.Collection)
-     */
     @Override
     public void addWhereAttrIn(final String _attr,
-                               final Collection<String> _values)
+                               final String... _values)
         throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.wheres.add(new Where().setAttribute(_attr).addValue(_values).setComparison(Comparison.IN));
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.efaps.eql.stmt.parts.IQueryStmtPart#addWhereSelectEq(java.lang.String
-     * , java.lang.String)
-     */
     @Override
     public void addWhereSelectEq(final String _select,
                                  final String _value)
         throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.wheres.add(new Where().setSelect(_select).addValue(_value).setComparison(Comparison.EQUAL));
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.efaps.eql.stmt.parts.IQueryStmtPart#addWhereSelectLike(java.lang.
-     * String, java.lang.String)
-     */
     @Override
     public void addWhereSelectLike(final String _select,
                                    final String _value)
         throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.wheres.add(new Where().setSelect(_select).addValue(_value).setComparison(Comparison.LIKE));
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.efaps.eql.stmt.parts.IQueryStmtPart#addWhereSelectGreater(java.lang
-     * .String, java.lang.String)
-     */
     @Override
     public void addWhereSelectGreater(final String _select,
                                       final String _value)
         throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.wheres.add(new Where().setSelect(_select).addValue(_value).setComparison(Comparison.GREATER));
     }
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.efaps.eql.stmt.parts.IQueryStmtPart#addWhereSelectLess(java.lang.
-     * String, java.lang.String)
-     */
     @Override
     public void addWhereSelectLess(final String _select,
                                    final String _value)
         throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.wheres.add(new Where().setSelect(_select).addValue(_value).setComparison(Comparison.LESS));
     }
-
 
     /**
      * Getter method for the instance variable {@link #types}.
@@ -203,4 +137,108 @@ public class AbstractQueryPart
         return this.types;
     }
 
+    /**
+     * Getter method for the instance variable {@link #wheres}.
+     *
+     * @return value of instance variable {@link #wheres}
+     */
+    public List<Where> getWheres()
+    {
+        return this.wheres;
+    }
+
+    public static class Where
+    {
+
+        private String attribute;
+        private String select;
+
+        private final List<String> values = new ArrayList<>();;
+
+        private Comparison comparison;
+
+        /**
+         * Getter method for the instance variable {@link #attribute}.
+         *
+         * @return value of instance variable {@link #attribute}
+         */
+        public String getAttribute()
+        {
+            return this.attribute;
+        }
+
+        /**
+         * Setter method for instance variable {@link #attribute}.
+         *
+         * @param _attribute value for instance variable {@link #attribute}
+         */
+        public Where setAttribute(final String _attribute)
+        {
+            this.attribute = _attribute;
+            return this;
+        }
+
+        /**
+         * Getter method for the instance variable {@link #value}.
+         *
+         * @return value of instance variable {@link #value}
+         */
+        public List<String> getValues()
+        {
+            return this.values;
+        }
+
+        /**
+         * Setter method for instance variable {@link #value}.
+         *
+         * @param _value value for instance variable {@link #value}
+         */
+        public Where addValue(final String... _value)
+        {
+            this.values.addAll(Arrays.asList(_value));
+            return this;
+        }
+
+        /**
+         * Getter method for the instance variable {@link #comparison}.
+         *
+         * @return value of instance variable {@link #comparison}
+         */
+        public Comparison getComparison()
+        {
+            return this.comparison;
+        }
+
+        /**
+         * Setter method for instance variable {@link #comparison}.
+         *
+         * @param _comparison value for instance variable {@link #comparison}
+         */
+        public Where setComparison(final Comparison _comparison)
+        {
+            this.comparison = _comparison;
+            return this;
+        }
+
+        /**
+         * Getter method for the instance variable {@link #select}.
+         *
+         * @return value of instance variable {@link #select}
+         */
+        public String getSelect()
+        {
+            return this.select;
+        }
+
+        /**
+         * Setter method for instance variable {@link #select}.
+         *
+         * @param _select value for instance variable {@link #select}
+         */
+        public Where setSelect(final String _select)
+        {
+            this.select = _select;
+            return this;
+        }
+    }
 }

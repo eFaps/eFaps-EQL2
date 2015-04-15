@@ -17,7 +17,6 @@
 
 package org.efaps.eql.stmt.parts;
 
-import java.util.Collection;
 
 /**
  * TODO comment!
@@ -78,7 +77,7 @@ public interface IQueryStmtPart
      * @param _values list of values
      */
     void addWhereAttrIn(final String _attr,
-                        final Collection<String> _values)
+                        final String... _values)
         throws Exception;
 
     void addWhereSelectEq(final String _select,

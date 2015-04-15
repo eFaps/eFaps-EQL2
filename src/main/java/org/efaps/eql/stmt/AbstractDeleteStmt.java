@@ -17,6 +17,8 @@
 
 package org.efaps.eql.stmt;
 
+import org.efaps.eql.stmt.parts.AbstractQueryPart;
+
 
 /**
  * TODO comment!
@@ -24,7 +26,7 @@ package org.efaps.eql.stmt;
  * @author The eFaps Team
  */
 public abstract class AbstractDeleteStmt
-    extends AbstractEQLStmt
+    extends AbstractQueryPart
     implements IDeleteStmt
 {
 
