@@ -4,11 +4,14 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate eQL "http://www.efaps.org/EQL"
 
 Statement:
-    (execPart=ExecPart)? (printPart=PrintPart)? (queryPart=QueryPart)? (updatePart=UpdatePart)?;
+    (execPart=ExecPart) | (printPart=PrintPart) | (queryPart=QueryPart) | (updatePart=UpdatePart)?;
 
 UpdatePart:
-    'update' ((('obj' | 'object')? oid=OID) | 'list' '(' oids+=OID (',' oids+=OID)* ')') 'set' (updates+=OneUpdate) (',' updates+=OneUpdate)*
+    'update' ((('obj' | 'object')? oid=OID) | 'list' '(' oids+=OID (',' oids+=OID)* ')' | queryPart=ObjQueryPart) 'set' (updates+=OneUpdate) (',' updates+=OneUpdate)*
 ;
+
+ObjQueryPart:
+    'query' ('type' types+=TYPE) (',' types+=TYPE)* (wherePart=WherePart)?;
 
 OneUpdate:
     attribute=ATTRIBUTE '=' value=(KEY | STRING)

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.efaps.eql.eQL.OneSelect;
+import org.efaps.eql.eQL.OrderPart;
 import org.efaps.eql.eQL.PrintPart;
 import org.efaps.eql.eQL.SelectPart;
 import org.efaps.eql.eQL.Statement;
@@ -117,5 +118,18 @@ public class PrintTest
         final SelectPart select = print.getSelectPart();
         Assert.assertEquals(print.getOids().toArray(), new String[] { "124.879", "546.234", "646.77" });
         Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
+    }
+
+    @Test
+    public void printListManyWithSelectOrder()
+    {
+        final Statement stmt = getStatement("print list (124.879, 546.234, 646.77) select attribute[Name] as name order by name");
+        final PrintPart print = stmt.getPrintPart();
+        final SelectPart select = print.getSelectPart();
+        final OrderPart order = print.getOrderPart();
+        Assert.assertEquals(print.getOids().toArray(), new String[] { "124.879", "546.234", "646.77" });
+        Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
+        Assert.assertEquals(order.getOneOrder().get(0).getKey(), "name");
+        Assert.assertEquals(order.getOneOrder().get(0).isDesc(), false);
     }
 }
