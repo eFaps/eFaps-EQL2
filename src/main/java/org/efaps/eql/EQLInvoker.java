@@ -42,6 +42,17 @@ import org.efaps.eql.eQL.Statement;
 import org.efaps.eql.eQL.UpdatePart;
 import org.efaps.eql.eQL.WherePart;
 import org.efaps.eql.parser.antlr.EQLParser;
+import org.efaps.eql.stmt.AbstractDeleteStmt;
+import org.efaps.eql.stmt.AbstractExecStmt;
+import org.efaps.eql.stmt.AbstractInsertStmt;
+import org.efaps.eql.stmt.AbstractPrintStmt;
+import org.efaps.eql.stmt.AbstractUpdateStmt;
+import org.efaps.eql.stmt.IEQLStmt;
+import org.efaps.eql.stmt.impl.NonOpDelete;
+import org.efaps.eql.stmt.impl.NonOpExec;
+import org.efaps.eql.stmt.impl.NonOpInsert;
+import org.efaps.eql.stmt.impl.NonOpPrint;
+import org.efaps.eql.stmt.impl.NonOpUpdate;
 import org.efaps.eql.validation.EQLJavaValidator;
 
 import com.google.inject.Inject;
@@ -89,13 +100,13 @@ public class EQLInvoker
             if (diagnostics.isEmpty()) {
                 if (stmt.getPrintPart() != null) {
                     final PrintPart printPart = stmt.getPrintPart();
-                    final IPrintStmt print = getIPrint();
-                    print.setInstance(printPart.getOid());
+                    final AbstractPrintStmt print = getPrint();
+                    print.addInstance(printPart.getOid());
                     ret = print;
                     if (printPart.getSelectPart() != null) {
                         final SelectPart selectPart = printPart.getSelectPart();
                         for (final OneSelect sel : selectPart.getSelects()) {
-                            ((ISelectStmt) ret).addSelect(sel.getSelect(), sel.getAlias());
+                            print.addSelect(sel.getSelect(), sel.getAlias());
                         }
                     }
                     if (printPart.getOrderPart() != null) {
@@ -106,7 +117,7 @@ public class EQLInvoker
                     }
                 } else if (stmt.getExecPart() != null) {
                     final ExecPart execPart = stmt.getExecPart();
-                    final IExecStmt exec = getIExec();
+                    final AbstractExecStmt exec = getExec();
                     exec.setESJPName(execPart.getClassName());
                     for (final String parameter : execPart.getParameters()) {
                         exec.addParameter(parameter);
@@ -123,33 +134,33 @@ public class EQLInvoker
                     ret = exec;
                 } else if (stmt.getQueryPart() != null) {
                     final QueryPart queryPart = stmt.getQueryPart();
-                    final IQueryStmt query = getIQuery();
+                    final AbstractPrintStmt print = getPrint();
                     for (final String type : queryPart.getTypes()) {
-                        query.addType(type);
+                        print.addType(type);
                     }
-                    ret = query;
+                    ret = print;
                     if (queryPart.getWherePart() != null) {
                         final WherePart wherePart = queryPart.getWherePart();
                         for (final OneWhere oneWhere : wherePart.getWheres()) {
                             if (oneWhere.getAttribute() != null) {
                                 switch (oneWhere.getComparison()) {
                                     case EQUAL:
-                                        query.addWhereAttrEq(oneWhere.getAttribute(), oneWhere.getValue());
+                                        print.addWhereAttrEq(oneWhere.getAttribute(), oneWhere.getValue());
                                         break;
                                     case GREATER:
-                                        query.addWhereAttrGreater(oneWhere.getAttribute(), oneWhere.getValue());
+                                        print.addWhereAttrGreater(oneWhere.getAttribute(), oneWhere.getValue());
                                         break;
                                     case LESS:
-                                        query.addWhereAttrLess(oneWhere.getAttribute(), oneWhere.getValue());
+                                        print.addWhereAttrLess(oneWhere.getAttribute(), oneWhere.getValue());
                                         break;
                                     case LIKE:
-                                        query.addWhereAttrLike(oneWhere.getAttribute(), oneWhere.getValue());
+                                        print.addWhereAttrLike(oneWhere.getAttribute(), oneWhere.getValue());
                                         break;
                                     case UNEQUAL:
-                                        query.addWhereAttrNotEq(oneWhere.getAttribute(), oneWhere.getValue());
+                                        print.addWhereAttrNotEq(oneWhere.getAttribute(), oneWhere.getValue());
                                         break;
                                     case IN:
-                                        query.addWhereAttrIn(oneWhere.getAttribute(), oneWhere.getValues());
+                                        print.addWhereAttrIn(oneWhere.getAttribute(), oneWhere.getValues());
                                         break;
                                     default:
                                         break;
@@ -157,16 +168,16 @@ public class EQLInvoker
                             } else if (oneWhere.getSelect() != null) {
                                 switch (oneWhere.getComparison()) {
                                     case EQUAL:
-                                        query.addWhereSelectEq(oneWhere.getSelect(), oneWhere.getValue());
+                                        print.addWhereSelectEq(oneWhere.getSelect(), oneWhere.getValue());
                                         break;
                                     case GREATER:
-                                        query.addWhereSelectGreater(oneWhere.getSelect(), oneWhere.getValue());
+                                        print.addWhereSelectGreater(oneWhere.getSelect(), oneWhere.getValue());
                                         break;
                                     case LESS:
-                                        query.addWhereSelectLess(oneWhere.getSelect(), oneWhere.getValue());
+                                        print.addWhereSelectLess(oneWhere.getSelect(), oneWhere.getValue());
                                         break;
                                     case LIKE:
-                                        query.addWhereSelectLike(oneWhere.getSelect(), oneWhere.getValue());
+                                        print.addWhereSelectLike(oneWhere.getSelect(), oneWhere.getValue());
                                         break;
                                     case UNEQUAL:
                                     case IN:
@@ -179,26 +190,32 @@ public class EQLInvoker
                     if (queryPart.getSelectPart() != null) {
                         final SelectPart selectPart = queryPart.getSelectPart();
                         for (final OneSelect sel : selectPart.getSelects()) {
-                            ((ISelectStmt) ret).addSelect(sel.getSelect(), sel.getAlias());
+                            print.addSelect(sel.getSelect(), sel.getAlias());
                         }
                     }
                     if (queryPart.getOrderPart() != null) {
                         final OrderPart orderPart = queryPart.getOrderPart();
                         for (final OneOrder oneOrder : orderPart.getOneOrder()) {
-                            query.addOrder(oneOrder.getKey(), oneOrder.isDesc());
+                            print.addOrder(oneOrder.getKey(), oneOrder.isDesc());
                         }
                     }
                 } else if (stmt.getUpdatePart() != null) {
                     final UpdatePart updatePart = stmt.getUpdatePart();
-                    final IUpdateStmt update = getIUpdate();
-                    update.setInstance(updatePart.getOid());
+                     final AbstractUpdateStmt update = getUpdate();
+                    if (updatePart.getOid() != null) {
+                        update.addInstance(updatePart.getOid());
+                    }
+                    if (updatePart.getOids() != null && !updatePart.getOids().isEmpty()) {
+                        update.addInstance(updatePart.getOids().toArray(new String[updatePart.getOids().size()]));
+                    }
                     for (final OneUpdate oneUpdate : updatePart.getUpdates()) {
                         update.addUpdate(oneUpdate.getAttribute(), oneUpdate.getValue());
                     }
                     ret = update;
                 }
             } else {
-                ret = new IEQLStmt() {
+                ret = new IEQLStmt()
+                {
 
                     @Override
                     public List<Diagnostic> getDiagnostics()
@@ -254,23 +271,28 @@ public class EQLInvoker
         return this.validator;
     }
 
-    protected IPrintStmt getIPrint()
+    protected AbstractPrintStmt getPrint()
     {
         return new NonOpPrint();
     }
 
-    protected IQueryStmt getIQuery()
-    {
-        return new NonOpQuery();
-    }
-
-    protected IExecStmt getIExec()
+    protected AbstractExecStmt getExec()
     {
         return new NonOpExec();
     }
 
-    protected IUpdateStmt getIUpdate()
+    protected AbstractUpdateStmt getUpdate()
     {
         return new NonOpUpdate();
+    }
+
+    protected AbstractDeleteStmt getDelete()
+    {
+        return new NonOpDelete();
+    }
+
+    protected AbstractInsertStmt getInsert()
+    {
+        return new NonOpInsert();
     }
 }

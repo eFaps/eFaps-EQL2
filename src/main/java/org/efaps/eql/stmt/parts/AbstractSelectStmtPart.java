@@ -13,70 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Revision:        $Rev$
- * Last Changed:    $Date$
- * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt.parts;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * TODO comment!
  *
  * @author The eFaps Team
- * @version $Id: $
  */
-public class PrintStmt
-    extends AbstractSelectStmt
-    implements IPrintStmt
+public abstract class AbstractSelectStmtPart
+    extends AbstractQueryPart
+    implements ISelectStmtPart
 {
-    private String oid;
 
-    private final Map<String, String> alias = new LinkedHashMap<>();
+    private final Map<String, String> alias2Selects = new LinkedHashMap<>();
+
+    private final Map<String, Boolean> sortKey2desc = new LinkedHashMap<>();
 
     @Override
     public void addSelect(final String _select,
                           final String _alias)
-    {
-        this.alias.put(_select, _alias);
-    }
-
-    @Override
-    public void setInstance(final String _oid)
-    {
-        this.oid = _oid;
-    }
-
-
-    /**
-     * Getter method for the instance variable {@link #oid}.
-     *
-     * @return value of instance variable {@link #oid}
-     */
-    public String getOid()
-    {
-        return this.oid;
-    }
-
-    /**
-     * Getter method for the instance variable {@link #alias}.
-     *
-     * @return value of instance variable {@link #alias}
-     */
-    public Map<String, String> getAlias()
-    {
-        return this.alias;
-    }
-
-    @Override
-    public List<Map<String, Object>> getData()
         throws Exception
     {
-        return null;
+        String alias;
+        if (_alias == null) {
+            alias = Integer.valueOf(getAlias2Selects().size() + 1).toString();
+        } else {
+            alias = _alias;
+        }
+        getAlias2Selects().put(alias, _select);
     }
 
+    @Override
+    public Map<String, String> getAlias2Selects()
+        throws Exception
+    {
+        return this.alias2Selects;
+    }
+
+    @Override
+    public Map<String, Boolean> getSortKey2desc()
+        throws Exception
+    {
+        return this.sortKey2desc;
+    }
+
+    @Override
+    public void addOrder(final String _key,
+                         final Boolean _desc)
+        throws Exception
+    {
+        getSortKey2desc().put(_key, _desc);
+    }
 }

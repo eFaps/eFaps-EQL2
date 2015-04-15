@@ -34,6 +34,8 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.validation.AbstractInjectableValidator;
 import org.efaps.eql.eQL.Statement;
 import org.efaps.eql.parser.antlr.EQLParser;
+import org.efaps.eql.stmt.AbstractPrintStmt;
+import org.efaps.eql.stmt.PrintStmt;
 import org.efaps.eql.validation.EQLJavaValidator;
 import org.testng.annotations.BeforeClass;
 
@@ -57,17 +59,10 @@ public abstract class AbstractTest
     {
         this.invoker = new EQLInvoker()
         {
-
             @Override
-            protected IPrintStmt getIPrint()
+            protected AbstractPrintStmt getPrint()
             {
                 return new PrintStmt();
-            }
-
-            @Override
-            protected IQueryStmt getIQuery()
-            {
-                return new QueryStmt();
             }
         };
     }

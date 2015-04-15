@@ -18,7 +18,7 @@
  * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt;
 
 /**
  * TODO comment!
@@ -27,7 +27,7 @@ package org.efaps.eql;
  * @version $Id: $
  */
 public interface IExecStmt
-    extends ISelectStmt
+    extends IEQLStmt
 {
 
     public void setESJPName(final String _className)

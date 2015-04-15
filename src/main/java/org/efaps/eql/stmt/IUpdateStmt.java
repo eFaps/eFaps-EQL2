@@ -18,10 +18,9 @@
  * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt;
 
-import java.util.List;
-import java.util.Map;
+
 
 /**
  * TODO comment!
@@ -29,14 +28,16 @@ import java.util.Map;
  * @author The eFaps Team
  * @version $Id: $
  */
-public class NonOpExec
-    extends AbstractExecStmt
+public interface IUpdateStmt
+    extends IModifyStmt
 {
-    @Override
-    public List<Map<String, Object>> getData()
-        throws Exception
-    {
-        // Non operational implementation
-        return null;
-    }
+
+    /**
+     * @param _attribute Attribute to be added to the Update
+     * @param _value value for the related Attribute
+     * @throws Exception on error
+     */
+    void addUpdate(final String _attribute,
+                   final String _value)
+        throws Exception;
 }

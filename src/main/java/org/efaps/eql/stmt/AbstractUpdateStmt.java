@@ -18,10 +18,12 @@
  * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.efaps.eql.stmt.parts.AbstractQueryPart;
 
 /**
  * TODO comment!
@@ -30,7 +32,7 @@ import java.util.Map;
  * @version $Id: $
  */
 public abstract class AbstractUpdateStmt
-    extends AbstractEQLStmt
+    extends AbstractQueryPart
     implements IUpdateStmt
 {
 
@@ -38,28 +40,6 @@ public abstract class AbstractUpdateStmt
      * Mapping of Attribute to Value.
      */
     private final Map<String, String> attr2Value = new LinkedHashMap<>();
-
-    /**
-     * Instance to be updated.
-     */
-    private String instance;
-
-    @Override
-    public void setInstance(final String _oid)
-        throws Exception
-    {
-        this.instance = _oid;
-    }
-
-    /**
-     * Getter method for the instance variable {@link #instance}.
-     *
-     * @return value of instance variable {@link #instance}
-     */
-    public String getInstance()
-    {
-        return this.instance;
-    }
 
     @Override
     public void addUpdate(final String _attribute,

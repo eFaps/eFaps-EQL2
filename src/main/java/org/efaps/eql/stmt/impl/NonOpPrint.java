@@ -18,8 +18,12 @@
  * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt.impl;
 
+import java.util.List;
+import java.util.Map;
+
+import org.efaps.eql.stmt.AbstractPrintStmt;
 
 /**
  * TODO comment!
@@ -27,14 +31,14 @@ package org.efaps.eql;
  * @author The eFaps Team
  * @version $Id: $
  */
-public class NonOpUpdate
-    extends AbstractUpdateStmt
+public class NonOpPrint
+    extends AbstractPrintStmt
 {
 
     @Override
-    public void execute()
-        throws Exception
+    public List<Map<String, Object>> getData()
     {
-        // Non Operational Implementation
+        // Non operational implementation
+        return null;
     }
 }

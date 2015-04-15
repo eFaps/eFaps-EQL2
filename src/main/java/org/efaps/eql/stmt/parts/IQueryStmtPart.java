@@ -15,7 +15,7 @@
  *
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt.parts;
 
 import java.util.Collection;
 
@@ -24,8 +24,7 @@ import java.util.Collection;
  *
  * @author The eFaps Team
  */
-interface IQueryStmt
-    extends ISelectStmt
+interface IQueryStmtPart
 {
 
     /**

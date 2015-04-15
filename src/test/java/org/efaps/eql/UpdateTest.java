@@ -70,7 +70,7 @@ public class UpdateTest
         Assert.assertEquals(values.toArray(), new String[] { "22" });
     }
 
-    @Test(description = "update 124.879 set ATTR=NUM")
+    @Test(description = "update obj 124.879 set ATTR=NUM")
     public void objSetAttrNum()
         throws Exception
     {
@@ -89,7 +89,7 @@ public class UpdateTest
         Assert.assertEquals(values.toArray(), new String[] { "22" });
     }
 
-    @Test(description = "update 124.879 set ATTR=NUM")
+    @Test(description = "update object 124.879 set ATTR=NUM")
     public void objectSetAttrNum()
         throws Exception
     {

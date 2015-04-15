@@ -18,7 +18,13 @@
  * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
+
+package org.efaps.eql.stmt;
+
+import java.util.List;
+
+import org.eclipse.emf.common.util.Diagnostic;
+
 
 /**
  * TODO comment!
@@ -26,13 +32,7 @@ package org.efaps.eql;
  * @author The eFaps Team
  * @version $Id: $
  */
-public interface IPrintStmt
-    extends ISelectStmt
+public interface IEQLStmt
 {
-
-    /**
-     * @param _oid set the object the Statement will be executed for
-     */
-    public void setInstance(final String _oid) throws Exception;
-
+    List<Diagnostic> getDiagnostics();
 }

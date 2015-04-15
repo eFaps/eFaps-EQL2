@@ -13,18 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
+ * Revision:        $Rev$
+ * Last Changed:    $Date$
+ * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt;
+
+import java.util.Collections;
+import java.util.List;
+
+import org.eclipse.emf.common.util.Diagnostic;
 
 /**
  * TODO comment!
  *
  * @author The eFaps Team
+ * @version $Id: $
  */
-public abstract class AbstractQueryStmt
-    extends AbstractSelectStmt
-    implements IQueryStmt
+public abstract class AbstractEQLStmt
+    implements IEQLStmt
 {
+
+    @Override
+    public List<Diagnostic> getDiagnostics()
+    {
+        return Collections.<Diagnostic>emptyList();
+    }
 
 }

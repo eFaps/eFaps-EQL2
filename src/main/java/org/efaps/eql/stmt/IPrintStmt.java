@@ -18,12 +18,7 @@
  * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
-
-import java.util.Collections;
-import java.util.List;
-
-import org.eclipse.emf.common.util.Diagnostic;
+package org.efaps.eql.stmt;
 
 /**
  * TODO comment!
@@ -31,14 +26,8 @@ import org.eclipse.emf.common.util.Diagnostic;
  * @author The eFaps Team
  * @version $Id: $
  */
-public class AbstractEQLStmt
-    implements IEQLStmt
+public interface IPrintStmt
+    extends IEQLStmt
 {
-
-    @Override
-    public List<Diagnostic> getDiagnostics()
-    {
-        return Collections.<Diagnostic>emptyList();
-    }
 
 }

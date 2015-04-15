@@ -15,17 +15,19 @@
  *
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt.parts;
 
 import java.util.List;
 import java.util.Map;
+
+import org.efaps.eql.stmt.IEQLStmt;
 
 /**
  * TODO comment!
  *
  * @author The eFaps Team
  */
-public interface ISelectStmt
+public interface ISelectStmtPart
     extends IEQLStmt
 {
 

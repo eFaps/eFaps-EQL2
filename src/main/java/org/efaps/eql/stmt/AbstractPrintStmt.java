@@ -18,7 +18,10 @@
  * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt;
+
+import org.efaps.eql.stmt.parts.AbstractSelectStmtPart;
+
 
 /**
  * TODO comment!
@@ -27,26 +30,8 @@ package org.efaps.eql;
  * @version $Id: $
  */
 public abstract class AbstractPrintStmt
-    extends AbstractSelectStmt
+    extends AbstractSelectStmtPart
     implements IPrintStmt
 {
 
-    private String instance;
-
-    @Override
-    public void setInstance(final String _oid)
-        throws Exception
-    {
-        this.instance = _oid;
-    }
-
-    /**
-     * Getter method for the instance variable {@link #instance}.
-     *
-     * @return value of instance variable {@link #instance}
-     */
-    public String getInstance()
-    {
-        return this.instance;
-    }
 }

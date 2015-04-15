@@ -18,8 +18,12 @@
  * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt.impl;
 
+import java.util.List;
+import java.util.Map;
+
+import org.efaps.eql.stmt.AbstractExecStmt;
 
 /**
  * TODO comment!
@@ -27,30 +31,14 @@ package org.efaps.eql;
  * @author The eFaps Team
  * @version $Id: $
  */
-public interface IUpdateStmt
-    extends IEQLStmt
+public class NonOpExec
+    extends AbstractExecStmt
 {
-
-    /**
-     * @param _oid set the object the Statement will be executed for
-     * @throws Exception on error
-     */
-    void setInstance(final String _oid)
-        throws Exception;
-
-    /**
-     * @param _attribute Attribute to be added to the Update
-     * @param _value value for the related Attribute
-     * @throws Exception on error
-     */
-    void addUpdate(final String _attribute,
-                   final String _value)
-        throws Exception;
-
-    /**
-     * Execute the update.
-     * @throws Exception on error
-     */
-    void execute()
-        throws Exception;
+    @Override
+    public List<Map<String, Object>> getData()
+        throws Exception
+    {
+        // Non operational implementation
+        return null;
+    }
 }

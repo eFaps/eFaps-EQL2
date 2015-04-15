@@ -18,10 +18,12 @@
  * Last Changed By: $Author$
  */
 
-package org.efaps.eql;
+package org.efaps.eql.stmt;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.efaps.eql.stmt.parts.AbstractSelectStmtPart;
 
 /**
  * TODO comment!
@@ -30,7 +32,7 @@ import java.util.List;
  * @version $Id: $
  */
 public abstract class AbstractExecStmt
-    extends AbstractSelectStmt
+    extends AbstractSelectStmtPart
     implements IExecStmt
 {
 
