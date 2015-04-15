@@ -29,7 +29,7 @@ import org.efaps.eql.eQL.Comparison;
  * @author The eFaps Team
  */
 public class AbstractQueryPart
-    extends AbstractObjectSelectPart
+    extends AbstractObjectPart
     implements IQueryStmtPart
 {
 

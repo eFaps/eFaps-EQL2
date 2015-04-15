@@ -28,7 +28,7 @@ import org.efaps.eql.stmt.AbstractEQLStmt;
  *
  * @author The eFaps Team
  */
-public class AbstractObjectSelectPart
+public class AbstractObjectPart
     extends AbstractEQLStmt
     implements IObjectStmtPart
 {
