@@ -16,9 +16,6 @@
   limitations under the License.
 
   Author:          The eFaps Team
-  Revision:        $Rev: 14739 $
-  Last Changed:    $Date: 2015-01-19 23:11:33 -0500 (Mon, 19 Jan 2015) $
-  Last Changed By: $Author: jan@moxter.net $
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
