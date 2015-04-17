@@ -272,4 +272,19 @@ public class UpdateTest
         Assert.assertEquals(values.toArray(), new String[] { "22" });
     }
 
+    @Test(description = "update 5710.4137 set Name = \"001-064056\"")
+    public void setAttributeWithHyphen()
+        throws Exception
+    {
+        final Statement stmt = getStatement("update 5710.4137 set Name = \"001-064056\"");
+        final UpdatePart update = stmt.getUpdatePart();
+        final List<String> attributes = new ArrayList<>();
+        final List<String> values = new ArrayList<>();
+        for (final OneUpdate oneUpdate : update.getUpdates()) {
+            attributes.add(oneUpdate.getAttribute());
+            values.add(oneUpdate.getValue());
+        }
+        Assert.assertEquals(attributes.toArray(), new String[] { "Name" });
+        Assert.assertEquals(values.toArray(), new String[] { "001-064056" });
+    }
 }
