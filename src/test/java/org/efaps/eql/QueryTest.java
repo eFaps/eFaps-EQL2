@@ -82,4 +82,17 @@ public class QueryTest
         Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice2DeliveryNote");
         Assert.assertEquals(new String[] { "linkto[ToLink].attribute[Name]" }, selects.toArray());
     }
+
+    @Test(description = "query with a limit")
+    public void limit()
+    {
+        final Statement stmt = getStatement("query type Sales_Invoice, Contacts_Contact, HumanResource_Employee limit 10");
+        final QueryPart query = stmt.getQueryPart();
+
+        Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice");
+        Assert.assertEquals(query.getTypes().get(1), "Contacts_Contact");
+        Assert.assertEquals(query.getTypes().get(2), "HumanResource_Employee");
+        Assert.assertEquals(query.getLimitPart().getValue(), "10");
+        Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input '<EOF>' expecting 'select'" });
+    }
 }

@@ -19,7 +19,7 @@ UpdatePart:
 ;
 
 ObjQueryPart:
-    'query' ('type' types+=TYPE) (',' types+=TYPE)* (wherePart=WherePart)?;
+    'query' ('type' types+=TYPE) (',' types+=TYPE)* (wherePart=WherePart)? (limitPart=LimitPart)?;
 
 OneUpdate:
     attribute=ATTRIBUTE '=' value=(KEY | STRING)
@@ -36,7 +36,7 @@ PrintPart:
     'print' ((('obj' | 'object')? oid=OID) | 'list' '(' oids+=OID (',' oids+=OID)* ')') (selectPart=SelectPart) (orderPart=OrderPart)?;
 
 QueryPart:
-    ('print')? 'query' ('type' types+=TYPE) (',' types+=TYPE)* (wherePart=WherePart)? (selectPart=SelectPart) (orderPart=OrderPart)?;
+    ('print')? 'query' ('type' types+=TYPE) (',' types+=TYPE)* (wherePart=WherePart)? (limitPart=LimitPart)?  (selectPart=SelectPart) (orderPart=OrderPart)?;
 
 WherePart:
     'where' wheres+=OneWhere ('and' wheres+=OneWhere)*;
@@ -65,6 +65,9 @@ OrderPart:
 
 OneOrder:
     key=(ALIAS | KEY) ('asc' |(desc?=('desc')))?;
+
+LimitPart:
+    'limit' value=KEY;
 
 terminal WS:
     (' ' | '\t' | '\r' | '\n')+;

@@ -40,6 +40,25 @@ public class AbstractQueryPart
 
     private final List<Where> wheres = new ArrayList<>();
 
+    private int limit = -1;
+
+    /**
+     * Getter method for the instance variable {@link #limit}.
+     *
+     * @return value of instance variable {@link #limit}
+     */
+    public int getLimit()
+    {
+        return this.limit;
+    }
+
+    @Override
+    public void setLimit(final String _limit)
+        throws Exception
+    {
+        this.limit = Integer.parseInt(_limit);
+    }
+
     @Override
     public void addType(final String _type)
         throws Exception

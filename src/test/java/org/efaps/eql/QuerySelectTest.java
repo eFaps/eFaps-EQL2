@@ -94,6 +94,20 @@ public class QuerySelectTest extends AbstractTest
         Assert.assertEquals(select.getSelects().get(1).getAlias(), "instance");
     }
 
-
+    @Test(description = "query with a limit")
+    public void limit()
+    {
+        final Statement stmt = getStatement("query type Sales_Invoice, Contacts_Contact, HumanResource_Employee limit 10 select attribute[Name] as Name, linkto[DocumentLink].instance as instance");
+        final QueryPart query = stmt.getQueryPart();
+        final SelectPart select = query.getSelectPart();
+        Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice");
+        Assert.assertEquals(query.getTypes().get(1), "Contacts_Contact");
+        Assert.assertEquals(query.getTypes().get(2), "HumanResource_Employee");
+        Assert.assertEquals(query.getLimitPart().getValue(), "10");
+        Assert.assertEquals(select.getSelects().get(0).getSelect(), "attribute[Name]");
+        Assert.assertEquals(select.getSelects().get(0).getAlias(), "Name");
+        Assert.assertEquals(select.getSelects().get(1).getSelect(), "linkto[DocumentLink].instance");
+        Assert.assertEquals(select.getSelects().get(1).getAlias(), "instance");
+    }
 
 }

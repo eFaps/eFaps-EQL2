@@ -155,6 +155,10 @@ public class EQLInvoker
                             print.addOrder(oneOrder.getKey(), oneOrder.isDesc());
                         }
                     }
+                    if (queryPart.getLimitPart() != null) {
+                        print.setLimit(queryPart.getLimitPart().getValue());
+                    }
+
                 } else if (stmt.getUpdatePart() != null) {
                     final UpdatePart updatePart = stmt.getUpdatePart();
                     final AbstractUpdateStmt update = getUpdate();

@@ -27,6 +27,13 @@ public interface IQueryStmtPart
 {
 
     /**
+     * @param _limit Limit to be added to the Statement
+     * @throws Exception
+     */
+    void setLimit(final String _limit)
+        throws Exception;
+
+    /**
      * @param _type Type to be added to the Statement
      */
     void addType(final String _type)

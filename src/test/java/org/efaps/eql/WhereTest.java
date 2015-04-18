@@ -390,4 +390,16 @@ public class WhereTest
         Assert.assertEquals(stmt.getQueryPart().getSelectPart().getSelects().get(0).getSelect(),
                         "linkto[ToLink].attribute[Name]");
     }
+
+    @Test(description = "where SELECT > STRING LIMI")
+    public void selectGreaterStringWithLimit()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice where linkto[DocumentLink].attribute[Code] > \"Blaues Hause\" limit 1");
+        final WherePart where = stmt.getQueryPart().getWherePart();
+        Assert.assertEquals(where.getWheres().get(0).getSelect(), "linkto[DocumentLink].attribute[Code]");
+        Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.GREATER);
+        Assert.assertEquals(where.getWheres().get(0).getValue(), "Blaues Hause");
+        Assert.assertEquals(stmt.getQueryPart().getLimitPart().getValue(), "1");
+    }
 }
