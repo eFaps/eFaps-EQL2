@@ -378,4 +378,16 @@ public class WhereTest
         Assert.assertEquals(where.getWheres().get(4).getValue(), "459");
     }
 
+    @Test(description = "combination test for selects ")
+    public void typeNameAndEqOID()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice2DeliveryNote where FromLink == 5710.1126 select linkto[ToLink].attribute[Name] as name");
+        final WherePart where = stmt.getQueryPart().getWherePart();
+        Assert.assertEquals(where.getWheres().get(0).getAttribute(), "FromLink");
+        Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
+        Assert.assertEquals(where.getWheres().get(0).getValue(), "5710.1126");
+        Assert.assertEquals(stmt.getQueryPart().getSelectPart().getSelects().get(0).getSelect(),
+                        "linkto[ToLink].attribute[Name]");
+    }
 }

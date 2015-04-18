@@ -19,6 +19,10 @@
  */
 package org.efaps.eql;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.efaps.eql.eQL.OneSelect;
 import org.efaps.eql.eQL.QueryPart;
 import org.efaps.eql.eQL.Statement;
 import org.testng.Assert;
@@ -62,5 +66,20 @@ public class QueryTest
         Assert.assertEquals(query.getTypes().get(1), "Contacts_Contact");
         Assert.assertEquals(query.getTypes().get(2), "HumanResource_Employee");
         Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input '<EOF>' expecting 'select'" });
+    }
+
+    @Test(description = "Type contains a number in the name")
+    public void typeWithNumberInName()
+        throws Exception
+    {
+        final Statement stmt = getStatement("query type Sales_Invoice2DeliveryNote select linkto[ToLink].attribute[Name] as name;");
+        final QueryPart query = stmt.getQueryPart();
+        final List<String> selects = new ArrayList<>();
+
+        for (final OneSelect part : query.getSelectPart().getSelects()) {
+            selects.add(part.getSelect());
+        }
+        Assert.assertEquals(query.getTypes().get(0), "Sales_Invoice2DeliveryNote");
+        Assert.assertEquals(new String[] { "linkto[ToLink].attribute[Name]" }, selects.toArray());
     }
 }
