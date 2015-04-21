@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.validation.AbstractInjectableValidator;
+import org.efaps.eql.eQL.DeletePart;
 import org.efaps.eql.eQL.ExecPart;
 import org.efaps.eql.eQL.ExecSelect;
 import org.efaps.eql.eQL.InsertPart;
@@ -195,6 +196,16 @@ public class EQLInvoker
                         insert.addAttribute(oneUpdate.getAttribute(), oneUpdate.getValue());
                     }
                     ret = insert;
+                } else if (stmt.getDeletePart() != null) {
+                    final DeletePart deletePart = stmt.getDeletePart();
+                    final AbstractDeleteStmt delete = getDelete();
+                    if (deletePart.getOid() != null) {
+                        delete.addInstance(deletePart.getOid());
+                    }
+                     for (final String oid : deletePart.getOids()) {
+                        delete.addInstance(oid);
+                    }
+                    ret = delete;
                 }
             } else {
                 ret = new IEQLStmt()

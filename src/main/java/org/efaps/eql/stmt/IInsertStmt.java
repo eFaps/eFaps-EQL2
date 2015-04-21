@@ -31,4 +31,6 @@ public interface IInsertStmt
      */
     void setType(final String _type)
         throws Exception;
+
+    String getInstance();
 }

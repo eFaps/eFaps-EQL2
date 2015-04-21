@@ -40,6 +40,24 @@ public abstract class AbstractInsertStmt
      */
     private final Map<String, String> attr2Value = new LinkedHashMap<>();
 
+    private String instance;
+
+    @Override
+    public String getInstance()
+    {
+        return this.instance;
+    }
+
+    /**
+     * Setter method for instance variable {@link #instance}.
+     *
+     * @param _instance value for instance variable {@link #instance}
+     */
+    public void setInstance(final String _instance)
+    {
+        this.instance = _instance;
+    }
+
     @Override
     public void setType(final String _type)
         throws Exception
