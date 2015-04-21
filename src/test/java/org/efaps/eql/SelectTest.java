@@ -134,4 +134,39 @@ public class SelectTest
                         selects.toArray());
     }
 
+    @Test(description = "type.label select")
+    public void typeLabelSelects()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice select type.label as TypeName");
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+
+        for (final OneSelect part : select.getSelects()) {
+            selects.add(part.getSelect());
+            alias.add(part.getAlias());
+        }
+        Assert.assertEquals(selects.toArray(), new String[] { "type.label" });
+        Assert.assertEquals(alias.toArray(), new String[] { "TypeName" });
+    }
+
+    @Test(description = "type.label select")
+    public void typeLabelSelectsInvalidMapping()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice select type.label as type");
+
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+
+        for (final OneSelect part : select.getSelects()) {
+            selects.add(part.getSelect());
+            alias.add(part.getAlias());
+        }
+        Assert.assertEquals(selects.toArray(), new String[] { "type.label" });
+        Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input 'type' expecting RULE_ALIAS" });
+    }
+
 }
