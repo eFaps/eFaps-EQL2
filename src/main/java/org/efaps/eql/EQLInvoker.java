@@ -19,6 +19,7 @@ package org.efaps.eql;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.validation.AbstractInjectableValidator;
 import org.efaps.eql.eQL.ExecPart;
@@ -72,6 +74,8 @@ public class EQLInvoker
     @Inject
     private EQLJavaValidator validator;
 
+    private final List<String> syntaxErrors = new ArrayList<>();
+
     /**
      *
      */
@@ -95,6 +99,14 @@ public class EQLInvoker
     {
         IEQLStmt ret = null;
         final IParseResult result = getParser().doParse(_stmt);
+        this.syntaxErrors.clear();
+        if (result.hasSyntaxErrors()) {
+            final Iterator<INode> iter = result.getSyntaxErrors().iterator();
+            while (iter.hasNext()) {
+                final INode node = iter.next();
+                this.syntaxErrors.add(node.getSyntaxErrorMessage().getMessage());
+            }
+        }
         final Statement stmt = (Statement) result.getRootASTElement();
         if (stmt != null) {
             final List<Diagnostic> diagnostics = validate(stmt);
@@ -319,5 +331,16 @@ public class EQLInvoker
     protected AbstractInsertStmt getInsert()
     {
         return new NonOpInsert();
+    }
+
+
+    /**
+     * Getter method for the instance variable {@link #syntaxErrors}.
+     *
+     * @return value of instance variable {@link #syntaxErrors}
+     */
+    public List<String> getSyntaxErrors()
+    {
+        return this.syntaxErrors;
     }
 }
