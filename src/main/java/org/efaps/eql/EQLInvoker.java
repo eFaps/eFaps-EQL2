@@ -182,6 +182,9 @@ public class EQLInvoker
                         update.addInstance(updatePart.getOids().toArray(new String[updatePart.getOids().size()]));
                     }
                     if (updatePart.getQueryPart() != null) {
+                        for (final String type : updatePart.getQueryPart().getTypes()) {
+                            update.addType(type);
+                        }
                         addWherePart(update, updatePart.getQueryPart().getWherePart());
                     }
                     for (final OneUpdate oneUpdate : updatePart.getUpdates()) {
