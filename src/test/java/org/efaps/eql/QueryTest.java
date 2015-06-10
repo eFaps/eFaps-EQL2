@@ -95,4 +95,18 @@ public class QueryTest
         Assert.assertEquals(query.getLimitPart().getValue(), "10");
         Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input '<EOF>' expecting 'select'" });
     }
+
+    @Test(description = "query with UUIDs for the type")
+    public void typeUUID()
+    {
+        final Statement stmt = getStatement("query type 0029a77d-65ca-4564-968c-2ef6adf72033, Contacts_Contact, ce71ffa1-98f2-49b4-b892-246cd407b520, afc188bb-96a6-40ac-a48b-cfba985474c5");
+        final QueryPart query = stmt.getQueryPart();
+
+        Assert.assertEquals(query.getTypes().get(0), "0029a77d-65ca-4564-968c-2ef6adf72033");
+        Assert.assertEquals(query.getTypes().get(1), "Contacts_Contact");
+        Assert.assertEquals(query.getTypes().get(2), "ce71ffa1-98f2-49b4-b892-246cd407b520");
+        Assert.assertEquals(query.getTypes().get(3), "afc188bb-96a6-40ac-a48b-cfba985474c5");
+        Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input '<EOF>' expecting 'select'" });
+    }
+
 }

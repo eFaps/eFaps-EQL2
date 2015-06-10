@@ -90,8 +90,14 @@ terminal fragment KARET:
 terminal SELECTSTR:
     ('a'..'z') ('a'..'z' | 'A'..'Z' | '.' | '_' | KARET)*;
 
+terminal fragment HEX:
+    ('a'..'f' | '0'..'9');
+
+terminal fragment UUID:
+    HEX HEX HEX HEX HEX HEX HEX HEX '-' HEX HEX HEX HEX '-' HEX HEX HEX HEX '-' HEX HEX HEX HEX '-' HEX HEX HEX HEX HEX HEX HEX HEX HEX HEX HEX HEX;
+
 terminal TYPE:
-    ('A'..'Z') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+    (('A'..'Z') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*) | UUID;
 
 terminal STRING:
     '"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
