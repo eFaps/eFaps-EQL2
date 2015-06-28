@@ -113,6 +113,7 @@ public class DeleteTest
         final Statement stmt = getStatement("delete query type Sales_Invoice where DocumentLink == 4 and Description < 567 and House like \"%Blaues Hause\" and HouseNumber > 459");
         final DeletePart delete = stmt.getDeletePart();
         final WherePart where = delete.getQueryPart().getWherePart();
+        Assert.assertEquals(delete.getQueryPart().getTypes().get(0), "Sales_Invoice");
         Assert.assertEquals(where.getWheres().get(0).getAttribute(), "DocumentLink");
         Assert.assertEquals(where.getWheres().get(0).getComparison(), Comparison.EQUAL);
         Assert.assertEquals(where.getWheres().get(0).getValue(), "4");

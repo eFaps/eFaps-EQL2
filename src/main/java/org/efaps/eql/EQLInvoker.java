@@ -202,11 +202,17 @@ public class EQLInvoker
                 } else if (stmt.getDeletePart() != null) {
                     final DeletePart deletePart = stmt.getDeletePart();
                     final AbstractDeleteStmt delete = getDelete();
-                    if (deletePart.getOid() != null) {
+                    if (deletePart.getOid() != null ) {
                         delete.addInstance(deletePart.getOid());
                     }
-                     for (final String oid : deletePart.getOids()) {
-                        delete.addInstance(oid);
+                    if (deletePart.getOids() != null && !deletePart.getOids().isEmpty()) {
+                        delete.addInstance(deletePart.getOids().toArray(new String[deletePart.getOids().size()]));
+                    }
+                    if (deletePart.getQueryPart() != null) {
+                        for (final String type : deletePart.getQueryPart().getTypes()) {
+                            delete.addType(type);
+                        }
+                        addWherePart(delete, deletePart.getQueryPart().getWherePart());
                     }
                     ret = delete;
                 }
