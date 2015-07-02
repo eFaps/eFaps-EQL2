@@ -7,3 +7,4 @@
 /.settings/
 /test-output/
 /plugin.xml_gen
+/.checkstyle
