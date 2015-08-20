@@ -34,6 +34,7 @@ import org.efaps.eql.eQL.DeletePart;
 import org.efaps.eql.eQL.ExecPart;
 import org.efaps.eql.eQL.ExecSelect;
 import org.efaps.eql.eQL.InsertPart;
+import org.efaps.eql.eQL.NestedQueryPart;
 import org.efaps.eql.eQL.OneOrder;
 import org.efaps.eql.eQL.OneSelect;
 import org.efaps.eql.eQL.OneUpdate;
@@ -55,9 +56,11 @@ import org.efaps.eql.stmt.IEQLStmt;
 import org.efaps.eql.stmt.impl.NonOpDelete;
 import org.efaps.eql.stmt.impl.NonOpExec;
 import org.efaps.eql.stmt.impl.NonOpInsert;
+import org.efaps.eql.stmt.impl.NonOpNestedQuery;
 import org.efaps.eql.stmt.impl.NonOpPrint;
 import org.efaps.eql.stmt.impl.NonOpUpdate;
-import org.efaps.eql.stmt.parts.IQueryStmtPart;
+import org.efaps.eql.stmt.parts.INestedQueryStmtPart;
+import org.efaps.eql.stmt.parts.IQueryPart;
 import org.efaps.eql.validation.EQLJavaValidator;
 
 import com.google.inject.Inject;
@@ -69,12 +72,15 @@ import com.google.inject.Inject;
 public class EQLInvoker
 {
 
+    /** The parser. */
     @Inject
     private EQLParser parser;
 
+    /** The validator. */
     @Inject
     private EQLJavaValidator validator;
 
+    /** The syntax errors. */
     private final List<String> syntaxErrors = new ArrayList<>();
 
     /**
@@ -95,6 +101,13 @@ public class EQLInvoker
         return this.parser;
     }
 
+    /**
+     * Invoke.
+     *
+     * @param _stmt the _stmt
+     * @return the IEQL stmt
+     * @throws Exception the exception
+     */
     public IEQLStmt invoke(final String _stmt)
         throws Exception
     {
@@ -202,7 +215,7 @@ public class EQLInvoker
                 } else if (stmt.getDeletePart() != null) {
                     final DeletePart deletePart = stmt.getDeletePart();
                     final AbstractDeleteStmt delete = getDelete();
-                    if (deletePart.getOid() != null ) {
+                    if (deletePart.getOid() != null) {
                         delete.addInstance(deletePart.getOid());
                     }
                     if (deletePart.getOids() != null && !deletePart.getOids().isEmpty()) {
@@ -231,7 +244,14 @@ public class EQLInvoker
         return ret;
     }
 
-    protected void addWherePart(final IQueryStmtPart _queryPart,
+    /**
+     * Adds the where part.
+     *
+     * @param _queryPart the _query part
+     * @param _wherePart the _where part
+     * @throws Exception the exception
+     */
+    protected void addWherePart(final IQueryPart _queryPart,
                                 final WherePart _wherePart)
         throws Exception
     {
@@ -255,8 +275,13 @@ public class EQLInvoker
                             _queryPart.addWhereAttrNotEq(oneWhere.getAttribute(), oneWhere.getValue());
                             break;
                         case IN:
-                            _queryPart.addWhereAttrIn(oneWhere.getAttribute(),
+                            if (oneWhere.getNestedQueryPart() != null) {
+                                _queryPart.addWhereAttrIn(oneWhere.getAttribute(),
+                                                getNestedQuery(oneWhere.getNestedQueryPart()));
+                            } else {
+                                _queryPart.addWhereAttrIn(oneWhere.getAttribute(),
                                             oneWhere.getValues().toArray(new String[ oneWhere.getValues().size()]));
+                            }
                             break;
                         default:
                             break;
@@ -286,7 +311,33 @@ public class EQLInvoker
     }
 
     /**
+     * Gets the nested query.
+     *
+     * @param _nestedQueryPart the _nested query part
+     * @return the nested query
+     * @throws Exception the exception
+     */
+    protected INestedQueryStmtPart getNestedQuery(final NestedQueryPart _nestedQueryPart)
+        throws Exception
+    {
+        final INestedQueryStmtPart ret = getNestedQuery();
+        for (final String type : _nestedQueryPart.getTypes()) {
+            ret.addType(type);
+        }
+
+        addWherePart(ret, _nestedQueryPart.getWherePart());
+
+        if (_nestedQueryPart.getSelectPart() != null) {
+            ret.setSelect(_nestedQueryPart.getSelectPart().getSelects().get(0).getSelect());
+        }
+        return ret;
+    }
+
+    /**
+     * Validate.
+     *
      * @param _stmt stmt to be validated
+     * @return the list
      */
     public List<Diagnostic> validate(final String _stmt)
     {
@@ -296,7 +347,10 @@ public class EQLInvoker
     }
 
     /**
+     * Validate.
+     *
      * @param _stmt stmt to be validated
+     * @return the list
      */
     public List<Diagnostic> validate(final Statement _stmt)
     {
@@ -328,31 +382,65 @@ public class EQLInvoker
         return this.validator;
     }
 
+    /**
+     * Gets the prints the.
+     *
+     * @return the prints the
+     */
     protected AbstractPrintStmt getPrint()
     {
         return new NonOpPrint();
     }
 
+    /**
+     * Gets the exec.
+     *
+     * @return the exec
+     */
     protected AbstractExecStmt getExec()
     {
         return new NonOpExec();
     }
 
+    /**
+     * Gets the update.
+     *
+     * @return the update
+     */
     protected AbstractUpdateStmt getUpdate()
     {
         return new NonOpUpdate();
     }
 
+    /**
+     * Gets the delete.
+     *
+     * @return the delete
+     */
     protected AbstractDeleteStmt getDelete()
     {
         return new NonOpDelete();
     }
 
+    /**
+     * Gets the insert.
+     *
+     * @return the insert
+     */
     protected AbstractInsertStmt getInsert()
     {
         return new NonOpInsert();
     }
 
+    /**
+     * Gets the nested query.
+     *
+     * @return the nested query
+     */
+    protected INestedQueryStmtPart getNestedQuery()
+    {
+        return new NonOpNestedQuery();
+    }
 
     /**
      * Getter method for the instance variable {@link #syntaxErrors}.

@@ -14,20 +14,17 @@
  * limitations under the License.
  *
  */
+package org.efaps.eql.stmt.impl;
 
-package org.efaps.eql.stmt;
-
-import org.efaps.eql.stmt.parts.AbstractQueryStmtPart;
-
+import org.efaps.eql.stmt.parts.AbstractNestedQueryStmtPart;
 
 /**
- * TODO comment!
+ * The Class NonOpNestedQuery.
  *
  * @author The eFaps Team
  */
-public abstract class AbstractDeleteStmt
-    extends AbstractQueryStmtPart
-    implements IDeleteStmt
+public class NonOpNestedQuery
+    extends AbstractNestedQueryStmtPart
 {
 
 }

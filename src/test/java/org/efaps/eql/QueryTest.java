@@ -108,5 +108,4 @@ public class QueryTest
         Assert.assertEquals(query.getTypes().get(3), "afc188bb-96a6-40ac-a48b-cfba985474c5");
         Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input '<EOF>' expecting 'select'" });
     }
-
 }

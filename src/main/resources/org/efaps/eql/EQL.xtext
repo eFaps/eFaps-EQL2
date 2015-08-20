@@ -43,7 +43,10 @@ WherePart:
 
 OneWhere:
     (attribute=ATTRIBUTE | select=SELECTSTR) => comparison=Comparison (value=(Value | OID | STRING) | '(' values+=(Value | OID | STRING)
-    ("," values+=(Value | OID | STRING))* ')');
+    ("," values+=(Value | OID | STRING))* ')' | nestedQueryPart=NestedQueryPart );
+
+NestedQueryPart:
+    '(' 'query' ('type' types+=TYPE) (',' types+=TYPE)* (wherePart=WherePart)? (selectPart=SelectPart) ')';
 
 Value:
     KEY;

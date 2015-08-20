@@ -23,7 +23,7 @@ package org.efaps.eql.stmt;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.efaps.eql.stmt.parts.AbstractQueryPart;
+import org.efaps.eql.stmt.parts.AbstractQueryStmtPart;
 
 /**
  * TODO comment!
@@ -32,7 +32,7 @@ import org.efaps.eql.stmt.parts.AbstractQueryPart;
  * @version $Id: $
  */
 public abstract class AbstractUpdateStmt
-    extends AbstractQueryPart
+    extends AbstractQueryStmtPart
     implements IUpdateStmt
 {
 

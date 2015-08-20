@@ -15,19 +15,34 @@
  *
  */
 
-package org.efaps.eql.stmt;
-
-import org.efaps.eql.stmt.parts.AbstractQueryStmtPart;
-
+package org.efaps.eql.stmt.parts;
 
 /**
  * TODO comment!
  *
  * @author The eFaps Team
  */
-public abstract class AbstractDeleteStmt
-    extends AbstractQueryStmtPart
-    implements IDeleteStmt
+public abstract class AbstractQueryStmtPart
+    extends AbstractQueryPart
+    implements IQueryStmtPart
 {
+    /** The limit. */
+    private int limit = -1;
 
+    /**
+     * Getter method for the instance variable {@link #limit}.
+     *
+     * @return value of instance variable {@link #limit}
+     */
+    public int getLimit()
+    {
+        return this.limit;
+    }
+
+    @Override
+    public void setLimit(final String _limit)
+        throws Exception
+    {
+        this.limit = Integer.parseInt(_limit);
+    }
 }

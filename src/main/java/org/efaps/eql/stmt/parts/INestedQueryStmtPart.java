@@ -14,20 +14,22 @@
  * limitations under the License.
  *
  */
-
-package org.efaps.eql.stmt;
-
-import org.efaps.eql.stmt.parts.AbstractQueryStmtPart;
-
+package org.efaps.eql.stmt.parts;
 
 /**
- * TODO comment!
+ * The Interface ISubQueryStmtPart.
  *
  * @author The eFaps Team
  */
-public abstract class AbstractDeleteStmt
-    extends AbstractQueryStmtPart
-    implements IDeleteStmt
+public interface INestedQueryStmtPart
+    extends IQueryPart
 {
-
+    /**
+     * Sets the select.
+     *
+     * @param _select Select to be added to the Statement
+     * @throws Exception on error
+     */
+    void setSelect(final String _select)
+        throws Exception;
 }

@@ -14,25 +14,40 @@
  * limitations under the License.
  *
  */
-
 package org.efaps.eql.stmt.parts;
 
-
 /**
- * TODO comment!
+ * The Class AbstractNestedQueryStmtPart.
  *
  * @author The eFaps Team
  */
-public interface IQueryStmtPart
-    extends IQueryPart
+public abstract class AbstractNestedQueryStmtPart
+    extends AbstractQueryPart
+    implements INestedQueryStmtPart
 {
-    /**
-     * Sets the limit.
-     *
-     * @param _limit Limit to be added to the Statement
-     * @throws Exception the exception
-     */
-    void setLimit(final String _limit)
-        throws Exception;
 
+    /** The select. */
+    private String select;
+
+    /**
+     * Gets the select.
+     *
+     * @return the select
+     */
+    public String getSelect()
+    {
+        return this.select;
+    }
+
+    /**
+     * @param _select Select to be added to the Statement
+     * @param _alias alias for the related select
+     * @throws Exception on error
+     */
+    @Override
+    public void setSelect(final String _select)
+        throws Exception
+    {
+        this.setSelect(_select);
+    }
 }

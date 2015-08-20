@@ -14,7 +14,6 @@
  * limitations under the License.
  *
  */
-
 package org.efaps.eql.stmt.parts;
 
 import java.util.ArrayList;
@@ -24,13 +23,13 @@ import java.util.List;
 import org.efaps.eql.eQL.Comparison;
 
 /**
- * TODO comment!
+ * The Class AbstractQueryPart.
  *
  * @author The eFaps Team
  */
-public class AbstractQueryPart
+public abstract class AbstractQueryPart
     extends AbstractObjectPart
-    implements IQueryStmtPart
+    implements IQueryPart
 {
 
     /**
@@ -38,26 +37,8 @@ public class AbstractQueryPart
      */
     private final List<String> types = new ArrayList<>();
 
+    /** The wheres. */
     private final List<Where> wheres = new ArrayList<>();
-
-    private int limit = -1;
-
-    /**
-     * Getter method for the instance variable {@link #limit}.
-     *
-     * @return value of instance variable {@link #limit}
-     */
-    public int getLimit()
-    {
-        return this.limit;
-    }
-
-    @Override
-    public void setLimit(final String _limit)
-        throws Exception
-    {
-        this.limit = Integer.parseInt(_limit);
-    }
 
     @Override
     public void addType(final String _type)
@@ -115,6 +96,15 @@ public class AbstractQueryPart
     }
 
     @Override
+    public void addWhereAttrIn(final String _attr,
+                               final INestedQueryStmtPart _subQueryStmtPart)
+        throws Exception
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
     public void addWhereSelectEq(final String _select,
                                  final String _value)
         throws Exception
@@ -169,11 +159,16 @@ public class AbstractQueryPart
     public static class Where
     {
 
+        /** The attribute. */
         private String attribute;
+
+        /** The select. */
         private String select;
 
+        /** The values. */
         private final List<String> values = new ArrayList<>();;
 
+        /** The comparison. */
         private Comparison comparison;
 
         /**
@@ -190,6 +185,7 @@ public class AbstractQueryPart
          * Setter method for instance variable {@link #attribute}.
          *
          * @param _attribute value for instance variable {@link #attribute}
+         * @return the where
          */
         public Where setAttribute(final String _attribute)
         {
@@ -211,6 +207,7 @@ public class AbstractQueryPart
          * Setter method for instance variable {@link #value}.
          *
          * @param _value value for instance variable {@link #value}
+         * @return the where
          */
         public Where addValue(final String... _value)
         {
@@ -232,6 +229,7 @@ public class AbstractQueryPart
          * Setter method for instance variable {@link #comparison}.
          *
          * @param _comparison value for instance variable {@link #comparison}
+         * @return the where
          */
         public Where setComparison(final Comparison _comparison)
         {
@@ -253,6 +251,7 @@ public class AbstractQueryPart
          * Setter method for instance variable {@link #select}.
          *
          * @param _select value for instance variable {@link #select}
+         * @return the where
          */
         public Where setSelect(final String _select)
         {

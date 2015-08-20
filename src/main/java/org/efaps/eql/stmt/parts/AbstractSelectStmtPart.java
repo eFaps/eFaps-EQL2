@@ -26,7 +26,7 @@ import java.util.Map;
  * @author The eFaps Team
  */
 public abstract class AbstractSelectStmtPart
-    extends AbstractQueryPart
+    extends AbstractQueryStmtPart
     implements ISelectStmtPart
 {
 
