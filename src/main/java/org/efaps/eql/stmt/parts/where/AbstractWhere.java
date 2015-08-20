@@ -14,40 +14,41 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.stmt.parts;
+package org.efaps.eql.stmt.parts.where;
+
+import org.efaps.eql.eQL.Comparison;
+
 
 /**
- * The Class AbstractNestedQueryStmtPart.
+ * The Class AbstractWhere.
  *
  * @author The eFaps Team
  */
-public abstract class AbstractNestedQueryStmtPart
-    extends AbstractQueryPart
-    implements INestedQueryStmtPart
+public abstract class AbstractWhere
 {
 
-    /** The select. */
-    private String select = "attribute[ID]";
+    /** The comparison. */
+    private Comparison comparison;
 
     /**
-     * Gets the select.
+     * Getter method for the instance variable {@link #comparison}.
      *
-     * @return the select
+     * @return value of instance variable {@link #comparison}
      */
-    public String getSelect()
+    public Comparison getComparison()
     {
-        return this.select;
+        return this.comparison;
     }
 
     /**
-     * @param _select Select to be added to the Statement
-     * @param _alias alias for the related select
-     * @throws Exception on error
+     * Setter method for instance variable {@link #comparison}.
+     *
+     * @param _comparison value for instance variable {@link #comparison}
+     * @return the where
      */
-    @Override
-    public void setSelect(final String _select)
-        throws Exception
+    public AbstractWhere setComparison(final Comparison _comparison)
     {
-        this.select = _select;
+        this.comparison = _comparison;
+        return this;
     }
 }

@@ -14,25 +14,24 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.stmt.parts;
+package org.efaps.eql.stmt.parts.where;
 
 /**
- * The Class AbstractNestedQueryStmtPart.
+ * The Class QueryWhere.
  *
  * @author The eFaps Team
  */
-public abstract class AbstractNestedQueryStmtPart
-    extends AbstractQueryPart
-    implements INestedQueryStmtPart
+public class SelectQueryWhere
+    extends AbstractQueryWhere
 {
 
     /** The select. */
     private String select = "attribute[ID]";
 
     /**
-     * Gets the select.
+     * Getter method for the instance variable {@link #select}.
      *
-     * @return the select
+     * @return value of instance variable {@link #select}
      */
     public String getSelect()
     {
@@ -40,14 +39,14 @@ public abstract class AbstractNestedQueryStmtPart
     }
 
     /**
-     * @param _select Select to be added to the Statement
-     * @param _alias alias for the related select
-     * @throws Exception on error
+     * Setter method for instance variable {@link #select}.
+     *
+     * @param _select value for instance variable {@link #select}
+     * @return the where
      */
-    @Override
-    public void setSelect(final String _select)
-        throws Exception
+    public SelectQueryWhere setSelect(final String _select)
     {
         this.select = _select;
+        return this;
     }
 }

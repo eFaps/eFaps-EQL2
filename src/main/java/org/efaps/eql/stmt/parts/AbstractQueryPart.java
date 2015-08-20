@@ -17,10 +17,14 @@
 package org.efaps.eql.stmt.parts;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.efaps.eql.eQL.Comparison;
+import org.efaps.eql.stmt.parts.where.AbstractWhere;
+import org.efaps.eql.stmt.parts.where.AttrQueryWhere;
+import org.efaps.eql.stmt.parts.where.AttributeWhere;
+import org.efaps.eql.stmt.parts.where.SelectQueryWhere;
+import org.efaps.eql.stmt.parts.where.SelectWhere;
 
 /**
  * The Class AbstractQueryPart.
@@ -38,7 +42,7 @@ public abstract class AbstractQueryPart
     private final List<String> types = new ArrayList<>();
 
     /** The wheres. */
-    private final List<Where> wheres = new ArrayList<>();
+    private final List<AbstractWhere> wheres = new ArrayList<>();
 
     @Override
     public void addType(final String _type)
@@ -52,7 +56,7 @@ public abstract class AbstractQueryPart
                                final String _value)
         throws Exception
     {
-        this.wheres.add(new Where().setAttribute(_attr).addValue(_value).setComparison(Comparison.EQUAL));
+        this.wheres.add(new AttributeWhere().setAttribute(_attr).addValue(_value).setComparison(Comparison.EQUAL));
     }
 
     @Override
@@ -60,7 +64,7 @@ public abstract class AbstractQueryPart
                                   final String _value)
         throws Exception
     {
-        this.wheres.add(new Where().setAttribute(_attr).addValue(_value).setComparison(Comparison.UNEQUAL));
+        this.wheres.add(new AttributeWhere().setAttribute(_attr).addValue(_value).setComparison(Comparison.UNEQUAL));
     }
 
     @Override
@@ -68,7 +72,7 @@ public abstract class AbstractQueryPart
                                     final String _value)
         throws Exception
     {
-        this.wheres.add(new Where().setAttribute(_attr).addValue(_value).setComparison(Comparison.GREATER));
+        this.wheres.add(new AttributeWhere().setAttribute(_attr).addValue(_value).setComparison(Comparison.GREATER));
     }
 
     @Override
@@ -76,7 +80,7 @@ public abstract class AbstractQueryPart
                                  final String _value)
         throws Exception
     {
-        this.wheres.add(new Where().setAttribute(_attr).addValue(_value).setComparison(Comparison.LESS));
+        this.wheres.add(new AttributeWhere().setAttribute(_attr).addValue(_value).setComparison(Comparison.LESS));
     }
 
     @Override
@@ -84,7 +88,7 @@ public abstract class AbstractQueryPart
                                  final String _value)
         throws Exception
     {
-        this.wheres.add(new Where().setAttribute(_attr).addValue(_value).setComparison(Comparison.LIKE));
+        this.wheres.add(new AttributeWhere().setAttribute(_attr).addValue(_value).setComparison(Comparison.LIKE));
     }
 
     @Override
@@ -92,16 +96,33 @@ public abstract class AbstractQueryPart
                                final String... _values)
         throws Exception
     {
-        this.wheres.add(new Where().setAttribute(_attr).addValue(_values).setComparison(Comparison.IN));
+        this.wheres.add(new AttributeWhere().setAttribute(_attr).addValue(_values).setComparison(Comparison.IN));
+    }
+
+    @Override
+    public void addWhereAttrNotIn(final String _attr,
+                                  final String... _values)
+        throws Exception
+    {
+        this.wheres.add(new AttributeWhere().setAttribute(_attr).addValue(_values).setComparison(Comparison.NOTIN));
     }
 
     @Override
     public void addWhereAttrIn(final String _attr,
-                               final INestedQueryStmtPart _subQueryStmtPart)
+                               final INestedQueryStmtPart _nestedQueryStmtPart)
         throws Exception
     {
-        // TODO Auto-generated method stub
+        this.wheres.add(new AttrQueryWhere().setAttribute(_attr).setQuery(_nestedQueryStmtPart)
+                        .setComparison(Comparison.IN));
+    }
 
+    @Override
+    public void addWhereAttrNotIn(final String _attr,
+                                  final INestedQueryStmtPart _nestedQueryStmtPart)
+        throws Exception
+    {
+        this.wheres.add(new AttrQueryWhere().setAttribute(_attr).setQuery(_nestedQueryStmtPart)
+                        .setComparison(Comparison.NOTIN));
     }
 
     @Override
@@ -109,7 +130,7 @@ public abstract class AbstractQueryPart
                                  final String _value)
         throws Exception
     {
-        this.wheres.add(new Where().setSelect(_select).addValue(_value).setComparison(Comparison.EQUAL));
+        this.wheres.add(new SelectWhere().setSelect(_select).addValue(_value).setComparison(Comparison.EQUAL));
     }
 
     @Override
@@ -117,7 +138,7 @@ public abstract class AbstractQueryPart
                                    final String _value)
         throws Exception
     {
-        this.wheres.add(new Where().setSelect(_select).addValue(_value).setComparison(Comparison.LIKE));
+        this.wheres.add(new SelectWhere().setSelect(_select).addValue(_value).setComparison(Comparison.LIKE));
     }
 
     @Override
@@ -125,7 +146,7 @@ public abstract class AbstractQueryPart
                                       final String _value)
         throws Exception
     {
-        this.wheres.add(new Where().setSelect(_select).addValue(_value).setComparison(Comparison.GREATER));
+        this.wheres.add(new SelectWhere().setSelect(_select).addValue(_value).setComparison(Comparison.GREATER));
     }
 
     @Override
@@ -133,7 +154,7 @@ public abstract class AbstractQueryPart
                                    final String _value)
         throws Exception
     {
-        this.wheres.add(new Where().setSelect(_select).addValue(_value).setComparison(Comparison.LESS));
+        this.wheres.add(new SelectWhere().setSelect(_select).addValue(_value).setComparison(Comparison.LESS));
     }
 
     /**
@@ -151,112 +172,42 @@ public abstract class AbstractQueryPart
      *
      * @return value of instance variable {@link #wheres}
      */
-    public List<Where> getWheres()
+    public List<AbstractWhere> getWheres()
     {
         return this.wheres;
     }
 
-    public static class Where
+    @Override
+    public void addWhereSelectIn(final String _select,
+                                 final INestedQueryStmtPart _nestedQueryStmtPart)
+        throws Exception
     {
+        this.wheres.add(new SelectQueryWhere().setSelect(_select).setQuery(_nestedQueryStmtPart)
+                        .setComparison(Comparison.IN));
+    }
 
-        /** The attribute. */
-        private String attribute;
+    @Override
+    public void addWhereSelectNotIn(final String _select,
+                                    final INestedQueryStmtPart _nestedQueryStmtPart)
+        throws Exception
+    {
+        this.wheres.add(new SelectQueryWhere().setSelect(_select).setQuery(_nestedQueryStmtPart)
+                        .setComparison(Comparison.NOTIN));
+    }
 
-        /** The select. */
-        private String select;
+    @Override
+    public void addWhereSelectIn(final String _select,
+                                 final String... _values)
+        throws Exception
+    {
+        this.wheres.add(new SelectWhere().setSelect(_select).addValue(_values).setComparison(Comparison.IN));
+    }
 
-        /** The values. */
-        private final List<String> values = new ArrayList<>();;
-
-        /** The comparison. */
-        private Comparison comparison;
-
-        /**
-         * Getter method for the instance variable {@link #attribute}.
-         *
-         * @return value of instance variable {@link #attribute}
-         */
-        public String getAttribute()
-        {
-            return this.attribute;
-        }
-
-        /**
-         * Setter method for instance variable {@link #attribute}.
-         *
-         * @param _attribute value for instance variable {@link #attribute}
-         * @return the where
-         */
-        public Where setAttribute(final String _attribute)
-        {
-            this.attribute = _attribute;
-            return this;
-        }
-
-        /**
-         * Getter method for the instance variable {@link #value}.
-         *
-         * @return value of instance variable {@link #value}
-         */
-        public List<String> getValues()
-        {
-            return this.values;
-        }
-
-        /**
-         * Setter method for instance variable {@link #value}.
-         *
-         * @param _value value for instance variable {@link #value}
-         * @return the where
-         */
-        public Where addValue(final String... _value)
-        {
-            this.values.addAll(Arrays.asList(_value));
-            return this;
-        }
-
-        /**
-         * Getter method for the instance variable {@link #comparison}.
-         *
-         * @return value of instance variable {@link #comparison}
-         */
-        public Comparison getComparison()
-        {
-            return this.comparison;
-        }
-
-        /**
-         * Setter method for instance variable {@link #comparison}.
-         *
-         * @param _comparison value for instance variable {@link #comparison}
-         * @return the where
-         */
-        public Where setComparison(final Comparison _comparison)
-        {
-            this.comparison = _comparison;
-            return this;
-        }
-
-        /**
-         * Getter method for the instance variable {@link #select}.
-         *
-         * @return value of instance variable {@link #select}
-         */
-        public String getSelect()
-        {
-            return this.select;
-        }
-
-        /**
-         * Setter method for instance variable {@link #select}.
-         *
-         * @param _select value for instance variable {@link #select}
-         * @return the where
-         */
-        public Where setSelect(final String _select)
-        {
-            this.select = _select;
-            return this;
-        }
+    @Override
+    public void addWhereSelectNotIn(final String _select,
+                                    final String... _values)
+        throws Exception
+    {
+        this.wheres.add(new SelectWhere().setSelect(_select).addValue(_values).setComparison(Comparison.NOTIN));
     }
 }

@@ -283,6 +283,15 @@ public class EQLInvoker
                                             oneWhere.getValues().toArray(new String[ oneWhere.getValues().size()]));
                             }
                             break;
+                        case NOTIN:
+                            if (oneWhere.getNestedQueryPart() != null) {
+                                _queryPart.addWhereAttrNotIn(oneWhere.getAttribute(),
+                                                getNestedQuery(oneWhere.getNestedQueryPart()));
+                            } else {
+                                _queryPart.addWhereAttrNotIn(oneWhere.getAttribute(),
+                                            oneWhere.getValues().toArray(new String[ oneWhere.getValues().size()]));
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -300,8 +309,25 @@ public class EQLInvoker
                         case LIKE:
                             _queryPart.addWhereSelectLike(oneWhere.getSelect(), oneWhere.getValue());
                             break;
-                        case UNEQUAL:
                         case IN:
+                            if (oneWhere.getNestedQueryPart() != null) {
+                                _queryPart.addWhereSelectIn(oneWhere.getSelect(),
+                                                getNestedQuery(oneWhere.getNestedQueryPart()));
+                            } else {
+                                _queryPart.addWhereSelectIn(oneWhere.getSelect(),
+                                            oneWhere.getValues().toArray(new String[ oneWhere.getValues().size()]));
+                            }
+                            break;
+                        case NOTIN:
+                            if (oneWhere.getNestedQueryPart() != null) {
+                                _queryPart.addWhereSelectNotIn(oneWhere.getSelect(),
+                                                getNestedQuery(oneWhere.getNestedQueryPart()));
+                            } else {
+                                _queryPart.addWhereSelectNotIn(oneWhere.getSelect(),
+                                            oneWhere.getValues().toArray(new String[ oneWhere.getValues().size()]));
+                            }
+                            break;
+                        case UNEQUAL:
                         default:
                             break;
                     }

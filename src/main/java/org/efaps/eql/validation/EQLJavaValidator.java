@@ -51,20 +51,32 @@ public class EQLJavaValidator
      */
     private static final Logger LOG = LoggerFactory.getLogger(EQLJavaValidator.class);
 
-
+    /** The diagnostic clazz. */
     private Class<? extends EFapsDiagnostic> diagnosticClazz = EFapsDiagnostic.class;
 
+    /** The validations. */
     private final Map<String, Collection<IValidation>> validations = new HashMap<>();
 
+    /**
+     * In must not be empty.
+     *
+     * @param _oneWhere the _one where
+     */
     @Check
     public void inMustNotBeEmpty(final OneWhere _oneWhere)
     {
-        if (Comparison.IN.equals(_oneWhere.getComparison()) && _oneWhere.getValues().isEmpty()) {
+        if (Comparison.IN.equals(_oneWhere.getComparison()) && _oneWhere.getValues().isEmpty()
+                        && _oneWhere.getNestedQueryPart() == null) {
             error("In must not be empty", EQLPackage.Literals.ONE_WHERE__VALUES, "E001", _oneWhere.getAttribute(),
                             _oneWhere.getSelect());
         }
     }
 
+    /**
+     * Type.
+     *
+     * @param _queryPart the _query part
+     */
     @Check
     public void type(final QueryPart _queryPart)
     {
@@ -105,7 +117,7 @@ public class EQLJavaValidator
             final Constructor<? extends EFapsDiagnostic> constructor = getDiagnosticClazz().getConstructor(
                             Severity.class, String.class, String.class, String[].class);
             ret = constructor.newInstance(_severity, _message, _code, _issueData);
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+        } catch (final NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                         | IllegalArgumentException | InvocationTargetException e) {
             LOG.error("Catched error", e);
         }
@@ -146,7 +158,8 @@ public class EQLJavaValidator
     /**
      * Getter method for the instance variable {@link #validators}.
      *
-     * @return value of instance variable {@link #validators}
+     * @param _key the _key
+     * @param _validate the _validate
      */
     public void addValidation(final String _key,
                               final IValidation _validate)

@@ -102,11 +102,33 @@ public interface IQueryPart
     /**
      * Adds the where attr in.
      *
+     * @param _attr Name of the Attribute
+     * @param _values list of values
+     * @throws Exception the exception
+     */
+    void addWhereAttrNotIn(final String _attr,
+                        final String... _values)
+        throws Exception;
+
+    /**
+     * Adds the where attr in.
+     *
      * @param _attr the _attr
      * @param _nestedQueryStmtPart the _nested query stmt part
      * @throws Exception the exception
      */
     void addWhereAttrIn(final String _attr,
+                        final INestedQueryStmtPart _nestedQueryStmtPart)
+        throws Exception;
+
+    /**
+     * Adds the where attr in.
+     *
+     * @param _attr the _attr
+     * @param _nestedQueryStmtPart the _nested query stmt part
+     * @throws Exception the exception
+     */
+    void addWhereAttrNotIn(final String _attr,
                         final INestedQueryStmtPart _nestedQueryStmtPart)
         throws Exception;
 
@@ -152,5 +174,49 @@ public interface IQueryPart
      */
     void addWhereSelectLess(final String _select,
                             final String _value)
+        throws Exception;
+
+    /**
+     * Adds the where attr in.
+     *
+     * @param the _select
+     * @param _nestedQueryStmtPart the _nested query stmt part
+     * @throws Exception the exception
+     */
+    void addWhereSelectIn(final String _select,
+                          final INestedQueryStmtPart _nestedQueryStmtPart)
+        throws Exception;
+
+    /**
+     * Adds the where attr in.
+     *
+     * @param the _select
+     * @param _nestedQueryStmtPart the _nested query stmt part
+     * @throws Exception the exception
+     */
+    void addWhereSelectNotIn(final String _select,
+                          final INestedQueryStmtPart _nestedQueryStmtPart)
+        throws Exception;
+
+    /**
+     * Adds the where attr in.
+     *
+     * @param _select the _select
+     * @param _values list of values
+     * @throws Exception the exception
+     */
+    void addWhereSelectIn(final String _select,
+                          final String... _values)
+        throws Exception;
+
+    /**
+     * Adds the where attr in.
+     *
+     * @param _select the _select
+     * @param _values list of values
+     * @throws Exception the exception
+     */
+    void addWhereSelectNotIn(final String _select,
+                             final String... _values)
         throws Exception;
 }

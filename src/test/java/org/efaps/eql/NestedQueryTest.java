@@ -23,4 +23,33 @@ public class NestedQueryTest
         Assert.assertEquals(subQuery.getTypes().get(0), "Sales_Invoice");
         Assert.assertEquals(subQuery.getSelectPart().getSelects().get(0).getSelect(), "attribute[ID]");
     }
+
+
+    @Test(description = "print query type Sales_Invoice select one Attribute")
+    public void subQueryWithWhere()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_InvoicePosition where Invoice in "
+                        + "( query type Sales_Invoice where attribute[ID] == 15 select attribute[ID] )");
+        final EList<OneWhere> wheres = stmt.getQueryPart().getWherePart().getWheres();
+        final NestedQueryPart subQuery = wheres.get(0).getNestedQueryPart();
+
+        Assert.assertEquals(subQuery.getTypes().get(0), "Sales_Invoice");
+        Assert.assertEquals(subQuery.getSelectPart().getSelects().get(0).getSelect(), "attribute[ID]");
+    }
+
+    @Test(description = "print query type Sales_Invoice select one Attribute")
+    public void subQueryWithoutSelect()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_InvoicePosition where Invoice in "
+                        + "( query type Sales_Invoice )");
+        final EList<OneWhere> wheres = stmt.getQueryPart().getWherePart().getWheres();
+        final NestedQueryPart subQuery = wheres.get(0).getNestedQueryPart();
+
+        Assert.assertEquals(subQuery.getTypes().get(0), "Sales_Invoice");
+        Assert.assertTrue(subQuery.getSelectPart() == null);
+    }
+
+
 }

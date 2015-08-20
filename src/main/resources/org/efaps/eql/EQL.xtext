@@ -46,7 +46,7 @@ OneWhere:
     ("," values+=(Value | OID | STRING))* ')' | nestedQueryPart=NestedQueryPart );
 
 NestedQueryPart:
-    '(' 'query' ('type' types+=TYPE) (',' types+=TYPE)* (wherePart=WherePart)? (selectPart=SelectPart) ')';
+    '(' 'query' ('type' types+=TYPE) (',' types+=TYPE)* (wherePart=WherePart)? (selectPart=SelectPart)? ')';
 
 Value:
     KEY;
@@ -55,7 +55,7 @@ OID:
     KEY+ "."+ KEY;
 
 enum Comparison:
-    EQUAL='==' | EQUAL='eq' | LESS='<' | GREATER='>' | UNEQUAL='!=' | LIKE='like' | IN='in';
+    EQUAL='==' | EQUAL='eq' | LESS='<' | GREATER='>' | UNEQUAL='!=' | LIKE='like' | IN='in' | NOTIN='not in';
 
 SelectPart:
     'select' selects+=OneSelect (',' selects+=OneSelect)*;
