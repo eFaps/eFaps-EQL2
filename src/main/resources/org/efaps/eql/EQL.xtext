@@ -61,7 +61,10 @@ SelectPart:
     'select' selects+=OneSelect (',' selects+=OneSelect)*;
 
 OneSelect:
-    select=SELECTSTR (=> 'as' alias=ALIAS)?;
+    (select=SELECTSTR | execSelect=OneExecSelect) (=> 'as' alias=ALIAS)?;
+
+OneExecSelect:
+    ('exec' | 'execute') className=CLASSNAME (parameters+=(KEY | STRING) (',' parameters+=(KEY | STRING))*)?;
 
 OrderPart:
     'order by' oneOrder+=OneOrder (',' oneOrder+=OneOrder)*;

@@ -39,7 +39,7 @@ public class InvokeTest
         throws Exception
     {
         final PrintStmt printStmt = (PrintStmt) getInvoker().invoke("print 12312.2342");
-        Assert.assertEquals(printStmt.getInstances().toArray(), new String[] { "12312.2342" } );
+        Assert.assertEquals(printStmt.getInstances().toArray(), new String[] { "12312.2342" });
     }
 
     @Test
@@ -47,18 +47,19 @@ public class InvokeTest
         throws Exception
     {
         final PrintStmt printStmt = (PrintStmt) getInvoker().invoke("print 12312.2342 select attribute[Name] as name");
-        Assert.assertEquals(printStmt.getInstances().toArray(), new String[] { "12312.2342" } );
+        Assert.assertEquals(printStmt.getInstances().toArray(), new String[] { "12312.2342" });
         Assert.assertEquals(printStmt.getAlias2Selects().keySet().toArray(), new String[] { "name" });
-        Assert.assertEquals(printStmt.getAlias2Selects().values().toArray(), new String[] { "attribute[Name]" });
+        Assert.assertEquals(printStmt.getAlias2Selects().values().iterator().next().getSelect(), "attribute[Name]");
     }
 
     @Test
     public void queryWithSelect()
         throws Exception
     {
-        final PrintStmt queryStmt = (PrintStmt) getInvoker().invoke("query type Sales_Invoice select attribute[Name] as name");
+        final PrintStmt queryStmt = (PrintStmt) getInvoker().invoke(
+                        "query type Sales_Invoice select attribute[Name] as name");
         Assert.assertEquals(queryStmt.getAlias2Selects().keySet().toArray(), new String[] { "name" });
-        Assert.assertEquals(queryStmt.getAlias2Selects().values().toArray(), new String[] { "attribute[Name]" });
+        Assert.assertEquals(queryStmt.getAlias2Selects().values().iterator().next().getSelect(), "attribute[Name]" );
         Assert.assertEquals(queryStmt.getTypes().toArray(), new String[] { "Sales_Invoice" });
     }
 
@@ -66,9 +67,10 @@ public class InvokeTest
     public void queryWithWhereAndSelect()
         throws Exception
     {
-        final PrintStmt queryStmt = (PrintStmt) getInvoker().invoke("query type Sales_Invoice select attribute[Name] as name");
+        final PrintStmt queryStmt = (PrintStmt) getInvoker().invoke(
+                        "query type Sales_Invoice select attribute[Name] as name");
         Assert.assertEquals(queryStmt.getAlias2Selects().keySet().toArray(), new String[] { "name" });
-        Assert.assertEquals(queryStmt.getAlias2Selects().values().toArray(), new String[] { "attribute[Name]" });
+        Assert.assertEquals(queryStmt.getAlias2Selects().values().iterator().next().getSelect(), "attribute[Name]" );
         Assert.assertEquals(queryStmt.getTypes().toArray(), new String[] { "Sales_Invoice" });
     }
 }

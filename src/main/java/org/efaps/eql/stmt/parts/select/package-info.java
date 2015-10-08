@@ -13,33 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Revision:        $Rev$
- * Last Changed:    $Date$
- * Last Changed By: $Author$
  */
-
-package org.efaps.eql.stmt.impl;
-
-import java.util.List;
-import java.util.Map;
-
-import org.efaps.eql.stmt.AbstractExecStmt;
 
 /**
- * TODO comment!
+ * Select parts.
  *
  * @author The eFaps Team
- * @version $Id: $
  */
-public class NonOpExec
-    extends AbstractExecStmt
-{
-    @Override
-    public List<Map<String, Object>> getData()
-        throws Exception
-    {
-        // Non operational implementation
-        return null;
-    }
-
-}
+package org.efaps.eql.stmt.parts.select;

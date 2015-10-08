@@ -13,33 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Revision:        $Rev$
- * Last Changed:    $Date$
- * Last Changed By: $Author$
  */
-
-package org.efaps.eql.stmt.impl;
-
-import java.util.List;
-import java.util.Map;
-
-import org.efaps.eql.stmt.AbstractExecStmt;
+package org.efaps.eql.stmt.parts.select;
 
 /**
- * TODO comment!
+ * The Class SimpleSelect.
  *
  * @author The eFaps Team
- * @version $Id: $
  */
-public class NonOpExec
-    extends AbstractExecStmt
+public class SimpleSelect
+    extends AbstractSelect
 {
-    @Override
-    public List<Map<String, Object>> getData()
-        throws Exception
+    /**
+     * Instantiates a new simple select.
+     *
+     * @param _select the _select
+     */
+    public SimpleSelect(final String _select)
     {
-        // Non operational implementation
-        return null;
+       super(_select);
     }
-
 }

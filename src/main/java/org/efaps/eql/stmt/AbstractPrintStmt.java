@@ -20,7 +20,10 @@
 
 package org.efaps.eql.stmt;
 
+import java.util.List;
+
 import org.efaps.eql.stmt.parts.AbstractSelectStmtPart;
+import org.efaps.eql.stmt.parts.select.ExecSelect;
 
 
 /**
@@ -33,5 +36,18 @@ public abstract class AbstractPrintStmt
     extends AbstractSelectStmtPart
     implements IPrintStmt
 {
-
+    @Override
+    public void addSelect(final String _className,
+                          final List<String> _parameters,
+                          final String _alias)
+        throws Exception
+    {
+        String alias;
+        if (_alias == null) {
+            alias = Integer.valueOf(getAlias2Selects().size() + 1).toString();
+        } else {
+            alias = _alias;
+        }
+        getAlias2Selects().put(alias, new ExecSelect(_className, _parameters));
+    }
 }

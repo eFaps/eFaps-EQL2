@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.efaps.eql.stmt.IEQLStmt;
+import org.efaps.eql.stmt.parts.select.AbstractSelect;
 
 /**
  * TODO comment!
@@ -30,7 +31,6 @@ import org.efaps.eql.stmt.IEQLStmt;
 public interface ISelectStmtPart
     extends IEQLStmt
 {
-
     /**
      * @param _select Select to be added to the Statement
      * @param _alias alias for the related select
@@ -41,12 +41,22 @@ public interface ISelectStmtPart
         throws Exception;
 
     /**
+     * @param _select Select to be added to the Statement
+     * @param _alias alias for the related select
+     * @throws Exception on error
+     */
+    void addSelect(final String _className,
+                   final List<String> _parameters,
+                   final String _alias)
+        throws Exception;
+
+    /**
      * Get the Mapping between alias and selects.
      *
      * @return mapping
      * @throws Exception on error
      */
-    Map<String, String> getAlias2Selects()
+    Map<String, AbstractSelect> getAlias2Selects()
         throws Exception;
 
     /**

@@ -20,6 +20,9 @@ package org.efaps.eql.stmt.parts;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.efaps.eql.stmt.parts.select.AbstractSelect;
+import org.efaps.eql.stmt.parts.select.SimpleSelect;
+
 /**
  * TODO comment!
  *
@@ -30,8 +33,10 @@ public abstract class AbstractSelectStmtPart
     implements ISelectStmtPart
 {
 
-    private final Map<String, String> alias2Selects = new LinkedHashMap<>();
+    /** The alias2 selects. */
+    private final Map<String, AbstractSelect> alias2Selects = new LinkedHashMap<>();
 
+    /** The sort key2desc. */
     private final Map<String, Boolean> sortKey2desc = new LinkedHashMap<>();
 
     @Override
@@ -45,11 +50,11 @@ public abstract class AbstractSelectStmtPart
         } else {
             alias = _alias;
         }
-        getAlias2Selects().put(alias, _select);
+        getAlias2Selects().put(alias, new SimpleSelect(_select));
     }
 
     @Override
-    public Map<String, String> getAlias2Selects()
+    public Map<String, AbstractSelect> getAlias2Selects()
         throws Exception
     {
         return this.alias2Selects;
@@ -65,7 +70,7 @@ public abstract class AbstractSelectStmtPart
     @Override
     public void addOrder(final String _key,
                          final Boolean _desc)
-        throws Exception
+                             throws Exception
     {
         getSortKey2desc().put(_key, _desc);
     }

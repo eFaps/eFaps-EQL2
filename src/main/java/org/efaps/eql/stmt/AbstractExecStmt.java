@@ -36,8 +36,10 @@ public abstract class AbstractExecStmt
     implements IExecStmt
 {
 
+    /** The esjp name. */
     private String esjpName;
 
+    /** The parameters. */
     private final List<String> parameters = new ArrayList<>();
 
     /**
@@ -68,7 +70,6 @@ public abstract class AbstractExecStmt
         this.parameters.add(_parameter);
     }
 
-
     /**
      * Getter method for the instance variable {@link #parameters}.
      *
@@ -77,5 +78,14 @@ public abstract class AbstractExecStmt
     public List<String> getParameters()
     {
         return this.parameters;
+    }
+
+    @Override
+    public void addSelect(final String _className,
+                          final List<String> _parameters,
+                          final String _alias)
+        throws Exception
+    {
+        // is not possible
     }
 }

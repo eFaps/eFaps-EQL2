@@ -13,33 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Revision:        $Rev$
- * Last Changed:    $Date$
- * Last Changed By: $Author$
  */
+package org.efaps.eql.stmt.parts.select;
 
-package org.efaps.eql.stmt.impl;
-
-import java.util.List;
-import java.util.Map;
-
-import org.efaps.eql.stmt.AbstractExecStmt;
 
 /**
- * TODO comment!
+ * The Class AbstractSelect.
  *
  * @author The eFaps Team
- * @version $Id: $
  */
-public class NonOpExec
-    extends AbstractExecStmt
+public abstract class AbstractSelect
 {
-    @Override
-    public List<Map<String, Object>> getData()
-        throws Exception
+    /** The select. */
+    private final String select;
+
+    /**
+     * Instantiates a new abstract select.
+     *
+     * @param _select the _select
+     */
+    public AbstractSelect(final String _select)
     {
-        // Non operational implementation
-        return null;
+        this.select = _select;
     }
 
+    /**
+     * Gets the select.
+     *
+     * @return the select
+     */
+    public String getSelect()
+    {
+        return this.select;
+    }
 }

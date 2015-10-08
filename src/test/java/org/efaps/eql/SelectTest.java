@@ -169,4 +169,128 @@ public class SelectTest
         Assert.assertEquals(getSyntaxErrors().toArray(), new String[] { "mismatched input 'type' expecting RULE_ALIAS" });
     }
 
+    /**
+     * Exec Select.
+     *
+     * @throws Exception the exception
+     */
+    @Test(description = "exec select")
+    public void execSelect1()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice select attribute[Name] as name, exec org.efaps.Demo as Two");
+
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+
+        for (final OneSelect part : select.getSelects()) {
+            if (part.getSelect() != null) {
+                selects.add(part.getSelect());
+            } else if (part.getExecSelect() != null) {
+                selects.add(part.getExecSelect().getClassName());
+            }
+            alias.add(part.getAlias());
+        }
+        Assert.assertEquals(selects.toArray(), new String[] { "attribute[Name]", "org.efaps.Demo" });
+        Assert.assertEquals(alias.toArray(), new String[] { "name", "Two" });
+
+    }
+
+    @Test(description = "exec select")
+    public void execSelect2()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice select attribute[Name] as name, exec org.efaps.Demo as Two, exec org.efaps.esjp.Versuch as Three");
+
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+
+        for (final OneSelect part : select.getSelects()) {
+            if (part.getSelect() != null) {
+                selects.add(part.getSelect());
+            } else if (part.getExecSelect() != null) {
+                selects.add(part.getExecSelect().getClassName());
+            }
+            alias.add(part.getAlias());
+        }
+        Assert.assertEquals(selects.toArray(), new String[] { "attribute[Name]", "org.efaps.Demo", "org.efaps.esjp.Versuch" });
+        Assert.assertEquals(alias.toArray(), new String[] { "name", "Two", "Three"});
+
+    }
+
+    @Test(description = "select with exec and select")
+    public void execSelect3()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice select attribute[Name] as name, exec org.efaps.Demo as Two, exec org.efaps.esjp.Versuch as Three, linkto[AbstractLink].attribute[Name] as linkname");
+
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+
+        for (final OneSelect part : select.getSelects()) {
+            if (part.getSelect() != null) {
+                selects.add(part.getSelect());
+            } else if (part.getExecSelect() != null) {
+                selects.add(part.getExecSelect().getClassName());
+            }
+            alias.add(part.getAlias());
+        }
+        Assert.assertEquals(selects.toArray(), new String[] { "attribute[Name]", "org.efaps.Demo", "org.efaps.esjp.Versuch", "linkto[AbstractLink].attribute[Name]" });
+        Assert.assertEquals(alias.toArray(), new String[] { "name", "Two", "Three", "linkname"});
+    }
+
+    @Test(description = "select with exec with parameters and select")
+    public void execSelect4()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice select attribute[Name] as name, exec org.efaps.demo.Test \"Param1 with space\", 24 as Two, exec org.efaps.esjp.Versuch as Three, linkto[AbstractLink].attribute[Name] as linkname");
+
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+        final List<String> parameters = new ArrayList<>();
+
+        for (final OneSelect part : select.getSelects()) {
+            if (part.getSelect() != null) {
+                selects.add(part.getSelect());
+            } else if (part.getExecSelect() != null) {
+                selects.add(part.getExecSelect().getClassName());
+                parameters.addAll(part.getExecSelect().getParameters());
+            }
+            alias.add(part.getAlias());
+        }
+        Assert.assertEquals(selects.toArray(), new String[] { "attribute[Name]", "org.efaps.demo.Test", "org.efaps.esjp.Versuch", "linkto[AbstractLink].attribute[Name]" });
+        Assert.assertEquals(alias.toArray(), new String[] { "name", "Two", "Three", "linkname"});
+        Assert.assertEquals(parameters.toArray(), new String[] {"Param1 with space", "24"});
+    }
+
+    @Test(description = "select with exec with parameters and select")
+    public void execSelect5()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice select attribute[Name] as name, exec org.efaps.demo.Test \"linkto[Attribute].instance\", 24 as Two, exec org.efaps.esjp.Versuch as Three, linkto[AbstractLink].attribute[Name] as linkname");
+
+        final SelectPart select = stmt.getQueryPart().getSelectPart();
+        final List<String> selects = new ArrayList<>();
+        final List<String> alias = new ArrayList<>();
+        final List<String> parameters = new ArrayList<>();
+
+        for (final OneSelect part : select.getSelects()) {
+            if (part.getSelect() != null) {
+                selects.add(part.getSelect());
+            } else if (part.getExecSelect() != null) {
+                selects.add(part.getExecSelect().getClassName());
+                parameters.addAll(part.getExecSelect().getParameters());
+            }
+            alias.add(part.getAlias());
+        }
+        Assert.assertEquals(selects.toArray(), new String[] { "attribute[Name]", "org.efaps.demo.Test", "org.efaps.esjp.Versuch", "linkto[AbstractLink].attribute[Name]" });
+        Assert.assertEquals(alias.toArray(), new String[] { "name", "Two", "Three", "linkname"});
+        Assert.assertEquals(parameters.toArray(), new String[] {"linkto[Attribute].instance", "24"});
+    }
+
+
 }

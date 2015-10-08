@@ -133,7 +133,12 @@ public class EQLInvoker
                     if (printPart.getSelectPart() != null) {
                         final SelectPart selectPart = printPart.getSelectPart();
                         for (final OneSelect sel : selectPart.getSelects()) {
-                            print.addSelect(sel.getSelect(), sel.getAlias());
+                            if (sel.getSelect() != null) {
+                                print.addSelect(sel.getSelect(), sel.getAlias());
+                            } else if (sel.getExecSelect() != null){
+                                print.addSelect(sel.getExecSelect().getClassName(), sel.getExecSelect().getParameters(),
+                                                sel.getAlias());
+                            }
                         }
                     }
                     if (printPart.getOrderPart() != null) {
@@ -172,7 +177,12 @@ public class EQLInvoker
                     if (queryPart.getSelectPart() != null) {
                         final SelectPart selectPart = queryPart.getSelectPart();
                         for (final OneSelect sel : selectPart.getSelects()) {
-                            print.addSelect(sel.getSelect(), sel.getAlias());
+                            if (sel.getSelect() != null) {
+                                print.addSelect(sel.getSelect(), sel.getAlias());
+                            } else if (sel.getExecSelect() != null){
+                                print.addSelect(sel.getExecSelect().getClassName(), sel.getExecSelect().getParameters(),
+                                                sel.getAlias());
+                            }
                         }
                     }
                     if (queryPart.getOrderPart() != null) {
