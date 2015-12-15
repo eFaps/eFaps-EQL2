@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.validation.AbstractInjectableValidator;
+import org.efaps.eql.eQL.CIPrintPart;
 import org.efaps.eql.eQL.DeletePart;
 import org.efaps.eql.eQL.ExecPart;
 import org.efaps.eql.eQL.ExecSelect;
@@ -47,12 +48,14 @@ import org.efaps.eql.eQL.Statement;
 import org.efaps.eql.eQL.UpdatePart;
 import org.efaps.eql.eQL.WherePart;
 import org.efaps.eql.parser.antlr.EQLParser;
+import org.efaps.eql.stmt.AbstractCIPrintStmt;
 import org.efaps.eql.stmt.AbstractDeleteStmt;
 import org.efaps.eql.stmt.AbstractExecStmt;
 import org.efaps.eql.stmt.AbstractInsertStmt;
 import org.efaps.eql.stmt.AbstractPrintStmt;
 import org.efaps.eql.stmt.AbstractUpdateStmt;
 import org.efaps.eql.stmt.IEQLStmt;
+import org.efaps.eql.stmt.impl.NonOpCIPrint;
 import org.efaps.eql.stmt.impl.NonOpDelete;
 import org.efaps.eql.stmt.impl.NonOpExec;
 import org.efaps.eql.stmt.impl.NonOpInsert;
@@ -135,7 +138,7 @@ public class EQLInvoker
                         for (final OneSelect sel : selectPart.getSelects()) {
                             if (sel.getSelect() != null) {
                                 print.addSelect(sel.getSelect(), sel.getAlias());
-                            } else if (sel.getExecSelect() != null){
+                            } else if (sel.getExecSelect() != null) {
                                 print.addSelect(sel.getExecSelect().getClassName(), sel.getExecSelect().getParameters(),
                                                 sel.getAlias());
                             }
@@ -179,7 +182,7 @@ public class EQLInvoker
                         for (final OneSelect sel : selectPart.getSelects()) {
                             if (sel.getSelect() != null) {
                                 print.addSelect(sel.getSelect(), sel.getAlias());
-                            } else if (sel.getExecSelect() != null){
+                            } else if (sel.getExecSelect() != null) {
                                 print.addSelect(sel.getExecSelect().getClassName(), sel.getExecSelect().getParameters(),
                                                 sel.getAlias());
                             }
@@ -238,6 +241,16 @@ public class EQLInvoker
                         addWherePart(delete, deletePart.getQueryPart().getWherePart());
                     }
                     ret = delete;
+                } else if (stmt.getCiPrintPart() != null) {
+                    final CIPrintPart ciPrintPart = stmt.getCiPrintPart();
+                    final AbstractCIPrintStmt ciPrint = getCIPrint();
+                    if (ciPrintPart.getCiNature() != null) {
+                        ciPrint.setCINature(ciPrintPart.getCiNature());
+                    }
+                    if (ciPrintPart.getCi() != null) {
+                        ciPrint.setCI(ciPrintPart.getCi());
+                    }
+                    ret = ciPrint;
                 }
             } else {
                 ret = new IEQLStmt()
@@ -426,6 +439,16 @@ public class EQLInvoker
     protected AbstractPrintStmt getPrint()
     {
         return new NonOpPrint();
+    }
+
+    /**
+     * Gets the prints the.
+     *
+     * @return the prints the
+     */
+    protected AbstractCIPrintStmt getCIPrint()
+    {
+        return new NonOpCIPrint();
     }
 
     /**

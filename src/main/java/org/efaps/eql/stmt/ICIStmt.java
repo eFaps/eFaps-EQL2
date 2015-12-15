@@ -13,31 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Revision:        $Rev$
- * Last Changed:    $Date$
- * Last Changed By: $Author$
  */
-
-
 package org.efaps.eql.stmt;
 
-import java.util.List;
-
-import org.eclipse.emf.common.util.Diagnostic;
-
+import org.efaps.eql.eQL.CINature;
 
 /**
- * TODO comment!
+ * The Interface ICIStmt.
  *
  * @author The eFaps Team
- * @version $Id: $
  */
-public interface IEQLStmt
+public interface ICIStmt
+    extends IEQLStmt
 {
     /**
-     * Gets the diagnostics.
+     * Gets the CI nature.
      *
-     * @return the diagnostics
+     * @return the CI nature
      */
-    List<Diagnostic> getDiagnostics();
+    CINature getCINature();
+
+    /**
+     * Gets the ci.
+     *
+     * @return the ci
+     */
+    String getCI();
 }

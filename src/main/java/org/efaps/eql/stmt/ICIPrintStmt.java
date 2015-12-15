@@ -13,31 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Revision:        $Rev$
- * Last Changed:    $Date$
- * Last Changed By: $Author$
  */
-
-
 package org.efaps.eql.stmt;
-
-import java.util.List;
-
-import org.eclipse.emf.common.util.Diagnostic;
 
 
 /**
- * TODO comment!
+ * The Interface ICIPrintStmt.
  *
  * @author The eFaps Team
- * @version $Id: $
  */
-public interface IEQLStmt
+public interface ICIPrintStmt
+    extends ICIStmt
 {
-    /**
-     * Gets the diagnostics.
-     *
-     * @return the diagnostics
-     */
-    List<Diagnostic> getDiagnostics();
+
 }
