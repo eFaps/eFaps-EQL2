@@ -112,6 +112,13 @@
                             -->
                         </jvmArgs>
                     </jvmSettings>
+                    <logDetectionPatterns>
+                        <logDetectionPattern>
+                            <level>2</level>
+                            <detectionString>WARNING</detectionString>
+                            <regexp>false</regexp>
+                        </logDetectionPattern>
+                    </logDetectionPatterns>
                 </configuration>
                 <executions>
                     <execution>
@@ -192,7 +199,7 @@
     <dependencies>
         <dependency>
             <groupId>org.eclipse.xtext</groupId>
-            <artifactId>org.eclipse.xtext.xtext</artifactId>
+            <artifactId>org.eclipse.xtext</artifactId>
             <version>${xtext-version}</version>
         </dependency>
         <dependency>
@@ -205,8 +212,6 @@
             <artifactId>common</artifactId>
             <version>3.6.200-v20130402-1505</version>
         </dependency>
-
-        <!-- test -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
