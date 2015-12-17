@@ -32,6 +32,10 @@ Workflow {
         directory = "${runtimeProject}/model"
     }
 
+    component = DirectoryCleaner {
+        directory = "${runtimeProject}/xtend-gen"
+    }
+
     component = Generator {
         pathRtProject = runtimeProject
         projectNameRt = projectName
@@ -48,7 +52,6 @@ Workflow {
 
             // generates Java API for the generated EPackages
             fragment = ecore.EMFGeneratorFragment auto-inject {
-
                 updateBuildProperties = false
                 generateEditor = false
                 generateEdit = false
@@ -69,7 +72,18 @@ Workflow {
             // Xtend-based API for validation
             fragment = validation.JavaValidatorFragment auto-inject {
             //    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-            //    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+                composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+            }
+
+            // formatter API
+            fragment = formatting2.Formatter2Fragment auto-inject {}
+
+            // java-based API for content assistance
+            fragment = contentAssist.ContentAssistFragment {
+                generateStub = false
+            }
+            fragment = parser.antlr.XtextAntlrUiGeneratorFragment auto-inject {
+                partialParsing = true
             }
         }
     }

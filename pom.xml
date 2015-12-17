@@ -150,6 +150,7 @@
                         <configuration>
                             <sources>
                                 <source>${basedir}/src-gen</source>
+                                <source>${basedir}/xtend-gen</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -194,6 +195,26 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.eclipse.xtend</groupId>
+                <artifactId>xtend-maven-plugin</artifactId>
+                <version>${xtext-version}</version>
+                <executions>
+                    <execution>
+                        <id>xtend-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <javaSourceVersion>1.7</javaSourceVersion>
+                            <outputDirectory>${basedir}/xtend-gen</outputDirectory>
+                            <generateSyntheticSuppressWarnings>true</generateSyntheticSuppressWarnings>
+                            <includeDateInGeneratedAnnotation>true</includeDateInGeneratedAnnotation>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -203,14 +224,24 @@
             <version>${xtext-version}</version>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.xtext</groupId>
+            <artifactId>org.eclipse.xtext.ui</artifactId>
+            <version>${xtext-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.xtext</groupId>
+            <artifactId>org.eclipse.xtext.ide</artifactId>
+            <version>${xtext-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.scout.sdk.deps</groupId>
+            <artifactId>org.eclipse.jface.text</artifactId>
+            <version>3.10.0.v20150603-1752</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.equinox</groupId>
-            <artifactId>common</artifactId>
-            <version>3.6.200-v20130402-1505</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>

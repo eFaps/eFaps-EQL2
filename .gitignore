@@ -8,3 +8,4 @@
 /test-output/
 /plugin.xml_gen
 /.checkstyle
+/xtend-gen/
