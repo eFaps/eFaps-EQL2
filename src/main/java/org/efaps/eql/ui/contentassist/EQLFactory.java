@@ -57,9 +57,10 @@ public class EQLFactory
     }
 
     @Override
+    @SuppressWarnings("checkstyle:returncount")
     protected void createContextsForLastCompleteNode(final EObject _previousModel,
                                                      final boolean _strict)
-                                                         throws BadLocationException
+        throws BadLocationException
     {
         final String currentNodePrefix = getPrefix(this.currentNode);
         if (!Strings.isEmpty(currentNodePrefix) && !this.currentNode.getText().equals(currentNodePrefix)) {
@@ -77,7 +78,8 @@ public class EQLFactory
             }
         }
         final String prefix = "";
-        final Collection<FollowElement> followElements = this.parser.getFollowElements(currentNodePrefix, _strict);
+        final String completeInput = this.selection.getText().substring(0, this.completionOffset);
+        final Collection<FollowElement> followElements = this.parser.getFollowElements(completeInput, _strict);
         doCreateContexts(this.lastCompleteNode, this.currentNode, prefix, _previousModel, followElements);
     }
 
@@ -86,10 +88,11 @@ public class EQLFactory
         throws BadLocationException
     {
         final String prefix = getPrefix(this.lastCompleteNode);
+        final String completeInput = this.selection.getText().substring(0, this.lastCompleteNode.getOffset());
         final INode previousNode = getLastCompleteNodeByOffset(this.rootNode, this.lastCompleteNode.getOffset());
         final EObject previousModel = previousNode.getSemanticElement();
         final INode currentDatatypeNode = getContainingDatatypeRuleNode(this.currentNode);
-        final Collection<FollowElement> followElements = this.parser.getFollowElements(this.selection.getText(), false);
+        final Collection<FollowElement> followElements = this.parser.getFollowElements(completeInput, false);
         final int prevSize = this.contextBuilders.size();
         doCreateContexts(previousNode, currentDatatypeNode, prefix, previousModel, followElements);
 

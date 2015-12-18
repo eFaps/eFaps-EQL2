@@ -28,7 +28,7 @@ public class EQLTextSelection
 {
 
     /** The offset. */
-    int offset;
+    private final int offset;
 
     /** The txt. */
     private final String txt;

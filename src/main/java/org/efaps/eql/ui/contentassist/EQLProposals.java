@@ -17,7 +17,9 @@
 package org.efaps.eql.ui.contentassist;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.xtext.resource.XtextResource;
@@ -30,6 +32,8 @@ import org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistC
 import org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory.StatefulFactory;
 import org.eclipse.xtext.util.StringInputStream;
 import org.efaps.eql.EQLStandaloneSetup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.inject.Provider;
 
@@ -41,19 +45,46 @@ import com.google.inject.Provider;
 public final class EQLProposals
 {
 
+    /** The log. */
+    private static Logger LOG = LoggerFactory.getLogger(EQLProposals.class);
+
+    /** The cinameproviders. */
+    private static Set<ICINameProvider> CINAMEPROVIDERS = new HashSet<>();
+
     /**
      * Instantiates a new EQL proposals.
      */
     private EQLProposals()
     {
-
     }
+
+    /**
+     * Gets the CI name providers.
+     *
+     * @param _provider the provider
+     */
+    public static void registerCINameProviders(final ICINameProvider _provider)
+    {
+        CINAMEPROVIDERS.add(_provider);
+    }
+
+    /**
+     * Gets the CI name providers.
+     *
+     * @return the CI name providers
+     */
+    public static Set<ICINameProvider> getCINameProviders()
+    {
+        return CINAMEPROVIDERS;
+    }
+
     /**
      * Gets the proposal list.
      *
      * @param _text the text
      * @return the proposal list
      */
+    @SuppressWarnings("checkstyle:illegalcatch")
     public static List<String> getProposalList(final String _text)
     {
         final List<String> ret = new ArrayList<>();
@@ -98,12 +129,9 @@ public final class EQLProposals
             for (int i = 0; i < prep.length; i++) {
                 ret.add(prep[i].getDisplayString());
             }
-
         } catch (final Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOG.error("Catched error", e);
         }
-
         return ret;
     }
 

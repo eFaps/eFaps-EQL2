@@ -34,16 +34,6 @@ public class EQLProposalProvider
     }
 
     @Override
-    public void complete_TYPE(final EObject _model,
-                              final RuleCall _ruleCall,
-                              final ContentAssistContext _context,
-                              final ICompletionProposalAcceptor _acceptor)
-    {
-        final ConfigurableCompletionProposal proposal = doCreateProposal("TYPE", null, null, 400, _context);
-        _acceptor.accept(proposal);
-    }
-
-    @Override
     public void complete_ATTRIBUTE(final EObject _model,
                                    final RuleCall _ruleCall,
                                    final ContentAssistContext _context,
@@ -96,5 +86,46 @@ public class EQLProposalProvider
                                     final ICompletionProposalAcceptor _acceptor)
     {
         LOG.error("complete_DeletePart");
+    }
+
+    @Override
+    public void complete_ObjQueryPart(final EObject _model,
+                                      final RuleCall _ruleCall,
+                                      final ContentAssistContext _context,
+                                      final ICompletionProposalAcceptor _acceptor)
+    {
+        LOG.error("complete_ObjQueryPart");
+    }
+
+    @Override
+    public void complete_InsertPart(final EObject _model,
+                                    final RuleCall _ruleCall,
+                                    final ContentAssistContext _context,
+                                    final ICompletionProposalAcceptor _acceptor)
+    {
+        LOG.error("complete_InsertPart");
+    }
+
+    @Override
+    public void complete_TYPE(final EObject _model,
+                              final RuleCall _ruleCall,
+                              final ContentAssistContext _context,
+                              final ICompletionProposalAcceptor _acceptor)
+    {
+        final String prefix = _context.getPrefix();
+        if (prefix.isEmpty()) {
+            final ConfigurableCompletionProposal proposal = doCreateProposal("CITYPE", null, null, 400, _context);
+            _acceptor.accept(proposal);
+        } else {
+            for (final ICINameProvider provider : EQLProposals.getCINameProviders()) {
+                for (final String type : provider.getTypeNames()) {
+                    if (type.startsWith(prefix)) {
+                        final ConfigurableCompletionProposal proposal = doCreateProposal(type, null, null, 400,
+                                        _context);
+                        _acceptor.accept(proposal);
+                    }
+                }
+            }
+        }
     }
 }

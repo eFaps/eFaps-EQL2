@@ -14,39 +14,22 @@
  * limitations under the License.
  *
  */
+package org.efaps.eql.ui.contentassist;
 
-package org.efaps.eql;
-
-import com.google.inject.Injector;
+import java.util.Set;
 
 /**
- * Initialization support for running Xtext languages without equinox extension
- * registry.
+ * The Interface ICINameProvider.
  *
  * @author The eFaps Team
  */
-public class EQLStandaloneSetup
-    extends EQLStandaloneSetupGenerated
+public interface ICINameProvider
 {
 
     /**
-     * Do setup.
-     */
-    public static void doSetup()
-    {
-        doSetup(null);
-    }
-
-    /**
-     * Do setup.
+     * Gets the type names.
      *
-     * @param _instance the instance
+     * @return the type names
      */
-    public static void doSetup(final Object _instance)
-    {
-        final Injector injector = new EQLStandaloneSetup().createInjectorAndDoEMFRegistration();
-        if (_instance != null) {
-            injector.injectMembers(_instance);
-        }
-    }
+    Set<String> getTypeNames();
 }

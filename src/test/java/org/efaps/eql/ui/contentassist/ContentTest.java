@@ -16,10 +16,13 @@
  */
 package org.efaps.eql.ui.contentassist;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.efaps.eql.AbstractTest;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
@@ -32,15 +35,33 @@ public class ContentTest
 {
 
     /**
+     * Setup ci name provier.
+     */
+    @BeforeClass
+    public void setupCINameProvier()
+    {
+        EQLProposals.registerCINameProviders(new ICINameProvider()
+        {
+            @Override
+            public Set<String> getTypeNames()
+            {
+                final Set<String> ret = new HashSet<>();
+                ret.add("Sales_Invoice");
+                return ret;
+            }
+        });
+    }
+
+    /**
      * Test.
      *
      * @throws Exception the exception
      */
-    @Test(description = "delete")
+    @Test(description = "delete ")
     public void delete()
         throws Exception
     {
-        final List<String> proposals = EQLProposals.getProposalList("delete");
+        final List<String> proposals = EQLProposals.getProposalList("delete ");
         Assert.assertEqualsNoOrder(proposals.toArray(), new String[] { "111.222", "obj", "object", "list", "query" },
                         "Different");
     }
@@ -50,11 +71,11 @@ public class ContentTest
      *
      * @throws Exception the exception
      */
-    @Test(description = "update")
+    @Test(description = "update ")
     public void update()
         throws Exception
     {
-        final List<String> proposals = EQLProposals.getProposalList("update");
+        final List<String> proposals = EQLProposals.getProposalList("update ");
         Assert.assertEqualsNoOrder(proposals.toArray(), new String[] { "111.222", "obj", "object", "list", "query" },
                         "Different");
     }
@@ -68,7 +89,7 @@ public class ContentTest
     public void insert()
         throws Exception
     {
-        final List<String> proposals = EQLProposals.getProposalList("insert");
+        final List<String> proposals = EQLProposals.getProposalList("insert ");
         Assert.assertEqualsNoOrder(proposals.toArray(), new String[] { "type" },
                         "Different");
     }
@@ -83,7 +104,21 @@ public class ContentTest
         throws Exception
     {
         final List<String> proposals = EQLProposals.getProposalList("insert type ");
-        Assert.assertEqualsNoOrder(proposals.toArray(), new String[] { "TYPE" },
+        Assert.assertEqualsNoOrder(proposals.toArray(), new String[] { "CITYPE" },
+                        "Different");
+    }
+
+    /**
+     * Test.
+     *
+     * @throws Exception the exception
+     */
+    @Test(description = "insert type Sa")
+    public void insertTypeSa()
+        throws Exception
+    {
+        final List<String> proposals = EQLProposals.getProposalList("insert type Sales");
+        Assert.assertEqualsNoOrder(proposals.toArray(), new String[] { "Sales_Invoice" },
                         "Different");
     }
 
@@ -124,8 +159,8 @@ public class ContentTest
     public void print()
         throws Exception
     {
-        final List<String> proposals = EQLProposals.getProposalList("print");
-        Assert.assertEqualsNoOrder(proposals.toArray(), new String[] { "111.222" },
-                        "Different");
+        final List<String> proposals = EQLProposals.getProposalList("print ");
+        Assert.assertEqualsNoOrder(proposals.toArray(),
+                        new String[] { "111.222", "obj", "object", "list", "query", "ci" }, "Different");
     }
 }
