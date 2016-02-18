@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2015 The eFaps Team
+ * Copyright 2003 - 2016 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Revision:        $Rev$
- * Last Changed:    $Date$
- * Last Changed By: $Author$
  */
 
 package org.efaps.eql.stmt;
@@ -24,19 +21,27 @@ package org.efaps.eql.stmt;
  * TODO comment!
  *
  * @author The eFaps Team
- * @version $Id: $
  */
 public interface IExecStmt
     extends IEQLStmt
 {
 
-    public void setESJPName(final String _className)
+    /**
+     * Sets the ESJP name.
+     *
+     * @param _className the new ESJP name
+     * @throws Exception the exception
+     */
+    void setESJPName(final String _className)
         throws Exception;
 
     /**
+     * Adds the parameter.
+     *
      * @param _parameter parameter to be added to the Statement
+     * @throws Exception the exception
      */
-    public void addParameter(final String _parameter)
+    void addParameter(final String _parameter)
         throws Exception;
 
 }
