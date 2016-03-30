@@ -90,7 +90,7 @@
         </repository>
     </distributionManagement>
     <properties>
-        <xtext-version>2.9.0</xtext-version>
+        <xtext-version>2.9.2</xtext-version>
     </properties>
     <build>
         <plugins>
