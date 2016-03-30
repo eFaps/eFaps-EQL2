@@ -229,6 +229,12 @@
             <groupId>org.eclipse.xtext</groupId>
             <artifactId>org.eclipse.xtext</artifactId>
             <version>${xtext-version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>org.eclipse.equinox.common</artifactId>
+                    <groupId>org.eclipse.equinox</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.eclipse.xtext</groupId>
