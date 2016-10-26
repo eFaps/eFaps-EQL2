@@ -43,8 +43,8 @@ WherePart:
     'where' wheres+=OneWhere ('and' wheres+=OneWhere)*;
 
 OneWhere:
-    (attribute=ATTRIBUTE | select=SELECTSTR) => comparison=Comparison (value=(Value | OID | STRING) | '(' values+=(Value | OID | STRING)
-    ("," values+=(Value | OID | STRING))* ')' | nestedQueryPart=NestedQueryPart );
+    (attribute=ATTRIBUTE | select=SELECTSTR) => comparison=Comparison (value=(Value | OID | STRING | BOOLEAN) | '(' values+=(Value | OID | STRING | BOOLEAN)
+    ("," values+=(Value | OID | STRING | BOOLEAN))* ')' | nestedQueryPart=NestedQueryPart );
 
 NestedQueryPart:
     '(' 'query' ('type' types+=TYPE) (',' types+=TYPE)* (wherePart=WherePart)? (selectPart=SelectPart)? ')';
@@ -83,6 +83,10 @@ OneOrder:
 
 LimitPart:
     'limit' value=KEY;
+
+terminal BOOLEAN:
+    'true' | 'false'
+;
 
 terminal WS:
     (' ' | '\t' | '\r' | '\n')+;

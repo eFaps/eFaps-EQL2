@@ -36,6 +36,34 @@ public class WhereTest
     extends AbstractTest
 {
 
+    /**
+     * Eq true.
+     *
+     * @throws Exception the exception
+     */
+    @Test(description = "print query type Sales_Invoice where attribute[Name] == true")
+    public void eqTrue()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice where attribute[Name] == true");
+        final WherePart where = stmt.getQueryPart().getWherePart();
+        Assert.assertEquals(where.getWheres().get(0).getValue(), "true");
+    }
+
+    /**
+     * Eq false.
+     *
+     * @throws Exception the exception
+     */
+    @Test(description = "print query type Sales_Invoice where attribute[Name] == false")
+    public void eqFalse()
+        throws Exception
+    {
+        final Statement stmt = getStatement("print query type Sales_Invoice where attribute[Name] == false");
+        final WherePart where = stmt.getQueryPart().getWherePart();
+        Assert.assertEquals(where.getWheres().get(0).getValue(), "false");
+    }
+
     @Test(description = "where ATTRIBUTE eq NUMBER")
     public void eqNum()
         throws Exception
