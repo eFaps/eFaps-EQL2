@@ -28,12 +28,68 @@ public class BaseStatementTest
 {
 
     /**
-     * Exec esjp.
+     * Object update.
      */
-    @Test(description = "print obj")
-    public void objectPrint()
+    @Test(description = "update obj")
+    public void objectUpdate()
     {
-        final PrintStatement stmt = EqlFactory.eINSTANCE.createObjectPrintStatement();
-        verifyStatement("print obj", stmt);
+        final Statement stmt = EqlFactory.eINSTANCE.createObjectUpdateStatement();
+        verifyStatement("update obj", stmt);
+        verifyStatement("update object", stmt);
+    }
+
+    /**
+     * Object delete.
+     */
+    @Test(description = "delete obj")
+    public void objectDelete()
+    {
+        final Statement stmt = EqlFactory.eINSTANCE.createObjectDeleteStatement();
+        verifyStatement("delete obj", stmt);
+        verifyStatement("delete object", stmt);
+    }
+
+    /**
+     * Insert.
+     */
+    @Test(description = "insert type")
+    public void insert()
+    {
+        final Statement stmt = EqlFactory.eINSTANCE.createInsertStatement();
+        verifyStatement("insert type", stmt);
+    }
+
+    /**
+     * Exec.
+     */
+    @Test(description = "exec | execute")
+    public void exec()
+    {
+        final Statement stmt = EqlFactory.eINSTANCE.createExecStatement();
+        verifyStatement("exec ", stmt);
+        verifyStatement("execute ", stmt);
+    }
+
+
+    /**
+     * Ci print type.
+     */
+    @Test(description = "print ci form")
+    public void ciPrintType()
+    {
+        final Statement stmt = EqlFactory.eINSTANCE.createCIPrintTypeStatement();
+        verifyStatement("print ci type", stmt);
+
+    }
+
+    /**
+     * Ci print form.
+     */
+    @Test(description = "print ci form")
+    public void ciPrintForm()
+    {
+        final Statement stmt = EqlFactory.eINSTANCE.createCIPrintFormStatement();
+        verifyStatement("print ci form", stmt);
+
     }
 }

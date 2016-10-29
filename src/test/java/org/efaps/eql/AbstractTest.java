@@ -17,6 +17,7 @@
 package org.efaps.eql;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.eclipse.emf.ecore.EObject;
 import org.efaps.eql.parser.antlr.EQLParser;
 import org.testng.Assert;
 
@@ -61,8 +62,8 @@ public abstract class AbstractTest
     public void verifyStatement(final String _eqlStmt,
                                 final Object _object)
     {
-        Assert.assertTrue(EqualsBuilder.reflectionEquals(_object,
-                        getParser().doParse(_eqlStmt).getRootASTElement(),
+        final EObject eObject = getParser().doParse(_eqlStmt).getRootASTElement();
+        Assert.assertTrue(EqualsBuilder.reflectionEquals(_object, eObject,
                         "eContainer", "eFlags", "eStorage"));
     }
 }

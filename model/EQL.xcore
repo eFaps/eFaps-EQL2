@@ -1,10 +1,13 @@
 @Ecore(nsURI="http://www.efaps.org/EQL")
 @GenModel(modelName="EQL",
-    modelDirectory="eFaps-EQL/src/main/java/xcore-gen",  
-    arrayAccessors="true", 
-    dataTypeConverters="true", 
-    codeFormatting="true", 
-    cleanup="true")
+    modelDirectory="../src/main/xcore-gen",
+    arrayAccessors="true",
+    dataTypeConverters="true",
+    codeFormatting="true",
+    cleanup="true",
+    suppressGenModelAnnotations="false",
+    binaryCompatibleReflectiveMethods="true",
+    forceOverwrite="true")
 package org.efaps.eql
 
 interface Statement {
@@ -26,11 +29,21 @@ interface UpdateElementsStatement extends Statement{
     contains UpdateElement[] updateElements
 }
 
-abstract class PrintStatement extends Statement, Ordered {
+abstract class PrintStatement<T> extends Statement, Ordered, Generic<T> {
     contains Selection selection opposite printStatement
+    op T setSelectionC(Selection _selection)
+    {
+        selection = selection
+        return getThis();
+    }
 }
 
-class ObjectPrintStatement extends PrintStatement {
+interface Generic<T>
+{
+    op T getThis()
+}
+
+class ObjectPrintStatement extends PrintStatement<ObjectPrintStatement> {
     String oid
     op ObjectPrintStatement setOidC(String _oid) {
         oid = _oid
@@ -38,7 +51,7 @@ class ObjectPrintStatement extends PrintStatement {
     }
 }
 
-class ListPrintStatement extends PrintStatement {
+class ListPrintStatement extends PrintStatement<ListPrintStatement> {
     String[] oids
     op ListPrintStatement addOid(String _oid) {
         getOidsList().add(_oid);
@@ -155,7 +168,7 @@ class ExecSelectElement extends SelectElement {
 }
 
 class Selection {
-    container PrintStatement printStatement opposite selection
+    container PrintStatement<?> printStatement opposite selection
     contains Select[] selects
 }
 

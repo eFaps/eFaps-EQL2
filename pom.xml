@@ -132,6 +132,7 @@
                 <version>${xtext-version}</version>
                 <executions>
                     <execution>
+                        <id>xcode</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
@@ -150,9 +151,11 @@
                         </language>
                         <language>
                             <setup>org.eclipse.emf.ecore.xcore.XcoreStandaloneSetup</setup>
+                            <javaSupport></javaSupport>
                             <outputConfigurations>
                                 <outputConfiguration>
                                     <outputDirectory>${project.basedir}/src/main/xcore-gen</outputDirectory>
+                                    <installDslAsPrimarySource>true</installDslAsPrimarySource>
                                 </outputConfiguration>
                             </outputConfigurations>
                         </language>
@@ -232,6 +235,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <javaSourceVersion>1.8</javaSourceVersion>
                     <outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
                     <testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory>
                 </configuration>
