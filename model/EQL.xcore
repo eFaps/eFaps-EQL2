@@ -1,0 +1,233 @@
+@Ecore(nsURI="http://www.efaps.org/EQL")
+@GenModel(modelName="EQL",
+    modelDirectory="eFaps-EQL/src/main/java/xcore-gen",  
+    arrayAccessors="true", 
+    dataTypeConverters="true", 
+    codeFormatting="true", 
+    cleanup="true")
+package org.efaps.eql
+
+interface Statement {
+}
+
+interface ObjectStatement extends Statement{
+    String oid
+}
+
+interface ListStatement extends Statement{
+    String[] oids
+}
+
+interface QueryStatement extends Statement{
+    contains Query query
+}
+
+interface UpdateElementsStatement extends Statement{
+    contains UpdateElement[] updateElements
+}
+
+abstract class PrintStatement extends Statement, Ordered {
+    contains Selection selection opposite printStatement
+}
+
+class ObjectPrintStatement extends PrintStatement {
+    String oid
+    op ObjectPrintStatement setOidC(String _oid) {
+        oid = _oid
+        return this
+    }
+}
+
+class ListPrintStatement extends PrintStatement {
+    String[] oids
+    op ListPrintStatement addOid(String _oid) {
+        getOidsList().add(_oid);
+        return this
+    }
+}
+
+class UpdateStatement extends UpdateElementsStatement
+{
+}
+
+class ObjectUpdateStatement extends UpdateStatement, ObjectStatement
+{
+}
+
+class ListUpdateStatement extends UpdateStatement, ListStatement{
+}
+
+class QueryUpdateStatement extends UpdateStatement, QueryStatement{
+}
+
+class DeleteStatement extends Statement
+{
+}
+
+class ObjectDeleteStatement extends DeleteStatement, ObjectStatement
+{
+}
+
+class ListDeleteStatement extends DeleteStatement, ListStatement
+{
+}
+
+class QueryDeleteStatement extends DeleteStatement, QueryStatement
+{
+}
+
+interface Typed
+{
+    String typeName
+}
+
+class InsertStatement extends UpdateElementsStatement, Typed
+{
+}
+
+interface CIPrintStatement extends Statement
+{
+}
+
+class CIPrintTypeStatement extends CIPrintStatement, Named
+{
+}
+
+class CIPrintFormStatement extends CIPrintStatement, Named
+{
+}
+
+class Order {
+    contains OrderElement[] elements
+}
+
+class OrderElement {
+    String key
+    Boolean desc
+}
+
+class Limit {
+    String value = "-1"
+}
+
+class ExecStatement extends Statement
+{
+    String className
+    String[] parameters
+    contains ExecSelectionElement[] selects
+    contains Order order
+}
+
+interface SelectElement {
+}
+
+interface Named extends SelectElement{
+    String name
+}
+
+class LinkfromSelectElement extends SelectElement,Typed {
+    String attribute
+}
+
+class ClassSelectElement extends Named {
+}
+
+class LinktoSelectElement extends Named {
+}
+
+class AttributeSelectElement extends Named {
+}
+
+class AttributeSetSelectElement extends Named {
+}
+
+class FormatSelectElement extends SelectElement {
+    String value
+}
+
+class BaseSelectElement extends SelectElement {
+    SimpleSelectElement element
+}
+
+class ExecSelectElement extends SelectElement {
+    String className
+    String[] parameters
+}
+
+class Selection {
+    container PrintStatement printStatement opposite selection
+    contains Select[] selects
+}
+
+interface Select {
+    String alias
+    contains SelectElement[] elements
+}
+
+class ExecSelectionElement {
+    String index
+    String alias
+}
+
+class Where {
+    contains WhereElement[] elements
+}
+
+class WhereElement {
+    String attribute
+    contains NestedQuery nestedQuery
+    String[] values
+    Comparison comparison
+}
+
+class UpdateElement {
+    String attribute
+    String value
+}
+
+interface BaseQuery {
+    String[] types
+    contains Where where
+}
+
+class Query extends BaseQuery{
+    contains Limit limit
+}
+
+class NestedQuery extends BaseQuery{
+    contains Selection selection
+}
+
+enum Comparison {
+    EQUAL
+    LESS
+    GREATER
+    UNEQUAL
+    LIKE
+    IN
+    NOTIN
+}
+
+enum SimpleSelectElement
+{
+    TYPE
+    OID
+    INSTANCE
+    LABEL
+    ID
+    UUID
+    NAME
+    CLASS
+    VALUE
+    BASE
+    UOM
+    FILE
+    LENGTH
+    STATUS
+    KEY
+}
+
+interface Ordered {
+    contains Order order
+}
+
