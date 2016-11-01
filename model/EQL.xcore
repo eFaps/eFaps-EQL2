@@ -159,16 +159,28 @@ class QueryDeleteStatement extends DeleteStatement, QueryStatement
 {
 }
 
-interface Typed
+interface Typed<T>
+    extends Generic<T>
 {
     String typeName
+
+    op T setTypeNameC(String _typeName)
+    {
+        setTypeName(_typeName)
+        return getThis()
+    }
 }
 
 class InsertStatement
-    extends UpdateElementsStatement, Typed
+    extends UpdateElementsStatement, Typed<InsertStatement>
 {
     op String eqlStmt() {
         return "insert type " + getTypeName()
+    }
+
+    op InsertStatement getThis()
+    {
+        return this
     }
 }
 
@@ -177,7 +189,7 @@ interface CIPrintStatement extends Statement
 }
 
 class CIPrintTypeStatement
-    extends CIPrintStatement, Typed
+    extends CIPrintStatement, Typed<CIPrintTypeStatement>
 {
     op String eqlStmt() {
         return "print ci type " + getTypeName()
@@ -242,23 +254,59 @@ interface Named<T>
     }
 }
 
-class LinkfromSelectElement extends SelectElement,Typed {
+class LinkfromSelectElement
+    extends SelectElement, Typed<LinkfromSelectElement>
+{
     String attribute
+
+    op LinkfromSelectElement setAttributeC(String _attribute) {
+       setAttribute(_attribute)
+       return this;
+    }
+
+    op String eqlStmt() {
+        return "linkfrom[" + typeName + "#" + attribute + "]"
+    }
+
+    op LinkfromSelectElement getThis()
+    {
+        return this
+    }
 }
 
-class ClassSelectElement extends Named<ClassSelectElement> {
+class ClassSelectElement
+    extends Named<ClassSelectElement>
+{
     op ClassSelectElement setNameC(String _name) {
         setName(_name)
         return this
     }
-    op String toString() {
+
+    op String eqlStmt() {
         return "class[" + getName() + "]"
+    }
+
+    op ClassSelectElement getThis()
+    {
+        return this
     }
 }
 
-class LinktoSelectElement extends Named<LinktoSelectElement> {
+class LinktoSelectElement
+    extends Named<LinktoSelectElement>
+{
+
     op LinktoSelectElement setNameC(String _name) {
         setName(_name)
+        return this
+    }
+
+    op String eqlStmt() {
+        return "linkto[" + getName() + "]"
+    }
+
+    op LinktoSelectElement getThis()
+    {
         return this
     }
 }
@@ -287,8 +335,19 @@ class FormatSelectElement extends SelectElement {
     String value
 }
 
-class BaseSelectElement extends SelectElement {
+class BaseSelectElement
+    extends SelectElement
+{
     SimpleSelectElement element
+
+    op BaseSelectElement setElementC(SimpleSelectElement _element) {
+        setElement(_element);
+        return this
+    }
+
+    op String eqlStmt() {
+         return element.getLiteral()
+    }
 }
 
 class ExecSelectElement extends SelectElement {
@@ -392,33 +451,34 @@ class NestedQuery extends BaseQuery{
     contains Selection selection
 }
 
-enum Comparison {
-    EQUAL
-    LESS
-    GREATER
-    UNEQUAL
-    LIKE
-    IN
-    NOTIN
+enum Comparison
+{
+    EQUAL as "=="
+    LESS as "<"
+    GREATER as ">"
+    UNEQUAL as "!="
+    LIKE as"like"
+    IN as "in"
+    NOTIN as "not in"
 }
 
 enum SimpleSelectElement
 {
-    TYPE
-    OID
-    INSTANCE
-    LABEL
-    ID
-    UUID
-    NAME
-    CLASS
-    VALUE
-    BASE
-    UOM
-    FILE
-    LENGTH
-    STATUS
-    KEY
+    TYPE as "type"
+    OID as "oid"
+    INSTANCE as "instance"
+    LABEL as "label"
+    ID as "id"
+    UUID as "uuid"
+    NAME as "name"
+    CLASS as "class"
+    VALUE as "value"
+    BASE as "base"
+    UOM as "uom"
+    FILE as "file"
+    LENGTH as "length"
+    STATUS as "status"
+    KEY as "key"
 }
 
 interface Ordered {
