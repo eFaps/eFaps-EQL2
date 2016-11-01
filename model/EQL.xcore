@@ -331,8 +331,19 @@ class AttributeSelectElement
 class AttributeSetSelectElement extends Named<AttributeSetSelectElement> {
 }
 
-class FormatSelectElement extends SelectElement {
+class FormatSelectElement
+    extends SelectElement
+{
     String value
+
+     op FormatSelectElement setValueC(String _value) {
+        setValue(_value);
+        return this
+    }
+
+    op String eqlStmt() {
+         return "format[" + value + "]"
+    }
 }
 
 class BaseSelectElement

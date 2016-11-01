@@ -16,9 +16,16 @@
  */
 package org.efaps.eql
 
+import org.efaps.eql.converter.ValueConverters
+
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-class EQLRuntimeModule extends AbstractEQLRuntimeModule {
+class EQLRuntimeModule
+    extends AbstractEQLRuntimeModule
+{
+    override bindIValueConverterService() {
+       return typeof(ValueConverters)
+    }
 }

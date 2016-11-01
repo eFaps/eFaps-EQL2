@@ -357,6 +357,65 @@ public class SelectionTest
     }
 
     /**
+     * Object print.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select attribute[Date].format[YYYY-MM-DD]")
+    public void attributeFormat(final String _eqlBase,
+                                final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
+                        .addElement(IEqlFactory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")));
+        verifyStatement(_eqlBase + "select attribute[Date].format[YYYY-MM-DD]", _printStmt);
+    }
+
+    /**
+     * Object print.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select attribute[Date].format[YYYY-MM-DD] as Algo")
+    public void attributeFormatAlias(final String _eqlBase,
+                                final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("Algo")
+                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
+                        .addElement(IEqlFactory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")));
+        verifyStatement(_eqlBase + "select attribute[Date].format[YYYY-MM-DD] as Algo", _printStmt);
+    }
+
+    /**
+     * Object print.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select attribute[Date].format[YYYY-MM-DD] as Algo,"
+                    + "attribute[Date].format[MM-YYYY/DD] as Otro")
+    public void multiAttributeFormatAlias(final String _eqlBase,
+                                          final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("Algo")
+                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
+                        .addElement(IEqlFactory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")))
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("Otro")
+                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
+                        .addElement(IEqlFactory.eINSTANCE.createFormatSelectElement().setValueC("MM-YYYY/DD")));
+        verifyStatement(_eqlBase + "select attribute[Date].format[YYYY-MM-DD] as Algo, "
+                        + "attribute[Date].format[MM-YYYY/DD] as Otro", _printStmt);
+    }
+
+    /**
      * Ci commands.
      *
      * @param _context context
