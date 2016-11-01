@@ -57,22 +57,22 @@ interface UpdateElementsStatement
     contains UpdateElement[] updateElements
 }
 
-abstract class PrintStatement
-    extends Statement, Ordered
+abstract class PrintStatement<T>
+    extends Statement, Ordered, Generic<T>
 {
     contains Selection selection opposite printStatement
+
+     op T setSelectionC(Selection _selection) {
+        setSelection(_selection)
+        return getThis()
+    }
 }
 
 class ObjectPrintStatement
-    extends PrintStatement, ObjectStatement
+    extends PrintStatement<ObjectPrintStatement>, ObjectStatement
 {
     op ObjectPrintStatement setOidC(String _oid) {
         this.oid = _oid
-        return this
-    }
-
-    op PrintStatement setSelectionC(Selection _selection) {
-        setSelection(_selection)
         return this
     }
 
@@ -83,20 +83,17 @@ class ObjectPrintStatement
         }
         return ret
     }
+
+    op ObjectPrintStatement getThis() {
+        return this
+    }
 }
 
 class ListPrintStatement
-    extends PrintStatement
+    extends PrintStatement<ListPrintStatement>, ListStatement
 {
-    String[] oids
-
     op ListPrintStatement addOid(String _oid) {
         getOidsList().add(_oid);
-        return this
-    }
-
-    op PrintStatement setSelectionC(Selection _selection) {
-        setSelection(_selection)
         return this
     }
 
@@ -116,6 +113,10 @@ class ListPrintStatement
             ret = ret + " " + getSelection().eqlStmt()
         }
         return ret
+    }
+
+    op ListPrintStatement getThis() {
+        return this
     }
 }
 
@@ -298,7 +299,7 @@ class ExecSelectElement extends SelectElement {
 class Selection
     extends EQLElement
 {
-    container PrintStatement printStatement opposite selection
+    container PrintStatement<?> printStatement opposite selection
 
     contains Select[] selects
 
@@ -328,6 +329,11 @@ class Select
     String alias
 
     contains SelectElement[] elements
+
+    op Select setAliasC(String _alias) {
+        setAlias(_alias)
+        return this
+    }
 
     op Select addElement(SelectElement _element) {
         elementsList.add(_element)
