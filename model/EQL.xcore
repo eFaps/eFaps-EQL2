@@ -1,61 +1,107 @@
 @Ecore(nsURI="http://www.efaps.org/EQL")
 @GenModel(modelName="EQL",
-    modelDirectory="../src/main/xcore-gen",
+    modelDirectory="EQL2/src/main/xcore-gen",
     arrayAccessors="true",
     dataTypeConverters="true",
     codeFormatting="true",
     cleanup="true",
     suppressGenModelAnnotations="false",
     binaryCompatibleReflectiveMethods="true",
-    forceOverwrite="true")
+    forceOverwrite="true",
+    complianceLevel="8.0")
 package org.efaps.eql
 
-interface Statement {
+
+interface Statement
+    extends EQLElement
+{
 }
 
-interface ObjectStatement extends Statement{
+interface ObjectStatement
+    extends Statement
+{
     String oid
 }
 
-interface ListStatement extends Statement{
+interface ListStatement
+    extends Statement
+{
     String[] oids
 }
 
-interface QueryStatement extends Statement{
+interface QueryStatement
+    extends Statement
+{
     contains Query query
 }
 
-interface UpdateElementsStatement extends Statement{
+interface UpdateElementsStatement
+    extends Statement
+{
     contains UpdateElement[] updateElements
 }
 
-abstract class PrintStatement<T> extends Statement, Ordered, Generic<T> {
-    contains Selection selection opposite printStatement
-    op T setSelectionC(Selection _selection)
-    {
-        selection = selection
-        return getThis();
-    }
-}
-
-interface Generic<T>
+abstract class PrintStatement
+    extends Statement, Ordered
 {
-    op T getThis()
+    contains Selection selection opposite printStatement
 }
 
-class ObjectPrintStatement extends PrintStatement<ObjectPrintStatement> {
+class ObjectPrintStatement
+    extends PrintStatement
+{
     String oid
+
     op ObjectPrintStatement setOidC(String _oid) {
         oid = _oid
         return this
     }
+
+    op PrintStatement setSelectionC(Selection _selection) {
+        setSelection(_selection)
+        return this
+    }
+
+    op String eqlStmt() {
+        var String ret =  "print object " + oid + " "
+        if (getSelection() != null) {
+            ret = ret + " " + getSelection().eqlStmt()
+        }
+        return ret
+    }
 }
 
-class ListPrintStatement extends PrintStatement<ListPrintStatement> {
+class ListPrintStatement
+    extends PrintStatement
+{
     String[] oids
+
     op ListPrintStatement addOid(String _oid) {
         getOidsList().add(_oid);
         return this
+    }
+
+    op PrintStatement setSelectionC(Selection _selection) {
+        setSelection(_selection)
+        return this
+    }
+
+    op String eqlStmt() {
+        var String ret =  "print list ("
+        var first = true
+        for (String oid : getOidsList()) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + ", "
+            }
+            ret = ret + oid
+        }
+        ret = ret + ")"
+        if (getSelection() != null) {
+            ret = ret + " " + getSelection().eqlStmt()
+        }
+        return ret
     }
 }
 
@@ -63,8 +109,12 @@ class UpdateStatement extends UpdateElementsStatement
 {
 }
 
-class ObjectUpdateStatement extends UpdateStatement, ObjectStatement
+class ObjectUpdateStatement
+    extends UpdateStatement, ObjectStatement
 {
+    op String eqlStmt() {
+        return "update object " + oid
+    }
 }
 
 class ListUpdateStatement extends UpdateStatement, ListStatement{
@@ -77,8 +127,12 @@ class DeleteStatement extends Statement
 {
 }
 
-class ObjectDeleteStatement extends DeleteStatement, ObjectStatement
+class ObjectDeleteStatement
+    extends DeleteStatement, ObjectStatement
 {
+    op String eqlStmt() {
+        return "delete object " + oid
+    }
 }
 
 class ListDeleteStatement extends DeleteStatement, ListStatement
@@ -94,20 +148,37 @@ interface Typed
     String typeName
 }
 
-class InsertStatement extends UpdateElementsStatement, Typed
+class InsertStatement
+    extends UpdateElementsStatement, Typed
 {
+    op String eqlStmt() {
+        return "insert type " + getTypeName()
+    }
 }
 
 interface CIPrintStatement extends Statement
 {
 }
 
-class CIPrintTypeStatement extends CIPrintStatement, Named
+class CIPrintTypeStatement
+    extends CIPrintStatement, Typed
 {
+    op String eqlStmt() {
+        return "print ci type " + getTypeName()
+    }
 }
 
-class CIPrintFormStatement extends CIPrintStatement, Named
+class CIPrintFormStatement
+    extends CIPrintStatement, Named<CIPrintFormStatement>
 {
+    op String eqlStmt() {
+        return "print ci form " + getName()
+    }
+
+    op CIPrintFormStatement getThis()
+    {
+        return this
+    }
 }
 
 class Order {
@@ -123,35 +194,77 @@ class Limit {
     String value = "-1"
 }
 
-class ExecStatement extends Statement
+class ExecStatement
+    extends Statement
 {
     String className
+
     String[] parameters
+
     contains ExecSelectionElement[] selects
+
     contains Order order
+
+    op String eqlStmt() {
+        return "execute " + getClassName()
+    }
 }
 
-interface SelectElement {
+interface SelectElement
+    extends EQLElement
+{
 }
 
-interface Named extends SelectElement{
+interface Named<T>
+    extends SelectElement, Generic<T>
+{
     String name
+    op T setNameC(String _name)
+    {
+        setName(_name)
+        return getThis()
+    }
 }
 
 class LinkfromSelectElement extends SelectElement,Typed {
     String attribute
 }
 
-class ClassSelectElement extends Named {
+class ClassSelectElement extends Named<ClassSelectElement> {
+    op ClassSelectElement setNameC(String _name) {
+        setName(_name)
+        return this
+    }
+    op String toString() {
+        return "class[" + getName() + "]"
+    }
 }
 
-class LinktoSelectElement extends Named {
+class LinktoSelectElement extends Named<LinktoSelectElement> {
+    op LinktoSelectElement setNameC(String _name) {
+        setName(_name)
+        return this
+    }
 }
 
-class AttributeSelectElement extends Named {
+class AttributeSelectElement
+    extends Named<AttributeSelectElement>
+{
+    op AttributeSelectElement setNameC(String _name) {
+        setName(_name)
+        return this
+    }
+    op String eqlStmt() {
+        return "attribute[" + getName() +  "]"
+    }
+
+    op AttributeSelectElement getThis()
+    {
+        return this
+    }
 }
 
-class AttributeSetSelectElement extends Named {
+class AttributeSetSelectElement extends Named<AttributeSetSelectElement> {
 }
 
 class FormatSelectElement extends SelectElement {
@@ -167,14 +280,61 @@ class ExecSelectElement extends SelectElement {
     String[] parameters
 }
 
-class Selection {
-    container PrintStatement<?> printStatement opposite selection
+class Selection
+    extends EQLElement
+{
+    container PrintStatement printStatement opposite selection
+
     contains Select[] selects
+
+    op Selection addSelect(Select _select) {
+        selectsList.add(_select)
+        return this
+    }
+
+    op String eqlStmt() {
+        var String ret = "select ";
+        var first = true
+        for (Select select : getSelectsList()) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + ", "
+            }
+            ret = ret + select.eqlStmt()
+        }
+        return ret
+    }
 }
 
-interface Select {
+class Select
+    extends EQLElement
+{
     String alias
+
     contains SelectElement[] elements
+
+    op Select addElement(SelectElement _element) {
+        elementsList.add(_element)
+        return this
+    }
+
+    op String eqlStmt() {
+        var String ret = " ";
+        var first = true
+        for (SelectElement element : getElementsList()) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + "."
+            }
+            ret = ret + element.eqlStmt()
+        }
+        if (alias != null) {
+            ret = ret + " as " + alias
+        }
+        return ret
+    }
 }
 
 class ExecSelectionElement {
@@ -242,5 +402,15 @@ enum SimpleSelectElement
 
 interface Ordered {
     contains Order order
+}
+
+interface EQLElement
+{
+    op String eqlStmt()
+}
+
+interface Generic<T>
+{
+    op T getThis()
 }
 

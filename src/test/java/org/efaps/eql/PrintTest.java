@@ -44,7 +44,7 @@ public class PrintTest
     @Test(description = "print obj 123.456")
     public void objectPrintOID()
     {
-        final Object stmt = EqlFactory.eINSTANCE.createObjectPrintStatement()
+        final PrintStatement stmt = EqlFactory.eINSTANCE.createObjectPrintStatement()
                         .setOidC("123.456");
         verifyStatement("print obj 123.456", stmt);
         verifyStatement("print object 123.456", stmt);
@@ -56,7 +56,7 @@ public class PrintTest
     @Test(description = "print list ()")
     public void listPrint()
     {
-        final Object stmt = EqlFactory.eINSTANCE.createListPrintStatement().addOid(null);
+        final PrintStatement stmt = EqlFactory.eINSTANCE.createListPrintStatement().addOid(null);
         verifyStatement("print list ()", stmt);
     }
 
@@ -66,7 +66,7 @@ public class PrintTest
     @Test(description = "print list (123.456)")
     public void listPrintOID()
     {
-        final Object stmt = EqlFactory.eINSTANCE.createListPrintStatement().addOid("123.456");
+        final PrintStatement stmt = EqlFactory.eINSTANCE.createListPrintStatement().addOid("123.456");
         verifyStatement("print list (123.456)", stmt);
     }
 
@@ -76,7 +76,7 @@ public class PrintTest
     @Test(description = "print list (123.456, 223.456, 323.456)")
     public void listPrintOIDs()
     {
-        final Object stmt = EqlFactory.eINSTANCE.createListPrintStatement()
+        final PrintStatement stmt = EqlFactory.eINSTANCE.createListPrintStatement()
                         .addOid("123.456").addOid("223.456").addOid("323.456");
         verifyStatement("print list (123.456, 223.456, 323.456)", stmt);
     }
@@ -84,12 +84,16 @@ public class PrintTest
     /**
      * List print OIDs.
      */
-    @Test(description = "print list (123.456, 223.456, 323.456)")
+    @Test(description = "print list (123.456, 223.456, 323.456) select attribute[Name] ")
     public void listPrintOIDSelection()
     {
-        final Object stmt = EqlFactory.eINSTANCE.createListPrintStatement()
-                        .addOid("123.456").addOid("223.456").addOid("323.456")
-                        .setSelectionC(null);
-        verifyStatement("print list (123.456, 223.456, 323.456)", stmt);
+        final PrintStatement stmt = EqlFactory.eINSTANCE.createListPrintStatement()
+                        .addOid("123.456")
+                        .addOid("223.456")
+                        .addOid("323.456")
+                        .setSelectionC(EqlFactory.eINSTANCE.createSelection()
+                            .addSelect(EqlFactory.eINSTANCE.createSelect()
+                                .addElement(EqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name"))));
+        verifyStatement("print list (123.456, 223.456, 323.456) select attribute[Name] ", stmt);
     }
 }

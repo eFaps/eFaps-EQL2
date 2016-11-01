@@ -383,7 +383,11 @@
             <artifactId>org.eclipse.emf.codegen.ecore.xtext</artifactId>
             <version>${ecore-xtext-version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>

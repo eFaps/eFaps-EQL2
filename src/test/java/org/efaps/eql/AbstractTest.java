@@ -16,8 +16,16 @@
  */
 package org.efaps.eql;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.eclipse.emf.ecore.EObject;
+import java.util.List;
+
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.Token;
+import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.parser.IParseResult;
+import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
+import org.eclipse.xtext.parser.antlr.Lexer;
+import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.efaps.eql.parser.antlr.EQLParser;
 import org.testng.Assert;
 
@@ -34,6 +42,14 @@ public abstract class AbstractTest
     /** The parser. */
     @Inject
     private EQLParser parser;
+
+    /** The lexer. */
+    @Inject
+    private Lexer lexer;
+
+    /** The token def provider. */
+    @Inject
+    private ITokenDefProvider tokenDefProvider;
 
     /**
      * Instantiates a new abstract test.
@@ -60,10 +76,59 @@ public abstract class AbstractTest
      * @param _object the object
      */
     public void verifyStatement(final String _eqlStmt,
-                                final Object _object)
+                                final EQLElement _object)
     {
-        final EObject eObject = getParser().doParse(_eqlStmt).getRootASTElement();
-        Assert.assertTrue(EqualsBuilder.reflectionEquals(_object, eObject,
-                        "eContainer", "eFlags", "eStorage"));
+        final IParseResult result = getParser().doParse(_eqlStmt);
+        if (result.hasSyntaxErrors()) {
+            for (final INode error : result.getSyntaxErrors()) {
+                System.out.println(error.getSyntaxErrorMessage());
+            }
+        }
+        final EQLElement eObject = (EQLElement) result.getRootASTElement();
+        if (eObject == null) {
+            debugTokens(getTokens(_eqlStmt));
+        }
+        Assert.assertEquals(eObject.eqlStmt(), _object.eqlStmt());
     }
+
+    /**
+     * Gets the tokens.
+     *
+     * @param _input the input
+     * @return the tokens
+     */
+    public List<Token> getTokens(final CharSequence _input)
+    {
+        final CharStream stream = new ANTLRStringStream(_input.toString());
+        this.lexer.setCharStream(stream);
+        final XtextTokenStream tokenStream = new XtextTokenStream(this.lexer, this.tokenDefProvider);
+        @SuppressWarnings("unchecked")
+        final List<Token> tokens = tokenStream.getTokens();
+        return tokens;
+    }
+
+    /**
+     * Debug tokens.
+     *
+     * @param _tokens the tokens
+     */
+    public void debugTokens(final List<Token> _tokens)
+    {
+        for (int i = 0; i < _tokens.size(); i++) {
+            final Token token = _tokens.get(i);
+            System.out.println("Token type=" + getTokenType(token) + " text=" + token.getText());
+        }
+    }
+
+    /**
+     * Gets the token type.
+     *
+     * @param _token the token
+     * @return the token type
+     */
+    public String getTokenType(final Token _token)
+    {
+        return this.tokenDefProvider.getTokenDefMap().get(_token.getType());
+    }
+
 }

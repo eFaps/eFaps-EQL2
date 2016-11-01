@@ -23,12 +23,12 @@ UpdateStatement:
 ;
 
 ListUpdateStatement:
-    'update' 'list' '(' oids+=OID (',' oids+=OID)* ')' 
+    'update' 'list' '(' oids+=OID (',' oids+=OID)* ')'
 ;
 
 
 ObjectUpdateStatement:
-    'update' ('obj' | 'object') oid=OID 
+    'update' ('obj' | 'object') oid=OID
 ;
 
 QueryUpdateStatement:
@@ -55,15 +55,13 @@ InsertStatement:
     'insert' 'type' typeName=Type 'set' (updateElements+=UpdateElement) (',' updateElements+=UpdateElement)*
 ;
 
-
-
 CIPrintStatement:
     CIPrintTypeStatement | CIPrintFormStatement
 ;
-    
+
 
 CIPrintTypeStatement:
-    'print' 'ci' 'type' name=NAMESTR
+    'print' 'ci' 'type' typeName=Type
 ;
 
 CIPrintFormStatement:
@@ -160,7 +158,7 @@ ClazzName hidden():
 ;
 
 
-enum SimpleSelectElement: 
+enum SimpleSelectElement:
     TYPE='type' | OID='oid' | INSTANCE='instance' | LABEL='label' | ID='id' | UUID='uuid' | NAME='name' |
     CLASS='class' | VALUE='value' | BASE='base' | UOM='uom' | FILE='file' | LENGTH='length' | STATUS='status' | KEY='key'
 ;
