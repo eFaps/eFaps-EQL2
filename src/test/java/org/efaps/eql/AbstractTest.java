@@ -76,7 +76,7 @@ public abstract class AbstractTest
      * @param _object the object
      */
     public void verifyStatement(final String _eqlStmt,
-                                final EQLElement _object)
+                                final IEQLElement _object)
     {
         final IParseResult result = getParser().doParse(_eqlStmt);
         if (result.hasSyntaxErrors()) {
@@ -84,7 +84,7 @@ public abstract class AbstractTest
                 System.out.println(error.getSyntaxErrorMessage());
             }
         }
-        final EQLElement eObject = (EQLElement) result.getRootASTElement();
+        final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
         if (eObject == null) {
             debugTokens(getTokens(_eqlStmt));
         }

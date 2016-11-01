@@ -33,7 +33,7 @@ public class InsertTest
     @Test(description = "insert type")
     public void insert()
     {
-        final Statement stmt = EqlFactory.eINSTANCE.createInsertStatement();
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createInsertStatement();
         verifyStatement("insert type", stmt);
     }
 }

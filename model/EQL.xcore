@@ -8,9 +8,24 @@
     suppressGenModelAnnotations="false",
     binaryCompatibleReflectiveMethods="true",
     forceOverwrite="true",
-    complianceLevel="8.0")
-package org.efaps.eql
+    complianceLevel="8.0",
+    interfaceNamePattern="I{0}",
+    classNamePattern="{0}",
+    copyrightFields="true",
+    copyrightText="Copyright 2003 - 2016 The eFaps Team
 
+Licensed under the Apache License, Version 2.0 (the \"License\");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an \"AS IS\" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.")
+package org.efaps.eql
 
 interface Statement
     extends EQLElement
@@ -20,6 +35,7 @@ interface Statement
 interface ObjectStatement
     extends Statement
 {
+    //@GenModel(suppressedSetVisibility="true")
     String oid
 }
 
@@ -48,12 +64,10 @@ abstract class PrintStatement
 }
 
 class ObjectPrintStatement
-    extends PrintStatement
+    extends PrintStatement, ObjectStatement
 {
-    String oid
-
     op ObjectPrintStatement setOidC(String _oid) {
-        oid = _oid
+        this.oid = _oid
         return this
     }
 
@@ -116,6 +130,7 @@ class ObjectUpdateStatement
         return "update object " + oid
     }
 }
+
 
 class ListUpdateStatement extends UpdateStatement, ListStatement{
 }
@@ -295,7 +310,7 @@ class Selection
     op String eqlStmt() {
         var String ret = "select ";
         var first = true
-        for (Select select : getSelectsList()) {
+        for (ISelect select : getSelectsList()) {
             if (first) {
                 first = false
             } else {
@@ -322,7 +337,7 @@ class Select
     op String eqlStmt() {
         var String ret = " ";
         var first = true
-        for (SelectElement element : getElementsList()) {
+        for (ISelectElement element : getElementsList()) {
             if (first) {
                 first = false
             } else {

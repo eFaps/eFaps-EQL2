@@ -33,7 +33,7 @@ public class ExecuteTest
     @Test(description = "exec | execute")
     public void exec()
     {
-        final Statement stmt = EqlFactory.eINSTANCE.createExecStatement();
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement();
         verifyStatement("exec ", stmt);
         verifyStatement("execute ", stmt);
     }

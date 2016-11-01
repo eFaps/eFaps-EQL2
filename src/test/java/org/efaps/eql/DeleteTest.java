@@ -33,7 +33,7 @@ public class DeleteTest
     @Test(description = "delete obj")
     public void objectDelete()
     {
-        final Statement stmt = EqlFactory.eINSTANCE.createObjectDeleteStatement();
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createObjectDeleteStatement();
         verifyStatement("delete obj", stmt);
         verifyStatement("delete object", stmt);
     }

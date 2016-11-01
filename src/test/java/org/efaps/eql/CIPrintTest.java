@@ -32,7 +32,7 @@ public class CIPrintTest
     @Test(description = "print ci type ")
     public void ciPrintType()
     {
-        final Statement stmt = EqlFactory.eINSTANCE.createCIPrintTypeStatement();
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintTypeStatement();
         verifyStatement("print ci type ", stmt);
 
     }
@@ -43,7 +43,7 @@ public class CIPrintTest
     @Test(description = "print ci form EFaps_InvoiceForm")
     public void ciPrintForm()
     {
-        final Statement stmt = EqlFactory.eINSTANCE.createCIPrintFormStatement().setNameC("EFaps_InvoiceForm");
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintFormStatement().setNameC("EFaps_InvoiceForm");
         verifyStatement("print ci form EFaps_InvoiceForm", stmt);
     }
 }
