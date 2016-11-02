@@ -30,11 +30,22 @@ public class DeleteTest
     /**
      * Object delete.
      */
-    @Test(description = "delete obj")
-    public void objectDelete()
+    @Test(description = "delete obj 123.456")
+    public void obj()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createObjectDeleteStatement();
-        verifyStatement("delete obj", stmt);
-        verifyStatement("delete object", stmt);
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createObjectDeleteStatement().setOidC("123.456");
+        verifyStatement("delete obj 123.456", stmt);
+        verifyStatement("delete object 123.456", stmt);
+    }
+
+    /**
+     * Object delete.
+     */
+    @Test(description = "delete list (123.456, 789.456, 456.123)")
+    public void list()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createListDeleteStatement()
+                        .addOid("123.456").addOid("789.456").addOid("456.123");
+        verifyStatement("delete list (123.456, 789.456, 456.123)", stmt);
     }
 }

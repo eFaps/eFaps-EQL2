@@ -27,38 +27,48 @@ See the License for the specific language governing permissions and
 limitations under the License.")
 package org.efaps.eql
 
-interface Statement
-    extends EQLElement
+interface Statement<T>
+    extends EQLElement, Generic<T>
 {
 }
 
-interface ObjectStatement
-    extends Statement
+interface ObjectStatement<T>
+    extends Statement<T>
 {
     //@GenModel(suppressedSetVisibility="true")
     String oid
+
+    op T setOidC(String _oid) {
+        this.oid = _oid
+        return getThis()
+    }
 }
 
-interface ListStatement
-    extends Statement
+interface ListStatement<T>
+    extends Statement<T>
 {
     String[] oids
+
+    op T addOid(String _oid) {
+        oidsList.add(_oid)
+        return getThis()
+    }
 }
 
-interface QueryStatement
-    extends Statement
+interface QueryStatement<T>
+    extends Statement<T>
 {
     contains Query query
 }
 
-interface UpdateElementsStatement
-    extends Statement
+interface UpdateElementsStatement<T>
+    extends Statement<T>
 {
     contains UpdateElement[] updateElements
 }
 
 abstract class PrintStatement<T>
-    extends Statement, Ordered, Generic<T>
+    extends Statement<T>, Ordered
 {
     contains Selection selection opposite printStatement
 
@@ -69,12 +79,9 @@ abstract class PrintStatement<T>
 }
 
 class ObjectPrintStatement
-    extends PrintStatement<ObjectPrintStatement>, ObjectStatement
+    extends PrintStatement<ObjectPrintStatement>, ObjectStatement<ObjectPrintStatement>
 {
-    op ObjectPrintStatement setOidC(String _oid) {
-        this.oid = _oid
-        return this
-    }
+
 
     op String eqlStmt() {
         var String ret =  "print object " + oid + " "
@@ -90,13 +97,8 @@ class ObjectPrintStatement
 }
 
 class ListPrintStatement
-    extends PrintStatement<ListPrintStatement>, ListStatement
+    extends PrintStatement<ListPrintStatement>, ListStatement<ListPrintStatement>
 {
-    op ListPrintStatement addOid(String _oid) {
-        getOidsList().add(_oid);
-        return this
-    }
-
     op String eqlStmt() {
         var String ret =  "print list ("
         var first = true
@@ -120,12 +122,12 @@ class ListPrintStatement
     }
 }
 
-class UpdateStatement extends UpdateElementsStatement
+class UpdateStatement<T> extends UpdateElementsStatement<T>
 {
 }
 
 class ObjectUpdateStatement
-    extends UpdateStatement, ObjectStatement
+    extends UpdateStatement<ObjectUpdateStatement>, ObjectStatement<ObjectUpdateStatement>
 {
     op String eqlStmt() {
         return "update object " + oid
@@ -133,29 +135,60 @@ class ObjectUpdateStatement
 }
 
 
-class ListUpdateStatement extends UpdateStatement, ListStatement{
+class ListUpdateStatement
+    extends UpdateStatement<ListUpdateStatement>, ListStatement<ListUpdateStatement>
+{
 }
 
-class QueryUpdateStatement extends UpdateStatement, QueryStatement{
+class QueryUpdateStatement
+    extends UpdateStatement<QueryUpdateStatement>, QueryStatement<QueryUpdateStatement>
+{
 }
 
-class DeleteStatement extends Statement
+class DeleteStatement<T>
+    extends Statement<T>
 {
 }
 
 class ObjectDeleteStatement
-    extends DeleteStatement, ObjectStatement
+    extends DeleteStatement<ObjectDeleteStatement>, ObjectStatement<ObjectDeleteStatement>
 {
     op String eqlStmt() {
         return "delete object " + oid
     }
+
+    op ObjectDeleteStatement getThis()
+    {
+        return this
+    }
 }
 
-class ListDeleteStatement extends DeleteStatement, ListStatement
+class ListDeleteStatement
+    extends DeleteStatement<ListDeleteStatement>, ListStatement<ListDeleteStatement>
 {
+     op String eqlStmt() {
+        var String ret =  "delete list ("
+        var first = true
+        for (String oid : getOidsList()) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + ", "
+            }
+            ret = ret + oid
+        }
+        ret = ret + ")"
+        return ret
+    }
+
+    op ListDeleteStatement getThis()
+    {
+        return this
+    }
 }
 
-class QueryDeleteStatement extends DeleteStatement, QueryStatement
+class QueryDeleteStatement
+    extends DeleteStatement<QueryDeleteStatement>, QueryStatement<QueryDeleteStatement>
 {
 }
 
@@ -172,7 +205,7 @@ interface Typed<T>
 }
 
 class InsertStatement
-    extends UpdateElementsStatement, Typed<InsertStatement>
+    extends UpdateElementsStatement<InsertStatement>, Typed<InsertStatement>
 {
     op String eqlStmt() {
         return "insert type " + getTypeName()
@@ -184,12 +217,12 @@ class InsertStatement
     }
 }
 
-interface CIPrintStatement extends Statement
+interface CIPrintStatement<T> extends Statement<T>
 {
 }
 
 class CIPrintTypeStatement
-    extends CIPrintStatement, Typed<CIPrintTypeStatement>
+    extends CIPrintStatement<CIPrintTypeStatement>, Typed<CIPrintTypeStatement>
 {
     op String eqlStmt() {
         return "print ci type " + getTypeName()
@@ -197,7 +230,7 @@ class CIPrintTypeStatement
 }
 
 class CIPrintFormStatement
-    extends CIPrintStatement, Named<CIPrintFormStatement>
+    extends CIPrintStatement<CIPrintFormStatement>, Named<CIPrintFormStatement>
 {
     op String eqlStmt() {
         return "print ci form " + getName()
@@ -223,7 +256,7 @@ class Limit {
 }
 
 class ExecStatement
-    extends Statement
+    extends Statement<ExecStatement>
 {
     String className
 
