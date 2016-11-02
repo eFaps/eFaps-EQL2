@@ -270,6 +270,12 @@ class Limit
 {
     String value = "-1"
 
+    op Limit setValueC(String _value)
+    {
+        setValue(_value)
+        return this
+    }
+
     op String eqlStmt() {
         return "limit " + value
     }
