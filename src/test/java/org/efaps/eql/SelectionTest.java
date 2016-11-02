@@ -674,10 +674,10 @@ public class SelectionTest
     {
         final List<Object[]> ret = new ArrayList<>();
         ret.add(new Object[] { "print obj 123.345 ",
-                        IEqlFactory.eINSTANCE.createObjectPrintStatement().setOidC("123.345")
+                        IEqlFactory.eINSTANCE.createPrintObjectStatement().setOidC("123.345")
                             .setSelectionC(IEqlFactory.eINSTANCE.createSelection()) });
         ret.add(new Object[] { "print list (123.345) ",
-                        IEqlFactory.eINSTANCE.createListPrintStatement().addOid("123.345")
+                        IEqlFactory.eINSTANCE.createPrintListStatement().addOid("123.345")
                             .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
         return ret.iterator();
     }

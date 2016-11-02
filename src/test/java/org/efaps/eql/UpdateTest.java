@@ -32,7 +32,7 @@ public class UpdateTest
     @Test(description = "update obj")
     public void objectUpdate()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createObjectUpdateStatement();
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createUpdateObjectStatement();
         verifyStatement("update obj", stmt);
         verifyStatement("update object", stmt);
     }

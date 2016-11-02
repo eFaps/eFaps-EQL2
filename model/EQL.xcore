@@ -32,7 +32,7 @@ interface Statement<T>
 {
 }
 
-interface ObjectStatement<T>
+interface ObjectStmt<T>
     extends Statement<T>
 {
     //@GenModel(suppressedSetVisibility="true")
@@ -44,7 +44,7 @@ interface ObjectStatement<T>
     }
 }
 
-interface ListStatement<T>
+interface ListStmt<T>
     extends Statement<T>
 {
     String[] oids
@@ -55,13 +55,13 @@ interface ListStatement<T>
     }
 }
 
-interface QueryStatement<T>
+interface QueryStmt<T>
     extends Statement<T>
 {
     contains Query query
 }
 
-interface UpdateElementsStatement<T>
+interface UpdateElementsStmt<T>
     extends Statement<T>
 {
     contains UpdateElement[] updateElements
@@ -78,8 +78,8 @@ abstract class PrintStatement<T>
     }
 }
 
-class ObjectPrintStatement
-    extends PrintStatement<ObjectPrintStatement>, ObjectStatement<ObjectPrintStatement>
+class PrintObjectStatement
+    extends PrintStatement<PrintObjectStatement>, ObjectStmt<PrintObjectStatement>
 {
 
 
@@ -91,13 +91,13 @@ class ObjectPrintStatement
         return ret
     }
 
-    op ObjectPrintStatement getThis() {
+    op PrintObjectStatement getThis() {
         return this
     }
 }
 
-class ListPrintStatement
-    extends PrintStatement<ListPrintStatement>, ListStatement<ListPrintStatement>
+class PrintListStatement
+    extends PrintStatement<PrintListStatement>, ListStmt<PrintListStatement>
 {
     op String eqlStmt() {
         var String ret =  "print list ("
@@ -117,17 +117,25 @@ class ListPrintStatement
         return ret
     }
 
-    op ListPrintStatement getThis() {
+    op PrintListStatement getThis() {
         return this
     }
 }
 
-class UpdateStatement<T> extends UpdateElementsStatement<T>
+class PrintQueryStatement
+    extends PrintStatement<PrintQueryStatement>, QueryStmt<PrintQueryStatement>
+{
+
+}
+
+
+
+class UpdateStatement<T> extends UpdateElementsStmt<T>
 {
 }
 
-class ObjectUpdateStatement
-    extends UpdateStatement<ObjectUpdateStatement>, ObjectStatement<ObjectUpdateStatement>
+class UpdateObjectStatement
+    extends UpdateStatement<UpdateObjectStatement>, ObjectStmt<UpdateObjectStatement>
 {
     op String eqlStmt() {
         return "update object " + oid
@@ -135,13 +143,13 @@ class ObjectUpdateStatement
 }
 
 
-class ListUpdateStatement
-    extends UpdateStatement<ListUpdateStatement>, ListStatement<ListUpdateStatement>
+class UpdateListStatement
+    extends UpdateStatement<UpdateListStatement>, ListStmt<UpdateListStatement>
 {
 }
 
-class QueryUpdateStatement
-    extends UpdateStatement<QueryUpdateStatement>, QueryStatement<QueryUpdateStatement>
+class UpdateQueryStatement
+    extends UpdateStatement<UpdateQueryStatement>, QueryStmt<UpdateQueryStatement>
 {
 }
 
@@ -150,21 +158,21 @@ class DeleteStatement<T>
 {
 }
 
-class ObjectDeleteStatement
-    extends DeleteStatement<ObjectDeleteStatement>, ObjectStatement<ObjectDeleteStatement>
+class DeleteObjectStatement
+    extends DeleteStatement<DeleteObjectStatement>, ObjectStmt<DeleteObjectStatement>
 {
     op String eqlStmt() {
         return "delete object " + oid
     }
 
-    op ObjectDeleteStatement getThis()
+    op DeleteObjectStatement getThis()
     {
         return this
     }
 }
 
-class ListDeleteStatement
-    extends DeleteStatement<ListDeleteStatement>, ListStatement<ListDeleteStatement>
+class DeleteListStatement
+    extends DeleteStatement<DeleteListStatement>, ListStmt<DeleteListStatement>
 {
      op String eqlStmt() {
         var String ret =  "delete list ("
@@ -181,31 +189,21 @@ class ListDeleteStatement
         return ret
     }
 
-    op ListDeleteStatement getThis()
+    op DeleteListStatement getThis()
     {
         return this
     }
 }
 
-class QueryDeleteStatement
-    extends DeleteStatement<QueryDeleteStatement>, QueryStatement<QueryDeleteStatement>
+class DeleteQueryStatement
+    extends DeleteStatement<DeleteQueryStatement>, QueryStmt<DeleteQueryStatement>
 {
 }
 
-interface Typed<T>
-    extends Generic<T>
-{
-    String typeName
 
-    op T setTypeNameC(String _typeName)
-    {
-        setTypeName(_typeName)
-        return getThis()
-    }
-}
 
 class InsertStatement
-    extends UpdateElementsStatement<InsertStatement>, Typed<InsertStatement>
+    extends UpdateElementsStmt<InsertStatement>, Typed<InsertStatement>
 {
     op String eqlStmt() {
         return "insert type " + getTypeName()
@@ -271,10 +269,7 @@ class ExecStatement
     }
 }
 
-interface SelectElement
-    extends EQLElement
-{
-}
+
 
 interface Named<T>
     extends SelectElement, Generic<T>
@@ -285,6 +280,23 @@ interface Named<T>
         setName(_name)
         return getThis()
     }
+}
+
+interface Typed<T>
+    extends Generic<T>
+{
+    String typeName
+
+    op T setTypeNameC(String _typeName)
+    {
+        setTypeName(_typeName)
+        return getThis()
+    }
+}
+
+interface SelectElement
+    extends EQLElement
+{
 }
 
 class LinkfromSelectElement

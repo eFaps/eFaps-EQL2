@@ -33,7 +33,7 @@ public class PrintTest
     @Test(description = "print obj")
     public void objectPrint()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createObjectPrintStatement();
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintObjectStatement();
         verifyStatement("print obj", stmt);
         verifyStatement("print object", stmt);
     }
@@ -44,7 +44,7 @@ public class PrintTest
     @Test(description = "print obj 123.456")
     public void objectPrintOID()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createObjectPrintStatement().setOidC("123.456");
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintObjectStatement().setOidC("123.456");
         verifyStatement("print obj 123.456", stmt);
         verifyStatement("print object 123.456", stmt);
     }
@@ -55,7 +55,7 @@ public class PrintTest
     @Test(description = "print obj 123.456 select attribute[Name]")
     public void objectPrintOIDSelection()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createObjectPrintStatement().setOidC("123.456")
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintObjectStatement().setOidC("123.456")
                         .setSelectionC(IEqlFactory.eINSTANCE.createSelection()
                         .addSelect(IEqlFactory.eINSTANCE.createSelect()
                                         .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement()
@@ -70,7 +70,7 @@ public class PrintTest
     @Test(description = "print list ()")
     public void listPrint()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createListPrintStatement().addOid(null);
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintListStatement().addOid(null);
         verifyStatement("print list ()", stmt);
     }
 
@@ -80,7 +80,7 @@ public class PrintTest
     @Test(description = "print list (123.456)")
     public void listPrintOID()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createListPrintStatement().addOid("123.456");
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintListStatement().addOid("123.456");
         verifyStatement("print list (123.456)", stmt);
     }
 
@@ -90,7 +90,7 @@ public class PrintTest
     @Test(description = "print list (123.456, 223.456, 323.456)")
     public void listPrintOIDs()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createListPrintStatement().addOid("123.456").addOid("223.456")
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintListStatement().addOid("123.456").addOid("223.456")
                         .addOid("323.456");
         verifyStatement("print list (123.456, 223.456, 323.456)", stmt);
     }
@@ -101,7 +101,7 @@ public class PrintTest
     @Test(description = "print list (123.456, 223.456, 323.456) select attribute[Name] ")
     public void listPrintOIDSelection()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createListPrintStatement().addOid("123.456").addOid("223.456")
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintListStatement().addOid("123.456").addOid("223.456")
                         .addOid("323.456").setSelectionC(IEqlFactory.eINSTANCE.createSelection().addSelect(
                                         IEqlFactory.eINSTANCE.createSelect().addElement(IEqlFactory.eINSTANCE
                                                         .createAttributeSelectElement().setNameC("Name"))));

@@ -7,47 +7,46 @@ Statement:
     PrintStatement | UpdateStatement | DeleteStatement | InsertStatement | CIPrintStatement | ExecStatement;
 
 PrintStatement:
-    (ObjectPrintStatement | ListPrintStatement) selection=Selection (order=Order)?;
+    (PrintObjectStatement | PrintListStatement) selection=Selection (order=Order)?;
 
-ObjectPrintStatement:
+PrintObjectStatement:
     'print' ('obj' | 'object') oid=OID
 ;
 
-ListPrintStatement:
+PrintListStatement:
     'print' 'list' '(' oids+=OID (',' oids+=OID)* ')'
 ;
 
 UpdateStatement:
-    (ObjectUpdateStatement | ListUpdateStatement | QueryUpdateStatement)
+    (UpdateObjectStatement | UpdateListStatement | UpdateQueryStatement)
     'set' (updateElements+=UpdateElement) (',' updateElements+=UpdateElement)*
 ;
 
-ListUpdateStatement:
+UpdateListStatement:
     'update' 'list' '(' oids+=OID (',' oids+=OID)* ')'
 ;
 
-
-ObjectUpdateStatement:
+UpdateObjectStatement:
     'update' ('obj' | 'object') oid=OID
 ;
 
-QueryUpdateStatement:
+UpdateQueryStatement:
     'update' query=Query
 ;
 
 DeleteStatement:
-    ObjectDeleteStatement | ListDeleteStatement | QueryDeleteStatement
+    DeleteObjectStatement | DeleteListStatement | DeleteQueryStatement
 ;
 
-ObjectDeleteStatement:
+DeleteObjectStatement:
     'delete' ('obj' | 'object') oid=OID
 ;
 
-ListDeleteStatement:
+DeleteListStatement:
     'delete' 'list' '(' oids+=OID (',' oids+=OID)* ')'
 ;
 
-QueryDeleteStatement:
+DeleteQueryStatement:
     'delete' query=Query
 ;
 

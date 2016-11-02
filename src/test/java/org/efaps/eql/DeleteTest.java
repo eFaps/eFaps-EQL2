@@ -33,7 +33,7 @@ public class DeleteTest
     @Test(description = "delete obj 123.456")
     public void obj()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createObjectDeleteStatement().setOidC("123.456");
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createDeleteObjectStatement().setOidC("123.456");
         verifyStatement("delete obj 123.456", stmt);
         verifyStatement("delete object 123.456", stmt);
     }
@@ -44,7 +44,7 @@ public class DeleteTest
     @Test(description = "delete list (123.456, 789.456, 456.123)")
     public void list()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createListDeleteStatement()
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createDeleteListStatement()
                         .addOid("123.456").addOid("789.456").addOid("456.123");
         verifyStatement("delete list (123.456, 789.456, 456.123)", stmt);
     }
