@@ -399,8 +399,8 @@ public class SelectionTest
      */
     @Test(dataProvider = "PrintStmts", description = "select attribute[Date].format[YYYY-MM-DD] as Algo,"
                     + "attribute[Date].format[MM-YYYY/DD] as Otro")
-    public void multiAttributeFormatAlias(final String _eqlBase,
-                                          final IPrintStatement<?> _printStmt)
+    public void nAttributeFormatAlias(final String _eqlBase,
+                                      final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
                 .addSelect(IEqlFactory.eINSTANCE.createSelect()
@@ -413,6 +413,254 @@ public class SelectionTest
                         .addElement(IEqlFactory.eINSTANCE.createFormatSelectElement().setValueC("MM-YYYY/DD")));
         verifyStatement(_eqlBase + "select attribute[Date].format[YYYY-MM-DD] as Algo, "
                         + "attribute[Date].format[MM-YYYY/DD] as Otro", _printStmt);
+    }
+
+    /**
+     * n Attributes.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "PrintStmts", description = " select attribute[Name1], attribute[Name2],"
+                    + " attribute[Name3], attribute[Name4]")
+    public void nAttributes(final String _eqlBase,
+                            final IPrintStatement<?> _printStmt)
+        throws Exception
+    {
+        _printStmt.getSelection()
+            .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name1")))
+            .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name2")))
+            .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name3")))
+            .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name4")));
+        verifyStatement(_eqlBase + "select attribute[Name1], attribute[Name2], "
+                        + "attribute[Name3], attribute[Name4]", _printStmt);
+    }
+
+    /**
+     * Object print.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select linkto[LinkTo].linkto[Linkto2].attribute[Attribute] "
+                    + "as First, attribute[OneAttribute].base")
+    public void nElements(final String _eqlBase,
+                          final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("First")
+                        .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().setNameC("LinkTo"))
+                        .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().setNameC("Linkto2"))
+                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Attribute")))
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("OneAttribute"))
+                        .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+                                        .setElementC(SimpleSelectElement.BASE)));
+        verifyStatement(_eqlBase + "select linkto[LinkTo].linkto[Linkto2].attribute[Attribute] "
+                        + "as First, attribute[OneAttribute].base", _printStmt);
+    }
+
+    /**
+     * Exec select.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select exec org.efaps.Demo as Test")
+    public void execSelect(final String _eqlBase,
+                           final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("Test")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")));
+        verifyStatement(_eqlBase + "select exec org.efaps.Demo as Test", _printStmt);
+    }
+
+    /**
+     * Exec two selects.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select exec org.efaps.Demo as One, exec org.efaps.esjp.Versuch"
+                    + " as TWO")
+    public void execTwoSelects(final String _eqlBase,
+                               final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("One")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")))
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("TWO")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement()
+                                        .setClassNameC("org.efaps.esjp.Versuch")));
+        verifyStatement(_eqlBase + "select exec org.efaps.Demo as One, exec org.efaps.esjp.Versuch as TWO", _printStmt);
+    }
+
+
+    /**
+     * Exec select parameter.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select exec org.efaps.Demo \"PARA\" as One")
+    public void execSelectParameter(final String _eqlBase,
+                                    final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("One")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
+                                        .addParameter("PARA")));
+        verifyStatement(_eqlBase + "select exec org.efaps.Demo \"PARA\" as One", _printStmt);
+    }
+
+    /**
+     * Exec select two parameters.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select exec org.efaps.Demo \"PARA\", \"Para2\" as One")
+    public void execSelectTwoParameters(final String _eqlBase,
+                                        final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("One")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
+                                        .addParameter("PARA")
+                                        .addParameter("Para2")));
+        verifyStatement(_eqlBase + "select exec org.efaps.Demo \"PARA\", \"Para2\" as One", _printStmt);
+    }
+
+    /**
+     * Exec select parameter number.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select exec org.efaps.Demo 12 as One")
+    public void execSelectParameterNumber(final String _eqlBase,
+                                          final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("One")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
+                                        .addParameter("12")));
+        verifyStatement(_eqlBase + "select exec org.efaps.Demo 12 as One", _printStmt);
+    }
+
+    /**
+     * Exec select two parameter number.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select exec org.efaps.Demo 12,890 as One")
+    public void execSelectTwoParameterNumber(final String _eqlBase,
+                                             final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("One")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
+                                        .addParameter("12").addParameter("890")));
+        verifyStatement(_eqlBase + "select exec org.efaps.Demo 12,890 as One", _printStmt);
+    }
+
+    /**
+     * Exec select mixed parameters.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select exec org.efaps.Demo \"Hallo Welt\", 12, "
+                    + "12, \"StringPara\", 890 as One")
+    public void execSelectMixedParameters(final String _eqlBase,
+                                          final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("One")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
+                                        .addParameter("Hallo Welt").addParameter("12").addParameter("12")
+                                        .addParameter("StringPara").addParameter("890")));
+        verifyStatement(_eqlBase + "select exec org.efaps.Demo \"Hallo Welt\", 12, "
+                        + "12, \"StringPara\", 890 as One", _printStmt);
+    }
+
+    /**
+     * Attribute exec select.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select attribute[AttrName], exec org.efaps.Demo as Test")
+    public void attributeExecSelect(final String _eqlBase,
+                                    final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+            .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("AttrName")))
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("Test")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")));
+        verifyStatement(_eqlBase + "select attribute[AttrName], exec org.efaps.Demo as Test", _printStmt);
+    }
+
+    /**
+     * Attribute alias exec select.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select attribute[AttrName] as Test2, "
+                    + "exec org.efaps.Demo as Test")
+    public void attributeAliasExecSelect(final String _eqlBase,
+                                         final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+            .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("Test2")
+                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("AttrName")))
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("Test")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")));
+        verifyStatement(_eqlBase + "select attribute[AttrName] as Test2, "
+                        + "exec org.efaps.Demo as Test", _printStmt);
+    }
+
+    /**
+     * Exec attribute select.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select exec org.efaps.Demo as Test,"
+                    + "attribute[AttrName] as Test2")
+    public void execAttributeSelect(final String _eqlBase,
+                                    final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .setAliasC("Test")
+                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")))
+                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                                .setAliasC("Test2")
+                                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("AttrName")));
+        verifyStatement(_eqlBase + "select exec org.efaps.Demo as Test,"
+                        + "attribute[AttrName] as Test2", _printStmt);
     }
 
     /**

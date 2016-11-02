@@ -361,9 +361,32 @@ class BaseSelectElement
     }
 }
 
-class ExecSelectElement extends SelectElement {
+class ExecSelectElement
+    extends SelectElement
+{
     String className
+
     String[] parameters
+
+    op ExecSelectElement setClassNameC(String _className)
+    {
+        setClassName(_className)
+        return this
+    }
+
+    op ExecSelectElement addParameter(String _parameter)
+    {
+        parametersList.add(_parameter)
+        return this
+    }
+
+    op String eqlStmt() {
+        var String ret = "execute " + className ;
+        for (String parameter : parametersList) {
+            ret = ret + " " + parameter
+        }
+        return ret
+    }
 }
 
 class Selection
