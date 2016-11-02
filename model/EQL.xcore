@@ -59,6 +59,12 @@ interface QueryStmt<T>
     extends Statement<T>
 {
     contains Query query
+
+    op T setQueryC(Query _query)
+    {
+        setQuery(_query)
+        return getThis()
+    }
 }
 
 interface UpdateElementsStmt<T>
@@ -72,7 +78,7 @@ abstract class PrintStatement<T>
 {
     contains Selection selection opposite printStatement
 
-     op T setSelectionC(Selection _selection) {
+    op T setSelectionC(Selection _selection) {
         setSelection(_selection)
         return getThis()
     }
@@ -81,7 +87,6 @@ abstract class PrintStatement<T>
 class PrintObjectStatement
     extends PrintStatement<PrintObjectStatement>, ObjectStmt<PrintObjectStatement>
 {
-
 
     op String eqlStmt() {
         var String ret =  "print object " + oid + " "
@@ -125,10 +130,21 @@ class PrintListStatement
 class PrintQueryStatement
     extends PrintStatement<PrintQueryStatement>, QueryStmt<PrintQueryStatement>
 {
+    op String eqlStmt() {
+        var String ret =  "print "
+        if (getQuery() != null) {
+            ret = ret + getQuery().eqlStmt()
+        }
+        if (getSelection() != null) {
+            ret = ret + " " + getSelection().eqlStmt()
+        }
+        return ret
+    }
 
+    op PrintQueryStatement getThis() {
+        return this
+    }
 }
-
-
 
 class UpdateStatement<T> extends UpdateElementsStmt<T>
 {
@@ -249,8 +265,14 @@ class OrderElement {
     Boolean desc
 }
 
-class Limit {
+class Limit
+    extends EQLElement
+{
     String value = "-1"
+
+    op String eqlStmt() {
+        return "limit " + value
+    }
 }
 
 class ExecStatement
@@ -517,17 +539,70 @@ class UpdateElement {
     String value
 }
 
-interface BaseQuery {
+abstract class BaseQuery<T>
+    extends EQLElement, Generic<T>
+{
+
     String[] types
+
+    op T addType(String _type)
+    {
+        typesList.add(_type)
+        return getThis
+    }
+
     contains Where where
+
+    op String eqlStmt() {
+        var String ret =  "query type "
+        var first = true
+        for (String aType : typesList) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + ", "
+            }
+            ret = ret + aType
+        }
+        return ret
+    }
 }
 
-class Query extends BaseQuery{
+class Query
+    extends BaseQuery<Query>
+{
+
     contains Limit limit
+
+    op Query setLimitC(Limit _limit)
+    {
+        setLimit(_limit)
+        return this
+    }
+
+    op String eqlStmt() {
+        var ret = super.eqlStmt()
+        if (limit != null) {
+            ret + " " + limit.eqlStmt()
+        }
+        return ret
+    }
+
+    op Query getThis()
+    {
+        return this
+    }
 }
 
-class NestedQuery extends BaseQuery{
+class NestedQuery
+    extends BaseQuery<NestedQuery>
+{
     contains Selection selection
+
+    op NestedQuery getThis()
+    {
+        return this
+    }
 }
 
 enum Comparison

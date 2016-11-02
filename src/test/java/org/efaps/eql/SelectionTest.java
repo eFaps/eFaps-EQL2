@@ -381,7 +381,7 @@ public class SelectionTest
      */
     @Test(dataProvider = "PrintStmts", description = "select attribute[Date].format[YYYY-MM-DD] as Algo")
     public void attributeFormatAlias(final String _eqlBase,
-                                final IPrintStatement<?> _printStmt)
+                                     final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
                 .addSelect(IEqlFactory.eINSTANCE.createSelect()
@@ -679,6 +679,10 @@ public class SelectionTest
         ret.add(new Object[] { "print list (123.345) ",
                         IEqlFactory.eINSTANCE.createPrintListStatement().addOid("123.345")
                             .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
+        ret.add(new Object[] { "print query type EFaps_Type ",
+                        IEqlFactory.eINSTANCE.createPrintQueryStatement()
+                    .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type"))
+                    .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
         return ret.iterator();
     }
 }

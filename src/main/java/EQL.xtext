@@ -7,7 +7,7 @@ Statement:
     PrintStatement | UpdateStatement | DeleteStatement | InsertStatement | CIPrintStatement | ExecStatement;
 
 PrintStatement:
-    (PrintObjectStatement | PrintListStatement) selection=Selection (order=Order)?;
+    (PrintObjectStatement | PrintListStatement | PrintQueryStatement) selection=Selection (order=Order)?;
 
 PrintObjectStatement:
     'print' ('obj' | 'object') oid=OID
@@ -15,6 +15,10 @@ PrintObjectStatement:
 
 PrintListStatement:
     'print' 'list' '(' oids+=OID (',' oids+=OID)* ')'
+;
+
+PrintQueryStatement:
+    'print' query=Query
 ;
 
 UpdateStatement:
