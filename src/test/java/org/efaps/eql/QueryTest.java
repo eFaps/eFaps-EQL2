@@ -123,7 +123,6 @@ public class QueryTest
                         + "ce71ffa1-98f2-49b4-b892-246cd407b520, Sales_Invoice", _queryStmt);
     }
 
-
     /**
      * Ci commands.
      *

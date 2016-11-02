@@ -94,8 +94,12 @@ Where:
 ;
 
 WhereElement:
-    (attribute=Attribute) => comparison=Comparison (values+=(Value | OID | STRING | BOOLEAN) | '(' values+=(Value | OID | STRING | BOOLEAN)
+    (attribute=Attribute | select = WhereSelect) => comparison=Comparison (values+=(Value | OID | STRING | BOOLEAN) | '(' values+=(Value | OID | STRING | BOOLEAN)
     ("," values+=(Value | OID | STRING | BOOLEAN))* ')' | nestedQuery=NestedQuery );
+
+WhereSelect:
+    elements+=SelectElement ('.' elements+=SelectElement)*
+;
 
 
 NestedQuery :

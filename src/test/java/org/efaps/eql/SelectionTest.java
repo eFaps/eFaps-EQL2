@@ -683,6 +683,12 @@ public class SelectionTest
                         IEqlFactory.eINSTANCE.createPrintQueryStatement()
                     .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type"))
                     .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
+        ret.add(new Object[] { "print query type EFaps_Type, ce71ffa1-98f2-49b4-b892-246cd407b520, Sales_Invoice ",
+                        IEqlFactory.eINSTANCE.createPrintQueryStatement()
+                    .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type")
+                                    .addType("ce71ffa1-98f2-49b4-b892-246cd407b520")
+                                    .addType("Sales_Invoice"))
+                    .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
         return ret.iterator();
     }
 }

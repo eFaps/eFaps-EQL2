@@ -42,6 +42,11 @@ interface ObjectStmt<T>
         this.oid = _oid
         return getThis()
     }
+
+    op T oid(String _oid) {
+        this.oid = _oid
+        return getThis()
+    }
 }
 
 interface ListStmt<T>
@@ -65,6 +70,14 @@ interface QueryStmt<T>
         setQuery(_query)
         return getThis()
     }
+
+    op T query()
+    {
+        if (getQuery() == null) {
+            setQuery(IEqlFactory.eINSTANCE.createQuery())
+        }
+        return getThis()
+    }
 }
 
 interface UpdateElementsStmt<T>
@@ -80,6 +93,13 @@ abstract class PrintStatement<T>
 
     op T setSelectionC(Selection _selection) {
         setSelection(_selection)
+        return getThis()
+    }
+
+    op T selection() {
+        if (getSelection == null) {
+            setSelection(IEqlFactory.eINSTANCE.createSelection)
+        }
         return getThis()
     }
 }
@@ -276,8 +296,14 @@ class Limit
         return this
     }
 
+    op Limit value(String _value)
+    {
+        setValue(_value)
+        return this
+    }
+
     op String eqlStmt() {
-        return "limit " + value
+        return "limit " + getValue()
     }
 }
 
@@ -297,13 +323,18 @@ class ExecStatement
     }
 }
 
-
-
 interface Named<T>
     extends SelectElement, Generic<T>
 {
     String name
+
     op T setNameC(String _name)
+    {
+        setName(_name)
+        return getThis()
+    }
+
+    op T name(String _name)
     {
         setName(_name)
         return getThis()
@@ -489,24 +520,12 @@ class Selection
     }
 }
 
-class Select
+abstract class AbstractSelect
     extends EQLElement
 {
-    String alias
+     contains SelectElement[] elements
 
-    contains SelectElement[] elements
-
-    op Select setAliasC(String _alias) {
-        setAlias(_alias)
-        return this
-    }
-
-    op Select addElement(SelectElement _element) {
-        elementsList.add(_element)
-        return this
-    }
-
-    op String eqlStmt() {
+     op String eqlStmt() {
         var String ret = " ";
         var first = true
         for (ISelectElement element : getElementsList()) {
@@ -517,6 +536,32 @@ class Select
             }
             ret = ret + element.eqlStmt()
         }
+        return ret
+    }
+}
+
+class Select
+    extends AbstractSelect
+{
+    String alias
+
+    op Select setAliasC(String _alias) {
+        setAlias(_alias)
+        return this
+    }
+
+    op Select alias(String _alias) {
+        setAlias(_alias)
+        return this
+    }
+
+    op Select addElement(SelectElement _element) {
+        elementsList.add(_element)
+        return this
+    }
+
+    op String eqlStmt() {
+        var String ret = super.eqlStmt()
         if (alias != null) {
             ret = ret + " as " + alias
         }
@@ -529,15 +574,118 @@ class ExecSelectionElement {
     String alias
 }
 
-class Where {
+class Where
+    extends EQLElement
+{
     contains WhereElement[] elements
+
+    op Where addElement(WhereElement _element)
+    {
+        elementsList.add(_element)
+        return this
+    }
+
+    op String eqlStmt() {
+        var String ret = " where ";
+        var first = true
+        for (IWhereElement element : getElementsList()) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + ", "
+            }
+            ret = ret + element.eqlStmt()
+        }
+        return ret
+    }
 }
 
-class WhereElement {
+class WhereElement
+    extends EQLElement
+{
     String attribute
-    contains NestedQuery nestedQuery
-    String[] values
+
+    contains WhereSelect select
+
     Comparison comparison
+
+    String[] values
+
+    contains NestedQuery nestedQuery
+
+    op WhereElement attribute(String _attribute)
+    {
+        setSelect(IEqlFactory.eINSTANCE.createWhereSelect()
+            .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement()
+                .name(_attribute))
+        )
+        return this
+    }
+
+    op WhereElement select(WhereSelect _select)
+    {
+        setSelect(_select)
+        return this
+    }
+
+
+    op WhereElement comparison(Comparison _comparison)
+    {
+        setComparison(_comparison)
+        return this
+    }
+
+    op WhereElement addValue(String _value)
+    {
+        valuesList.add(_value)
+        return this
+    }
+
+    op WhereElement value(String _value)
+    {
+        valuesList.add(_value)
+        return this
+    }
+
+    op String eqlStmt() {
+         var String ret;
+         if (getAttribute() != null) {
+             ret = " attribute[" + getAttribute() + "]"
+         } else if (getSelect() != null) {
+             ret = getSelect().eqlStmt()
+         }
+         ret = ret + " "
+         if (comparison == null) {
+             ret = ret + "eq"
+         } else {
+             ret = ret + comparison.getLiteral()
+         }
+         if (valuesList.size() == 1) {
+            ret = ret + " " + valuesList.get(0)
+         } else {
+             ret = ret + " ("
+             var boolean first = true
+             for (String value : valuesList) {
+                 if (first) {
+                    first = false
+                 } else {
+                    ret = ret + ", "
+                 }
+                 ret = ret + value
+             }
+             ret = ret + ")"
+         }
+         return ret
+     }
+}
+
+class WhereSelect
+     extends AbstractSelect
+{
+     op WhereSelect addElement(SelectElement _element) {
+        elementsList.add(_element)
+        return this
+    }
 }
 
 class UpdateElement {
@@ -551,13 +699,19 @@ abstract class BaseQuery<T>
 
     String[] types
 
+    contains Where where
+
     op T addType(String _type)
     {
         typesList.add(_type)
         return getThis
     }
 
-    contains Where where
+    op T setWhereC(Where _where)
+    {
+        setWhere(_where)
+        return getThis
+    }
 
     op String eqlStmt() {
         var String ret =  "query type "
@@ -570,7 +724,18 @@ abstract class BaseQuery<T>
             }
             ret = ret + aType
         }
+        if (getWhere != null) {
+            ret = ret + getWhere.eqlStmt()
+        }
         return ret
+    }
+
+    op T where()
+    {
+        if (getWhere() == null) {
+           setWhere(IEqlFactory.eINSTANCE.createWhere())
+        }
+        return getThis
     }
 }
 
