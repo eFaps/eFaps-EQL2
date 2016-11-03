@@ -140,32 +140,6 @@ public class WhereTest
     }
 
     /**
-     * Group.
-     *
-     * @param _eqlBase the eql base
-     * @param _stmt the stmt
-     * @throws Exception the exception
-     */
-    @Test(dataProvider = "Stmts", description = "ATTRIBUTE eq NUMBER and (ATTRIBUTE eq number or ATTRIBUTE es Val")
-    public void group(final String _eqlBase,
-                      final IQueryStmt<?> _stmt)
-        throws Exception
-    {
-        _stmt.getQuery().getWhere()
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement()
-                                    .attribute("DocumentLink1").equal().value("4")))
-                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
-                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
-                                    .attribute("Description1").equal().value("567")))
-                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().or()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
-                                    .attribute("Description2").equal().value("555"))));
-        verifyStatement(_eqlBase + "DocumentLink1 == 4 and (Description1 == 567 or Description2 ==555)", _stmt);
-    }
-
-    /**
      * Less num.
      *
      * @param _eqlBase the eql base
@@ -576,6 +550,167 @@ public class WhereTest
                         + "and linkto[DocumentLink3].attribute[DocLink] in (\"567\",\"das it ein langer text\","
                             + "\"Bla bal bal\") "
                         + "and linkto[DocumentLink4].attribute[HouseNumber] > 459", _stmt);
+    }
+
+    /**
+     * Group.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = "T1 and (T2 and T3)")
+    public void group1(final String _eqlBase,
+                      final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                    .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR1").equal().value("1")))
+                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
+                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR2").equal().value("2")))
+                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR3").equal().value("3"))));
+        verifyStatement(_eqlBase + "ATTR1 == 1 and (ATTR2 == 2 and ATTR3 == 3)", _stmt);
+    }
+
+    /**
+     * Group two.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = "(T1 and T2) and T3")
+    public void group2(final String _eqlBase,
+                       final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm()
+                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR1").equal().value("1")))
+                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR2").equal().value("2"))))
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR3").equal().value("3")));
+        verifyStatement(_eqlBase + "(ATTR1 == 1 and ATTR2 == 2) and ATTR3 ==3", _stmt);
+    }
+
+    /**
+     * Group 3.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = " T1 and (T2 and T3) and T4 and T5 and T6")
+    public void group3(final String _eqlBase,
+                       final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR1").equal().value("1")))
+                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
+                        .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                            .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                        .attribute("ATTR2").equal().value("2")))
+                        .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                            .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                        .attribute("ATTR3").equal().value("3"))))
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR4").equal().value("4")))
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR5").equal().value("5")))
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR6").equal().value("6")));
+        verifyStatement(_eqlBase + "ATTR1 == 1 and (ATTR2 == 2 and ATTR3 ==3) "
+                        + "and ATTR4 == 4 and ATTR5 == 5  and ATTR6 == 6 ", _stmt);
+    }
+
+    /**
+     * Group for.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = " T1 and ((T2 and T3) and T4) and T5 and T6")
+    public void group4(final String _eqlBase,
+                       final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("ATTR1").equal().value("1")))
+                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
+                    .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm()
+                        .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                            .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                            .attribute("ATTR2").equal().value("2")))
+                        .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                            .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                            .attribute("ATTR3").equal().value("3"))))
+                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                            .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR4").equal().value("4"))))
+               .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                           .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("ATTR5").equal().value("5")))
+               .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                           .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("ATTR6").equal().value("6")));
+        verifyStatement(_eqlBase + "ATTR1 == 1 and ((ATTR2 == 2 and ATTR3 == 3) and ATTR4 == 4) "
+                        + "and ATTR5 == 5  and ATTR6 == 6 ", _stmt);
+    }
+
+    /**
+     * Group 5.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = "(T1 and ((T2 and T3) and (T4 and T5))) and T6 ")
+    public void group5(final String _eqlBase,
+                       final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm()
+                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("ATTR1").equal().value("1")))
+                    .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
+                        .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm()
+                            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                            .attribute("ATTR2").equal().value("2")))
+                            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                            .attribute("ATTR3").equal().value("3"))))
+                        .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
+                            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                            .attribute("ATTR4").equal().value("4")))
+                            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                            .attribute("ATTR5").equal().value("5"))))))
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                            .attribute("ATTR6").equal().value("6")));
+        verifyStatement(_eqlBase + "(ATTR1 == 1 and ((ATTR2 == 2 and ATTR3 == 3) and (ATTR4 == 4 "
+                        + "and ATTR5 == 5)))  and ATTR6 == 6 ", _stmt);
     }
 
     /**
