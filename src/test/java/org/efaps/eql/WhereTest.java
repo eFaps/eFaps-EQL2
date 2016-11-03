@@ -47,13 +47,12 @@ public class WhereTest
                        final IQueryStmt<?> _stmt)
         throws Exception
     {
-        _stmt.getQuery().getWhere()
-                .addElement(IEqlFactory.eINSTANCE.createWhereElement()
-                        .attribute("Name").comparison(Comparison.EQUAL).value("true"));
-        verifyStatement(_eqlBase + "Name == true", _stmt);
-        verifyStatement(_eqlBase + "attribute[Name] == true", _stmt);
-        verifyStatement(_eqlBase + "Name eq true", _stmt);
-        verifyStatement(_eqlBase + "attribute[Name] eq true", _stmt);
+        _stmt.getQuery().getWhere().element().attribute("Name").comparison(Comparison.EQUAL).value("true");
+        verifyStatement(_eqlBase + "Name == true ", _stmt);
+        verifyStatement(_eqlBase + "attribute[Name] == true ", _stmt);
+        verifyStatement(_eqlBase + "Name eq true ", _stmt);
+        verifyStatement(_eqlBase + "attribute[Name] eq true ", _stmt);
+        verifyStatement(_eqlBase + "attribute[Name] eq true ", _stmt);
     }
 
     /**
@@ -68,9 +67,7 @@ public class WhereTest
                         final IQueryStmt<?> _stmt)
         throws Exception
     {
-        _stmt.getQuery().getWhere()
-                .addElement(IEqlFactory.eINSTANCE.createWhereElement()
-                            .attribute("Name").comparison(Comparison.EQUAL).value("false"));
+        _stmt.getQuery().getWhere().element().attribute("Name").equal().value("false");
         verifyStatement(_eqlBase + "Name == false", _stmt);
         verifyStatement(_eqlBase + "attribute[Name] == false", _stmt);
         verifyStatement(_eqlBase + "Name eq false", _stmt);
@@ -89,9 +86,7 @@ public class WhereTest
                       final IQueryStmt<?> _stmt)
         throws Exception
     {
-        _stmt.getQuery().getWhere()
-                .addElement(IEqlFactory.eINSTANCE.createWhereElement()
-                    .attribute("DocumentLink").comparison(Comparison.EQUAL).value("4"));
+        _stmt.getQuery().getWhere().element().attribute("DocumentLink").equal().value("4");
         verifyStatement(_eqlBase + "DocumentLink == 4", _stmt);
         verifyStatement(_eqlBase + "attribute[DocumentLink] == 4", _stmt);
         verifyStatement(_eqlBase + "DocumentLink eq 4", _stmt);
@@ -111,10 +106,8 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-                .addElement(IEqlFactory.eINSTANCE.createWhereElement()
-                            .attribute("DocumentLink").comparison(Comparison.EQUAL).value("4"))
-                .addElement(IEqlFactory.eINSTANCE.createWhereElement()
-                                .attribute("Description").comparison(Comparison.EQUAL).value("567"));
+            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().element().attribute("DocumentLink").equal().value("4"))
+            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().attribute("Name").equal().value("4"));
         verifyStatement(_eqlBase + "DocumentLink == 4 and Description == 567", _stmt);
         verifyStatement(_eqlBase + "attribute[DocumentLink] == 4 and attribute[Description] == 567", _stmt);
         verifyStatement(_eqlBase + "DocumentLink eq 4 and Description eq 567", _stmt);

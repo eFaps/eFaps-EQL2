@@ -83,14 +83,24 @@ UpdateElement:
     attribute=Attribute '=' value=(NUM | STRING)
 ;
 
-
 ExecSelectionElement:
     index=NUM (=> 'as' alias=Alias)?
 ;
 
-
 Where:
-    'where' elements+=WhereElement ('and' elements+=WhereElement)*
+    'where' terms+=(WhereElementTerm | WhereGroupTerm)+
+;
+
+WhereTerm:
+    WhereElementTerm | WhereGroupTerm
+;
+
+WhereElementTerm:
+    connection=Connection? element=WhereElement
+;
+
+WhereGroupTerm:
+    connection=Connection? '(' terms+=(WhereElementTerm | WhereGroupTerm)+ ')'
 ;
 
 WhereElement:
@@ -106,7 +116,6 @@ NestedQuery :
     '(' 'query' ('type' types+=Type) (',' types+=Type)* (where=Where)? (selection=Selection)? ')'
 ;
 
-
 Value:
     NUM;
 
@@ -115,6 +124,10 @@ OID:
 
 enum Comparison:
     EQUAL='==' | EQUAL='eq' | LESS='<' | GREATER='>' | UNEQUAL='!=' | LIKE='like' | IN='in' | NOTIN='not in';
+
+enum Connection:
+    AND='and' | OR='or'
+;
 
 Selection:
     'select' selects+=Select (',' selects+=Select)*;

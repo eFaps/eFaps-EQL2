@@ -577,28 +577,124 @@ class ExecSelectionElement {
 class Where
     extends EQLElement
 {
-    contains WhereElement[] elements
+    contains WhereTerm[] terms
 
-    op Where addElement(WhereElement _element)
+    op Where addTerm(WhereTerm _term)
     {
-        elementsList.add(_element)
+        termsList.add(_term)
         return this
     }
 
+    op WhereElementTerm term()
+    {
+        var IWhereElementTerm ret = IEqlFactory.eINSTANCE.createWhereElementTerm
+        termsList.add(ret)
+        return ret
+    }
+
+    op WhereElement element()
+    {
+        var IWhereElementTerm term = term()
+        termsList.add(term)
+        return term.element()
+    }
+
+    op WhereElement and()
+    {
+        var IWhereElementTerm term = term()
+        termsList.add(term)
+        term.and()
+        return term.element()
+    }
+
+    op WhereElement or()
+    {
+        var IWhereElementTerm term = term()
+        termsList.add(term)
+        term.or()
+        return term.element()
+    }
+
+    op WhereGroupTerm group()
+    {
+        var IWhereGroupTerm ret = IEqlFactory.eINSTANCE.createWhereGroupTerm
+        termsList.add(ret)
+        return ret
+    }
+
     op String eqlStmt() {
-        var String ret = " where ";
-        var first = true
-        for (IWhereElement element : getElementsList()) {
-            if (first) {
-                first = false
-            } else {
-                ret = ret + ", "
-            }
-            ret = ret + element.eqlStmt()
+        var String ret = " where "
+        for (IWhereTerm term : getTermsList()) {
+            ret = ret + term.eqlStmt()
         }
         return ret
     }
 }
+
+abstract class WhereTerm
+    extends EQLElement
+{
+     Connection connection
+
+     op String eqlStmt() {
+          var String ret = ""
+          if (getConnection() != null) {
+              ret = ret + " " + getConnection().getLiteral()
+          }
+          return ret
+     }
+
+     op WhereTerm and()
+     {
+         connection = Connection.AND
+         return this
+     }
+
+      op WhereTerm or()
+     {
+         connection = Connection.OR
+         return this
+     }
+}
+
+class WhereElementTerm
+    extends WhereTerm
+{
+    contains WhereElement element
+
+    op WhereElement element()
+    {
+        if (getElement() == null) {
+            element = IEqlFactory.eINSTANCE.createWhereElement
+        }
+        return getElement()
+    }
+
+
+    op String eqlStmt() {
+        var String ret = super.eqlStmt()
+        if (getElement() != null) {
+            ret = ret + getElement().eqlStmt()
+        }
+        return ret
+    }
+}
+
+class WhereGroupTerm
+    extends WhereTerm
+{
+    contains WhereTerm[] terms
+
+    op String eqlStmt() {
+        var String ret = super.eqlStmt()
+        for (IWhereTerm term : getTermsList()) {
+            ret = ret + term.eqlStmt()
+        }
+        return ret
+    }
+}
+
+
 
 class WhereElement
     extends EQLElement
@@ -632,6 +728,12 @@ class WhereElement
     op WhereElement comparison(Comparison _comparison)
     {
         setComparison(_comparison)
+        return this
+    }
+
+    op WhereElement equal()
+    {
+        setComparison(Comparison.EQUAL)
         return this
     }
 
@@ -774,6 +876,15 @@ class NestedQuery
     {
         return this
     }
+}
+
+enum Connection
+{
+    NONE as ""
+
+    AND as "and"
+
+    OR as "or"
 }
 
 enum Comparison
