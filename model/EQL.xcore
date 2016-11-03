@@ -80,10 +80,39 @@ interface QueryStmt<T>
     }
 }
 
-interface UpdateElementsStmt<T>
+class UpdateElementsStmt<T>
     extends Statement<T>
 {
     contains UpdateElement[] updateElements
+
+    op T addUpdateElements(UpdateElement _element)
+    {
+        updateElementsList.add(_element)
+        return getThis()
+    }
+
+    op T update(String _attribute, String _value)
+    {
+        var element =  IEqlFactory.eINSTANCE.createUpdateElement()
+        updateElementsList.add(element)
+        element.attribute(_attribute)
+        element.value(_value)
+        return getThis()
+    }
+
+    op String eqlStmt() {
+        var String ret =  " set "
+        var first = true
+        for (IUpdateElement ele : getUpdateElementsList()) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + ", "
+            }
+            ret = ret + ele.eqlStmt()
+        }
+        return ret
+    }
 }
 
 abstract class PrintStatement<T>
@@ -252,7 +281,11 @@ class InsertStatement
     extends UpdateElementsStmt<InsertStatement>, Typed<InsertStatement>
 {
     op String eqlStmt() {
-        return "insert type " + getTypeName()
+        var ret = "insert type " + getTypeName()
+        if (updateElementsList.size > 0) {
+            ret = ret + super.eqlStmt()
+        }
+        return ret
     }
 
     op InsertStatement getThis()
@@ -991,9 +1024,28 @@ class WhereSelect
     }
 }
 
-class UpdateElement {
+class UpdateElement
+    extends EQLElement
+{
     String attribute
+
     String value
+
+    op UpdateElement attribute(String _attribute)
+    {
+        setAttribute(_attribute)
+        return this
+    }
+
+    op UpdateElement value(String _value)
+    {
+        setValue(_value)
+        return this
+    }
+
+    op String eqlStmt() {
+        return attribute + " = " + value
+    }
 }
 
 abstract class BaseQuery<T>
