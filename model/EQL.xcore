@@ -577,9 +577,9 @@ class ExecSelectionElement {
 class Where
     extends EQLElement
 {
-    contains WhereTerm[] terms
+    contains WhereTerm<?>[] terms
 
-    op Where addTerm(WhereTerm _term)
+    op Where addTerm(WhereTerm<?> _term)
     {
         termsList.add(_term)
         return this
@@ -624,15 +624,15 @@ class Where
 
     op String eqlStmt() {
         var String ret = " where "
-        for (IWhereTerm term : getTermsList()) {
+        for (IWhereTerm<?> term : getTermsList()) {
             ret = ret + term.eqlStmt()
         }
         return ret
     }
 }
 
-abstract class WhereTerm
-    extends EQLElement
+abstract class WhereTerm<T>
+    extends EQLElement, Generic<T>
 {
      Connection connection
 
@@ -644,21 +644,21 @@ abstract class WhereTerm
           return ret
      }
 
-     op WhereTerm and()
+     op T and()
      {
          connection = Connection.AND
-         return this
+         return getThis()
      }
 
-      op WhereTerm or()
+      op T or()
      {
          connection = Connection.OR
-         return this
+         return getThis()
      }
 }
 
 class WhereElementTerm
-    extends WhereTerm
+    extends WhereTerm<WhereElementTerm>
 {
     contains WhereElement element
 
@@ -670,6 +670,11 @@ class WhereElementTerm
         return getElement()
     }
 
+    op WhereElementTerm element(WhereElement _element)
+    {
+        setElement(_element)
+        return this
+    }
 
     op String eqlStmt() {
         var String ret = super.eqlStmt()
@@ -678,23 +683,31 @@ class WhereElementTerm
         }
         return ret
     }
+
+    op WhereElementTerm getThis()
+    {
+       return this
+    }
 }
 
 class WhereGroupTerm
-    extends WhereTerm
+    extends WhereTerm<WhereGroupTerm>
 {
-    contains WhereTerm[] terms
+    contains WhereTerm<?>[] terms
 
     op String eqlStmt() {
         var String ret = super.eqlStmt()
-        for (IWhereTerm term : getTermsList()) {
+        for (IWhereTerm<?> term : getTermsList()) {
             ret = ret + term.eqlStmt()
         }
         return ret
     }
+
+    op WhereGroupTerm getThis()
+    {
+       return this
+    }
 }
-
-
 
 class WhereElement
     extends EQLElement

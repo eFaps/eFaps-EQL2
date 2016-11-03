@@ -106,8 +106,10 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().element().attribute("DocumentLink").equal().value("4"))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().attribute("Name").equal().value("4"));
+            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("DocumentLink").equal().value("4")))
+            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
+                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Description").equal().value("567")));
         verifyStatement(_eqlBase + "DocumentLink == 4 and Description == 567", _stmt);
         verifyStatement(_eqlBase + "attribute[DocumentLink] == 4 and attribute[Description] == 567", _stmt);
         verifyStatement(_eqlBase + "DocumentLink eq 4 and Description eq 567", _stmt);
