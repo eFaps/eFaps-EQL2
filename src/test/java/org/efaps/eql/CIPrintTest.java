@@ -38,12 +38,45 @@ public class CIPrintTest
     }
 
     /**
+     * Ci print type.
+     */
+    @Test(description = "print ci type EFaps_Type")
+    public void ciPrintTypeName()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintTypeStatement().typeName("EFaps_Type");
+        verifyStatement("print ci type EFaps_Type", stmt);
+    }
+
+    /**
+     * Ci print type.
+     */
+    @Test(description = "print ci type f84716ca-fd71-44ff-9907-0493e2165776")
+    public void ciPrintTypeUUID()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintTypeStatement()
+                        .typeName("f84716ca-fd71-44ff-9907-0493e2165776");
+        verifyStatement("print ci type f84716ca-fd71-44ff-9907-0493e2165776", stmt);
+    }
+
+    /**
      * Ci print form.
      */
     @Test(description = "print ci form EFaps_InvoiceForm")
-    public void ciPrintForm()
+    public void ciPrintFormName()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintFormStatement().setNameC("EFaps_InvoiceForm");
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintFormStatement()
+                        .name("EFaps_InvoiceForm");
         verifyStatement("print ci form EFaps_InvoiceForm", stmt);
+    }
+
+    /**
+     * Ci print form.
+     */
+    @Test(description = "print ci form f84716ca-fd71-44ff-9907-0493e2165776")
+    public void ciPrintFormUUID()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintFormStatement()
+                        .name("f84716ca-fd71-44ff-9907-0493e2165776");
+        verifyStatement("print ci form f84716ca-fd71-44ff-9907-0493e2165776", stmt);
     }
 }

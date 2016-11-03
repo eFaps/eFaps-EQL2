@@ -251,7 +251,8 @@ class InsertStatement
     }
 }
 
-interface CIPrintStatement<T> extends Statement<T>
+interface CIPrintStatement<T>
+    extends Statement<T>
 {
 }
 
@@ -260,6 +261,11 @@ class CIPrintTypeStatement
 {
     op String eqlStmt() {
         return "print ci type " + getTypeName()
+    }
+
+    op CIPrintTypeStatement getThis()
+    {
+        return this
     }
 }
 
@@ -347,6 +353,12 @@ interface Typed<T>
     String typeName
 
     op T setTypeNameC(String _typeName)
+    {
+        setTypeName(_typeName)
+        return getThis()
+    }
+
+    op T typeName(String _typeName)
     {
         setTypeName(_typeName)
         return getThis()

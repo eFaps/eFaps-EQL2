@@ -68,7 +68,7 @@ CIPrintTypeStatement:
 ;
 
 CIPrintFormStatement:
-    'print' 'ci' 'form' name=NAMESTR
+    'print' 'ci' 'form' name=Type
 ;
 
 ExecStatement:
