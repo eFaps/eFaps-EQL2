@@ -30,11 +30,184 @@ public class ExecuteTest
     /**
      * Exec.
      */
-    @Test(description = "exec | execute")
+    @Test(description = "org.efaps.demo.Test")
     public void exec()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement();
-        verifyStatement("exec ", stmt);
-        verifyStatement("execute ", stmt);
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test");
+        verifyStatement("exec org.efaps.demo.Test", stmt);
+        verifyStatement("execute org.efaps.demo.Test", stmt);
+    }
+
+    /**
+     * Exec esjp one numeric parameter.
+     */
+    @Test(description = "org.efaps.demo.Test 2")
+    public void execEsjpOneNumericParameter()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addParameter("2");
+        verifyStatement("exec org.efaps.demo.Test 2", stmt);
+        verifyStatement("execute org.efaps.demo.Test 2", stmt);
+    }
+
+    /**
+     * Exec esjp two numeric parameter.
+     */
+    @Test(description = "exec org.efaps.demo.Test 2, 44")
+    public void execEsjpTwoNumericParameter()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addParameter("2").addParameter("44");
+        verifyStatement("exec org.efaps.demo.Test 2, 44", stmt);
+        verifyStatement("execute org.efaps.demo.Test 2, 44", stmt);
+    }
+
+    /**
+     * Exec esjp many numeric parameter.
+     */
+    @Test(description = "exec org.efaps.demo.Test 2, 44, 4, 567")
+    public void execEsjpManyNumericParameter()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addParameter("2").addParameter("44").addParameter("4").addParameter("567");
+        verifyStatement("exec org.efaps.demo.Test 2, 44, 4, 567", stmt);
+        verifyStatement("execute org.efaps.demo.Test 2, 44, 4, 567", stmt);
+    }
+
+    /**
+     * Exec esjp one string parameter.
+     */
+    @Test(description = "exec org.efaps.demo.Test \"ABC DE D\"")
+    public void execEsjpOneStringParameter()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addParameter("ABC DE D");
+        verifyStatement("exec org.efaps.demo.Test \"ABC DE D\"", stmt);
+        verifyStatement("execute org.efaps.demo.Test \"ABC DE D\"", stmt);
+    }
+
+    /**
+     * Exec esjp two string parameter.
+     */
+    @Test(description = "org.efaps.demo.Test \"ABC DE D\", \"another string\"")
+    public void execEsjpTwoStringParameter()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addParameter("ABC DE D").addParameter("another string");
+        verifyStatement("exec org.efaps.demo.Test \"ABC DE D\", \"another string\"", stmt);
+        verifyStatement("execute org.efaps.demo.Test \"ABC DE D\", \"another string\"", stmt);
+    }
+
+    /**
+     * Exec esjp many string parameter.
+     */
+    @Test(description = "org.efaps.demo.Test \"ABC DE D\", \"another string\", \"Third one\"")
+    public void execEsjpManyStringParameter()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addParameter("ABC DE D").addParameter("another string").addParameter("Third one");
+        verifyStatement("exec org.efaps.demo.Test \"ABC DE D\", \"another string\", \"Third one\"", stmt);
+        verifyStatement("execute org.efaps.demo.Test \"ABC DE D\", \"another string\", \"Third one\"", stmt);
+    }
+
+    /**
+     * Exec esjp mixed parameters.
+     */
+    @Test(description = "exec org.efaps.demo.Test \"ABC DE D\", 2, \"Third one\"")
+    public void execEsjpMixedParameters()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addParameter("ABC DE D").addParameter("2").addParameter("Third one");
+        verifyStatement("exec org.efaps.demo.Test \"ABC DE D\", 2, \"Third one\"", stmt);
+        verifyStatement("execute org.efaps.demo.Test \"ABC DE D\", 2, \"Third one\"", stmt);
+    }
+
+    /**
+     * Exec esjp one mapping.
+     */
+    @Test(description = "org.efaps.demo.Test select 1 as Key")
+    public void execEsjpOneMapping()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("1").alias("Key"));
+        verifyStatement("exec org.efaps.demo.Test select 1 as Key", stmt);
+    }
+
+    /**
+     * Exec esjp two mapping.
+     */
+    @Test(description = "org.efaps.demo.Test select 1 as Key, 5 as Demo")
+    public void execEsjpTwoMapping()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("1").alias("Key"))
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("5").alias("Demo"));
+        verifyStatement("exec org.efaps.demo.Test select 1 as Key, 5 as Demo", stmt);
+    }
+
+    /**
+     * Exec esjp many mapping.
+     */
+    @Test(description = "org.efaps.demo.Test select 1 as Key, 5 as Demo, 8 as etwas")
+    public void execEsjpManyMapping()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("1").alias("Key"))
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("5").alias("Demo"))
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("8").alias("etwas"));
+        verifyStatement("exec org.efaps.demo.Test select 1 as Key, 5 as Demo, 8 as etwas", stmt);
+    }
+
+    /**
+     * Exec esjp parameters mapping.
+     */
+    @Test(description = "org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key")
+    public void execEsjpParametersMapping()
+    {
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addParameter("Param1 with space").addParameter("ABCDE")
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("1").alias("Key"));
+        verifyStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key", stmt);
+    }
+
+    /**
+     * Exec esjp many parameters mapping two.
+     */
+    @Test(description = "org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key, 2 as demo")
+    public void execEsjpManyParametersMapping2()
+    {
+        //("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key, 2 as Demo");
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addParameter("Param1 with space").addParameter("ABCDE")
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("1").alias("Key"))
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("2").alias("demo"));
+        verifyStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key, 2 as demo", stmt);
+    }
+
+    /**
+     * Exec esjp many parameters mapping 3.
+     */
+    @Test(description = "exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1, 2 as demo, 8")
+    public void execEsjpManyParametersMapping3()
+    {
+      //("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1 as Key, 2 as Demo");
+        final IEQLElement stmt = IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                        .addParameter("Param1 with space").addParameter("ABCDE")
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("1"))
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("2").alias("demo"))
+                        .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                                        .index("8"));
+        verifyStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1, 2 as demo, 8", stmt);
     }
 }

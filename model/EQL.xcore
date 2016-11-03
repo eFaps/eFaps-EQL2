@@ -292,13 +292,60 @@ class CIPrintFormStatement
     }
 }
 
-class Order {
+class Order
+    extends EQLElement
+{
     contains OrderElement[] elements
+
+    op Order addElement(OrderElement _element)
+    {
+        elementsList.add(_element)
+        return this
+    }
+
+    op String eqlStmt() {
+        var String ret =  "order by "
+        var first = true
+        for (IOrderElement ele : getElementsList()) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + ", "
+            }
+            ret = ret + ele.eqlStmt()
+        }
+        return ret
+    }
 }
 
-class OrderElement {
+class OrderElement
+    extends EQLElement
+{
     String key
+
     Boolean desc
+
+    op OrderElement key(String _key)
+    {
+        setKey(_key)
+        return this
+    }
+
+    op OrderElement desc(boolean  _desc)
+    {
+        setDesc(_desc)
+        return this
+    }
+
+    op String eqlStmt() {
+        var String ret = key
+        if (desc) {
+            ret = ret + "desc"
+        } else {
+            ret = ret + "asc"
+        }
+        return ret
+    }
 }
 
 class Limit
@@ -330,12 +377,66 @@ class ExecStatement
 
     String[] parameters
 
-    contains ExecSelectionElement[] selects
+    contains ExecSelectionElement[] selections
 
     contains Order order
 
+    op ExecStatement className(String _className)
+    {
+        setClassName(_className)
+        return this
+    }
+
+    op ExecStatement addParameter(String _parameter)
+    {
+        parametersList.add(_parameter)
+        return this
+    }
+
+    op ExecStatement addSelection(ExecSelectionElement _selection)
+    {
+        selectionsList.add(_selection)
+        return this
+    }
+
+    op ExecStatement order(Order _order)
+    {
+        setOrder(_order)
+        return this
+    }
+
     op String eqlStmt() {
-        return "execute " + getClassName()
+        var String ret = "execute " + getClassName()
+        var first = true
+        for (String para : getParametersList()) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + ", "
+            }
+            ret = ret + para
+        }
+        if (getSelectionsList().size() > 0) {
+            ret = ret + " select "
+            first = true
+            for (IExecSelectionElement select : getSelectionsList()) {
+                if (first) {
+                    first = false
+                } else {
+                    ret = ret + ", "
+                }
+                ret = ret + select.eqlStmt()
+            }
+        }
+        if (getOrder() != null) {
+            ret  = ret + getOrder().eqlStmt()
+        }
+        return ret
+    }
+
+    op ExecStatement getThis()
+    {
+        return this
     }
 }
 
@@ -591,9 +692,30 @@ class Select
     }
 }
 
-class ExecSelectionElement {
+class ExecSelectionElement
+    extends EQLElement
+{
     String index
+
     String alias
+
+    op ExecSelectionElement index(String _index) {
+        setIndex(_index)
+        return this
+    }
+
+    op ExecSelectionElement alias(String _alias) {
+        setAlias(_alias)
+        return this
+    }
+
+    op String eqlStmt() {
+        var String ret = index
+        if (alias != null) {
+            ret = ret + " as " + alias
+        }
+        return ret
+    }
 }
 
 class Where

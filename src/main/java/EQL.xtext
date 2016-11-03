@@ -73,7 +73,7 @@ CIPrintFormStatement:
 
 ExecStatement:
     ('exec' | 'execute') className=ClazzName (parameters+=(NUM | STRING) (',' parameters+=(NUM | STRING))*)? ('select'
-    selects+=ExecSelectionElement (',' selects+=ExecSelectionElement)*)? (order=Order)?;
+    selections+=ExecSelectionElement (',' selections+=ExecSelectionElement)*)? (order=Order)?;
 
 
 Query:
