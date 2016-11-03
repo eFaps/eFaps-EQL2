@@ -757,6 +757,43 @@ class WhereElement
         return this
     }
 
+    op WhereElement unequal()
+    {
+        setComparison(Comparison.UNEQUAL)
+        return this
+    }
+
+    op WhereElement less()
+    {
+        setComparison(Comparison.LESS)
+        return this
+    }
+
+    op WhereElement greater()
+    {
+        setComparison(Comparison.GREATER)
+        return this
+    }
+
+    op WhereElement like()
+    {
+        setComparison(Comparison.LIKE)
+        return this
+    }
+
+    op WhereElement in()
+    {
+        setComparison(Comparison.IN)
+        return this
+    }
+
+
+    op WhereElement notin()
+    {
+        setComparison(Comparison.NOTIN)
+        return this
+    }
+
     op WhereElement addValue(String _value)
     {
         valuesList.add(_value)
