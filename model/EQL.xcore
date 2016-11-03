@@ -234,9 +234,19 @@ class DeleteListStatement
 class DeleteQueryStatement
     extends DeleteStatement<DeleteQueryStatement>, QueryStmt<DeleteQueryStatement>
 {
+    op String eqlStmt() {
+        var String ret =  "delete "
+        if (getQuery() != null) {
+            ret = ret + getQuery().eqlStmt()
+        }
+        return ret
+    }
+
+    op DeleteQueryStatement getThis()
+    {
+        return this
+    }
 }
-
-
 
 class InsertStatement
     extends UpdateElementsStmt<InsertStatement>, Typed<InsertStatement>

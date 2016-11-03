@@ -136,6 +136,9 @@ public class QueryTest
         ret.add(new Object[] { "print query ",
                         IEqlFactory.eINSTANCE.createPrintQueryStatement()
                     .setQueryC(IEqlFactory.eINSTANCE.createQuery())});
+        ret.add(new Object[] { "delete query ",
+                        IEqlFactory.eINSTANCE.createDeleteQueryStatement()
+                    .setQueryC(IEqlFactory.eINSTANCE.createQuery())});
         return ret.iterator();
     }
 }
