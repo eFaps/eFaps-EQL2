@@ -695,11 +695,18 @@ class WhereGroupTerm
 {
     contains WhereTerm<?>[] terms
 
+    op WhereGroupTerm addTerm(WhereTerm<?> _term)
+    {
+        termsList.add(_term)
+        return this
+    }
+
     op String eqlStmt() {
-        var String ret = super.eqlStmt()
+        var String ret = super.eqlStmt() + " ("
         for (IWhereTerm<?> term : getTermsList()) {
             ret = ret + term.eqlStmt()
         }
+        ret = ret + ")"
         return ret
     }
 

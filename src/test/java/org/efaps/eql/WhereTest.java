@@ -100,7 +100,7 @@ public class WhereTest
      * @param _stmt the stmt
      * @throws Exception the exception
      */
-    @Test(dataProvider = "Stmts", description = "where ATTRIBUTE eq NUMBER and ATTRIBUTE eq number")
+    @Test(dataProvider = "Stmts", description = "ATTRIBUTE eq NUMBER and ATTRIBUTE eq number")
     public void eqNumAndEqNum(final String _eqlBase,
                               final IQueryStmt<?> _stmt)
         throws Exception
@@ -114,23 +114,55 @@ public class WhereTest
         verifyStatement(_eqlBase + "attribute[DocumentLink] == 4 and attribute[Description] == 567", _stmt);
         verifyStatement(_eqlBase + "DocumentLink eq 4 and Description eq 567", _stmt);
         verifyStatement(_eqlBase + "attribute[DocumentLink] eq 4 and attribute[Description] eq 567", _stmt);
-
     }
 
-    @Test(dataProvider = "Stmts", description = "where ATTRIBUTE == NUMBER")
+    /**
+     * Equals num.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = "ATTRIBUTE eq NUMBER or ATTRIBUTE eq number")
     public void equalsNum(final String _eqlBase,
-                        final IQueryStmt<?> _stmt)
+                          final IQueryStmt<?> _stmt)
         throws Exception
     {
-        //       final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink == 4");
+        _stmt.getQuery().getWhere()
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("DocumentLink").equal().value("4")))
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().or()
+                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Description").equal().value("567")));
+        verifyStatement(_eqlBase + "DocumentLink == 4 or Description == 567", _stmt);
+        verifyStatement(_eqlBase + "attribute[DocumentLink] == 4 or attribute[Description] == 567", _stmt);
+        verifyStatement(_eqlBase + "DocumentLink eq 4 or Description eq 567", _stmt);
+        verifyStatement(_eqlBase + "attribute[DocumentLink] eq 4 or attribute[Description] eq 567", _stmt);
     }
 
-    @Test(dataProvider = "Stmts", description = "where ATTRIBUTE == NUMBER and ATTRIBUTE == number")
-    public void equalsNumAndEqualsNum(final String _eqlBase,
-                        final IQueryStmt<?> _stmt)
+    /**
+     * Group.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = "ATTRIBUTE eq NUMBER and (ATTRIBUTE eq number or ATTRIBUTE es Val")
+    public void group(final String _eqlBase,
+                      final IQueryStmt<?> _stmt)
         throws Exception
     {
-        //       final Statement stmt = getStatement("print query type Sales_Invoice where DocumentLink == 4 and Description == 567");
+        _stmt.getQuery().getWhere()
+                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                    .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("DocumentLink1").equal().value("4")))
+                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
+                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("Description1").equal().value("567")))
+                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().or()
+                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                    .attribute("Description2").equal().value("555"))));
+        verifyStatement(_eqlBase + "DocumentLink1 == 4 and (Description1 == 567 or Description2 ==555)", _stmt);
     }
 
     @Test(dataProvider = "Stmts", description = "where ATTRIBUTE < NUMBER")
