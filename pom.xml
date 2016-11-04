@@ -354,24 +354,9 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.xtext</groupId>
-            <artifactId>org.eclipse.xtext.ui</artifactId>
-            <version>${xtext-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.xtext</groupId>
             <artifactId>org.eclipse.xtext.ide</artifactId>
             <version>${xtext-version}</version>
         </dependency>
-
-        <dependency>
-    <groupId>org.eclipse.xtext</groupId>
-    <artifactId>org.eclipse.xtext.web</artifactId>
-    <version>${xtext-version}</version>
-</dependency>
-
-
-
-
         <dependency>
             <groupId>org.eclipse.xtext</groupId>
             <artifactId>org.eclipse.xtext.xtext</artifactId>
