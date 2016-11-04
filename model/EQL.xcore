@@ -122,7 +122,7 @@ class UpdateElementsStmt<T>
 }
 
 abstract class PrintStatement<T>
-    extends Statement<T>, Ordered
+    extends Statement<T>, Ordered<T>
 {
     contains Selection selection opposite printStatement
 
@@ -174,6 +174,9 @@ class PrintListStatement
         if (getSelection() != null) {
             ret = ret + " " + getSelection().eqlStmt()
         }
+        if (getOrder() != null) {
+            ret  = ret + getOrder().eqlStmt()
+        }
         return ret
     }
 
@@ -192,6 +195,9 @@ class PrintQueryStatement
         }
         if (getSelection() != null) {
             ret = ret + " " + getSelection().eqlStmt()
+        }
+        if (getOrder() != null) {
+            ret  = ret + getOrder().eqlStmt()
         }
         return ret
     }
@@ -377,6 +383,28 @@ class CIPrintFormStatement
     }
 }
 
+
+interface Ordered<T>
+    extends Generic<T>, EQLElement
+{
+    contains Order order
+
+    op T order(Order _order)
+    {
+        setOrder(_order)
+        return getThis()
+    }
+
+    op T orderBy(String _key, boolean _desc)
+    {
+        if (getOrder() == null) {
+            setOrder(IEqlFactory.eINSTANCE.createOrder)
+        }
+        getOrder().addElement(_key, _desc)
+        return getThis()
+    }
+}
+
 class Order
     extends EQLElement
 {
@@ -388,8 +416,16 @@ class Order
         return this
     }
 
+    op Order addElement(String _key, boolean _desc)
+    {
+        var ele = IEqlFactory.eINSTANCE.createOrderElement
+        ele.key(_key).desc(_desc)
+        elementsList.add(ele)
+        return this
+    }
+
     op String eqlStmt() {
-        var String ret =  "order by "
+        var String ret =  " order by "
         var first = true
         for (IOrderElement ele : getElementsList()) {
             if (first) {
@@ -408,7 +444,7 @@ class OrderElement
 {
     String key
 
-    Boolean desc
+    boolean desc = "false"
 
     op OrderElement key(String _key)
     {
@@ -456,15 +492,13 @@ class Limit
 }
 
 class ExecStatement
-    extends Statement<ExecStatement>
+    extends Statement<ExecStatement>, Ordered<ExecStatement>
 {
     String className
 
     String[] parameters
 
     contains ExecSelectionElement[] selections
-
-    contains Order order
 
     op ExecStatement className(String _className)
     {
@@ -481,12 +515,6 @@ class ExecStatement
     op ExecStatement addSelection(ExecSelectionElement _selection)
     {
         selectionsList.add(_selection)
-        return this
-    }
-
-    op ExecStatement order(Order _order)
-    {
-        setOrder(_order)
         return this
     }
 
@@ -1233,9 +1261,6 @@ enum SimpleSelectElement
     KEY as "key"
 }
 
-interface Ordered {
-    contains Order order
-}
 
 interface EQLElement
 {
