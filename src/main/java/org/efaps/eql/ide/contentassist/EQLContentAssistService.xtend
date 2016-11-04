@@ -16,19 +16,18 @@
  */
 package org.efaps.eql.ide.contentassist
 
-import org.eclipse.xtext.ide.editor.contentassist.antlr.ContentAssistContextFactory
-import com.google.inject.Provider
 import com.google.inject.Inject
-import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalProvider
+import com.google.inject.Provider
+import java.util.Arrays
+import java.util.HashSet
+import java.util.List
+import java.util.concurrent.Executors
+import org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext
+import org.eclipse.xtext.ide.editor.contentassist.ContentAssistEntry
+import org.eclipse.xtext.ide.editor.contentassist.IIdeContentProposalAcceptor
+import org.eclipse.xtext.ide.editor.contentassist.antlr.ContentAssistContextFactory
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.ITextRegion
-import org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext
-import java.util.concurrent.Executors
-import java.util.List
-import java.util.HashSet
-import org.eclipse.xtext.ide.editor.contentassist.IIdeContentProposalAcceptor
-import java.util.Arrays
-import org.eclipse.xtext.ide.editor.contentassist.ContentAssistEntry
 
 /**
  * The Class EQLContentAssistService.
@@ -41,27 +40,27 @@ class EQLContentAssistService
     Provider<ContentAssistContextFactory> contextFactoryProvider
 
     @Inject
-    IdeContentProposalProvider proposalProvider
+    EQLProposalProvider proposalProvider
 
-    def createProposals(XtextResource resource, String text, ITextRegion selection, int caretOffset, int limit)
+    def createProposals(XtextResource _resource, String _text, ITextRegion _selection, int _caretOffset, int _limit)
     {
-        val contexts = getContexts(resource, text, selection, caretOffset)
-        return createProposals(Arrays.asList(contexts), limit)
+        val contexts = getContexts(_resource, _text, _selection, _caretOffset)
+        return createProposals(Arrays.asList(contexts), _limit)
     }
 
-    def private ContentAssistContext[] getContexts(XtextResource resource, String text, ITextRegion selection,
-        int caretOffset)
+    def private ContentAssistContext[] getContexts(XtextResource _resource, String _text, ITextRegion _selection,
+        int _caretOffset)
     {
-        if (caretOffset > text.length)
+        if (_caretOffset > _text.length)
             return #[]
         val contextFactory = contextFactoryProvider.get() => [pool = Executors.newCachedThreadPool]
-        contextFactory.create(text, selection, caretOffset, resource)
+        contextFactory.create(_text, _selection, _caretOffset, _resource)
     }
 
-    def private createProposals(List<ContentAssistContext> contexts, int proposalsLimit)
+    def private createProposals(List<ContentAssistContext> _contexts, int _proposalsLimit)
     {
         val result = newArrayList
-        if (!contexts.empty)
+        if (!_contexts.empty)
         {
             val proposals = new HashSet<Pair<Integer, ContentAssistEntry>>
             val acceptor = new IIdeContentProposalAcceptor
@@ -75,11 +74,11 @@ class EQLContentAssistService
 
                 override canAcceptMoreProposals()
                 {
-                    proposals.size < proposalsLimit
+                    proposals.size < _proposalsLimit
                 }
             }
 
-            proposalProvider.createProposals(contexts, acceptor)
+            proposalProvider.createProposals(_contexts, acceptor)
 
             result.addAll(proposals.sortWith [ p1, p2 |
                 val prioResult = p2.key.compareTo(p1.key)

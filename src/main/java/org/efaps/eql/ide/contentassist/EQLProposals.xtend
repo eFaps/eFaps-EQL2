@@ -16,17 +16,17 @@
  */
 package org.efaps.eql.ide.contentassist
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import java.util.HashSet
-import java.util.Set
-import java.util.List
-import java.util.ArrayList
-import org.efaps.eql.EQLStandaloneSetup
-import java.io.ByteArrayInputStream
 import com.google.common.base.Charsets
+import java.io.ByteArrayInputStream
+import java.util.ArrayList
+import java.util.HashSet
+import java.util.List
+import java.util.Set
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.TextRegion
+import org.efaps.eql.EQLStandaloneSetup
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * The Class EQLProposals.

@@ -16,21 +16,60 @@
  */
 package org.efaps.eql.ide.contentassist
 
-import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalProvider
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ide.editor.contentassist.IIdeContentProposalAcceptor
+import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalProvider
 
 /**
  * The Class EQLProposalProvider.
  *
  * @author The eFaps Team
  */
-class EQLProposalProvider extends IdeContentProposalProvider
+class EQLProposalProvider
+    extends IdeContentProposalProvider
 {
-    override dispatch createProposals(RuleCall ruleCall, ContentAssistContext context,
-        IIdeContentProposalAcceptor acceptor)
+    override dispatch createProposals(RuleCall _ruleCall,
+        ContentAssistContext _context,
+        IIdeContentProposalAcceptor _acceptor)
     {
-         println(ruleCall.rule.name)
+        println(_ruleCall.rule.name)
+        switch (_ruleCall.rule.name)
+        {
+            case "OID":
+            {
+                val entry = proposalCreator.createProposal("132.456", _context);
+                val priority = proposalPriorities.getKeywordPriority("132.456", entry);
+                _acceptor.accept(entry, priority)
+            }
+            case "Type":
+            {
+                val prefix = _context.getPrefix();
+                if (prefix.isEmpty())
+                {
+                    var entry = proposalCreator.createProposal("CITYPE", _context);
+                    val priority = proposalPriorities.getKeywordPriority("CITYPE", entry);
+                    _acceptor.accept(entry, priority)
+                }
+                else
+                {
+                    for (provider : EQLProposals.getCINameProviders())
+                    {
+                        for (type : provider.getTypeNames())
+                        {
+                            if (type.startsWith(prefix))
+                            {
+                                var entry = proposalCreator.createProposal(type, _context);
+                                val priority = proposalPriorities.getKeywordPriority(type, entry);
+                                _acceptor.accept(entry, priority)
+                            }
+                        }
+                    }
+                }
+            }
+            default:
+            {
+            }
+        }
     }
 }

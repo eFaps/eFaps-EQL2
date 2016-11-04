@@ -53,6 +53,8 @@ public class ContentTest
             {
                 final Set<String> ret = new HashSet<>();
                 ret.add("Sales_Invoice");
+                ret.add("Sales_Receipt");
+                ret.add("Contacts_Contact");
                 return ret;
             }
         });
@@ -86,9 +88,9 @@ public class ContentTest
         final List<Object[]> ret = new ArrayList<>();
         ret.add(new Object[] { "print ", Arrays.asList(new String[] { "ci", "obj", "object", "list", "query" }) });
 
-        ret.add(new Object[] { "print obj ", Arrays.asList(new String[] {  }) });
+        ret.add(new Object[] { "print obj ", Arrays.asList(new String[] { "132.456" }) });
 
-        ret.add(new Object[] { "print obj 123.456", Arrays.asList(new String[] { "select" }) });
+        ret.add(new Object[] { "print obj 123.456 ", Arrays.asList(new String[] { "select" }) });
 
         ret.add(new Object[] { "print obj 123.456 select ", Arrays.asList(new String[] { "value", "attribute[",
                         "attributeset[", "base", "class", "class[", "exec", "execute", "file", "id",
@@ -107,6 +109,18 @@ public class ContentTest
                                         "instance", "key", "label", "length", "linkfrom[", "linkto[", "name",
                                         "oid", "status", "type", "uom", "uuid", "value" }) });
 
+        ret.add(new Object[] { "print query ",
+                        Arrays.asList(new String[] { "type" }) });
+
+        ret.add(new Object[] { "print query type ",
+                        Arrays.asList(new String[] { "CITYPE" }) });
+
+        ret.add(new Object[] { "print query type S",
+                        Arrays.asList(new String[] { "Sales_Invoice", "Sales_Receipt",
+                                        "limit", "select", "where", "," }) });
+
+        ret.add(new Object[] { "print query type C",
+                        Arrays.asList(new String[] { "Contacts_Contact", "limit", "select", "where", "," }) });
         return ret.iterator();
     }
 }
