@@ -78,6 +78,12 @@ interface QueryStmt<T>
         }
         return getThis()
     }
+
+    op T query(Query _query)
+    {
+        setQuery(_query)
+        return getThis()
+    }
 }
 
 class UpdateElementsStmt<T>
@@ -203,7 +209,16 @@ class UpdateObjectStatement
     extends UpdateStatement<UpdateObjectStatement>, ObjectStmt<UpdateObjectStatement>
 {
     op String eqlStmt() {
-        return "update object " + oid
+        var ret = "update object " + getOid()
+        if (updateElementsList.size > 0) {
+            ret = ret + super.eqlStmt()
+        }
+        return ret
+    }
+
+    op UpdateObjectStatement getThis()
+    {
+        return this
     }
 }
 
@@ -211,11 +226,48 @@ class UpdateObjectStatement
 class UpdateListStatement
     extends UpdateStatement<UpdateListStatement>, ListStmt<UpdateListStatement>
 {
+    op String eqlStmt() {
+        var ret = "update list ("
+        var first = true
+        for (String oid : getOidsList()) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + ", "
+            }
+            ret = ret + oid
+        }
+        ret = ret + ")"
+        if (updateElementsList.size > 0) {
+            ret = ret + super.eqlStmt()
+        }
+        return ret
+    }
+
+    op UpdateListStatement getThis()
+    {
+        return this
+    }
 }
 
 class UpdateQueryStatement
     extends UpdateStatement<UpdateQueryStatement>, QueryStmt<UpdateQueryStatement>
 {
+    op String eqlStmt() {
+        var String ret =  "update "
+        if (getQuery() != null) {
+            ret = ret + getQuery().eqlStmt()
+        }
+        if (updateElementsList.size > 0) {
+            ret = ret + super.eqlStmt()
+        }
+        return ret
+    }
+
+    op UpdateQueryStatement getThis()
+    {
+        return this
+    }
 }
 
 class DeleteStatement<T>
@@ -1046,6 +1098,11 @@ class UpdateElement
     op String eqlStmt() {
         return attribute + " = " + value
     }
+
+    op UpdateElement getThis()
+    {
+        return this
+    }
 }
 
 abstract class BaseQuery<T>
@@ -1090,6 +1147,12 @@ abstract class BaseQuery<T>
         if (getWhere() == null) {
            setWhere(IEqlFactory.eINSTANCE.createWhere())
         }
+        return getThis
+    }
+
+    op T where(Where _where)
+    {
+        setWhere(_where)
         return getThis
     }
 }

@@ -676,19 +676,30 @@ public class SelectionTest
         ret.add(new Object[] { "print obj 123.345 ",
                         IEqlFactory.eINSTANCE.createPrintObjectStatement().setOidC("123.345")
                             .setSelectionC(IEqlFactory.eINSTANCE.createSelection()) });
+
         ret.add(new Object[] { "print list (123.345) ",
                         IEqlFactory.eINSTANCE.createPrintListStatement().addOid("123.345")
                             .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
+
         ret.add(new Object[] { "print query type EFaps_Type ",
                         IEqlFactory.eINSTANCE.createPrintQueryStatement()
                     .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type"))
                     .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
+
         ret.add(new Object[] { "print query type EFaps_Type, ce71ffa1-98f2-49b4-b892-246cd407b520, Sales_Invoice ",
                         IEqlFactory.eINSTANCE.createPrintQueryStatement()
                     .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type")
                                     .addType("ce71ffa1-98f2-49b4-b892-246cd407b520")
                                     .addType("Sales_Invoice"))
                     .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
+
+        ret.add(new Object[] { "print query type EFaps_Type where attribute[DocumentLink] == 4 ",
+                        IEqlFactory.eINSTANCE.createPrintQueryStatement()
+                        .setSelectionC(IEqlFactory.eINSTANCE.createSelection())
+                    .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type")
+                    .where(IEqlFactory.eINSTANCE.createWhere().addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                                    .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                                    .attribute("DocumentLink").equal().value("4")))))});
         return ret.iterator();
     }
 }

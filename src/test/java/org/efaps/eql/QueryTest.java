@@ -135,10 +135,15 @@ public class QueryTest
         final List<Object[]> ret = new ArrayList<>();
         ret.add(new Object[] { "print query ",
                         IEqlFactory.eINSTANCE.createPrintQueryStatement()
-                    .setQueryC(IEqlFactory.eINSTANCE.createQuery())});
+                    .query(IEqlFactory.eINSTANCE.createQuery())});
+
         ret.add(new Object[] { "delete query ",
                         IEqlFactory.eINSTANCE.createDeleteQueryStatement()
-                    .setQueryC(IEqlFactory.eINSTANCE.createQuery())});
+                    .query(IEqlFactory.eINSTANCE.createQuery())});
+
+        ret.add(new Object[] { "update query ",
+                    IEqlFactory.eINSTANCE.createUpdateQueryStatement()
+                        .query(IEqlFactory.eINSTANCE.createQuery())});
         return ret.iterator();
     }
 }
