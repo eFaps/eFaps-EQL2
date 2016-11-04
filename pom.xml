@@ -259,7 +259,7 @@
                             </includes>
                         </fileset>
                         <fileset>
-                            <directory>${basedir}/src/main/xtext-gen/</directory>
+                            <directory>${basedir}/src/main/xtend-gen/</directory>
                             <includes>
                                 <include>**/*</include>
                             </includes>
@@ -354,6 +354,26 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.xtext</groupId>
+            <artifactId>org.eclipse.xtext.ui</artifactId>
+            <version>${xtext-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.xtext</groupId>
+            <artifactId>org.eclipse.xtext.ide</artifactId>
+            <version>${xtext-version}</version>
+        </dependency>
+
+        <dependency>
+    <groupId>org.eclipse.xtext</groupId>
+    <artifactId>org.eclipse.xtext.web</artifactId>
+    <version>${xtext-version}</version>
+</dependency>
+
+
+
+
+        <dependency>
+            <groupId>org.eclipse.xtext</groupId>
             <artifactId>org.eclipse.xtext.xtext</artifactId>
             <version>${xtext-version}</version>
             <optional>true</optional>
@@ -388,6 +408,22 @@
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
             <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.scout.sdk.deps</groupId>
+            <artifactId>org.eclipse.jface.text</artifactId>
+            <version>3.11.0.v20160505-1301</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.scout.sdk.deps</groupId>
+                    <artifactId>org.eclipse.core.runtime</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>

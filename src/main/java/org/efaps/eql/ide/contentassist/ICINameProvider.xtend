@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2015 The eFaps Team
+ * Copyright 2003 - 2016 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,16 @@
  * limitations under the License.
  *
  */
+package org.efaps.eql.ide.contentassist
 
-
-package org.efaps.eql.stmt;
-
-import java.util.List;
-import java.util.Map;
-
+import java.util.Set
 
 /**
- * TODO comment!
+ * The ICINameProvider.
  *
  * @author The eFaps Team
  */
-public class PrintStmt
-    extends AbstractPrintStmt
+interface ICINameProvider
 {
-
-    @Override
-    public List<Map<String, Object>> getData()
-        throws Exception
-    {
-        return null;
-    }
-
+    def Set<String> getTypeNames()
 }

@@ -16,17 +16,26 @@
  */
 package org.efaps.eql;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.Token;
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.nodemodel.SyntaxErrorMessage;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
 import org.eclipse.xtext.parser.antlr.Lexer;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
+import org.eclipse.xtext.validation.AbstractInjectableValidator;
 import org.efaps.eql.parser.antlr.EQLParser;
+import org.efaps.eql.validation.EQLValidator;
 import org.testng.Assert;
 
 import com.google.inject.Inject;
@@ -50,6 +59,17 @@ public abstract class AbstractTest
     /** The token def provider. */
     @Inject
     private ITokenDefProvider tokenDefProvider;
+
+    /** The validator. */
+    @Inject
+    private EQLValidator validator;
+
+
+    /** The diagnostic. */
+    private BasicDiagnostic diagnostic;
+
+    /** The syntax errors. */
+    private final List<SyntaxErrorMessage> syntaxErrors = new ArrayList<>();
 
     /**
      * Instantiates a new abstract test.
@@ -79,14 +99,27 @@ public abstract class AbstractTest
                                 final IEQLElement _object)
     {
         final IParseResult result = getParser().doParse(_eqlStmt);
+        this.syntaxErrors.clear();
         if (result.hasSyntaxErrors()) {
             for (final INode error : result.getSyntaxErrors()) {
-                System.out.println(error.getSyntaxErrorMessage());
+                this.syntaxErrors.add(error.getSyntaxErrorMessage());
             }
         }
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
         if (eObject == null) {
             debugTokens(getTokens(_eqlStmt));
+        } else {
+            setDiagnostic(new BasicDiagnostic());
+            final Map<Object, Object> context = new HashMap<>();
+            context.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, "org.efaps.eql.EQL");
+            this.validator.validate(eObject, getDiagnostic(), context);
+            final TreeIterator<EObject> iterator = eObject.eAllContents();
+            while (iterator.hasNext()) {
+                final EObject nextObj = iterator.next();
+                if (nextObj != null) {
+                    this.validator.validate(nextObj, getDiagnostic(), context);
+                }
+            }
         }
         Assert.assertEquals(eObject.eqlStmt(), _object.eqlStmt());
     }
@@ -131,4 +164,33 @@ public abstract class AbstractTest
         return this.tokenDefProvider.getTokenDefMap().get(_token.getType());
     }
 
+    /**
+     * Gets the diagnostic.
+     *
+     * @return the diagnostic
+     */
+    public BasicDiagnostic getDiagnostic()
+    {
+        return this.diagnostic;
+    }
+
+    /**
+     * Sets the diagnostic.
+     *
+     * @param _diagnostic the new diagnostic
+     */
+    public void setDiagnostic(final BasicDiagnostic _diagnostic)
+    {
+        this.diagnostic = _diagnostic;
+    }
+
+    /**
+     * Gets the syntax errors.
+     *
+     * @return the syntax errors
+     */
+    public List<SyntaxErrorMessage> getSyntaxErrors()
+    {
+        return this.syntaxErrors;
+    }
 }

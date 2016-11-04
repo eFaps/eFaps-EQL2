@@ -17,15 +17,87 @@
 package org.efaps.eql
 
 import org.efaps.eql.converter.ValueConverters
-
+import org.eclipse.jface.viewers.ILabelProvider
+import org.eclipse.xtext.ui.editor.hover.IEObjectHover
+import org.eclipse.jface.viewers.ILabelProviderListener
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.jface.text.ITextViewer
+import org.eclipse.jface.text.IRegion
+import org.eclipse.xtext.ide.LexerIdeBindings
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-class EQLRuntimeModule
-    extends AbstractEQLRuntimeModule
+class EQLRuntimeModule extends AbstractEQLRuntimeModule
 {
-    override bindIValueConverterService() {
-       return typeof(ValueConverters)
+    override bindIValueConverterService()
+    {
+        return typeof(ValueConverters)
+    }
+
+    def configureILabelProvider(com.google.inject.Binder _binder)
+    {
+        _binder.bind(typeof(org.eclipse.jface.viewers.ILabelProvider)).annotatedWith(
+            typeof(org.eclipse.xtext.ui.editor.contentassist.ContentProposalLabelProvider)).to(typeof(Fake));
+    }
+
+    def configureContentLexer(com.google.inject.Binder _binder)
+    {
+        _binder.bind(typeof(org.eclipse.xtext.ide.editor.contentassist.antlr.internal.Lexer)).annotatedWith(
+            com.google.inject.name.Names.named(LexerIdeBindings.CONTENT_ASSIST)).to(
+            typeof(org.efaps.eql.ide.contentassist.antlr.internal.InternalEQLLexer));
+    }
+
+    def Class<? extends org.eclipse.xtext.ui.editor.hover.IEObjectHover> bindIHover()
+    {
+        return typeof(Fake)
+    }
+
+    def Class<? extends org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext.Builder> bindContextBuilder()
+    {
+        return typeof(org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext.Builder)
+    }
+
+
+    def Class<? extends org.eclipse.xtext.ide.editor.contentassist.antlr.IContentAssistParser> bindContentAssistParser()
+    {
+        return typeof(org.efaps.eql.ide.contentassist.antlr.EQLParser)
+    }
+
+
+    static class Fake implements ILabelProvider, IEObjectHover
+    {
+
+        override getImage(Object element)
+        {
+            null
+        }
+
+        override getText(Object element)
+        {
+            null
+        }
+
+        override addListener(ILabelProviderListener listener)
+        {
+        }
+
+        override dispose()
+        {
+        }
+
+        override isLabelProperty(Object element, String property)
+        {
+            false
+        }
+
+        override removeListener(ILabelProviderListener listener)
+        {
+        }
+
+        override getHoverInfo(EObject eObject, ITextViewer textViewer, IRegion hoverRegion)
+        {
+            null
+        }
     }
 }
