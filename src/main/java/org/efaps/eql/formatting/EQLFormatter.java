@@ -19,7 +19,6 @@ package org.efaps.eql.formatting;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
-import org.eclipse.xtext.util.Pair;
 
 /**
  * This class contains custom formatting declarations.
@@ -30,27 +29,27 @@ import org.eclipse.xtext.util.Pair;
  *
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an
  * example
- *
- * @author The eFaps Team
  */
 public class EQLFormatter
     extends AbstractDeclarativeFormatter
 {
 
     @Override
-    protected void configureFormatting(final FormattingConfig c)
+    protected void configureFormatting(final FormattingConfig _fconf)
     {
-        final org.efaps.eql.services.EQLGrammarAccess f = (org.efaps.eql.services.EQLGrammarAccess) getGrammarAccess();
-        for (final Pair<Keyword, Keyword> pair : f.findKeywordPairs("{", "}")) {
-            c.setIndentation(pair.getFirst(), pair.getSecond());
-            c.setLinewrap(1).after(pair.getFirst());
-            c.setLinewrap(1).before(pair.getSecond());
-            c.setLinewrap(1).after(pair.getSecond());
+        final org.efaps.eql.services.EQLGrammarAccess gr = (org.efaps.eql.services.EQLGrammarAccess) getGrammarAccess();
+
+        for (final Keyword comma : gr.findKeywords(",", "]")) {
+            _fconf.setNoLinewrap().before(comma);
+            _fconf.setNoSpace().before(comma);
         }
-        for (final Keyword comma : f.findKeywords(",")) {
-            c.setNoLinewrap().before(comma);
-            c.setNoSpace().before(comma);
-            c.setLinewrap().after(comma);
+
+        for (final Keyword keyWord : gr.findKeywords("linkto[", "attribute[")) {
+            _fconf.setNoSpace().after(keyWord);
+        }
+
+        for (final Keyword keyWord : gr.findKeywords(".")) {
+            _fconf.setNoSpace().around(keyWord);
         }
     }
 }
