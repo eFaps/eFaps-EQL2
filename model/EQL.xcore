@@ -146,7 +146,7 @@ class PrintObjectStatement
     op String eqlStmt() {
         var String ret =  "print object " + oid + " "
         if (getSelection() != null) {
-            ret = ret + " " + getSelection().eqlStmt()
+            ret = ret + getSelection().eqlStmt()
         }
         return ret
     }
@@ -742,7 +742,7 @@ class Selection
     }
 
     op String eqlStmt() {
-        var String ret = "select ";
+        var String ret = " select ";
         var first = true
         for (ISelect select : getSelectsList()) {
             if (first) {
@@ -986,6 +986,12 @@ class WhereElement
 
     contains NestedQuery nestedQuery
 
+    op WhereElement nestedQuery(NestedQuery _nestedQuery)
+    {
+        setNestedQuery(_nestedQuery)
+        return this
+    }
+
     op WhereElement attribute(String _attribute)
     {
         setSelect(IEqlFactory.eINSTANCE.createWhereSelect()
@@ -1076,20 +1082,24 @@ class WhereElement
          } else {
              ret = ret + comparison.getLiteral()
          }
-         if (valuesList.size() == 1) {
-            ret = ret + " " + valuesList.get(0)
-         } else {
-             ret = ret + " ("
-             var boolean first = true
-             for (String value : valuesList) {
-                 if (first) {
-                    first = false
-                 } else {
-                    ret = ret + ", "
+         if (getNestedQuery() == null) {
+             if (valuesList.size() == 1) {
+                ret = ret + " " + valuesList.get(0)
+             } else {
+                 ret = ret + " ("
+                 var boolean first = true
+                 for (String value : valuesList) {
+                     if (first) {
+                        first = false
+                     } else {
+                        ret = ret + ", "
+                     }
+                     ret = ret + value
                  }
-                 ret = ret + value
+                 ret = ret + ")"
              }
-             ret = ret + ")"
+         } else {
+             ret = ret + getNestedQuery().eqlStmt()
          }
          return ret
      }
@@ -1154,7 +1164,7 @@ abstract class BaseQuery<T>
     }
 
     op String eqlStmt() {
-        var String ret =  "query type "
+        var String ret =  " query type "
         var first = true
         for (String aType : typesList) {
             if (first) {
@@ -1216,9 +1226,24 @@ class NestedQuery
 {
     contains Selection selection
 
+    op NestedQuery selection(Selection _selection)
+    {
+        setSelection(_selection)
+        return this
+    }
+
     op NestedQuery getThis()
     {
         return this
+    }
+
+    op String eqlStmt() {
+        var ret = "( " + super.eqlStmt()
+        if (getSelection() != null) {
+            ret = ret + getSelection() .eqlStmt()
+        }
+        ret = ret + " )"
+        return ret
     }
 }
 

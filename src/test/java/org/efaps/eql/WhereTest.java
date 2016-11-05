@@ -553,6 +553,101 @@ public class WhereTest
     }
 
     /**
+     * Attr in list.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = " where ID in (1, 6, 7)")
+    public void attrInList(final String _eqlBase,
+                           final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("ID").in().addValue("1")
+                                    .addValue("6").addValue("7")));
+        verifyStatement(_eqlBase + "ID in (1, 6, 7)", _stmt);
+    }
+
+    /**
+     * Attr in query.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = "where Invoice in ( query type Sales_Invoice select "
+                    + "attribute[FromLink] )")
+    public void attrInQuery(final String _eqlBase,
+                            final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Invoice").in()
+                        .nestedQuery(IEqlFactory.eINSTANCE.createNestedQuery()
+                                    .addType("Sales_Invoice").selection(
+                                        IEqlFactory.eINSTANCE.createSelection()
+                                        .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("FromLink")))))));
+
+        verifyStatement(_eqlBase + "Invoice in ( query type Sales_Invoice select attribute[FromLink] )", _stmt);
+    }
+
+    /**
+     * Attr in query two.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = "where Invoice in ( query type Sales_Invoice where attribute[ID] == 15 "
+                    + "select attribute[FromLink]  )")
+    public void attrInQuery2(final String _eqlBase,
+                             final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Invoice").in()
+                    .nestedQuery(IEqlFactory.eINSTANCE.createNestedQuery().addType("Sales_Invoice")
+                        .where(IEqlFactory.eINSTANCE.createWhere()
+                            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                                            .attribute("ID").equal().value("15"))))
+                .selection(IEqlFactory.eINSTANCE.createSelection()
+                                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                                    .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("FromLink")
+                                ))))));
+
+        verifyStatement(_eqlBase + "Invoice in ( query type Sales_Invoice where attribute[ID] == 15 "
+                        + "select attribute[FromLink])", _stmt);
+    }
+
+    /**
+     * Attr in query 3.
+     *
+     * @param _eqlBase the eql base
+     * @param _stmt the stmt
+     * @throws Exception the exception
+     */
+    @Test(dataProvider = "Stmts", description = " where Invoice in ( query type Sales_Invoice )")
+    public void attrInQuery3(final String _eqlBase,
+                             final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
+                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Invoice").in()
+                            .nestedQuery(IEqlFactory.eINSTANCE.createNestedQuery()
+                                .addType("Sales_Invoice"))));
+
+        verifyStatement(_eqlBase + "Invoice in ( query type Sales_Invoice )", _stmt);
+    }
+
+    /**
      * Group.
      *
      * @param _eqlBase the eql base
