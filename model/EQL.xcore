@@ -604,6 +604,11 @@ class LinkfromSelectElement
        return this;
     }
 
+    op LinkfromSelectElement attribute(String _attribute) {
+       setAttribute(_attribute)
+       return this;
+    }
+
     op String eqlStmt() {
         return "linkfrom[" + typeName + "#" + attribute + "]"
     }
