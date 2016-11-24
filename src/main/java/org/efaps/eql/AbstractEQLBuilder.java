@@ -33,6 +33,18 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
     /**
      * Prints the.
      *
+     * @param _type the type
+     * @return the t
+     */
+    public T insert(final String _type)
+    {
+        this.stmt = IEqlFactory.eINSTANCE.createInsertStatement().typeName(_type);
+        return getThis();
+    }
+
+    /**
+     * Prints the.
+     *
      * @param _oids the oids
      * @return the t
      */

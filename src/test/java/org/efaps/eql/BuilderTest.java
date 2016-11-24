@@ -661,6 +661,19 @@ public class BuilderTest
     }
 
     /**
+     * Prints the.
+     */
+    @Test(description = "basic insert")
+    public void insert()
+    {
+        final EQLBuilder builder = new EQLBuilder()
+                        .insert("Sales_Invoice")
+                            .set("Name", "123");
+        final String smt = "insert type Sales_Invoice set Name = 123";
+        verifyStatement(smt, builder.getStmt());
+    }
+
+    /**
      * The Class EQLBuilder.
      *
      */
