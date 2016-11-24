@@ -16,6 +16,8 @@
  */
 package org.efaps.eql;
 
+import org.efaps.eql.impl.WhereElementTerm;
+
 /**
  * The Class AbstractEQLBuilder.
  *
@@ -31,12 +33,45 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
     /**
      * Prints the.
      *
-     * @param _oid the oid
+     * @param _oids the oids
      * @return the t
      */
-    public T print(final String _oid)
+    public T print(final String... _oids)
     {
-        this.stmt = IEqlFactory.eINSTANCE.createPrintObjectStatement().oid(_oid);
+        if (_oids.length == 1) {
+            this.stmt = IEqlFactory.eINSTANCE.createPrintObjectStatement().oid(_oids[0]);
+        } else {
+            this.stmt = IEqlFactory.eINSTANCE.createPrintListStatement();
+            for (final String oid : _oids) {
+                ((IPrintListStatement) this.stmt).addOid(oid);
+            }
+        }
+        return getThis();
+    }
+
+    /**
+     * Prints the.
+     *
+     * @return the t
+     */
+    public T print()
+    {
+        this.stmt = IEqlFactory.eINSTANCE.createPrintQueryStatement();
+        return getThis();
+    }
+
+    /**
+     * Query.
+     *
+     * @param _types the types
+     * @return the t
+     */
+    public T query(final String... _types)
+    {
+        ((IQueryStmt<?>) this.stmt).query();
+        for (final String type : _types) {
+            ((IQueryStmt<?>) this.stmt).getQuery().addType(type);
+        }
         return getThis();
     }
 
@@ -49,6 +84,20 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
     {
         ((IPrintStatement<?>) this.stmt).selection();
         ((IPrintStatement<?>) this.stmt).getSelection().addSelect(IEqlFactory.eINSTANCE.createSelect());
+        return getThis();
+    }
+
+    /**
+     * As.
+     *
+     * @param _alias the alias
+     * @return the t
+     */
+    public T as(final String _alias)
+    {
+        final ISelection selection = ((IPrintStatement<?>) this.stmt).getSelection();
+        final ISelect select = selection.getSelects(selection.getSelectsLength() - 1);
+        select.alias(_alias);
         return getThis();
     }
 
@@ -288,6 +337,153 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
         final ISelection selection = ((IPrintStatement<?>) this.stmt).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEqlFactory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.VALUE));
+        return getThis();
+    }
+
+    /**
+     * Where attr eq value.
+     *
+     * @return the t
+     */
+    public T where()
+    {
+        ((IQueryStmt<?>) this.stmt).getQuery().where();
+        return getThis();
+    }
+
+    /**
+     * Gets the current term.
+     *
+     * @return the current term
+     */
+    protected WhereElementTerm getCurrentTerm()
+    {
+        ((IQueryStmt<?>) this.stmt).getQuery().where();
+        final IWhere where = ((IQueryStmt<?>) this.stmt).getQuery().getWhere();
+        if (where.getTermsLength() == 0) {
+            where.term();
+        }
+        return (WhereElementTerm) where.getTerms(where.getTermsLength() - 1);
+    }
+
+    /**
+     * Limit.
+     *
+     * @param _limit the limit
+     * @return the t
+     */
+    public T limit(final int _limit)
+    {
+        ((IQueryStmt<?>) this.stmt).getQuery().limit(String.valueOf(_limit));
+        return getThis();
+    }
+
+    /**
+     * Where attr eq value.
+     *
+     * @param _attrName the attr name
+     * @param _values the values
+     * @return the t
+     */
+    public T attrEqValue(final String _attrName,
+                         final String... _values)
+    {
+        final IWhereElement element = getCurrentTerm().element();
+        element.attribute(_attrName);
+        element.comparison(_values.length == 1 ? Comparison.EQUAL : Comparison.IN);
+        for (final String value : _values) {
+            element.addValue(value);
+        }
+        return getThis();
+    }
+
+    /**
+     * Where attr eq value.
+     *
+     * @param _attrName the attr name
+     * @param _value the value
+     * @return the t
+     */
+    public T attrLessValue(final String _attrName,
+                           final String _value)
+    {
+        final IWhereElement element = getCurrentTerm().element();
+        element.attribute(_attrName).comparison(Comparison.LESS).addValue(_value);
+        return getThis();
+    }
+
+    /**
+     * Where attr eq value.
+     *
+     * @param _attrName the attr name
+     * @param _value the value
+     * @return the t
+     */
+    public T attrGreaterValue(final String _attrName,
+                              final String _value)
+    {
+        final IWhereElement element = getCurrentTerm().element();
+        element.attribute(_attrName).comparison(Comparison.GREATER).addValue(_value);
+        return getThis();
+    }
+
+    /**
+     * Where attr eq value.
+     *
+     * @param _attrName the attr name
+     * @param _value the value
+     * @return the t
+     */
+    public T attrMatchValue(final String _attrName,
+                              final String _value)
+    {
+        final IWhereElement element = getCurrentTerm().element();
+        element.attribute(_attrName).comparison(Comparison.LIKE).addValue(_value);
+        return getThis();
+    }
+
+    /**
+     * Where attr eq value.
+     *
+     * @param _attrName the attr name
+     * @param _values the values
+     * @return the t
+     */
+    public T attrNotValue(final String _attrName,
+                          final String... _values)
+    {
+        final IWhereElement element = getCurrentTerm().element();
+        element.attribute(_attrName);
+        element.comparison(_values.length == 1 ? Comparison.UNEQUAL : Comparison.NOTIN);
+        for (final String value : _values) {
+            element.addValue(value);
+        }
+        return getThis();
+    }
+
+    /**
+     * And.
+     *
+     * @return the t
+     */
+    public T and()
+    {
+        ((IQueryStmt<?>) this.stmt).getQuery().where();
+        final IWhere where = ((IQueryStmt<?>) this.stmt).getQuery().getWhere();
+        where.term().and();
+        return getThis();
+    }
+
+    /**
+     * Or.
+     *
+     * @return the t
+     */
+    public T or()
+    {
+        ((IQueryStmt<?>) this.stmt).getQuery().where();
+        final IWhere where = ((IQueryStmt<?>) this.stmt).getQuery().getWhere();
+        where.term().or();
         return getThis();
     }
 

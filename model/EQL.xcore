@@ -1206,6 +1206,15 @@ class Query
 
     contains Limit limit
 
+    op Query limit(String _val)
+    {
+        var l = IEqlFactory.eINSTANCE.createLimit
+        l.value(_val)
+        setLimit(l)
+        return this
+    }
+
+
     op Query setLimitC(Limit _limit)
     {
         setLimit(_limit)
@@ -1215,7 +1224,7 @@ class Query
     op String eqlStmt() {
         var ret = super.eqlStmt()
         if (limit != null) {
-            ret + " " + limit.eqlStmt()
+            ret = ret + " " + limit.eqlStmt()
         }
         return ret
     }
