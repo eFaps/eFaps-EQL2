@@ -591,6 +591,76 @@ public class BuilderTest
     }
 
     /**
+     * Prints the.
+     */
+    @Test(description = "basic update")
+    public void update()
+    {
+        final EQLBuilder builder = new EQLBuilder()
+                        .update("123.456")
+                            .set("Name", "123");
+        final String smt = "update obj 123.456 set Name = 123";
+        verifyStatement(smt, builder.getStmt());
+    }
+
+    /**
+     * Prints the.
+     */
+    @Test(description = "basic update")
+    public void updateVarious()
+    {
+        final EQLBuilder builder = new EQLBuilder()
+                        .update("123.456")
+                            .set("Name", "123")
+                            .set("Attr2", "demo");
+        final String smt = "update obj 123.456 set Name = 123, Attr2 = \"demo\"";
+        verifyStatement(smt, builder.getStmt());
+    }
+
+    /**
+     * Prints the.
+     */
+    @Test(description = "basic update")
+    public void updateList()
+    {
+        final EQLBuilder builder = new EQLBuilder()
+                        .update("123.456", "789.012")
+                            .set("Name", "123");
+        final String smt = "update list ( 123.456, 789.012 ) set Name = 123";
+        verifyStatement(smt, builder.getStmt());
+    }
+
+    /**
+     * Prints the.
+     */
+    @Test(description = "query update")
+    public void updateQuery()
+    {
+        final EQLBuilder builder = new EQLBuilder()
+                        .update()
+                            .query("Sales_Invoice")
+                            .set("Name", "123");
+        final String smt = "update query type Sales_Invoice set Name = 123";
+        verifyStatement(smt, builder.getStmt());
+    }
+
+    /**
+     * Prints the.
+     */
+    @Test(description = "query update where")
+    public void updateQueryWhere()
+    {
+        final EQLBuilder builder = new EQLBuilder()
+                        .update()
+                            .query("Sales_Invoice")
+                            .where()
+                                .attrEqValue("Name", "demo")
+                            .set("Name", "123");
+        final String smt = "update query type Sales_Invoice where Name = \"demo\"set Name = 123";
+        verifyStatement(smt, builder.getStmt());
+    }
+
+    /**
      * The Class EQLBuilder.
      *
      */

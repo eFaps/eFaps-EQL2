@@ -36,6 +36,51 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
      * @param _oids the oids
      * @return the t
      */
+    public T update(final String... _oids)
+    {
+        if (_oids.length == 1) {
+            this.stmt = IEqlFactory.eINSTANCE.createUpdateObjectStatement().oid(_oids[0]);
+        } else {
+            this.stmt = IEqlFactory.eINSTANCE.createUpdateListStatement();
+            for (final String oid : _oids) {
+                ((IListStmt<?>) this.stmt).addOid(oid);
+            }
+        }
+        return getThis();
+    }
+
+    /**
+     * Prints the.
+     *
+     * @return the t
+     */
+    public T update()
+    {
+        this.stmt = IEqlFactory.eINSTANCE.createUpdateQueryStatement();
+        return getThis();
+    }
+
+    /**
+     * Sets the.
+     *
+     * @param _attrName the attr name
+     * @param _value the value
+     * @return the t
+     */
+    public T set(final String _attrName,
+                 final String _value)
+    {
+        ((IUpdateElementsStmt<?>) this.stmt).addUpdateElements(IEqlFactory.eINSTANCE.createUpdateElement().attribute(
+                        _attrName).value(_value));
+        return getThis();
+    }
+
+    /**
+     * Prints the.
+     *
+     * @param _oids the oids
+     * @return the t
+     */
     public T print(final String... _oids)
     {
         if (_oids.length == 1) {
@@ -43,7 +88,7 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
         } else {
             this.stmt = IEqlFactory.eINSTANCE.createPrintListStatement();
             for (final String oid : _oids) {
-                ((IPrintListStatement) this.stmt).addOid(oid);
+                ((IListStmt<?>) this.stmt).addOid(oid);
             }
         }
         return getThis();
