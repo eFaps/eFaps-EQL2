@@ -14,8 +14,12 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql.bldr;
 
+import org.efaps.eql.Comparison;
+import org.efaps.eql.IQueryStmt;
+import org.efaps.eql.IWhere;
+import org.efaps.eql.IWhereElement;
 
 /**
  * The Class AbstractWhereBuilder.

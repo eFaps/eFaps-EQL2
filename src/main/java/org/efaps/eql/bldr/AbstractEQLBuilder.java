@@ -14,8 +14,17 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql.bldr;
 
+import org.efaps.eql.EQL;
+import org.efaps.eql.IEqlFactory;
+import org.efaps.eql.IPrintStatement;
+import org.efaps.eql.IQueryStmt;
+import org.efaps.eql.ISelect;
+import org.efaps.eql.ISelection;
+import org.efaps.eql.IStatement;
+import org.efaps.eql.IWhere;
+import org.efaps.eql.SimpleSelectElement;
 import org.efaps.eql.impl.WhereElementTerm;
 
 /**
@@ -310,7 +319,7 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
     {
         ((IQueryStmt<?>) this.stmt).getQuery().where();
         if (this.whereBldr == null) {
-            this.whereBldr = EQL.eql().getWhere(this);
+            this.whereBldr = EQL.where(this);
         }
         return this.whereBldr;
     }

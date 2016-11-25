@@ -16,6 +16,12 @@
  */
 package org.efaps.eql;
 
+import org.efaps.eql.bldr.AbstractEQLBuilder;
+import org.efaps.eql.bldr.AbstractInsertEQLBuilder;
+import org.efaps.eql.bldr.AbstractPrintEQLBuilder;
+import org.efaps.eql.bldr.AbstractUpdateEQLBuilder;
+import org.efaps.eql.bldr.AbstractWhereBuilder;
+
 /**
  * The Class TestEQL.
  *

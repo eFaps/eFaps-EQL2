@@ -14,7 +14,11 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql.bldr;
+
+import org.efaps.eql.IEqlFactory;
+import org.efaps.eql.IListStmt;
+import org.efaps.eql.IUpdateElementsStmt;
 
 /**
  * The Class PrintEQLBuilder.

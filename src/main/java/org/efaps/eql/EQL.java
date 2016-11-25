@@ -16,6 +16,11 @@
  */
 package org.efaps.eql;
 
+import org.efaps.eql.bldr.AbstractEQLBuilder;
+import org.efaps.eql.bldr.AbstractInsertEQLBuilder;
+import org.efaps.eql.bldr.AbstractPrintEQLBuilder;
+import org.efaps.eql.bldr.AbstractUpdateEQLBuilder;
+import org.efaps.eql.bldr.AbstractWhereBuilder;
 
 /**
  * The Class EQL.
@@ -108,6 +113,17 @@ public abstract class EQL
     public static AbstractInsertEQLBuilder<?> insert(final String _typeName)
     {
         return eql().getInsert().insert(_typeName);
+    }
+
+    /**
+     * Insert.
+     *
+     * @param _parent the parent
+     * @return the abstract EQL builder<?>
+     */
+    public static AbstractWhereBuilder<?> where(final AbstractEQLBuilder<?> _parent)
+    {
+        return eql().getWhere(_parent);
     }
 
     /**

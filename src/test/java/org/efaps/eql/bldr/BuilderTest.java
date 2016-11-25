@@ -14,8 +14,12 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql.bldr;
 
+import org.efaps.eql.AbstractTest;
+import org.efaps.eql.EQL;
+import org.efaps.eql.bldr.AbstractEQLBuilder;
+import org.efaps.eql.bldr.AbstractPrintEQLBuilder;
 import org.testng.annotations.Test;
 
 /**
