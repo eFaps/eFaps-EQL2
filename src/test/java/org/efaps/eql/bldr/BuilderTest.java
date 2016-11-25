@@ -18,8 +18,6 @@ package org.efaps.eql.bldr;
 
 import org.efaps.eql.AbstractTest;
 import org.efaps.eql.EQL;
-import org.efaps.eql.bldr.AbstractEQLBuilder;
-import org.efaps.eql.bldr.AbstractPrintEQLBuilder;
 import org.testng.annotations.Test;
 
 /**
@@ -486,7 +484,7 @@ public class BuilderTest
                                 .and()
                                 .attr("Attr2").eq("5")
                                 .or()
-                                .attr("Attr3").eq( "7")
+                                .attr("Attr3").eq("7")
                             .select()
                                 .attribute("Attri");
         final String smt = "print query type Sales_Document where Name eq \"demo\" and Attr2 == 5 "
@@ -643,6 +641,22 @@ public class BuilderTest
                                 .attr("Name").eq("demo")
                             .set("Name", "123");
         final String smt = "update query type Sales_Invoice where Name = \"demo\"set Name = 123";
+        verifyStatement(smt, bldr.getStmt());
+    }
+
+    /**
+     * Prints the.
+     */
+    @Test(description = "query update where")
+    public void updateQueryWhereSets()
+    {
+        final AbstractEQLBuilder<?> bldr = EQL.update()
+                            .query("Sales_Invoice")
+                            .where()
+                                .attr("Name").eq("demo")
+                            .set("Name", "123")
+                            .set("Attr2", "Value2");
+        final String smt = "update query type Sales_Invoice where Name = \"demo\"set Name = 123, Attr2 = \"Value2\"";
         verifyStatement(smt, bldr.getStmt());
     }
 
