@@ -30,92 +30,8 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
     /** The stmt. */
     private IStatement<?> stmt;
 
-    /**
-     * Prints the.
-     *
-     * @param _type the type
-     * @return the t
-     */
-    public T insert(final String _type)
-    {
-        this.stmt = IEqlFactory.eINSTANCE.createInsertStatement().typeName(_type);
-        return getThis();
-    }
-
-    /**
-     * Prints the.
-     *
-     * @param _oids the oids
-     * @return the t
-     */
-    public T update(final String... _oids)
-    {
-        if (_oids.length == 1) {
-            this.stmt = IEqlFactory.eINSTANCE.createUpdateObjectStatement().oid(_oids[0]);
-        } else {
-            this.stmt = IEqlFactory.eINSTANCE.createUpdateListStatement();
-            for (final String oid : _oids) {
-                ((IListStmt<?>) this.stmt).addOid(oid);
-            }
-        }
-        return getThis();
-    }
-
-    /**
-     * Prints the.
-     *
-     * @return the t
-     */
-    public T update()
-    {
-        this.stmt = IEqlFactory.eINSTANCE.createUpdateQueryStatement();
-        return getThis();
-    }
-
-    /**
-     * Sets the.
-     *
-     * @param _attrName the attr name
-     * @param _value the value
-     * @return the t
-     */
-    public T set(final String _attrName,
-                 final String _value)
-    {
-        ((IUpdateElementsStmt<?>) this.stmt).addUpdateElements(IEqlFactory.eINSTANCE.createUpdateElement().attribute(
-                        _attrName).value(_value));
-        return getThis();
-    }
-
-    /**
-     * Prints the.
-     *
-     * @param _oids the oids
-     * @return the t
-     */
-    public T print(final String... _oids)
-    {
-        if (_oids.length == 1) {
-            this.stmt = IEqlFactory.eINSTANCE.createPrintObjectStatement().oid(_oids[0]);
-        } else {
-            this.stmt = IEqlFactory.eINSTANCE.createPrintListStatement();
-            for (final String oid : _oids) {
-                ((IListStmt<?>) this.stmt).addOid(oid);
-            }
-        }
-        return getThis();
-    }
-
-    /**
-     * Prints the.
-     *
-     * @return the t
-     */
-    public T print()
-    {
-        this.stmt = IEqlFactory.eINSTANCE.createPrintQueryStatement();
-        return getThis();
-    }
+    /** The where. */
+    private AbstractWhereBuilder<?> whereBldr;
 
     /**
      * Query.
@@ -129,18 +45,6 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
         for (final String type : _types) {
             ((IQueryStmt<?>) this.stmt).getQuery().addType(type);
         }
-        return getThis();
-    }
-
-    /**
-     * Select.
-     *
-     * @return the t
-     */
-    public T select()
-    {
-        ((IPrintStatement<?>) this.stmt).selection();
-        ((IPrintStatement<?>) this.stmt).getSelection().addSelect(IEqlFactory.eINSTANCE.createSelect());
         return getThis();
     }
 
@@ -402,10 +306,13 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
      *
      * @return the t
      */
-    public T where()
+    public AbstractWhereBuilder<?> where()
     {
         ((IQueryStmt<?>) this.stmt).getQuery().where();
-        return getThis();
+        if (this.whereBldr == null) {
+            this.whereBldr = EQL.eql().getWhere(this);
+        }
+        return this.whereBldr;
     }
 
     /**
@@ -436,124 +343,11 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
     }
 
     /**
-     * Where attr eq value.
-     *
-     * @param _attrName the attr name
-     * @param _values the values
-     * @return the t
-     */
-    public T attrEqValue(final String _attrName,
-                         final String... _values)
-    {
-        final IWhereElement element = getCurrentTerm().element();
-        element.attribute(_attrName);
-        element.comparison(_values.length == 1 ? Comparison.EQUAL : Comparison.IN);
-        for (final String value : _values) {
-            element.addValue(value);
-        }
-        return getThis();
-    }
-
-    /**
-     * Where attr eq value.
-     *
-     * @param _attrName the attr name
-     * @param _value the value
-     * @return the t
-     */
-    public T attrLessValue(final String _attrName,
-                           final String _value)
-    {
-        final IWhereElement element = getCurrentTerm().element();
-        element.attribute(_attrName).comparison(Comparison.LESS).addValue(_value);
-        return getThis();
-    }
-
-    /**
-     * Where attr eq value.
-     *
-     * @param _attrName the attr name
-     * @param _value the value
-     * @return the t
-     */
-    public T attrGreaterValue(final String _attrName,
-                              final String _value)
-    {
-        final IWhereElement element = getCurrentTerm().element();
-        element.attribute(_attrName).comparison(Comparison.GREATER).addValue(_value);
-        return getThis();
-    }
-
-    /**
-     * Where attr eq value.
-     *
-     * @param _attrName the attr name
-     * @param _value the value
-     * @return the t
-     */
-    public T attrMatchValue(final String _attrName,
-                              final String _value)
-    {
-        final IWhereElement element = getCurrentTerm().element();
-        element.attribute(_attrName).comparison(Comparison.LIKE).addValue(_value);
-        return getThis();
-    }
-
-    /**
-     * Where attr eq value.
-     *
-     * @param _attrName the attr name
-     * @param _values the values
-     * @return the t
-     */
-    public T attrNotValue(final String _attrName,
-                          final String... _values)
-    {
-        final IWhereElement element = getCurrentTerm().element();
-        element.attribute(_attrName);
-        element.comparison(_values.length == 1 ? Comparison.UNEQUAL : Comparison.NOTIN);
-        for (final String value : _values) {
-            element.addValue(value);
-        }
-        return getThis();
-    }
-
-    /**
-     * And.
-     *
-     * @return the t
-     */
-    public T and()
-    {
-        ((IQueryStmt<?>) this.stmt).getQuery().where();
-        final IWhere where = ((IQueryStmt<?>) this.stmt).getQuery().getWhere();
-        where.term().and();
-        return getThis();
-    }
-
-    /**
-     * Or.
-     *
-     * @return the t
-     */
-    public T or()
-    {
-        ((IQueryStmt<?>) this.stmt).getQuery().where();
-        final IWhere where = ((IQueryStmt<?>) this.stmt).getQuery().getWhere();
-        where.term().or();
-        return getThis();
-    }
-
-    /**
      * Gets the this.
      *
      * @return the this
      */
-    @SuppressWarnings("unchecked")
-    protected T getThis()
-    {
-        return (T) this;
-    }
+    protected abstract T getThis();
 
     /**
      * Gets the stmt.
@@ -565,4 +359,13 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
         return this.stmt;
     }
 
+    /**
+     * Sets the stmt.
+     *
+     * @param _stmt the new stmt
+     */
+    protected void setStmt(final IStatement<?> _stmt)
+    {
+        this.stmt = _stmt;
+    }
 }
