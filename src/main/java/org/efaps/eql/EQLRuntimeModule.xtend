@@ -20,6 +20,7 @@ import org.efaps.eql.converter.ValueConverters
 import org.eclipse.jface.viewers.ILabelProvider
 import org.eclipse.jface.viewers.ILabelProviderListener
 import org.eclipse.xtext.ide.LexerIdeBindings
+import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalProvider
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -30,25 +31,6 @@ class EQLRuntimeModule extends AbstractEQLRuntimeModule
     {
         return typeof(ValueConverters)
     }
-
-    def configureContentLexer(com.google.inject.Binder _binder)
-    {
-        _binder.bind(typeof(org.eclipse.xtext.ide.editor.contentassist.antlr.internal.Lexer)).annotatedWith(
-            com.google.inject.name.Names.named(LexerIdeBindings.CONTENT_ASSIST)).to(
-            typeof(org.efaps.eql.ide.contentassist.antlr.internal.InternalEQLLexer));
-    }
-
-    def Class<? extends org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext.Builder> bindContextBuilder()
-    {
-        return typeof(org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext.Builder)
-    }
-
-
-    def Class<? extends org.eclipse.xtext.ide.editor.contentassist.antlr.IContentAssistParser> bindContentAssistParser()
-    {
-        return typeof(org.efaps.eql.ide.contentassist.antlr.EQLParser)
-    }
-
 
     static class Fake implements ILabelProvider
     {

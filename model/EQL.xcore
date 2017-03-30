@@ -73,7 +73,7 @@ interface QueryStmt<T>
 
     op T query()
     {
-        if (getQuery() == null) {
+        if (getQuery() === null) {
             setQuery(IEqlFactory.eINSTANCE.createQuery())
         }
         return getThis()
@@ -132,7 +132,7 @@ abstract class PrintStatement<T>
     }
 
     op T selection() {
-        if (getSelection == null) {
+        if (getSelection === null) {
             setSelection(IEqlFactory.eINSTANCE.createSelection)
         }
         return getThis()
@@ -145,7 +145,7 @@ class PrintObjectStatement
 
     op String eqlStmt() {
         var String ret =  "print object " + oid + " "
-        if (getSelection() != null) {
+        if (getSelection() !== null) {
             ret = ret + getSelection().eqlStmt()
         }
         return ret
@@ -171,10 +171,10 @@ class PrintListStatement
             ret = ret + oid
         }
         ret = ret + ")"
-        if (getSelection() != null) {
+        if (getSelection() !== null) {
             ret = ret + " " + getSelection().eqlStmt()
         }
-        if (getOrder() != null) {
+        if (getOrder() !== null) {
             ret  = ret + getOrder().eqlStmt()
         }
         return ret
@@ -190,13 +190,13 @@ class PrintQueryStatement
 {
     op String eqlStmt() {
         var String ret =  "print "
-        if (getQuery() != null) {
+        if (getQuery() !== null) {
             ret = ret + getQuery().eqlStmt()
         }
-        if (getSelection() != null) {
+        if (getSelection() !== null) {
             ret = ret + " " + getSelection().eqlStmt()
         }
-        if (getOrder() != null) {
+        if (getOrder() !== null) {
             ret  = ret + getOrder().eqlStmt()
         }
         return ret
@@ -261,7 +261,7 @@ class UpdateQueryStatement
 {
     op String eqlStmt() {
         var String ret =  "update "
-        if (getQuery() != null) {
+        if (getQuery() !== null) {
             ret = ret + getQuery().eqlStmt()
         }
         if (updateElementsList.size > 0) {
@@ -323,7 +323,7 @@ class DeleteQueryStatement
 {
     op String eqlStmt() {
         var String ret =  "delete "
-        if (getQuery() != null) {
+        if (getQuery() !== null) {
             ret = ret + getQuery().eqlStmt()
         }
         return ret
@@ -397,7 +397,7 @@ interface Ordered<T>
 
     op T orderBy(String _key, boolean _desc)
     {
-        if (getOrder() == null) {
+        if (getOrder() === null) {
             setOrder(IEqlFactory.eINSTANCE.createOrder)
         }
         getOrder().addElement(_key, _desc)
@@ -541,7 +541,7 @@ class ExecStatement
                 ret = ret + select.eqlStmt()
             }
         }
-        if (getOrder() != null) {
+        if (getOrder() !== null) {
             ret  = ret + getOrder().eqlStmt()
         }
         return ret
@@ -803,7 +803,7 @@ class Select
 
     op String eqlStmt() {
         var String ret = super.eqlStmt()
-        if (alias != null) {
+        if (alias !== null) {
             ret = ret + " as " + alias
         }
         return ret
@@ -829,7 +829,7 @@ class ExecSelectionElement
 
     op String eqlStmt() {
         var String ret = index
-        if (alias != null) {
+        if (alias !== null) {
             ret = ret + " as " + alias
         }
         return ret
@@ -900,7 +900,7 @@ abstract class WhereTerm<T>
 
      op String eqlStmt() {
           var String ret = ""
-          if (getConnection() != null) {
+          if (getConnection() !== null) {
               ret = ret + " " + getConnection().getLiteral()
           }
           return ret
@@ -926,7 +926,7 @@ class WhereElementTerm
 
     op WhereElement element()
     {
-        if (getElement() == null) {
+        if (getElement() === null) {
             element = IEqlFactory.eINSTANCE.createWhereElement
         }
         return getElement()
@@ -940,7 +940,7 @@ class WhereElementTerm
 
     op String eqlStmt() {
         var String ret = super.eqlStmt()
-        if (getElement() != null) {
+        if (getElement() !== null) {
             ret = ret + getElement().eqlStmt()
         }
         return ret
@@ -1076,19 +1076,19 @@ class WhereElement
 
     op String eqlStmt() {
          var String ret;
-         if (getAttribute() != null) {
+         if (getAttribute() !== null) {
              ret = " attribute[" + getAttribute() + "]"
-         } else if (getSelect() != null) {
+         } else if (getSelect() !== null) {
              ret = getSelect().eqlStmt()
          }
          ret = ret + " "
-         if (comparison == null) {
+         if (comparison === null) {
              ret = ret + "eq"
          } else {
              ret = ret + comparison.getLiteral()
          }
-         if (getNestedQuery() == null) {
-             if (valuesList.size() == 1) {
+         if (getNestedQuery() === null) {
+             if (valuesList.size() === 1) {
                 ret = ret + " " + valuesList.get(0)
              } else {
                  ret = ret + " ("
@@ -1179,7 +1179,7 @@ abstract class BaseQuery<T>
             }
             ret = ret + aType
         }
-        if (getWhere != null) {
+        if (getWhere !== null) {
             ret = ret + getWhere.eqlStmt()
         }
         return ret
@@ -1187,7 +1187,7 @@ abstract class BaseQuery<T>
 
     op T where()
     {
-        if (getWhere() == null) {
+        if (getWhere() === null) {
            setWhere(IEqlFactory.eINSTANCE.createWhere())
         }
         return getThis
@@ -1223,7 +1223,7 @@ class Query
 
     op String eqlStmt() {
         var ret = super.eqlStmt()
-        if (limit != null) {
+        if (limit !== null) {
             ret = ret + " " + limit.eqlStmt()
         }
         return ret
@@ -1253,7 +1253,7 @@ class NestedQuery
 
     op String eqlStmt() {
         var ret = "( " + super.eqlStmt()
-        if (getSelection() != null) {
+        if (getSelection() !== null) {
             ret = ret + getSelection() .eqlStmt()
         }
         ret = ret + " )"

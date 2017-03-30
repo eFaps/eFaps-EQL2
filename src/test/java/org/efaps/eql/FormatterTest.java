@@ -16,6 +16,7 @@
  */
 package org.efaps.eql;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +24,9 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.SaveOptions;
+import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.serializer.impl.Serializer;
+import org.eclipse.xtext.util.LazyStringInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -55,15 +58,22 @@ public class FormatterTest
      *
      * @param _orig the orig
      * @param _targetFrmtd the target frmtd
+     * @throws IOException
      */
     @Test(dataProvider = "DataProvider")
     public void verifyFormatedStr(final String _orig,
-                                  final String _targetFrmtd)
+                                  final String _targetFrmtd) throws IOException
     {
-        final IParseResult result = getParser().doParse(_orig);
+        final XtextResource resource = new XtextResource();
+        EQLStandaloneSetup.doSetup(resource);
+
+        resource.load(new LazyStringInputStream(_orig), null);
+
+
+        final IParseResult result = resource.getParseResult();
         final EObject obj = result.getRootASTElement();
         final String frmtd = this.serializer.serialize(obj, SaveOptions.newBuilder().format().getOptions());
-        LOG.info(frmtd);
+        FormatterTest.LOG.info(frmtd);
         System.out.println(frmtd);
         Assert.assertEquals(frmtd, _targetFrmtd);
     }
@@ -81,12 +91,12 @@ public class FormatterTest
         ret.add(new Object[] { "  print      query  type  Sales_Invoice where linkto[TaxId].attribute[CAT] eq \"Demo\" "
                         + "select attribute[ Name] , attribute[Other]",
             "print query type Sales_Invoice where linkto[TaxId].attribute[CAT] == \"Demo\""
-            + "\nselect attribute[Name], attribute[Other]"});
+            + " select attribute[Name], attribute[Other]"});
 
         ret.add(new Object[] { "  print    query  type  Sales_Invoice where linkto[ TaxId].attribute[CAT] eq \"Demo\" "
                         + "select attribute[ Name] , attribute[Other] order by demo ,test",
             "print query type Sales_Invoice where linkto[TaxId].attribute[CAT] == \"Demo\""
-            + "\nselect attribute[Name], attribute[Other] order by demo, test"});
+            + " select attribute[Name], attribute[Other] order by demo, test"});
 
         return ret.iterator();
     }

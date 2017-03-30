@@ -19,6 +19,7 @@ package org.efaps.eql
 
 import com.google.inject.Injector
 import org.eclipse.emf.ecore.EPackage
+import org.efaps.eql.ide.EQLIdeSetup
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
@@ -41,8 +42,8 @@ class EQLStandaloneSetup extends EQLStandaloneSetupGenerated
      */
     def static void doSetup(Object _instance)
     {
-        val injector = new EQLStandaloneSetup().createInjectorAndDoEMFRegistration();
-        if (_instance != null)
+        val injector = new EQLIdeSetup().createInjectorAndDoEMFRegistration();
+        if (_instance !== null)
         {
             injector.injectMembers(_instance);
         }
@@ -50,7 +51,7 @@ class EQLStandaloneSetup extends EQLStandaloneSetupGenerated
 
     def static <T> T getInstance(Class<T> _class)
     {
-        val injector = new EQLStandaloneSetup().createInjectorAndDoEMFRegistration();
+        val injector = new EQLIdeSetup().createInjectorAndDoEMFRegistration();
         injector.getInstance(_class)
     }
 
