@@ -34,6 +34,11 @@ Workflow {
 
             //fragment = org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2 {}
 
+            contentAssist = {
+                generateStub = true
+                generateXtendStub = true
+            }
+
             formatter = {
                 generateStub = true
                 generateXtendStub = true

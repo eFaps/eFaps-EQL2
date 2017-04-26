@@ -116,11 +116,10 @@ public class ContentTest
                         Arrays.asList(new String[] { "CITYPE" }) });
 
         ret.add(new Object[] { "print query type S",
-                        Arrays.asList(new String[] { "Sales_Invoice", "Sales_Receipt",
-                                        "limit", "select", "where", "," }) });
+                        Arrays.asList(new String[] { "Sales_Invoice", "Sales_Receipt", "," }) });
 
         ret.add(new Object[] { "print query type C",
-                        Arrays.asList(new String[] { "Contacts_Contact", "limit", "select", "where", "," }) });
+                        Arrays.asList(new String[] { "Contacts_Contact", "," }) });
         return ret.iterator();
     }
 }

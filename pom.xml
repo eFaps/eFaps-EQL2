@@ -95,6 +95,7 @@
         <emf-common-version>2.11.0-v20150805-0538</emf-common-version>
         <emf-codegen-version>2.11.0-v20150806-0404</emf-codegen-version>
         <xtext-version>2.11.0</xtext-version>
+        <xtend-version>2.11.0</xtend-version>
         <ecore-xtext-version>1.2.0</ecore-xtext-version>
         <ecore-xcore-version>1.3.1</ecore-xcore-version>
         <ecore-xcore-lib-version>1.1.100</ecore-xcore-lib-version>
@@ -148,10 +149,10 @@
                         <version>${xtext-version}</version>
                     </dependency>
                     <dependency>
-    <groupId>org.eclipse.xtext</groupId>
-    <artifactId>org.eclipse.xtext.ecore</artifactId>
-    <version>${xtext-version}</version>
-</dependency>
+                        <groupId>org.eclipse.xtext</groupId>
+                        <artifactId>org.eclipse.xtext.ecore</artifactId>
+                        <version>${xtext-version}</version>
+                    </dependency>
                </dependencies>
             </plugin>
             <plugin>
@@ -253,7 +254,7 @@
             <plugin>
                 <groupId>org.eclipse.xtend</groupId>
                 <artifactId>xtend-maven-plugin</artifactId>
-                <version>${xtext-version}</version>
+                <version>${xtend-version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -451,12 +452,10 @@
             <version>${commons.lang.version}</version>
             <scope>test</scope>
         </dependency>
-
-         <dependency>
-                        <groupId>org.eclipse.xtext</groupId>
-                        <artifactId>org.eclipse.xtext.xtext.generator</artifactId>
-                        <version>${xtext-version}</version>
-                    </dependency>
-
+        <dependency>
+            <groupId>org.eclipse.xtext</groupId>
+            <artifactId>org.eclipse.xtext.xtext.generator</artifactId>
+            <version>${xtext-version}</version>
+         </dependency>
     </dependencies>
 </project>

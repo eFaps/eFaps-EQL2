@@ -19,8 +19,6 @@ package org.efaps.eql
 import org.efaps.eql.converter.ValueConverters
 import org.eclipse.jface.viewers.ILabelProvider
 import org.eclipse.jface.viewers.ILabelProviderListener
-import org.eclipse.xtext.ide.LexerIdeBindings
-import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalProvider
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.

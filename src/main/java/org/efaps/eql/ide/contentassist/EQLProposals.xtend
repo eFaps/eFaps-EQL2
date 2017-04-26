@@ -16,17 +16,16 @@
  */
 package org.efaps.eql.ide.contentassist
 
-import com.google.common.base.Charsets
-import java.io.ByteArrayInputStream
 import java.util.ArrayList
 import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.util.TextRegion
-import org.efaps.eql.EQLStandaloneSetup
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.eclipse.xtext.util.LazyStringInputStream
+import org.efaps.eql.ide.EQLIdeSetup
 
 /**
  * The Class EQLProposals.
@@ -67,9 +66,9 @@ class EQLProposals
         val List<String> ret = new ArrayList;
         try
         {
-            val resource = EQLStandaloneSetup.getInstance(XtextResource);
-            resource.load(new ByteArrayInputStream(_text.getBytes(Charsets.UTF_8)), null);
-            val cas = EQLStandaloneSetup.getInstance(EQLContentAssistService)
+            val resource = EQLIdeSetup.getInstance(XtextResource);
+            resource.load(new LazyStringInputStream(_text), null);
+            val cas = EQLIdeSetup.getInstance(EQLContentAssistService)
             val selection = new TextRegion(_text.length, 0)
             val result2 = cas.createProposals(resource, resource.parseResult.rootNode.text, selection, _text.length,
                 1000)
