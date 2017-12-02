@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2017 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ public class EQLFormatter
     @Override
     protected void configureFormatting(final FormattingConfig _fconf)
     {
-        final org.efaps.eql.services.EQLGrammarAccess gr = (org.efaps.eql.services.EQLGrammarAccess) getGrammarAccess();
+        final org.efaps.eql2.services.EQLGrammarAccess gr = (org.efaps.eql2.services.EQLGrammarAccess) getGrammarAccess();
 
         for (final Keyword comma : gr.findKeywords(",", "]")) {
             _fconf.setNoLinewrap().before(comma);
