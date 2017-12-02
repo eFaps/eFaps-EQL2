@@ -1,4 +1,4 @@
-module org.efaps.eql.GenerateEQL
+module org.efaps.eql2.GenerateEQL
 
 import org.eclipse.xtext.xtext.generator.*
 import org.eclipse.xtext.xtext.generator.model.project.*
