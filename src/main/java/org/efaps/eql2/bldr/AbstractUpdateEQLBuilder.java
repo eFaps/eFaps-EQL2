@@ -16,7 +16,7 @@
  */
 package org.efaps.eql2.bldr;
 
-import org.efaps.eql2.IEqlFactory;
+import org.efaps.eql2.IEql2Factory;
 import org.efaps.eql2.IListStmt;
 import org.efaps.eql2.IUpdateElementsStmt;
 
@@ -38,9 +38,9 @@ public abstract class AbstractUpdateEQLBuilder<T extends AbstractUpdateEQLBuilde
     public T update(final String... _oids)
     {
         if (_oids.length == 1) {
-            setStmt(IEqlFactory.eINSTANCE.createUpdateObjectStatement().oid(_oids[0]));
+            setStmt(IEql2Factory.eINSTANCE.createUpdateObjectStatement().oid(_oids[0]));
         } else {
-            setStmt(IEqlFactory.eINSTANCE.createUpdateListStatement());
+            setStmt(IEql2Factory.eINSTANCE.createUpdateListStatement());
             for (final String oid : _oids) {
                 ((IListStmt<?>) getStmt()).addOid(oid);
             }
@@ -55,7 +55,7 @@ public abstract class AbstractUpdateEQLBuilder<T extends AbstractUpdateEQLBuilde
      */
     public T update()
     {
-        setStmt(IEqlFactory.eINSTANCE.createUpdateQueryStatement());
+        setStmt(IEql2Factory.eINSTANCE.createUpdateQueryStatement());
         return getThis();
     }
 
@@ -69,7 +69,7 @@ public abstract class AbstractUpdateEQLBuilder<T extends AbstractUpdateEQLBuilde
     public T set(final String _attrName,
                  final String _value)
     {
-        ((IUpdateElementsStmt<?>) getStmt()).addUpdateElements(IEqlFactory.eINSTANCE.createUpdateElement().attribute(
+        ((IUpdateElementsStmt<?>) getStmt()).addUpdateElements(IEql2Factory.eINSTANCE.createUpdateElement().attribute(
                         _attrName).value(_value));
         return getThis();
     }

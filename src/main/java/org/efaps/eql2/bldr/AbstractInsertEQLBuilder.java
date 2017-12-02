@@ -16,7 +16,7 @@
  */
 package org.efaps.eql2.bldr;
 
-import org.efaps.eql2.IEqlFactory;
+import org.efaps.eql2.IEql2Factory;
 
 /**
  * The Class PrintEQLBuilder.
@@ -35,7 +35,7 @@ public abstract class AbstractInsertEQLBuilder<T extends AbstractInsertEQLBuilde
      */
     public T insert(final String _type)
     {
-        setStmt(IEqlFactory.eINSTANCE.createInsertStatement().typeName(_type));
+        setStmt(IEql2Factory.eINSTANCE.createInsertStatement().typeName(_type));
         return getThis();
     }
 }

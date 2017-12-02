@@ -58,6 +58,6 @@ class EQLStandaloneSetup extends EQLStandaloneSetupGenerated
     override register(Injector injector)
     {
         super.register(injector);
-        EPackage.Registry.INSTANCE.put(IEqlPackage.eINSTANCE.getNsURI(), IEqlPackage.eINSTANCE);
+        EPackage.Registry.INSTANCE.put(IEql2Package.eINSTANCE.getNsURI(), IEql2Package.eINSTANCE);
     }
 }

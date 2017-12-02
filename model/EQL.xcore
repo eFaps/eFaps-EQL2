@@ -75,7 +75,7 @@ interface QueryStmt<T>
     op T query()
     {
         if (getQuery() === null) {
-            setQuery(IEqlFactory.eINSTANCE.createQuery())
+            setQuery(IEql2Factory.eINSTANCE.createQuery())
         }
         return getThis()
     }
@@ -100,7 +100,7 @@ class UpdateElementsStmt<T>
 
     op T update(String _attribute, String _value)
     {
-        var element =  IEqlFactory.eINSTANCE.createUpdateElement()
+        var element =  IEql2Factory.eINSTANCE.createUpdateElement()
         updateElementsList.add(element)
         element.attribute(_attribute)
         element.value(_value)
@@ -134,7 +134,7 @@ abstract class PrintStatement<T>
 
     op T selection() {
         if (getSelection === null) {
-            setSelection(IEqlFactory.eINSTANCE.createSelection)
+            setSelection(IEql2Factory.eINSTANCE.createSelection)
         }
         return getThis()
     }
@@ -399,7 +399,7 @@ interface Ordered<T>
     op T orderBy(String _key, boolean _desc)
     {
         if (getOrder() === null) {
-            setOrder(IEqlFactory.eINSTANCE.createOrder)
+            setOrder(IEql2Factory.eINSTANCE.createOrder)
         }
         getOrder().addElement(_key, _desc)
         return getThis()
@@ -419,7 +419,7 @@ class Order
 
     op Order addElement(String _key, boolean _desc)
     {
-        var ele = IEqlFactory.eINSTANCE.createOrderElement
+        var ele = IEql2Factory.eINSTANCE.createOrderElement
         ele.key(_key).desc(_desc)
         elementsList.add(ele)
         return this
@@ -850,7 +850,7 @@ class Where
 
     op WhereElementTerm term()
     {
-        var IWhereElementTerm ret = IEqlFactory.eINSTANCE.createWhereElementTerm
+        var IWhereElementTerm ret = IEql2Factory.eINSTANCE.createWhereElementTerm
         termsList.add(ret)
         return ret
     }
@@ -880,7 +880,7 @@ class Where
 
     op WhereGroupTerm group()
     {
-        var IWhereGroupTerm ret = IEqlFactory.eINSTANCE.createWhereGroupTerm
+        var IWhereGroupTerm ret = IEql2Factory.eINSTANCE.createWhereGroupTerm
         termsList.add(ret)
         return ret
     }
@@ -928,7 +928,7 @@ class WhereElementTerm
     op WhereElement element()
     {
         if (getElement() === null) {
-            element = IEqlFactory.eINSTANCE.createWhereElement
+            element = IEql2Factory.eINSTANCE.createWhereElement
         }
         return getElement()
     }
@@ -1000,8 +1000,8 @@ class WhereElement
 
     op WhereElement attribute(String _attribute)
     {
-        setSelect(IEqlFactory.eINSTANCE.createWhereSelect()
-            .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement()
+        setSelect(IEql2Factory.eINSTANCE.createWhereSelect()
+            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement()
                 .name(_attribute))
         )
         return this
@@ -1189,7 +1189,7 @@ abstract class BaseQuery<T>
     op T where()
     {
         if (getWhere() === null) {
-           setWhere(IEqlFactory.eINSTANCE.createWhere())
+           setWhere(IEql2Factory.eINSTANCE.createWhere())
         }
         return getThis
     }
@@ -1209,7 +1209,7 @@ class Query
 
     op Query limit(String _val)
     {
-        var l = IEqlFactory.eINSTANCE.createLimit
+        var l = IEql2Factory.eINSTANCE.createLimit
         l.value(_val)
         setLimit(l)
         return this

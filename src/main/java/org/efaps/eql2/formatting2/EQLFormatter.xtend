@@ -28,7 +28,7 @@ import org.efaps.eql2.ISelect
 import org.efaps.eql2.IAttributeSelectElement
 import org.efaps.eql2.ISelectElement
 import org.efaps.eql2.IWhereElement
-import org.efaps.eql2.IEqlPackage
+import org.efaps.eql2.IEql2Package
 import org.efaps.eql2.IOrder
 
 class EQLFormatter extends AbstractFormatter2
@@ -127,7 +127,7 @@ class EQLFormatter extends AbstractFormatter2
     )
     {
         _whereElement.regionFor
-            .feature(IEqlPackage.Literals.WHERE_ELEMENT__VALUES)
+            .feature(IEql2Package.Literals.WHERE_ELEMENT__VALUES)
             .prepend[space = " \""].append[space = "\" "]
 
         _whereElement.select.format
