@@ -14,13 +14,13 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql2;
 
-import org.efaps.eql.bldr.AbstractEQLBuilder;
-import org.efaps.eql.bldr.AbstractInsertEQLBuilder;
-import org.efaps.eql.bldr.AbstractPrintEQLBuilder;
-import org.efaps.eql.bldr.AbstractUpdateEQLBuilder;
-import org.efaps.eql.bldr.AbstractWhereBuilder;
+import org.efaps.eql2.bldr.AbstractEQLBuilder;
+import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
+import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
+import org.efaps.eql2.bldr.AbstractUpdateEQLBuilder;
+import org.efaps.eql2.bldr.AbstractWhereBuilder;
 
 /**
  * The Class TestEQL.

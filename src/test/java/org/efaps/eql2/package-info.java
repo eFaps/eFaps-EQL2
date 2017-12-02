@@ -19,6 +19,6 @@
  *
  * @author The eFaps Team
  */
-package org.efaps.eql;
+package org.efaps.eql2;
 
 

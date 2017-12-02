@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql2;
 
 import org.testng.annotations.Test;
 
@@ -32,7 +32,7 @@ public class CIPrintTest
     @Test(description = "print ci type ")
     public void ciPrintType()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintTypeStatement();
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createCIPrintTypeStatement();
         verifyStatement("print ci type ", stmt);
 
     }
@@ -43,7 +43,7 @@ public class CIPrintTest
     @Test(description = "print ci type EFaps_Type")
     public void ciPrintTypeName()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintTypeStatement().typeName("EFaps_Type");
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createCIPrintTypeStatement().typeName("EFaps_Type");
         verifyStatement("print ci type EFaps_Type", stmt);
     }
 
@@ -53,7 +53,7 @@ public class CIPrintTest
     @Test(description = "print ci type f84716ca-fd71-44ff-9907-0493e2165776")
     public void ciPrintTypeUUID()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintTypeStatement()
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createCIPrintTypeStatement()
                         .typeName("f84716ca-fd71-44ff-9907-0493e2165776");
         verifyStatement("print ci type f84716ca-fd71-44ff-9907-0493e2165776", stmt);
     }
@@ -64,7 +64,7 @@ public class CIPrintTest
     @Test(description = "print ci form EFaps_InvoiceForm")
     public void ciPrintFormName()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintFormStatement()
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createCIPrintFormStatement()
                         .name("EFaps_InvoiceForm");
         verifyStatement("print ci form EFaps_InvoiceForm", stmt);
     }
@@ -75,7 +75,7 @@ public class CIPrintTest
     @Test(description = "print ci form f84716ca-fd71-44ff-9907-0493e2165776")
     public void ciPrintFormUUID()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createCIPrintFormStatement()
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createCIPrintFormStatement()
                         .name("f84716ca-fd71-44ff-9907-0493e2165776");
         verifyStatement("print ci form f84716ca-fd71-44ff-9907-0493e2165776", stmt);
     }

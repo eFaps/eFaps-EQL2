@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql2;
 
 import java.io.IOException;
 import java.util.ArrayList;

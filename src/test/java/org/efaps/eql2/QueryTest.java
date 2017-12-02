@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql2;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -102,7 +102,7 @@ public class QueryTest
     public void limit(final String _eqlBase,
                       final IQueryStmt<?> _queryStmt)
     {
-        _queryStmt.getQuery().addType("Sales_Invoice").setLimitC(IEqlFactory.eINSTANCE.createLimit().setValueC("10"));
+        _queryStmt.getQuery().addType("Sales_Invoice").setLimitC(IEql2Factory.eINSTANCE.createLimit().setValueC("10"));
         verifyStatement(_eqlBase + "type Sales_Invoice limit 10", _queryStmt);
     }
 
@@ -134,16 +134,16 @@ public class QueryTest
     {
         final List<Object[]> ret = new ArrayList<>();
         ret.add(new Object[] { "print query ",
-                        IEqlFactory.eINSTANCE.createPrintQueryStatement()
-                    .query(IEqlFactory.eINSTANCE.createQuery())});
+                        IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                    .query(IEql2Factory.eINSTANCE.createQuery())});
 
         ret.add(new Object[] { "delete query ",
-                        IEqlFactory.eINSTANCE.createDeleteQueryStatement()
-                    .query(IEqlFactory.eINSTANCE.createQuery())});
+                        IEql2Factory.eINSTANCE.createDeleteQueryStatement()
+                    .query(IEql2Factory.eINSTANCE.createQuery())});
 
         ret.add(new Object[] { "update query ",
-                    IEqlFactory.eINSTANCE.createUpdateQueryStatement()
-                        .query(IEqlFactory.eINSTANCE.createQuery())});
+                    IEql2Factory.eINSTANCE.createUpdateQueryStatement()
+                        .query(IEql2Factory.eINSTANCE.createQuery())});
         return ret.iterator();
     }
 }

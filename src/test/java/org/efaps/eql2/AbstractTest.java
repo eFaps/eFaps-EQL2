@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,8 +34,8 @@ import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
 import org.eclipse.xtext.parser.antlr.Lexer;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.validation.AbstractInjectableValidator;
-import org.efaps.eql.parser.antlr.EQLParser;
-import org.efaps.eql.validation.EQLValidator;
+import org.efaps.eql2.parser.antlr.EQLParser;
+import org.efaps.eql2.validation.EQLValidator;
 import org.testng.Assert;
 
 import com.google.inject.Inject;
@@ -111,7 +111,7 @@ public abstract class AbstractTest
         } else {
             setDiagnostic(new BasicDiagnostic());
             final Map<Object, Object> context = new HashMap<>();
-            context.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, "org.efaps.eql.EQL");
+            context.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, "org.efaps.eql2.EQL");
             this.validator.validate(eObject, getDiagnostic(), context);
             final TreeIterator<EObject> iterator = eObject.eAllContents();
             while (iterator.hasNext()) {

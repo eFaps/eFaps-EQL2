@@ -15,7 +15,7 @@
  *
  */
 
-package org.efaps.eql;
+package org.efaps.eql2;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -58,7 +58,7 @@ public class OrderByTest
     public void twoNumericKey(final String _eqlBase,
                               final IOrdered<?> _stmt)
     {
-        _stmt.order(IEqlFactory.eINSTANCE.createOrder().addElement("2", false).addElement("5", false));
+        _stmt.order(IEql2Factory.eINSTANCE.createOrder().addElement("2", false).addElement("5", false));
         verifyStatement(_eqlBase + "order by 2, 5", _stmt);
     }
 
@@ -72,7 +72,7 @@ public class OrderByTest
     public void manyNumericKey(final String _eqlBase,
                                final IOrdered<?> _stmt)
     {
-        _stmt.order(IEqlFactory.eINSTANCE.createOrder().addElement("2", false).addElement("4", false)
+        _stmt.order(IEql2Factory.eINSTANCE.createOrder().addElement("2", false).addElement("4", false)
                         .addElement("7", false));
         verifyStatement(_eqlBase + "order by 2, 4, 7", _stmt);
     }
@@ -87,7 +87,7 @@ public class OrderByTest
     public void oneNumericKeyAsc(final String _eqlBase,
                                  final IOrdered<?> _stmt)
     {
-        _stmt.order(IEqlFactory.eINSTANCE.createOrder().addElement("2", false));
+        _stmt.order(IEql2Factory.eINSTANCE.createOrder().addElement("2", false));
         verifyStatement(_eqlBase + "order by 2 asc", _stmt);
     }
 
@@ -101,7 +101,7 @@ public class OrderByTest
     public void oneNumericKeyDesc(final String _eqlBase,
                                   final IOrdered<?> _stmt)
     {
-        _stmt.order(IEqlFactory.eINSTANCE.createOrder().addElement("2", true));
+        _stmt.order(IEql2Factory.eINSTANCE.createOrder().addElement("2", true));
         verifyStatement(_eqlBase + "order by 2 desc", _stmt);
     }
 
@@ -115,7 +115,7 @@ public class OrderByTest
     public void oneAlphanumericKey(final String _eqlBase,
                                    final IOrdered<?> _stmt)
     {
-        _stmt.order(IEqlFactory.eINSTANCE.createOrder().addElement("demo", false));
+        _stmt.order(IEql2Factory.eINSTANCE.createOrder().addElement("demo", false));
         verifyStatement(_eqlBase + "order by demo", _stmt);
     }
 
@@ -129,7 +129,7 @@ public class OrderByTest
     public void twoAlphanumericKey(final String _eqlBase,
                                    final IOrdered<?> _stmt)
     {
-        _stmt.order(IEqlFactory.eINSTANCE.createOrder().addElement("demo", false).addElement("second", false));
+        _stmt.order(IEql2Factory.eINSTANCE.createOrder().addElement("demo", false).addElement("second", false));
         verifyStatement(_eqlBase + "order by demo, second", _stmt);
     }
 
@@ -143,7 +143,7 @@ public class OrderByTest
     public void mixedAlphanumericKey(final String _eqlBase,
                                      final IOrdered<?> _stmt)
     {
-        _stmt.order(IEqlFactory.eINSTANCE.createOrder().addElement("demo", true).addElement("second", false));
+        _stmt.order(IEql2Factory.eINSTANCE.createOrder().addElement("demo", true).addElement("second", false));
         verifyStatement(_eqlBase + "order by demo desc, second", _stmt);
     }
 
@@ -158,20 +158,20 @@ public class OrderByTest
     {
         final List<Object[]> ret = new ArrayList<>();
         ret.add(new Object[] { "print query type EFaps_Type select attribute[Name] ",
-                        IEqlFactory.eINSTANCE.createPrintQueryStatement()
-                            .query(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type"))
-                                .setSelectionC(IEqlFactory.eINSTANCE.createSelection()
-                                    .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement()
+                        IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                            .query(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
+                                .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                    .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement()
                                     .setNameC("Name")))) });
 
         ret.add(new Object[] { "exec org.efaps.demo.Test select 1 as Key, 5 as Demo, 8 as etwas ",
-                        IEqlFactory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
-                            .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                        IEql2Factory.eINSTANCE.createExecStatement().className("org.efaps.demo.Test")
+                            .addSelection(IEql2Factory.eINSTANCE.createExecSelectionElement()
                                         .index("1").alias("Key"))
-                            .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                            .addSelection(IEql2Factory.eINSTANCE.createExecSelectionElement()
                                         .index("5").alias("Demo"))
-                            .addSelection(IEqlFactory.eINSTANCE.createExecSelectionElement()
+                            .addSelection(IEql2Factory.eINSTANCE.createExecSelectionElement()
                                             .index("8").alias("etwas"))  });
         return ret.iterator();
     }

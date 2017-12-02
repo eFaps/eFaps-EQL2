@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.ide.contentassist;
+package org.efaps.eql2.ide.contentassist;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.efaps.eql.AbstractTest;
+import org.efaps.eql2.AbstractTest;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;

@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql2;
 
 import org.testng.annotations.Test;
 
@@ -33,7 +33,7 @@ public class PrintTest
     @Test(description = "print obj")
     public void object()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintObjectStatement();
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement();
         verifyStatement("print obj", stmt);
         verifyStatement("print object", stmt);
     }
@@ -44,7 +44,7 @@ public class PrintTest
     @Test(description = "print obj 123.456")
     public void objectOID()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintObjectStatement().setOidC("123.456");
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.456");
         verifyStatement("print obj 123.456", stmt);
         verifyStatement("print object 123.456", stmt);
     }
@@ -55,10 +55,10 @@ public class PrintTest
     @Test(description = "print obj 123.456 select attribute[Name]")
     public void objectSelection()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintObjectStatement().setOidC("123.456")
-                        .setSelectionC(IEqlFactory.eINSTANCE.createSelection()
-                        .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement()
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.456")
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement()
                                                         .setNameC("Name"))));
         verifyStatement("print obj 123.456 select attribute[Name]", stmt);
         verifyStatement("print object 123.456 select attribute[Name]", stmt);
@@ -70,7 +70,7 @@ public class PrintTest
     @Test(description = "print list ()")
     public void list()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintListStatement().addOid(null);
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintListStatement().addOid(null);
         verifyStatement("print list ()", stmt);
     }
 
@@ -80,7 +80,7 @@ public class PrintTest
     @Test(description = "print list (123.456)")
     public void listOID()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintListStatement().addOid("123.456");
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintListStatement().addOid("123.456");
         verifyStatement("print list (123.456)", stmt);
     }
 
@@ -90,7 +90,7 @@ public class PrintTest
     @Test(description = "print list (123.456, 223.456, 323.456)")
     public void listOIDs()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintListStatement().addOid("123.456").addOid("223.456")
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintListStatement().addOid("123.456").addOid("223.456")
                         .addOid("323.456");
         verifyStatement("print list (123.456, 223.456, 323.456)", stmt);
     }
@@ -101,8 +101,8 @@ public class PrintTest
     @Test(description = "print query type EFaps_Type")
     public void query()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintQueryStatement()
-                    .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type"));
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                    .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"));
         verifyStatement("print query type EFaps_Type", stmt);
     }
 
@@ -112,11 +112,11 @@ public class PrintTest
     @Test(description = "print query type EFaps_Type select attribute[Name]")
     public void queryAttribute()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintQueryStatement()
-                    .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type"))
-                    .setSelectionC(IEqlFactory.eINSTANCE.createSelection()
-                        .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                            .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name"))));
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                    .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
+                    .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name"))));
         verifyStatement("print query type EFaps_Type select attribute[Name]", stmt);
     }
 
@@ -126,9 +126,9 @@ public class PrintTest
     @Test(description = "print list (123.456, 223.456, 323.456) select attribute[Name] ")
     public void listOIDSelection()
     {
-        final IEQLElement stmt = IEqlFactory.eINSTANCE.createPrintListStatement().addOid("123.456").addOid("223.456")
-                        .addOid("323.456").setSelectionC(IEqlFactory.eINSTANCE.createSelection().addSelect(
-                                        IEqlFactory.eINSTANCE.createSelect().addElement(IEqlFactory.eINSTANCE
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintListStatement().addOid("123.456").addOid("223.456")
+                        .addOid("323.456").setSelectionC(IEql2Factory.eINSTANCE.createSelection().addSelect(
+                                        IEql2Factory.eINSTANCE.createSelect().addElement(IEql2Factory.eINSTANCE
                                                         .createAttributeSelectElement().setNameC("Name"))));
         verifyStatement("print list (123.456, 223.456, 323.456) select attribute[Name] ", stmt);
     }

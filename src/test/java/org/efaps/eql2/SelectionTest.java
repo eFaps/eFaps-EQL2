@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql;
+package org.efaps.eql2;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,8 +44,8 @@ public class SelectionTest
                           final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
         verifyStatement(_eqlBase + "select attribute[Name]", _printStmt);
     }
 
@@ -62,9 +62,9 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
                 .setAliasC("alias")
-                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
+                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
         verifyStatement(_eqlBase + "select attribute[Name] as alias", _printStmt);
     }
 
@@ -81,9 +81,9 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
                 .setAliasC("ALIAS")
-                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
+                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
         verifyStatement(_eqlBase + "select attribute[Name] as ALIAS", _printStmt);
     }
 
@@ -100,8 +100,8 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.TYPE)));
         verifyStatement(_eqlBase + "select type", _printStmt);
     }
@@ -119,9 +119,9 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
                 .setAliasC("Type")
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.TYPE)));
         verifyStatement(_eqlBase + "select type as Type", _printStmt);
     }
@@ -139,10 +139,10 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.TYPE))
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.LABEL)));
         verifyStatement(_eqlBase + "select type.label", _printStmt);
     }
@@ -160,10 +160,10 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.TYPE))
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.NAME)));
         verifyStatement(_eqlBase + "select type.name", _printStmt);
     }
@@ -181,10 +181,10 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.TYPE))
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.ID)));
         verifyStatement(_eqlBase + "select type.id", _printStmt);
     }
@@ -202,10 +202,10 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.TYPE))
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.UUID)));
         verifyStatement(_eqlBase + "select type.uuid", _printStmt);
     }
@@ -223,8 +223,8 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.OID)));
         verifyStatement(_eqlBase + "select oid", _printStmt);
     }
@@ -242,8 +242,8 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.ID)));
         verifyStatement(_eqlBase + "select id", _printStmt);
     }
@@ -261,8 +261,8 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.INSTANCE)));
         verifyStatement(_eqlBase + "select instance", _printStmt);
     }
@@ -280,8 +280,8 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.STATUS)));
         verifyStatement(_eqlBase + "select status", _printStmt);
     }
@@ -299,10 +299,10 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.FILE))
-                .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                 .setElementC(SimpleSelectElement.LENGTH)));
         verifyStatement(_eqlBase + "select file.length", _printStmt);
     }
@@ -318,8 +318,8 @@ public class SelectionTest
                       final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                        .addElement(IEqlFactory.eINSTANCE.createClassSelectElement().setNameC("CLASS_Name")));
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createClassSelectElement().setNameC("CLASS_Name")));
         verifyStatement(_eqlBase + "select class[CLASS_Name]", _printStmt);
     }
 
@@ -334,8 +334,8 @@ public class SelectionTest
                       final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                        .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().setNameC("AttributeName")));
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().setNameC("AttributeName")));
         verifyStatement(_eqlBase + "select linkto[AttributeName]", _printStmt);
     }
 
@@ -350,8 +350,8 @@ public class SelectionTest
                          final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                        .addElement(IEqlFactory.eINSTANCE.createLinkfromSelectElement()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createLinkfromSelectElement()
                                         .setTypeNameC("TypeName").setAttributeC("AttributeName")));
         verifyStatement(_eqlBase + "select linkfrom[TypeName#AttributeName]", _printStmt);
     }
@@ -367,9 +367,9 @@ public class SelectionTest
                                 final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
-                        .addElement(IEqlFactory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")));
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
+                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")));
         verifyStatement(_eqlBase + "select attribute[Date].format[YYYY-MM-DD]", _printStmt);
     }
 
@@ -384,10 +384,10 @@ public class SelectionTest
                                      final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Algo")
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
-                        .addElement(IEqlFactory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")));
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
+                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")));
         verifyStatement(_eqlBase + "select attribute[Date].format[YYYY-MM-DD] as Algo", _printStmt);
     }
 
@@ -403,14 +403,14 @@ public class SelectionTest
                                       final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Algo")
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
-                        .addElement(IEqlFactory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")))
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
+                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")))
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Otro")
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
-                        .addElement(IEqlFactory.eINSTANCE.createFormatSelectElement().setValueC("MM-YYYY/DD")));
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
+                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setValueC("MM-YYYY/DD")));
         verifyStatement(_eqlBase + "select attribute[Date].format[YYYY-MM-DD] as Algo, "
                         + "attribute[Date].format[MM-YYYY/DD] as Otro", _printStmt);
     }
@@ -429,14 +429,14 @@ public class SelectionTest
         throws Exception
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name1")))
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name2")))
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name3")))
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Name4")));
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name1")))
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name2")))
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name3")))
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name4")));
         verifyStatement(_eqlBase + "select attribute[Name1], attribute[Name2], "
                         + "attribute[Name3], attribute[Name4]", _printStmt);
     }
@@ -453,14 +453,14 @@ public class SelectionTest
                           final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("First")
-                        .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().setNameC("LinkTo"))
-                        .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().setNameC("Linkto2"))
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("Attribute")))
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("OneAttribute"))
-                        .addElement(IEqlFactory.eINSTANCE.createBaseSelectElement()
+                        .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().setNameC("LinkTo"))
+                        .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().setNameC("Linkto2"))
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Attribute")))
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("OneAttribute"))
+                        .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement()
                                         .setElementC(SimpleSelectElement.BASE)));
         verifyStatement(_eqlBase + "select linkto[LinkTo].linkto[Linkto2].attribute[Attribute] "
                         + "as First, attribute[OneAttribute].base", _printStmt);
@@ -477,9 +477,9 @@ public class SelectionTest
                            final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Test")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")));
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")));
         verifyStatement(_eqlBase + "select exec org.efaps.Demo as Test", _printStmt);
     }
 
@@ -495,12 +495,12 @@ public class SelectionTest
                                final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("One")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")))
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")))
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("TWO")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement()
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement()
                                         .setClassNameC("org.efaps.esjp.Versuch")));
         verifyStatement(_eqlBase + "select exec org.efaps.Demo as One, exec org.efaps.esjp.Versuch as TWO", _printStmt);
     }
@@ -517,9 +517,9 @@ public class SelectionTest
                                     final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("One")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
                                         .addParameter("PARA")));
         verifyStatement(_eqlBase + "select exec org.efaps.Demo \"PARA\" as One", _printStmt);
     }
@@ -535,9 +535,9 @@ public class SelectionTest
                                         final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("One")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
                                         .addParameter("PARA")
                                         .addParameter("Para2")));
         verifyStatement(_eqlBase + "select exec org.efaps.Demo \"PARA\", \"Para2\" as One", _printStmt);
@@ -554,9 +554,9 @@ public class SelectionTest
                                           final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("One")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
                                         .addParameter("12")));
         verifyStatement(_eqlBase + "select exec org.efaps.Demo 12 as One", _printStmt);
     }
@@ -572,9 +572,9 @@ public class SelectionTest
                                              final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("One")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
                                         .addParameter("12").addParameter("890")));
         verifyStatement(_eqlBase + "select exec org.efaps.Demo 12,890 as One", _printStmt);
     }
@@ -591,9 +591,9 @@ public class SelectionTest
                                           final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("One")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")
                                         .addParameter("Hallo Welt").addParameter("12").addParameter("12")
                                         .addParameter("StringPara").addParameter("890")));
         verifyStatement(_eqlBase + "select exec org.efaps.Demo \"Hallo Welt\", 12, "
@@ -611,11 +611,11 @@ public class SelectionTest
                                     final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("AttrName")))
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("AttrName")))
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Test")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")));
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")));
         verifyStatement(_eqlBase + "select attribute[AttrName], exec org.efaps.Demo as Test", _printStmt);
     }
 
@@ -631,12 +631,12 @@ public class SelectionTest
                                          final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-            .addSelect(IEqlFactory.eINSTANCE.createSelect()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Test2")
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("AttrName")))
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("AttrName")))
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Test")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")));
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")));
         verifyStatement(_eqlBase + "select attribute[AttrName] as Test2, "
                         + "exec org.efaps.Demo as Test", _printStmt);
     }
@@ -653,12 +653,12 @@ public class SelectionTest
                                     final IPrintStatement<?> _printStmt)
     {
         _printStmt.getSelection()
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Test")
-                        .addElement(IEqlFactory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")))
-                .addSelect(IEqlFactory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement().setClassNameC("org.efaps.Demo")))
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
                                 .setAliasC("Test2")
-                                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().setNameC("AttrName")));
+                                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("AttrName")));
         verifyStatement(_eqlBase + "select exec org.efaps.Demo as Test,"
                         + "attribute[AttrName] as Test2", _printStmt);
     }
@@ -674,31 +674,31 @@ public class SelectionTest
     {
         final List<Object[]> ret = new ArrayList<>();
         ret.add(new Object[] { "print obj 123.345 ",
-                        IEqlFactory.eINSTANCE.createPrintObjectStatement().setOidC("123.345")
-                            .setSelectionC(IEqlFactory.eINSTANCE.createSelection()) });
+                        IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.345")
+                            .setSelectionC(IEql2Factory.eINSTANCE.createSelection()) });
 
         ret.add(new Object[] { "print list (123.345) ",
-                        IEqlFactory.eINSTANCE.createPrintListStatement().addOid("123.345")
-                            .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
+                        IEql2Factory.eINSTANCE.createPrintListStatement().addOid("123.345")
+                            .setSelectionC(IEql2Factory.eINSTANCE.createSelection())});
 
         ret.add(new Object[] { "print query type EFaps_Type ",
-                        IEqlFactory.eINSTANCE.createPrintQueryStatement()
-                    .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type"))
-                    .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
+                        IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                    .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
+                    .setSelectionC(IEql2Factory.eINSTANCE.createSelection())});
 
         ret.add(new Object[] { "print query type EFaps_Type, ce71ffa1-98f2-49b4-b892-246cd407b520, Sales_Invoice ",
-                        IEqlFactory.eINSTANCE.createPrintQueryStatement()
-                    .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type")
+                        IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                    .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type")
                                     .addType("ce71ffa1-98f2-49b4-b892-246cd407b520")
                                     .addType("Sales_Invoice"))
-                    .setSelectionC(IEqlFactory.eINSTANCE.createSelection())});
+                    .setSelectionC(IEql2Factory.eINSTANCE.createSelection())});
 
         ret.add(new Object[] { "print query type EFaps_Type where attribute[DocumentLink] == 4 ",
-                        IEqlFactory.eINSTANCE.createPrintQueryStatement()
-                        .setSelectionC(IEqlFactory.eINSTANCE.createSelection())
-                    .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("EFaps_Type")
-                    .where(IEqlFactory.eINSTANCE.createWhere().addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                                    .element(IEqlFactory.eINSTANCE.createWhereElement()
+                        IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection())
+                    .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type")
+                    .where(IEql2Factory.eINSTANCE.createWhere().addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                                    .element(IEql2Factory.eINSTANCE.createWhereElement()
                                                     .attribute("DocumentLink").equal().value("4")))))});
         return ret.iterator();
     }

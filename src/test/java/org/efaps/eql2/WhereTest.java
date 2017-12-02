@@ -15,7 +15,7 @@
  *
  */
 
-package org.efaps.eql;
+package org.efaps.eql2;
 
 
 import java.util.ArrayList;
@@ -106,10 +106,10 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("DocumentLink").equal().value("4")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Description").equal().value("567")));
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("DocumentLink").equal().value("4")))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("Description").equal().value("567")));
         verifyStatement(_eqlBase + "DocumentLink == 4 and Description == 567", _stmt);
         verifyStatement(_eqlBase + "attribute[DocumentLink] == 4 and attribute[Description] == 567", _stmt);
         verifyStatement(_eqlBase + "DocumentLink eq 4 and Description eq 567", _stmt);
@@ -129,10 +129,10 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("DocumentLink").equal().value("4")))
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().or()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Description").equal().value("567")));
+                .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("DocumentLink").equal().value("4")))
+                .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().or()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("Description").equal().value("567")));
         verifyStatement(_eqlBase + "DocumentLink == 4 or Description == 567", _stmt);
         verifyStatement(_eqlBase + "attribute[DocumentLink] == 4 or attribute[Description] == 567", _stmt);
         verifyStatement(_eqlBase + "DocumentLink eq 4 or Description eq 567", _stmt);
@@ -314,14 +314,14 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("DocumentLink").equal().value("4")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Description").less().value("567")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("House").like().value("Blue House")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("HouseNumber").greater().value("459")));
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("DocumentLink").equal().value("4")))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("Description").less().value("567")))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("House").like().value("Blue House")))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("HouseNumber").greater().value("459")));
         verifyStatement(_eqlBase + "DocumentLink == 4 and Description < 567 and "
                         + "House like \"Blue House\" and HouseNumber > 459", _stmt);
     }
@@ -375,17 +375,17 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("DocumentLink").equal().value("4")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Description").less().value("567")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("House").like().value("Blue House")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("DocLink").in()
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("DocumentLink").equal().value("4")))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("Description").less().value("567")))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("House").like().value("Blue House")))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("DocLink").in()
                             .addValue("4").addValue("das it ein langer etxt").addValue("Bla bal bal")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("HouseNumber").greater().value("459")));
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("HouseNumber").greater().value("459")));
         verifyStatement(_eqlBase + "DocumentLink == 4 and Description < 567 and House like \"Blue House\" "
                         + "and DocLink in (\"4\",\"das it ein langer etxt\",\"Bla bal bal\") "
                         + "and HouseNumber > 459", _stmt);
@@ -404,11 +404,11 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement()
-                        .select(IEqlFactory.eINSTANCE.createWhereSelect()
-                                .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
-                                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("Code"))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement()
+                        .select(IEql2Factory.eINSTANCE.createWhereSelect()
+                                .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
+                                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("Code"))
                         ).value("4")));
         verifyStatement(_eqlBase + "linkto[DocumentLink].attribute[Code] eq 4", _stmt);
     }
@@ -426,17 +426,17 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                .element(IEqlFactory.eINSTANCE.createWhereElement()
-                    .select(IEqlFactory.eINSTANCE.createWhereSelect()
-                            .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
-                            .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("Code"))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                .element(IEql2Factory.eINSTANCE.createWhereElement()
+                    .select(IEql2Factory.eINSTANCE.createWhereSelect()
+                            .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
+                            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("Code"))
                     ).equal().value("4")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                .element(IEqlFactory.eINSTANCE.createWhereElement()
-                    .select(IEqlFactory.eINSTANCE.createWhereSelect()
-                            .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
-                            .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("Description"))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                .element(IEql2Factory.eINSTANCE.createWhereElement()
+                    .select(IEql2Factory.eINSTANCE.createWhereSelect()
+                            .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
+                            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("Description"))
                     ).equal().value("567")));
         verifyStatement(_eqlBase + "linkto[DocumentLink].attribute[Code] eq 4 "
                         + "and linkto[DocumentLink].attribute[Description] == 567", _stmt);
@@ -455,11 +455,11 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                .element(IEqlFactory.eINSTANCE.createWhereElement()
-                    .select(IEqlFactory.eINSTANCE.createWhereSelect()
-                            .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
-                            .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("Code"))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                .element(IEql2Factory.eINSTANCE.createWhereElement()
+                    .select(IEql2Factory.eINSTANCE.createWhereSelect()
+                            .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
+                            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("Code"))
                     ).less().value("4")));
         verifyStatement(_eqlBase + "linkto[DocumentLink].attribute[Code] < 4", _stmt);
     }
@@ -477,11 +477,11 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                .element(IEqlFactory.eINSTANCE.createWhereElement()
-                    .select(IEqlFactory.eINSTANCE.createWhereSelect()
-                        .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("Code"))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                .element(IEql2Factory.eINSTANCE.createWhereElement()
+                    .select(IEql2Factory.eINSTANCE.createWhereSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("Code"))
                 ).greater().value("Blue House")));
         verifyStatement(_eqlBase + "linkto[DocumentLink].attribute[Code] > \"Blue House\"", _stmt);
     }
@@ -499,11 +499,11 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                .element(IEqlFactory.eINSTANCE.createWhereElement()
-                    .select(IEqlFactory.eINSTANCE.createWhereSelect()
-                        .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
-                        .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("Code"))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                .element(IEql2Factory.eINSTANCE.createWhereElement()
+                    .select(IEql2Factory.eINSTANCE.createWhereSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().name("DocumentLink"))
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("Code"))
                 ).like().value("099*")));
         verifyStatement(_eqlBase + "linkto[DocumentLink].attribute[Code] like \"099*\"", _stmt);
     }
@@ -521,29 +521,29 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                .element(IEqlFactory.eINSTANCE.createWhereElement()
-                    .select(IEqlFactory.eINSTANCE.createWhereSelect()
-                            .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().name("DocumentLink1"))
-                            .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("Code"))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                .element(IEql2Factory.eINSTANCE.createWhereElement()
+                    .select(IEql2Factory.eINSTANCE.createWhereSelect()
+                            .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().name("DocumentLink1"))
+                            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("Code"))
                     ).equal().value("4")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                .element(IEqlFactory.eINSTANCE.createWhereElement()
-                    .select(IEqlFactory.eINSTANCE.createWhereSelect()
-                            .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().name("DocumentLink2"))
-                            .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("Description"))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                .element(IEql2Factory.eINSTANCE.createWhereElement()
+                    .select(IEql2Factory.eINSTANCE.createWhereSelect()
+                            .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().name("DocumentLink2"))
+                            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("Description"))
                     ).less().value("567")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                .element(IEqlFactory.eINSTANCE.createWhereElement()
-                    .select(IEqlFactory.eINSTANCE.createWhereSelect()
-                            .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().name("DocumentLink3"))
-                            .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("DocLink"))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                .element(IEql2Factory.eINSTANCE.createWhereElement()
+                    .select(IEql2Factory.eINSTANCE.createWhereSelect()
+                            .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().name("DocumentLink3"))
+                            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("DocLink"))
                     ).in().addValue("567").addValue("das it ein langer text").addValue("Bla bal bal")))
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                .element(IEqlFactory.eINSTANCE.createWhereElement()
-                    .select(IEqlFactory.eINSTANCE.createWhereSelect()
-                            .addElement(IEqlFactory.eINSTANCE.createLinktoSelectElement().name("DocumentLink4"))
-                            .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("HouseNumber"))
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                .element(IEql2Factory.eINSTANCE.createWhereElement()
+                    .select(IEql2Factory.eINSTANCE.createWhereSelect()
+                            .addElement(IEql2Factory.eINSTANCE.createLinktoSelectElement().name("DocumentLink4"))
+                            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("HouseNumber"))
                     ).greater().value("459")));
         verifyStatement(_eqlBase + "linkto[DocumentLink1].attribute[Code] eq 4 "
                         + "and linkto[DocumentLink2].attribute[Description] < 567 "
@@ -565,8 +565,8 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("ID").in().addValue("1")
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("ID").in().addValue("1")
                                     .addValue("6").addValue("7")));
         verifyStatement(_eqlBase + "ID in (1, 6, 7)", _stmt);
     }
@@ -585,13 +585,13 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Invoice").in()
-                        .nestedQuery(IEqlFactory.eINSTANCE.createNestedQuery()
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("Invoice").in()
+                        .nestedQuery(IEql2Factory.eINSTANCE.createNestedQuery()
                                     .addType("Sales_Invoice").selection(
-                                        IEqlFactory.eINSTANCE.createSelection()
-                                        .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                                .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("FromLink")))))));
+                                        IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("FromLink")))))));
 
         verifyStatement(_eqlBase + "Invoice in ( query type Sales_Invoice select attribute[FromLink] )", _stmt);
     }
@@ -610,16 +610,16 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Invoice").in()
-                    .nestedQuery(IEqlFactory.eINSTANCE.createNestedQuery().addType("Sales_Invoice")
-                        .where(IEqlFactory.eINSTANCE.createWhere()
-                            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("Invoice").in()
+                    .nestedQuery(IEql2Factory.eINSTANCE.createNestedQuery().addType("Sales_Invoice")
+                        .where(IEql2Factory.eINSTANCE.createWhere()
+                            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                                .element(IEql2Factory.eINSTANCE.createWhereElement()
                                             .attribute("ID").equal().value("15"))))
-                .selection(IEqlFactory.eINSTANCE.createSelection()
-                                .addSelect(IEqlFactory.eINSTANCE.createSelect()
-                                    .addElement(IEqlFactory.eINSTANCE.createAttributeSelectElement().name("FromLink")
+                .selection(IEql2Factory.eINSTANCE.createSelection()
+                                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                    .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("FromLink")
                                 ))))));
 
         verifyStatement(_eqlBase + "Invoice in ( query type Sales_Invoice where attribute[ID] == 15 "
@@ -639,9 +639,9 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("Invoice").in()
-                            .nestedQuery(IEqlFactory.eINSTANCE.createNestedQuery()
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("Invoice").in()
+                            .nestedQuery(IEql2Factory.eINSTANCE.createNestedQuery()
                                 .addType("Sales_Invoice"))));
 
         verifyStatement(_eqlBase + "Invoice in ( query type Sales_Invoice )", _stmt);
@@ -660,15 +660,15 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                    .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR1").equal().value("1")))
-                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
-                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereGroupTerm().and()
+                    .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR2").equal().value("2")))
-                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                    .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR3").equal().value("3"))));
         verifyStatement(_eqlBase + "ATTR1 == 1 and (ATTR2 == 2 and ATTR3 == 3)", _stmt);
     }
@@ -686,15 +686,15 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm()
-                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereGroupTerm()
+                    .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR1").equal().value("1")))
-                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                    .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR2").equal().value("2"))))
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR3").equal().value("3")));
         verifyStatement(_eqlBase + "(ATTR1 == 1 and ATTR2 == 2) and ATTR3 ==3", _stmt);
     }
@@ -712,24 +712,24 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR1").equal().value("1")))
-                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
-                        .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                            .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereGroupTerm().and()
+                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                            .element(IEql2Factory.eINSTANCE.createWhereElement()
                                         .attribute("ATTR2").equal().value("2")))
-                        .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                            .element(IEqlFactory.eINSTANCE.createWhereElement()
+                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                            .element(IEql2Factory.eINSTANCE.createWhereElement()
                                         .attribute("ATTR3").equal().value("3"))))
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR4").equal().value("4")))
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR5").equal().value("5")))
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR6").equal().value("6")));
         verifyStatement(_eqlBase + "ATTR1 == 1 and (ATTR2 == 2 and ATTR3 ==3) "
                         + "and ATTR4 == 4 and ATTR5 == 5  and ATTR6 == 6 ", _stmt);
@@ -748,23 +748,23 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("ATTR1").equal().value("1")))
-                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
-                    .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm()
-                        .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                            .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("ATTR1").equal().value("1")))
+                .addTerm(IEql2Factory.eINSTANCE.createWhereGroupTerm().and()
+                    .addTerm(IEql2Factory.eINSTANCE.createWhereGroupTerm()
+                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                            .element(IEql2Factory.eINSTANCE.createWhereElement()
                                             .attribute("ATTR2").equal().value("2")))
-                        .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                            .element(IEqlFactory.eINSTANCE.createWhereElement()
+                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                            .element(IEql2Factory.eINSTANCE.createWhereElement()
                                             .attribute("ATTR3").equal().value("3"))))
-                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                            .element(IEqlFactory.eINSTANCE.createWhereElement()
+                    .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                            .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR4").equal().value("4"))))
-               .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                           .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("ATTR5").equal().value("5")))
-               .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                           .element(IEqlFactory.eINSTANCE.createWhereElement().attribute("ATTR6").equal().value("6")));
+               .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                           .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("ATTR5").equal().value("5")))
+               .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                           .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("ATTR6").equal().value("6")));
         verifyStatement(_eqlBase + "ATTR1 == 1 and ((ATTR2 == 2 and ATTR3 == 3) and ATTR4 == 4) "
                         + "and ATTR5 == 5  and ATTR6 == 6 ", _stmt);
     }
@@ -782,27 +782,27 @@ public class WhereTest
         throws Exception
     {
         _stmt.getQuery().getWhere()
-                .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm()
-                    .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                        .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereGroupTerm()
+                    .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement()
                                     .attribute("ATTR1").equal().value("1")))
-                    .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
-                        .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm()
-                            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                    .addTerm(IEql2Factory.eINSTANCE.createWhereGroupTerm().and()
+                        .addTerm(IEql2Factory.eINSTANCE.createWhereGroupTerm()
+                            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                                .element(IEql2Factory.eINSTANCE.createWhereElement()
                                             .attribute("ATTR2").equal().value("2")))
-                            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                                .element(IEql2Factory.eINSTANCE.createWhereElement()
                                             .attribute("ATTR3").equal().value("3"))))
-                        .addTerm(IEqlFactory.eINSTANCE.createWhereGroupTerm().and()
-                            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm()
-                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                        .addTerm(IEql2Factory.eINSTANCE.createWhereGroupTerm().and()
+                            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                                .element(IEql2Factory.eINSTANCE.createWhereElement()
                                             .attribute("ATTR4").equal().value("4")))
-                            .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                                .element(IEql2Factory.eINSTANCE.createWhereElement()
                                             .attribute("ATTR5").equal().value("5"))))))
-                .addTerm(IEqlFactory.eINSTANCE.createWhereElementTerm().and()
-                                .element(IEqlFactory.eINSTANCE.createWhereElement()
+                .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm().and()
+                                .element(IEql2Factory.eINSTANCE.createWhereElement()
                                             .attribute("ATTR6").equal().value("6")));
         verifyStatement(_eqlBase + "(ATTR1 == 1 and ((ATTR2 == 2 and ATTR3 == 3) and (ATTR4 == 4 "
                         + "and ATTR5 == 5)))  and ATTR6 == 6 ", _stmt);
@@ -819,8 +819,8 @@ public class WhereTest
     {
         final List<Object[]> ret = new ArrayList<>();
         ret.add(new Object[] { "print query type Sales_Invoice where ",
-                        IEqlFactory.eINSTANCE.createPrintQueryStatement()
-                    .setQueryC(IEqlFactory.eINSTANCE.createQuery().addType("Sales_Invoice")
+                        IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                    .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("Sales_Invoice")
                                     .where())});
         return ret.iterator();
     }
