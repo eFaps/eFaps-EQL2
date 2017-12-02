@@ -22,11 +22,11 @@
     <parent>
         <groupId>org.efaps</groupId>
         <artifactId>efaps-parent</artifactId>
-        <version>8.1.0-SNAPSHOT</version>
+        <version>8.0.0-SNAPSHOT</version>
     </parent>
     <packaging>jar</packaging>
-    <artifactId>efaps-eql</artifactId>
-    <name>eFaps Query Language</name>
+    <artifactId>efaps-eql2</artifactId>
+    <name>eFaps Query Language 2.0</name>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -237,7 +237,7 @@
                     <dependency>
                         <groupId>org.eclipse.emf</groupId>
                         <artifactId>org.eclipse.emf.codegen.ecore</artifactId>
-                        <version>${emf-codegen-version}</version>
+                        <version>${emf-common-version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.eclipse.emf</groupId>
@@ -307,7 +307,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.9.1</version>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>add-source</id>
@@ -452,10 +452,5 @@
             <version>${commons.lang.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.eclipse.xtext</groupId>
-            <artifactId>org.eclipse.xtext.xtext.generator</artifactId>
-            <version>${xtext-version}</version>
-         </dependency>
     </dependencies>
 </project>
