@@ -14,9 +14,9 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql
+package org.efaps.eql2
 
-import org.efaps.eql.converter.ValueConverters
+import org.efaps.eql2.converter.ValueConverters
 import org.eclipse.jface.viewers.ILabelProvider
 import org.eclipse.jface.viewers.ILabelProviderListener
 

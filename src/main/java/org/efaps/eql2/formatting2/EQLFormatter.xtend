@@ -14,22 +14,22 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.formatting2
+package org.efaps.eql2.formatting2
 
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import org.efaps.eql.IPrintQueryStatement
-import org.efaps.eql.IPrintStatement
-import org.efaps.eql.IQuery
-import org.efaps.eql.IWhereSelect
-import org.efaps.eql.ISelection
-import org.efaps.eql.ILinktoSelectElement
-import org.efaps.eql.ISelect
-import org.efaps.eql.IAttributeSelectElement
-import org.efaps.eql.ISelectElement
-import org.efaps.eql.IWhereElement
-import org.efaps.eql.IEqlPackage
-import org.efaps.eql.IOrder
+import org.efaps.eql2.IPrintQueryStatement
+import org.efaps.eql2.IPrintStatement
+import org.efaps.eql2.IQuery
+import org.efaps.eql2.IWhereSelect
+import org.efaps.eql2.ISelection
+import org.efaps.eql2.ILinktoSelectElement
+import org.efaps.eql2.ISelect
+import org.efaps.eql2.IAttributeSelectElement
+import org.efaps.eql2.ISelectElement
+import org.efaps.eql2.IWhereElement
+import org.efaps.eql2.IEqlPackage
+import org.efaps.eql2.IOrder
 
 class EQLFormatter extends AbstractFormatter2
 {

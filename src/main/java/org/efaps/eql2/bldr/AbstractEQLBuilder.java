@@ -14,13 +14,13 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.bldr;
+package org.efaps.eql2.bldr;
 
-import org.efaps.eql.EQL;
-import org.efaps.eql.IQueryStmt;
-import org.efaps.eql.IStatement;
-import org.efaps.eql.IWhere;
-import org.efaps.eql.impl.WhereElementTerm;
+import org.efaps.eql2.EQL;
+import org.efaps.eql2.IQueryStmt;
+import org.efaps.eql2.IStatement;
+import org.efaps.eql2.IWhere;
+import org.efaps.eql2.impl.WhereElementTerm;
 
 /**
  * The Class AbstractEQLBuilder.

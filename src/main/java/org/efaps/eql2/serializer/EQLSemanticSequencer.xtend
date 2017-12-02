@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.serializer
+package org.efaps.eql2.serializer
 
 /**
  * The Class EQLSemanticSequencer.

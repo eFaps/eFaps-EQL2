@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.converter;
+package org.efaps.eql2.converter;
 
 import org.eclipse.xtext.common.services.Ecore2XtextTerminalConverters;
 import org.eclipse.xtext.conversion.IValueConverter;

@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.ide.contentassist
+package org.efaps.eql2.ide.contentassist
 
 import java.util.ArrayList
 import java.util.HashSet
@@ -25,7 +25,7 @@ import org.eclipse.xtext.util.TextRegion
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.eclipse.xtext.util.LazyStringInputStream
-import org.efaps.eql.ide.EQLIdeSetup
+import org.efaps.eql2.ide.EQLIdeSetup
 
 /**
  * The Class EQLProposals.

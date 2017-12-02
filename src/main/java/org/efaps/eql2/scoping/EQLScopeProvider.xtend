@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.scoping
+package org.efaps.eql2.scoping
 
 
 /**

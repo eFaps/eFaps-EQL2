@@ -15,11 +15,11 @@
  *
  */
 
-package org.efaps.eql
+package org.efaps.eql2
 
 import com.google.inject.Injector
 import org.eclipse.emf.ecore.EPackage
-import org.efaps.eql.ide.EQLIdeSetup
+import org.efaps.eql2.ide.EQLIdeSetup
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.

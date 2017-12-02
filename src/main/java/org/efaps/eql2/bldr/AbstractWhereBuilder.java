@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2017 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.bldr;
+package org.efaps.eql2.bldr;
 
-import org.efaps.eql.Comparison;
-import org.efaps.eql.IQueryStmt;
-import org.efaps.eql.IWhere;
-import org.efaps.eql.IWhereElement;
+import org.efaps.eql2.Comparison;
+import org.efaps.eql2.IQueryStmt;
+import org.efaps.eql2.IWhere;
+import org.efaps.eql2.IWhereElement;
 
 /**
  * The Class AbstractWhereBuilder.

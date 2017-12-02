@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.ide.contentassist
+package org.efaps.eql2.ide.contentassist
 
 import com.google.inject.Inject
 import com.google.inject.Provider

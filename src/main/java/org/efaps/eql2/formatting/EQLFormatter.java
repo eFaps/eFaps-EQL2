@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.formatting;
+package org.efaps.eql2.formatting;
 
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;

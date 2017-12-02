@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.generator
+package org.efaps.eql2.generator
 
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator

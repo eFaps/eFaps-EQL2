@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.ide.contentassist
+package org.efaps.eql2.ide.contentassist
 
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext

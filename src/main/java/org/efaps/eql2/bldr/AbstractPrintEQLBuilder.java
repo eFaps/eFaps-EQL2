@@ -14,14 +14,14 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql.bldr;
+package org.efaps.eql2.bldr;
 
-import org.efaps.eql.IEqlFactory;
-import org.efaps.eql.IListStmt;
-import org.efaps.eql.IPrintStatement;
-import org.efaps.eql.ISelect;
-import org.efaps.eql.ISelection;
-import org.efaps.eql.SimpleSelectElement;
+import org.efaps.eql2.IEqlFactory;
+import org.efaps.eql2.IListStmt;
+import org.efaps.eql2.IPrintStatement;
+import org.efaps.eql2.ISelect;
+import org.efaps.eql2.ISelection;
+import org.efaps.eql2.SimpleSelectElement;
 
 /**
  * The Class PrintEQLBuilder.
