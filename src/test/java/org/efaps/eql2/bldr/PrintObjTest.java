@@ -1,4 +1,3 @@
-package org.efaps.eql2.bldr;
 /*
  * Copyright 2003 - 2017 The eFaps Team
  *
@@ -15,6 +14,8 @@ package org.efaps.eql2.bldr;
  * limitations under the License.
  *
  */
+
+package org.efaps.eql2.bldr;
 
 import org.efaps.eql2.AbstractTest;
 import org.efaps.eql2.EQL;

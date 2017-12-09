@@ -30,35 +30,6 @@ public class BuilderTest
 {
     //future id
     // (print query type Sales_Document select type.label as type ==> ( if (type == invoice ) {  update obj 123.456 set attr=\"\blau" } else {")
-
-    /**
-     * Prints the.
-     */
-    //@Test(description = "print query ")
-    public void printQuery()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                        .query("Sales_Document")
-                        .attribute("Attri");
-        final String smt = "print query type Sales_Document select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-   // @Test(description = "print query types")
-    public void printQueryTypes()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                        .query("Sales_Document", "Sales_Invoice")
-                        .attribute("Attri");
-        final String smt = "print query type Sales_Document, Sales_Invoice select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
     /**
      * Prints the query limit.
      */
@@ -67,8 +38,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print()
-                        .query("Sales_Document")
-                            .limit(10)
+                        //    .limit(10)
                         .attribute("Attri");
         final String smt = "print query type Sales_Document limit 10 select attribute[Attri]";
         verifyStatement(smt, bldr.getStmt());
@@ -281,7 +251,7 @@ public class BuilderTest
     public void updateQuery()
     {
         final AbstractEQLBuilder<?> bldr = EQL.update()
-                            .query("Sales_Invoice")
+                            //.query("Sales_Invoice")
                             .set("Name", "123");
         final String smt = "update query type Sales_Invoice set Name = 123";
         verifyStatement(smt, bldr.getStmt());
@@ -294,9 +264,9 @@ public class BuilderTest
     public void updateQueryWhere()
     {
         final AbstractEQLBuilder<?> bldr = EQL.update()
-                            .query("Sales_Invoice")
-                            .where()
-                                .attr("Name").eq("demo")
+                            //.query("Sales_Invoice")
+                            //.where()
+                           //     .attr("Name").eq("demo")
                             .set("Name", "123");
         final String smt = "update query type Sales_Invoice where Name = \"demo\"set Name = 123";
         verifyStatement(smt, bldr.getStmt());
@@ -309,9 +279,9 @@ public class BuilderTest
     public void updateQueryWhereSets()
     {
         final AbstractEQLBuilder<?> bldr = EQL.update()
-                            .query("Sales_Invoice")
-                            .where()
-                                .attr("Name").eq("demo")
+                            //.query("Sales_Invoice")
+                           // .where()
+                           //     .attr("Name").eq("demo")
                             .set("Name", "123")
                             .set("Attr2", "Value2");
         final String smt = "update query type Sales_Invoice where Name = \"demo\"set Name = 123, Attr2 = \"Value2\"";

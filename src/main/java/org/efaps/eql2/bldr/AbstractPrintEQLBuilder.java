@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2017 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import org.efaps.eql2.ISelect;
 import org.efaps.eql2.ISelectElement;
 import org.efaps.eql2.ISelection;
 import org.efaps.eql2.SimpleSelectElement;
+import org.efaps.eql2.impl.PrintQueryStatement;
 
 /**
  * The Class PrintEQLBuilder.
@@ -53,6 +54,20 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
             }
         }
         ((IPrintStatement<?>) getStmt()).selection();
+        return getThis();
+    }
+
+    /**
+     * Prints the.
+     *
+     * @param _oids the oids
+     * @return the t
+     */
+    public T print(final AbstractQueryEQLBuilder<?> _queryBuilder)
+    {
+        setStmt(IEql2Factory.eINSTANCE.createPrintQueryStatement());
+        ((IPrintStatement<?>) getStmt()).selection();
+        ((PrintQueryStatement) getStmt()).setQueryC(_queryBuilder.getIQuery());
         return getThis();
     }
 

@@ -16,9 +16,9 @@
  */
 package org.efaps.eql2;
 
-import org.efaps.eql2.bldr.AbstractEQLBuilder;
 import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
 import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
+import org.efaps.eql2.bldr.AbstractQueryEQLBuilder;
 import org.efaps.eql2.bldr.AbstractUpdateEQLBuilder;
 import org.efaps.eql2.bldr.AbstractWhereBuilder;
 
@@ -41,6 +41,13 @@ public abstract class EQL
     protected abstract AbstractPrintEQLBuilder<?> getPrint();
 
     /**
+     * Gets the query.
+     *
+     * @return the query
+     */
+    protected abstract AbstractQueryEQLBuilder<?> getQuery();
+
+    /**
      * Gets the prints the.
      *
      * @return the prints the
@@ -60,17 +67,7 @@ public abstract class EQL
      * @param _parent the parent
      * @return the prints the
      */
-    protected abstract AbstractWhereBuilder<?> getWhere(AbstractEQLBuilder<?> _parent);
-
-    /**
-     * Prints the.
-     *
-     * @return the abstract print EQL builder<?>
-     */
-    public static AbstractPrintEQLBuilder<?> print()
-    {
-        return eql().getPrint().print();
-    }
+    protected abstract AbstractWhereBuilder<?> getWhere();
 
     /**
      * Prints the.
@@ -81,6 +78,28 @@ public abstract class EQL
     public static AbstractPrintEQLBuilder<?> print(final String... _oid)
     {
         return eql().getPrint().print(_oid);
+    }
+
+    /**
+     * Prints the.
+     *
+     * @param _oid the oid
+     * @return the abstract print EQL builder<?>
+     */
+    public static AbstractPrintEQLBuilder<?> print(final AbstractQueryEQLBuilder<?> _queryBuilder)
+    {
+        return eql().getPrint().print(_queryBuilder);
+    }
+
+    /**
+     * Prints the.
+     *
+     * @param _oid the oid
+     * @return the abstract print EQL builder<?>
+     */
+    public static AbstractQueryEQLBuilder<?> query(final String... _types)
+    {
+        return eql().getQuery().query(_types);
     }
 
     /**
@@ -121,9 +140,9 @@ public abstract class EQL
      * @param _parent the parent
      * @return the abstract EQL builder<?>
      */
-    public static AbstractWhereBuilder<?> where(final AbstractEQLBuilder<?> _parent)
+    public static AbstractWhereBuilder<?> where()
     {
-        return eql().getWhere(_parent);
+        return eql().getWhere();
     }
 
     /**

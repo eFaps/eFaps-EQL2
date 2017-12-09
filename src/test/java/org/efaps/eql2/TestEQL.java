@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2017 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
  */
 package org.efaps.eql2;
 
-import org.efaps.eql2.bldr.AbstractEQLBuilder;
 import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
 import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
+import org.efaps.eql2.bldr.AbstractQueryEQLBuilder;
 import org.efaps.eql2.bldr.AbstractUpdateEQLBuilder;
 import org.efaps.eql2.bldr.AbstractWhereBuilder;
 
@@ -38,6 +38,12 @@ public class TestEQL
     }
 
     @Override
+    protected AbstractQueryEQLBuilder<?> getQuery()
+    {
+        return new QueryEQLBuilder();
+    }
+
+    @Override
     protected AbstractUpdateEQLBuilder<?> getUpdate()
     {
         return new UpdateEQLBuilder();
@@ -50,9 +56,9 @@ public class TestEQL
     }
 
     @Override
-    protected AbstractWhereBuilder<?> getWhere(final AbstractEQLBuilder<?> _parent)
+    protected AbstractWhereBuilder<?> getWhere()
     {
-        return new WhereBuilder(_parent);
+        return new WhereBuilder();
     }
 
     /**
@@ -68,6 +74,21 @@ public class TestEQL
             return this;
         }
     }
+
+    /**
+     * The Class PrintEQLBuilder.
+     *
+     */
+    public static class QueryEQLBuilder
+        extends AbstractQueryEQLBuilder<QueryEQLBuilder>
+    {
+        @Override
+        protected QueryEQLBuilder getThis()
+        {
+            return this;
+        }
+    }
+
 
     /**
      * The Class PrintEQLBuilder.
@@ -110,9 +131,9 @@ public class TestEQL
          *
          * @param _parent the parent
          */
-        public WhereBuilder(final AbstractEQLBuilder<?> _parent)
+        public WhereBuilder()
         {
-            super(_parent);
+            super();
         }
 
         @Override

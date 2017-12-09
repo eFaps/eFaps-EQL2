@@ -17,9 +17,11 @@
 package org.efaps.eql2.bldr;
 
 import org.efaps.eql2.Comparison;
-import org.efaps.eql2.IQueryStmt;
+import org.efaps.eql2.IEql2Factory;
 import org.efaps.eql2.IWhere;
 import org.efaps.eql2.IWhereElement;
+import org.efaps.eql2.IWhereElementTerm;
+import org.efaps.eql2.IWhereTerm;
 
 /**
  * The Class AbstractWhereBuilder.
@@ -31,16 +33,19 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
 {
 
     /** The parent. */
-    private final AbstractEQLBuilder<?> parent;
+    private IWhere iWhere;
 
     /**
-     * Instantiates a new abstract where builder.
+     * Attr.
      *
-     * @param _parent the parent
+     * @param _attr the attr
+     * @return the t
      */
-    public AbstractWhereBuilder(final AbstractEQLBuilder<?> _parent)
+    public T attribute(final String _attr)
     {
-        this.parent = _parent;
+        final IWhereElement element = getCurrentElement();
+        element.setAttribute(_attr);
+        return getThis();
     }
 
     /**
@@ -51,9 +56,7 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T attr(final String _attr)
     {
-        final IWhereElement element = getParent().getCurrentTerm().element();
-        element.attribute(_attr);
-        return getThis();
+        return attribute(_attr);
     }
 
     /**
@@ -64,7 +67,7 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T eq(final String _value)
     {
-        final IWhereElement element = getParent().getCurrentTerm().element();
+        final IWhereElement element = getCurrentElement();
         element.comparison(Comparison.EQUAL).addValue(_value);
         return getThis();
     }
@@ -75,10 +78,31 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      * @param _value the value
      * @return the t
      */
+    public T eq(final Long _value)
+    {
+        return eq(_value.toString());
+    }
+
+    /**
+     * Eq.
+     *
+     * @param _value the value
+     * @return the t
+     */
+    public T eq(final Integer _value)
+    {
+        return eq(_value.toString());
+    }
+    /**
+     * Eq.
+     *
+     * @param _value the value
+     * @return the t
+     */
     public T greater(final String _value)
     {
-        final IWhereElement element = getParent().getCurrentTerm().element();
-        element.comparison(Comparison.GREATER).addValue(_value);
+        //final IWhereElement element = getParent().getCurrentTerm().element();
+        //element.comparison(Comparison.GREATER).addValue(_value);
         return getThis();
     }
 
@@ -90,8 +114,8 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T less(final String _value)
     {
-        final IWhereElement element = getParent().getCurrentTerm().element();
-        element.comparison(Comparison.LESS).addValue(_value);
+        //final IWhereElement element = getParent().getCurrentTerm().element();
+        //element.comparison(Comparison.LESS).addValue(_value);
         return getThis();
     }
 
@@ -103,8 +127,8 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T like(final String _value)
     {
-        final IWhereElement element = getParent().getCurrentTerm().element();
-        element.comparison(Comparison.LIKE).addValue(_value);
+        //final IWhereElement element = getParent().getCurrentTerm().element();
+        //element.comparison(Comparison.LIKE).addValue(_value);
         return getThis();
     }
 
@@ -116,8 +140,8 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T uneq(final String _value)
     {
-        final IWhereElement element = getParent().getCurrentTerm().element();
-        element.comparison(Comparison.UNEQUAL).addValue(_value);
+        //final IWhereElement element = getParent().getCurrentTerm().element();
+        // element.comparison(Comparison.UNEQUAL).addValue(_value);
         return getThis();
     }
 
@@ -129,11 +153,11 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T in(final String... _values)
     {
-        final IWhereElement element = getParent().getCurrentTerm().element();
-        element.comparison(_values.length == 1 ? Comparison.EQUAL : Comparison.IN);
-        for (final String value : _values) {
-            element.addValue(value);
-        }
+        //final IWhereElement element = getParent().getCurrentTerm().element();
+        //element.comparison(_values.length == 1 ? Comparison.EQUAL : Comparison.IN);
+        //for (final String value : _values) {
+        //    element.addValue(value);
+        //}
         return getThis();
     }
 
@@ -145,11 +169,11 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T notin(final String... _values)
     {
-        final IWhereElement element = getParent().getCurrentTerm().element();
-        element.comparison(_values.length == 1 ? Comparison.UNEQUAL : Comparison.NOTIN);
-        for (final String value : _values) {
-            element.addValue(value);
-        }
+        //final IWhereElement element = getParent().getCurrentTerm().element();
+        //element.comparison(_values.length == 1 ? Comparison.UNEQUAL : Comparison.NOTIN);
+        //for (final String value : _values) {
+        //element.addValue(value);
+        //}
         return getThis();
     }
 
@@ -160,9 +184,11 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T and()
     {
+        /*
         ((IQueryStmt<?>) this.parent.getStmt()).getQuery().where();
         final IWhere where = ((IQueryStmt<?>) this.parent.getStmt()).getQuery().getWhere();
         where.term().and();
+        */
         return getThis();
     }
 
@@ -173,23 +199,10 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T or()
     {
-        ((IQueryStmt<?>) this.parent.getStmt()).getQuery().where();
+       /* ((IQueryStmt<?>) this.parent.getStmt()).getQuery().where();
         final IWhere where = ((IQueryStmt<?>) this.parent.getStmt()).getQuery().getWhere();
-        where.term().or();
+        where.term().or();*/
         return getThis();
-    }
-
-    /**
-     * Select.
-     *
-     * @param _attr the attr
-     * @param _value the value
-     * @return the abstract print EQL builder<?>
-     */
-    public AbstractUpdateEQLBuilder<?> set(final String _attr,
-                                           final String _value)
-    {
-        return ((AbstractUpdateEQLBuilder<?>) getParent()).set(_attr, _value);
     }
 
     /**
@@ -197,9 +210,27 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      *
      * @return the parent
      */
-    protected AbstractEQLBuilder<?> getParent()
+    protected IWhere getIWhere()
     {
-        return this.parent;
+        if (this.iWhere == null) {
+            this.iWhere = IEql2Factory.eINSTANCE.createWhere();
+        }
+        return this.iWhere;
+    }
+
+    protected IWhereTerm<?> getCurrentTerm()
+    {
+        final IWhere where = getIWhere();
+        if (where.getTermsLength() == 0) {
+            where.term();
+        }
+        return where.getTerms(where.getTermsLength() - 1);
+    }
+
+    protected IWhereElement getCurrentElement()
+    {
+        final IWhereElementTerm whereElementTerm = (IWhereElementTerm) getCurrentTerm();
+        return whereElementTerm.element();
     }
 
     /**

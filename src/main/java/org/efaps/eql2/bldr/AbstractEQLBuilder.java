@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2017 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,8 @@
  */
 package org.efaps.eql2.bldr;
 
-import org.efaps.eql2.EQL;
 import org.efaps.eql2.IQueryStmt;
 import org.efaps.eql2.IStatement;
-import org.efaps.eql2.IWhere;
-import org.efaps.eql2.impl.WhereElementTerm;
 
 /**
  * The Class AbstractEQLBuilder.
@@ -33,53 +30,6 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
 
     /** The stmt. */
     private IStatement<?> stmt;
-
-    /** The where. */
-    private AbstractWhereBuilder<?> whereBldr;
-
-    /**
-     * Query.
-     *
-     * @param _types the types
-     * @return the t
-     */
-    public T query(final String... _types)
-    {
-        ((IQueryStmt<?>) this.stmt).query();
-        for (final String type : _types) {
-            ((IQueryStmt<?>) this.stmt).getQuery().addType(type);
-        }
-        return getThis();
-    }
-
-    /**
-     * Where attr eq value.
-     *
-     * @return the t
-     */
-    public AbstractWhereBuilder<?> where()
-    {
-        ((IQueryStmt<?>) this.stmt).getQuery().where();
-        if (this.whereBldr == null) {
-            this.whereBldr = EQL.where(this);
-        }
-        return this.whereBldr;
-    }
-
-    /**
-     * Gets the current term.
-     *
-     * @return the current term
-     */
-    protected WhereElementTerm getCurrentTerm()
-    {
-        ((IQueryStmt<?>) this.stmt).getQuery().where();
-        final IWhere where = ((IQueryStmt<?>) this.stmt).getQuery().getWhere();
-        if (where.getTermsLength() == 0) {
-            where.term();
-        }
-        return (WhereElementTerm) where.getTerms(where.getTermsLength() - 1);
-    }
 
     /**
      * Limit.
