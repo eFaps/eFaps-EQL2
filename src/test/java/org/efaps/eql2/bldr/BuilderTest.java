@@ -247,7 +247,7 @@ public class BuilderTest
     /**
      * Prints the.
      */
-    @Test(description = "query update")
+    //@Test(description = "query update")
     public void updateQuery()
     {
         final AbstractEQLBuilder<?> bldr = EQL.update()
@@ -260,7 +260,7 @@ public class BuilderTest
     /**
      * Prints the.
      */
-    @Test(description = "query update where")
+    //@Test(description = "query update where")
     public void updateQueryWhere()
     {
         final AbstractEQLBuilder<?> bldr = EQL.update()
@@ -275,7 +275,7 @@ public class BuilderTest
     /**
      * Prints the.
      */
-    @Test(description = "query update where")
+    //@Test(description = "query update where")
     public void updateQueryWhereSets()
     {
         final AbstractEQLBuilder<?> bldr = EQL.update()
