@@ -34,350 +34,13 @@ public class BuilderTest
     /**
      * Prints the.
      */
-    @Test(description = "Select one attribute")
-    public void printSelAttr()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL.print("13.46")
-                        .attribute("ATTRNAME");
-        final String stmt =  String.format("print obj 13.46 select attribute[%s]", "ATTRNAME");
-        verifyStatement(stmt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "Select more attribute")
-    public void printSelAttrAttr()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                        .attribute("attr")
-                        .attribute("attr2");
-        final String stmt = "print obj 13.46 select attribute[attr], attribute[attr2]";
-        verifyStatement(stmt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "Select more attribute Alias")
-    public void printSelAttrAttrAlias()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                                .attribute("attr")
-                                .as("Alias1")
-                                .attribute("attr2")
-                                .as("Alias2");
-        final String smt = "print obj 13.46 select attribute[attr] as Alias1, attribute[attr2] as Alias2";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "Select more attribute")
-    public void printSelLinko()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-
-                                .linkto("attr1")
-                                .attribute("attr");
-        final String smt = "print obj 13.46 select linkto[attr1].attribute[attr]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "Select more attribute")
-    public void printSelLinko2()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-
-                                .linkto("attr1")
-                                .attribute("attr")
-
-                                .attribute("attr2");
-        final String smt = "print obj 13.46 select linkto[attr1].attribute[attr], attribute[attr2]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "instance")
-    public void printSelInstance()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-
-                                .instance();
-        final String smt = "print obj 13.46 select instance";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "linkto instance")
-    public void printSelLinkoInstance()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-
-                                .linkto("attr1")
-                                .instance();
-        final String smt = "print obj 13.46 select linkto[attr1].instance";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "linkfrom instance")
-    public void printSelLinkFrom()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-
-                                .linkfrom("Type_name", "Attr").instance();
-        final String smt = "print obj 13.46 select linkfrom[Type_name#Attr].instance";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "linkfrom attribute")
-    public void printSelLinkFromAttr()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-
-                                .linkfrom("Type_name", "Attr").attribute("Attr");
-        final String smt = "print obj 13.46 select linkfrom[Type_name#Attr].attribute[Attr]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "linkfrom linkto attribute")
-    public void printSelLinkFromLinktoAttr()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-
-                                .linkfrom("Type_name", "Attr").linkto("LinktoAttr") .attribute("Attr");
-        final String smt = "print obj 13.46 select linkfrom[Type_name#Attr].linkto[LinktoAttr].attribute[Attr]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "oid")
-    public void printSelOID()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .oid();
-        final String smt = "print obj 13.46 select oid";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "type")
-    public void printSelType()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .type();
-        final String smt = "print obj 13.46 select type";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "value")
-    public void printSelValue()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .attribute("Attr").value();
-        final String smt = "print obj 13.46 select attribute[Attr].value";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "label")
-    public void printSelLabel()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .type().label();
-        final String smt = "print obj 13.46 select type.label";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "id")
-    public void printSelID()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .id();
-        final String smt = "print obj 13.46 select id";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "name")
-    public void printSelName()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .file().name();
-        final String smt = "print obj 13.46 select file.name";
-        verifyStatement(smt, bldr.getStmt());
-    }
-    /**
-     * Prints the.
-     */
-    @Test(description = "key")
-    public void printSelKey()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .key();
-        final String smt = "print obj 13.46 select key";
-        verifyStatement(smt, bldr.getStmt());
-    }
-    /**
-     * Prints the.
-     */
-    @Test(description = "status")
-    public void printSelStatus()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .status();
-        final String smt = "print obj 13.46 select status";
-        verifyStatement(smt, bldr.getStmt());
-    }
-    /**
-     * Prints the.
-     */
-    @Test(description = "file")
-    public void printSelFile()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-
-                                .file();
-        final String smt = "print obj 13.46 select file";
-        verifyStatement(smt, bldr.getStmt());
-    }
-    /**
-     * Prints the.
-     */
-    @Test(description = "length")
-    public void printSelLength()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .file().length();
-        final String smt = "print obj 13.46 select file.length";
-        verifyStatement(smt, bldr.getStmt());
-    }
-    /**
-     * Prints the.
-     */
-    @Test(description = "base")
-    public void printSelBase()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-
-                                .attribute("Attr").base();
-        final String smt = "print obj 13.46 select attribute[Attr].base";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "uom")
-    public void printSelUoM()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .attribute("Attr").uom();
-        final String smt = "print obj 13.46 select attribute[Attr].uom";
-        verifyStatement(smt, bldr.getStmt());
-    }
-    /**
-     * Prints the.
-     */
-    @Test(description = "class")
-    public void printSelClass()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-
-                                .clazz();
-        final String smt = "print obj 13.46 select class";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "uuid")
-    public void printSelUUID()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("13.46")
-                            .type().uuid();
-        final String smt = "print obj 13.46 select type.uuid";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "uuid")
-    public void printList()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print("123.456", "789.012", "345.678")
-                            .type().uuid();
-        final String smt = "print list (123.456, 789.012, 345.678) select type.uuid";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "print query ")
+    //@Test(description = "print query ")
     public void printQuery()
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print()
-                            .query("Sales_Document")
-                            .attribute("Attri");
+                        .query("Sales_Document")
+                        .attribute("Attri");
         final String smt = "print query type Sales_Document select attribute[Attri]";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -385,13 +48,13 @@ public class BuilderTest
     /**
      * Prints the.
      */
-    @Test(description = "print query types")
+   // @Test(description = "print query types")
     public void printQueryTypes()
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print()
-                            .query("Sales_Document", "Sales_Invoice")
-                            .attribute("Attri");
+                        .query("Sales_Document", "Sales_Invoice")
+                        .attribute("Attri");
         final String smt = "print query type Sales_Document, Sales_Invoice select attribute[Attri]";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -399,14 +62,14 @@ public class BuilderTest
     /**
      * Prints the query limit.
      */
-    @Test(description = "print query limit")
+   // @Test(description = "print query limit")
     public void printQueryLimit()
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print()
-                            .query("Sales_Document")
-                                .limit(10)
-                            .attribute("Attri");
+                        .query("Sales_Document")
+                            .limit(10)
+                        .attribute("Attri");
         final String smt = "print query type Sales_Document limit 10 select attribute[Attri]";
         verifyStatement(smt, bldr.getStmt());
     }
