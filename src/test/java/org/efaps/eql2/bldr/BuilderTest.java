@@ -37,12 +37,11 @@ public class BuilderTest
     @Test(description = "Select one attribute")
     public void printSelAttr()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL.print("13.46").select()
-                          .attribute("attr");
-        final String smt = "print obj 13.46 select attribute[attr]";
-        verifyStatement(smt, bldr.getStmt());
+        final AbstractPrintEQLBuilder<?> bldr = EQL.print("13.46")
+                        .attribute("ATTRNAME");
+        final String stmt =  String.format("print obj 13.46 select attribute[%s]", "ATTRNAME");
+        verifyStatement(stmt, bldr.getStmt());
     }
-
 
     /**
      * Prints the.
@@ -52,12 +51,10 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
-                                .attribute("attr")
-                            .select()
-                                .attribute("attr2");
-        final String smt = "print obj 13.46 select attribute[attr], attribute[attr2]";
-        verifyStatement(smt, bldr.getStmt());
+                        .attribute("attr")
+                        .attribute("attr2");
+        final String stmt = "print obj 13.46 select attribute[attr], attribute[attr2]";
+        verifyStatement(stmt, bldr.getStmt());
     }
 
     /**
@@ -68,10 +65,8 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
                                 .attribute("attr")
                                 .as("Alias1")
-                            .select()
                                 .attribute("attr2")
                                 .as("Alias2");
         final String smt = "print obj 13.46 select attribute[attr] as Alias1, attribute[attr2] as Alias2";
@@ -86,7 +81,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
+
                                 .linkto("attr1")
                                 .attribute("attr");
         final String smt = "print obj 13.46 select linkto[attr1].attribute[attr]";
@@ -101,10 +96,10 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
+
                                 .linkto("attr1")
                                 .attribute("attr")
-                            .select()
+
                                 .attribute("attr2");
         final String smt = "print obj 13.46 select linkto[attr1].attribute[attr], attribute[attr2]";
         verifyStatement(smt, bldr.getStmt());
@@ -118,7 +113,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
+
                                 .instance();
         final String smt = "print obj 13.46 select instance";
         verifyStatement(smt, bldr.getStmt());
@@ -132,7 +127,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
+
                                 .linkto("attr1")
                                 .instance();
         final String smt = "print obj 13.46 select linkto[attr1].instance";
@@ -147,7 +142,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
+
                                 .linkfrom("Type_name", "Attr").instance();
         final String smt = "print obj 13.46 select linkfrom[Type_name#Attr].instance";
         verifyStatement(smt, bldr.getStmt());
@@ -161,7 +156,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
+
                                 .linkfrom("Type_name", "Attr").attribute("Attr");
         final String smt = "print obj 13.46 select linkfrom[Type_name#Attr].attribute[Attr]";
         verifyStatement(smt, bldr.getStmt());
@@ -175,7 +170,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
+
                                 .linkfrom("Type_name", "Attr").linkto("LinktoAttr") .attribute("Attr");
         final String smt = "print obj 13.46 select linkfrom[Type_name#Attr].linkto[LinktoAttr].attribute[Attr]";
         verifyStatement(smt, bldr.getStmt());
@@ -189,7 +184,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().oid();
+                            .oid();
         final String smt = "print obj 13.46 select oid";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -202,7 +197,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().type();
+                            .type();
         final String smt = "print obj 13.46 select type";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -215,7 +210,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().attribute("Attr").value();
+                            .attribute("Attr").value();
         final String smt = "print obj 13.46 select attribute[Attr].value";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -228,7 +223,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().type().label();
+                            .type().label();
         final String smt = "print obj 13.46 select type.label";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -241,7 +236,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().id();
+                            .id();
         final String smt = "print obj 13.46 select id";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -254,7 +249,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().file().name();
+                            .file().name();
         final String smt = "print obj 13.46 select file.name";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -266,7 +261,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().key();
+                            .key();
         final String smt = "print obj 13.46 select key";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -278,7 +273,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().status();
+                            .status();
         final String smt = "print obj 13.46 select status";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -290,7 +285,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
+
                                 .file();
         final String smt = "print obj 13.46 select file";
         verifyStatement(smt, bldr.getStmt());
@@ -303,7 +298,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().file().length();
+                            .file().length();
         final String smt = "print obj 13.46 select file.length";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -315,7 +310,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
+
                                 .attribute("Attr").base();
         final String smt = "print obj 13.46 select attribute[Attr].base";
         verifyStatement(smt, bldr.getStmt());
@@ -329,7 +324,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().attribute("Attr").uom();
+                            .attribute("Attr").uom();
         final String smt = "print obj 13.46 select attribute[Attr].uom";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -341,7 +336,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select()
+
                                 .clazz();
         final String smt = "print obj 13.46 select class";
         verifyStatement(smt, bldr.getStmt());
@@ -355,7 +350,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("13.46")
-                            .select().type().uuid();
+                            .type().uuid();
         final String smt = "print obj 13.46 select type.uuid";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -368,7 +363,7 @@ public class BuilderTest
     {
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print("123.456", "789.012", "345.678")
-                            .select().type().uuid();
+                            .type().uuid();
         final String smt = "print list (123.456, 789.012, 345.678) select type.uuid";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -382,7 +377,7 @@ public class BuilderTest
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print()
                             .query("Sales_Document")
-                            .select().attribute("Attri");
+                            .attribute("Attri");
         final String smt = "print query type Sales_Document select attribute[Attri]";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -396,7 +391,7 @@ public class BuilderTest
         final AbstractPrintEQLBuilder<?> bldr = EQL
                         .print()
                             .query("Sales_Document", "Sales_Invoice")
-                            .select().attribute("Attri");
+                            .attribute("Attri");
         final String smt = "print query type Sales_Document, Sales_Invoice select attribute[Attri]";
         verifyStatement(smt, bldr.getStmt());
     }
@@ -411,173 +406,173 @@ public class BuilderTest
                         .print()
                             .query("Sales_Document")
                                 .limit(10)
-                            .select().attribute("Attri");
+                            .attribute("Attri");
         final String smt = "print query type Sales_Document limit 10 select attribute[Attri]";
         verifyStatement(smt, bldr.getStmt());
     }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "print query ")
-    public void printWhereEq()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                            .query("Sales_Document")
-                            .where()
-                                .attr("Name").eq("demo")
-                            .select()
-                                .attribute("Attri");
-        final String smt = "print query type Sales_Document where Name eq \"demo\" select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "print query ")
-    public void printWhereEqValues()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                            .query("Sales_Document")
-                            .where()
-                                .attr("Name").in("demo", "test")
-                            .select()
-                                .attribute("Attri");
-        final String smt = "print query type Sales_Document where Name in (\"demo\", \"test\") select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the where eq and eq.
-     */
-    @Test(description = "print query eq and eq")
-    public void printWhereEqAndEq()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                            .query("Sales_Document")
-                            .where()
-                                .attr("Name").eq("demo")
-                                .and()
-                                .attr("Attr2").eq("5")
-                            .select()
-                                .attribute("Attri");
-        final String smt = "print query type Sales_Document where Name eq \"demo\" and Attr2 == 5 "
-                        + "select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the where eq and eq.
-     */
-    @Test(description = "print query eq and eq or eq")
-    public void printWhereEqAndEqOrEq()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                            .query("Sales_Document")
-                            .where()
-                                .attr("Name").eq("demo")
-                                .and()
-                                .attr("Attr2").eq("5")
-                                .or()
-                                .attr("Attr3").eq("7")
-                            .select()
-                                .attribute("Attri");
-        final String smt = "print query type Sales_Document where Name eq \"demo\" and Attr2 == 5 "
-                        + "or Attr3 == 7 select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "print query where less")
-    public void printWhereLess()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                            .query("Sales_Document")
-                            .where()
-                                .attr("Name").less("demo")
-                            .select()
-                                .attribute("Attri");
-        final String smt = "print query type Sales_Document where Name < \"demo\" select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "print query where greater")
-    public void printWhereGreater()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                            .query("Sales_Document")
-                            .where()
-                                .attr("Name").greater("demo")
-                            .select()
-                                .attribute("Attri");
-        final String smt = "print query type Sales_Document where Name > \"demo\" select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "print query where match")
-    public void printWhereMatch()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                            .query("Sales_Document")
-                            .where()
-                                .attr("Name").like("demo")
-                            .select()
-                                .attribute("Attri");
-        final String smt = "print query type Sales_Document where Name like \"demo\" select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "print query where not")
-    public void printWhereNot()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                            .query("Sales_Document")
-                            .where()
-                                .attr("Name").uneq("demo")
-                            .select()
-                                .attribute("Attri");
-        final String smt = "print query type Sales_Document where Name != \"demo\" select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "print query where nots")
-    public void printWhereNots()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
-                        .print()
-                            .query("Sales_Document")
-                            .where()
-                                .attr("Name").notin("demo", "test")
-                            .select()
-                                .attribute("Attri");
-        final String smt = "print query type Sales_Document where Name not in ( \"demo\", \"test\") "
-                        + "select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
+//
+//    /**
+//     * Prints the.
+//     */
+//    @Test(description = "print query ")
+//    public void printWhereEq()
+//    {
+//        final AbstractPrintEQLBuilder<?> bldr = EQL
+//                        .print()
+//                            .query("Sales_Document")
+//                            .where()
+//                                .attr("Name").eq("demo")
+//
+//                                .attribute("Attri");
+//        final String smt = "print query type Sales_Document where Name eq \"demo\" select attribute[Attri]";
+//        verifyStatement(smt, bldr.getStmt());
+//    }
+//
+//    /**
+//     * Prints the.
+//     */
+//    @Test(description = "print query ")
+//    public void printWhereEqValues()
+//    {
+//        final AbstractPrintEQLBuilder<?> bldr = EQL
+//                        .print()
+//                            .query("Sales_Document")
+//                            .where()
+//                                .attr("Name").in("demo", "test")
+//
+//                                .attribute("Attri");
+//        final String smt = "print query type Sales_Document where Name in (\"demo\", \"test\") select attribute[Attri]";
+//        verifyStatement(smt, bldr.getStmt());
+//    }
+//
+//    /**
+//     * Prints the where eq and eq.
+//     */
+//    @Test(description = "print query eq and eq")
+//    public void printWhereEqAndEq()
+//    {
+//        final AbstractPrintEQLBuilder<?> bldr = EQL
+//                        .print()
+//                            .query("Sales_Document")
+//                            .where()
+//                                .attr("Name").eq("demo")
+//                                .and()
+//                                .attr("Attr2").eq("5")
+//
+//                                .attribute("Attri");
+//        final String smt = "print query type Sales_Document where Name eq \"demo\" and Attr2 == 5 "
+//                        + "select attribute[Attri]";
+//        verifyStatement(smt, bldr.getStmt());
+//    }
+//
+//    /**
+//     * Prints the where eq and eq.
+//     */
+//    @Test(description = "print query eq and eq or eq")
+//    public void printWhereEqAndEqOrEq()
+//    {
+//        final AbstractPrintEQLBuilder<?> bldr = EQL
+//                        .print()
+//                            .query("Sales_Document")
+//                            .where()
+//                                .attr("Name").eq("demo")
+//                                .and()
+//                                .attr("Attr2").eq("5")
+//                                .or()
+//                                .attr("Attr3").eq("7")
+//
+//                                .attribute("Attri");
+//        final String smt = "print query type Sales_Document where Name eq \"demo\" and Attr2 == 5 "
+//                        + "or Attr3 == 7 select attribute[Attri]";
+//        verifyStatement(smt, bldr.getStmt());
+//    }
+//
+//
+//    /**
+//     * Prints the.
+//     */
+//    @Test(description = "print query where less")
+//    public void printWhereLess()
+//    {
+//        final AbstractPrintEQLBuilder<?> bldr = EQL
+//                        .print()
+//                            .query("Sales_Document")
+//                            .where()
+//                                .attr("Name").less("demo")
+//
+//                                .attribute("Attri");
+//        final String smt = "print query type Sales_Document where Name < \"demo\" select attribute[Attri]";
+//        verifyStatement(smt, bldr.getStmt());
+//    }
+//
+//    /**
+//     * Prints the.
+//     */
+//    @Test(description = "print query where greater")
+//    public void printWhereGreater()
+//    {
+//        final AbstractPrintEQLBuilder<?> bldr = EQL
+//                        .print()
+//                            .query("Sales_Document")
+//                            .where()
+//                                .attr("Name").greater("demo")
+//
+//                                .attribute("Attri");
+//        final String smt = "print query type Sales_Document where Name > \"demo\" select attribute[Attri]";
+//        verifyStatement(smt, bldr.getStmt());
+//    }
+//
+//    /**
+//     * Prints the.
+//     */
+//    @Test(description = "print query where match")
+//    public void printWhereMatch()
+//    {
+//        final AbstractPrintEQLBuilder<?> bldr = EQL
+//                        .print()
+//                            .query("Sales_Document")
+//                            .where()
+//                                .attr("Name").like("demo")
+//
+//                                .attribute("Attri");
+//        final String smt = "print query type Sales_Document where Name like \"demo\" select attribute[Attri]";
+//        verifyStatement(smt, bldr.getStmt());
+//    }
+//
+//    /**
+//     * Prints the.
+//     */
+//    @Test(description = "print query where not")
+//    public void printWhereNot()
+//    {
+//        final AbstractPrintEQLBuilder<?> bldr = EQL
+//                        .print()
+//                            .query("Sales_Document")
+//                            .where()
+//                                .attr("Name").uneq("demo")
+//
+//                                .attribute("Attri");
+//        final String smt = "print query type Sales_Document where Name != \"demo\" select attribute[Attri]";
+//        verifyStatement(smt, bldr.getStmt());
+//    }
+//
+//    /**
+//     * Prints the.
+//     */
+//    @Test(description = "print query where nots")
+//    public void printWhereNots()
+//    {
+//        final AbstractPrintEQLBuilder<?> bldr = EQL
+//                        .print()
+//                            .query("Sales_Document")
+//                            .where()
+//                                .attr("Name").notin("demo", "test")
+//
+//                                .attribute("Attri");
+//        final String smt = "print query type Sales_Document where Name not in ( \"demo\", \"test\") "
+//                        + "select attribute[Attri]";
+//        verifyStatement(smt, bldr.getStmt());
+//    }
 
     /**
      * Prints the.

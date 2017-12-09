@@ -182,16 +182,6 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
     /**
      * Select.
      *
-     * @return the abstract print EQL builder<?>
-     */
-    public AbstractPrintEQLBuilder<?> select()
-    {
-        return ((AbstractPrintEQLBuilder<?>) getParent()).select();
-    }
-
-    /**
-     * Select.
-     *
      * @param _attr the attr
      * @param _value the value
      * @return the abstract print EQL builder<?>

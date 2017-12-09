@@ -16,10 +16,13 @@
  */
 package org.efaps.eql2.bldr;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.efaps.eql2.IAttributeSelectElement;
 import org.efaps.eql2.IEql2Factory;
 import org.efaps.eql2.IListStmt;
 import org.efaps.eql2.IPrintStatement;
 import org.efaps.eql2.ISelect;
+import org.efaps.eql2.ISelectElement;
 import org.efaps.eql2.ISelection;
 import org.efaps.eql2.SimpleSelectElement;
 
@@ -32,17 +35,6 @@ import org.efaps.eql2.SimpleSelectElement;
 public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<T>>
     extends AbstractEQLBuilder<T>
 {
-
-    /**
-     * Prints the.
-     *
-     * @return the t
-     */
-    public T print()
-    {
-        setStmt(IEql2Factory.eINSTANCE.createPrintQueryStatement());
-        return getThis();
-    }
 
     /**
      * Prints the.
@@ -60,21 +52,9 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
                 ((IListStmt<?>) getStmt()).addOid(oid);
             }
         }
-        return getThis();
-    }
-
-    /**
-     * Select.
-     *
-     * @return the t
-     */
-    public T select()
-    {
         ((IPrintStatement<?>) getStmt()).selection();
-        ((IPrintStatement<?>) getStmt()).getSelection().addSelect(IEql2Factory.eINSTANCE.createSelect());
         return getThis();
     }
-
 
     /**
      * Attribute.
@@ -82,11 +62,21 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      * @param _attrName the attr name
      * @return the t
      */
-    public T attribute(final String _attrName)
+    public T attribute(final String... _attrName)
     {
-        final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
-        selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
-                        .createAttributeSelectElement().name(_attrName));
+        initSelect();
+        for (final String attrName : _attrName) {
+            final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
+            ISelect select = selection.getSelects(selection.getSelectsLength() - 1);
+            if (ArrayUtils.isNotEmpty(select.getElements())) {
+                final ISelectElement lastElement = select.getElements(select.getElementsLength() - 1);
+                if (lastElement instanceof IAttributeSelectElement) {
+                    ((IPrintStatement<?>) getStmt()).getSelection().addSelect(IEql2Factory.eINSTANCE.createSelect());
+                    select = selection.getSelects(selection.getSelectsLength() - 1);
+                }
+            }
+            select.addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name(attrName));
+        }
         return getThis();
     }
 
@@ -98,6 +88,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T linkto(final String _attrName)
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createLinktoSelectElement().name(_attrName));
@@ -114,6 +105,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
     public T linkfrom(final String _type,
                       final String _attrName)
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createLinkfromSelectElement().typeName(_type).attribute(_attrName));
@@ -127,6 +119,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T instance()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.INSTANCE));
@@ -153,6 +146,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T clazz()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.CLASS));
@@ -166,6 +160,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T file()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.FILE));
@@ -179,6 +174,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T id()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.ID));
@@ -192,6 +188,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T key()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.KEY));
@@ -205,6 +202,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T label()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.LABEL));
@@ -218,6 +216,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T length()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.LENGTH));
@@ -231,6 +230,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T name()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.NAME));
@@ -244,6 +244,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T oid()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.OID));
@@ -257,6 +258,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T status()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.STATUS));
@@ -270,6 +272,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T type()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.TYPE));
@@ -283,6 +286,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T uuid()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.UUID));
@@ -296,6 +300,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T uom()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.UOM));
@@ -309,12 +314,12 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T value()
     {
+        initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createBaseSelectElement().setElementC(SimpleSelectElement.VALUE));
         return getThis();
     }
-
 
     /**
      * As.
@@ -328,5 +333,15 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
         final ISelect select = selection.getSelects(selection.getSelectsLength() - 1);
         select.alias(_alias);
         return getThis();
+    }
+
+    /**
+     * Inits the select.
+     */
+    protected void initSelect() {
+        final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
+        if (ArrayUtils.isEmpty(selection.getSelects())) {
+            ((IPrintStatement<?>) getStmt()).getSelection().addSelect(IEql2Factory.eINSTANCE.createSelect());
+        }
     }
 }
