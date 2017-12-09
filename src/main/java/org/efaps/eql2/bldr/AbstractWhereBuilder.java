@@ -16,6 +16,8 @@
  */
 package org.efaps.eql2.bldr;
 
+import java.util.Arrays;
+
 import org.efaps.eql2.Comparison;
 import org.efaps.eql2.IEql2Factory;
 import org.efaps.eql2.IWhere;
@@ -93,6 +95,7 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
     {
         return eq(_value.toString());
     }
+
     /**
      * Eq.
      *
@@ -153,12 +156,37 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T in(final String... _values)
     {
-        //final IWhereElement element = getParent().getCurrentTerm().element();
-        //element.comparison(_values.length == 1 ? Comparison.EQUAL : Comparison.IN);
-        //for (final String value : _values) {
-        //    element.addValue(value);
-        //}
+        final IWhereElement element = getCurrentElement();
+        for (final String value : _values) {
+            element.comparison(Comparison.IN).addValue(value);
+        }
         return getThis();
+    }
+
+    /**
+     * Eq.
+     *
+     * @param _value the value
+     * @return the t
+     */
+    public T in(final Long... _value)
+    {
+        return in(Arrays.stream(_value)
+                        .map(value -> value.toString())
+                        .toArray(String[]::new));
+    }
+
+    /**
+     * Eq.
+     *
+     * @param _value the value
+     * @return the t
+     */
+    public T in(final Integer... _value)
+    {
+        return in(Arrays.stream(_value)
+                        .map(value -> value.toString())
+                        .toArray(String[]::new));
     }
 
     /**
@@ -184,11 +212,7 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T and()
     {
-        /*
-        ((IQueryStmt<?>) this.parent.getStmt()).getQuery().where();
-        final IWhere where = ((IQueryStmt<?>) this.parent.getStmt()).getQuery().getWhere();
-        where.term().and();
-        */
+        getIWhere().term().and();
         return getThis();
     }
 
