@@ -19,6 +19,8 @@ package org.efaps.eql2.bldr;
 import org.apache.commons.lang3.ArrayUtils;
 import org.efaps.eql2.IAttributeSelectElement;
 import org.efaps.eql2.IEql2Factory;
+import org.efaps.eql2.ILinkfromSelectElement;
+import org.efaps.eql2.ILinktoSelectElement;
 import org.efaps.eql2.IListStmt;
 import org.efaps.eql2.IPrintStatement;
 import org.efaps.eql2.ISelect;
@@ -105,6 +107,13 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
     {
         initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
+        final ISelect currentSelect = selection.getSelects(selection.getSelectsLength() - 1);
+        if (currentSelect.getElementsLength() > 0) {
+            final ISelectElement element = currentSelect.getElements()[currentSelect.getElementsLength() - 1];
+            if (!(element instanceof ILinktoSelectElement || element instanceof ILinkfromSelectElement)) {
+                selection.addSelect(IEql2Factory.eINSTANCE.createSelect());
+            }
+        }
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createLinktoSelectElement().name(_attrName));
         return getThis();
@@ -122,6 +131,13 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
     {
         initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
+        final ISelect currentSelect = selection.getSelects(selection.getSelectsLength() - 1);
+        if (currentSelect.getElementsLength() > 0) {
+            final ISelectElement element = currentSelect.getElements()[currentSelect.getElementsLength() - 1];
+            if (!(element instanceof ILinktoSelectElement || element instanceof ILinkfromSelectElement)) {
+                selection.addSelect(IEql2Factory.eINSTANCE.createSelect());
+            }
+        }
         selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
                         .createLinkfromSelectElement().typeName(_type).attribute(_attrName));
         return getThis();

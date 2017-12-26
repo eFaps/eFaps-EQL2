@@ -106,6 +106,18 @@ public class PrintObjTest
         verifyStatement(smt, bldr.getStmt());
     }
 
+    @Test(description = "attribute and linkto attribute")
+    public void printSelAttributeLinkoInstance()
+    {
+        final AbstractPrintEQLBuilder<?> bldr = EQL
+                        .print("13.46")
+                        .attribute("BaseAttribute")
+                        .linkto("LinkoAttribute")
+                        .instance();
+        final String smt = "print object 13.46 select attribute[BaseAttribute], linkto[LinkoAttribute].instance";
+        verifyStatement(smt, bldr.getStmt());
+    }
+
     @Test(description = "linkfrom instance")
     public void printSelLinkFrom()
     {
@@ -114,6 +126,18 @@ public class PrintObjTest
                         .linkfrom("Type_name", "Attr")
                             .instance();
         final String smt = "print obj 13.46 select linkfrom[Type_name#Attr].instance";
+        verifyStatement(smt, bldr.getStmt());
+    }
+
+    @Test(description = "attribute and linkfrom instance")
+    public void printSelAttrbiuteLinkFrom()
+    {
+        final AbstractPrintEQLBuilder<?> bldr = EQL
+                        .print("13.46")
+                        .attribute("BaseAttribute")
+                        .linkfrom("Type_name", "Attr")
+                            .instance();
+        final String smt = "print obj 13.46 select attribute[BaseAttribute], linkfrom[Type_name#Attr].instance";
         verifyStatement(smt, bldr.getStmt());
     }
 
