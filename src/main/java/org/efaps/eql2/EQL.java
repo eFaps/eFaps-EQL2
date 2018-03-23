@@ -16,11 +16,18 @@
  */
 package org.efaps.eql2;
 
+import com.google.inject.Inject;
+
+import java.util.Iterator;
+
+import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.parser.IParseResult;
 import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
 import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
 import org.efaps.eql2.bldr.AbstractQueryEQLBuilder;
 import org.efaps.eql2.bldr.AbstractUpdateEQLBuilder;
 import org.efaps.eql2.bldr.AbstractWhereBuilder;
+import org.efaps.eql2.parser.antlr.EQLParser;
 
 /**
  * The Class EQL.
@@ -32,6 +39,9 @@ public abstract class EQL
 
     /** The instance. */
     private static EQL INSTANCE;
+
+    @Inject
+    private EQLParser parser;
 
     /**
      * Gets the prints the.
@@ -146,6 +156,25 @@ public abstract class EQL
     }
 
     /**
+     * Parses the statement.
+     *
+     * @param _stmt the stmt to be parsed
+     * @return the istatement
+     */
+    public static IStatement<?> parse(final CharSequence _stmt) {
+        final IParseResult result = eql().parser.doParse(_stmt);
+        if (result.hasSyntaxErrors()) {
+            final Iterator<INode> iter = result.getSyntaxErrors().iterator();
+            while (iter.hasNext()) {
+                final INode node = iter.next();
+                System.out.println(node.getSyntaxErrorMessage().getMessage());
+            }
+        }
+        final IStatement<?> ret = (IStatement<?>) result.getRootASTElement();
+        return ret;
+    }
+
+    /**
      * Gets the.
      *
      * @return the eql
@@ -154,6 +183,7 @@ public abstract class EQL
     {
         if (INSTANCE == null) {
             INSTANCE = EQLService.get().getEQL();
+            EQLStandaloneSetup.doSetup(INSTANCE);
         }
         return INSTANCE;
     }
