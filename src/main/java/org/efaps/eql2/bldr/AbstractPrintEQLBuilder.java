@@ -18,6 +18,7 @@ package org.efaps.eql2.bldr;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.efaps.eql2.IAttributeSelectElement;
+import org.efaps.eql2.IBaseSelectElement;
 import org.efaps.eql2.IEql2Factory;
 import org.efaps.eql2.ILinkfromSelectElement;
 import org.efaps.eql2.ILinktoSelectElement;
@@ -27,7 +28,6 @@ import org.efaps.eql2.ISelect;
 import org.efaps.eql2.ISelectElement;
 import org.efaps.eql2.ISelection;
 import org.efaps.eql2.SimpleSelectElement;
-import org.efaps.eql2.bldr.AbstractSelectables.AbstractLinkto;
 import org.efaps.eql2.impl.PrintQueryStatement;
 
 /**
@@ -88,7 +88,8 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
             ISelect select = selection.getSelects(selection.getSelectsLength() - 1);
             if (ArrayUtils.isNotEmpty(select.getElements())) {
                 final ISelectElement lastElement = select.getElements(select.getElementsLength() - 1);
-                if (lastElement instanceof IAttributeSelectElement) {
+                if (lastElement instanceof IAttributeSelectElement
+                                || lastElement instanceof IBaseSelectElement) {
                     ((IPrintStatement<?>) getStmt()).getSelection().addSelect(IEql2Factory.eINSTANCE.createSelect());
                     select = selection.getSelects(selection.getSelectsLength() - 1);
                 }
@@ -367,13 +368,22 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
         return getThis();
     }
 
+    /**
+     * Select.
+     *
+     * @param _selects the selects
+     * @return the t
+     */
     public T select(final ISelectable... _selects) {
         for (final ISelectable select : _selects) {
             switch (select.getKey()) {
-                case AbstractLinkto.KEY:
-                    final AbstractLinkto linkto = (AbstractLinkto) select;
-                    linkto(linkto.getLinktoAttr());
-                    attribute(linkto.getAttr());
+                case AbstractSelectables.Attribute.KEY:
+                    attribute(((AbstractSelectables.Attribute) select).getAttr());
+                    break;
+                case AbstractSelectables.Linkto.KEY:
+                    final AbstractSelectables.Linkto linkto = (AbstractSelectables.Linkto) select;
+                    linkto(linkto.getAttr());
+                    select(linkto.getChild());
                     break;
                 case AbstractSelectables.INSTANCE:
                     instance();

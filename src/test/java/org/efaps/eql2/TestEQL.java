@@ -62,16 +62,11 @@ public class TestEQL
         return new WhereBuilder();
     }
 
-
-
     @Override
     protected AbstractSelectables getSelectables()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new Selectables();
     }
-
-
 
     /**
      * The Class PrintEQLBuilder.
@@ -153,5 +148,13 @@ public class TestEQL
         {
             return this;
         }
+    }
+
+    /**
+     * The Class Selectables.
+     */
+    public static class Selectables
+        extends AbstractSelectables
+    {
     }
 }
