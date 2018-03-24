@@ -25,6 +25,7 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
 import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
 import org.efaps.eql2.bldr.AbstractQueryEQLBuilder;
+import org.efaps.eql2.bldr.AbstractSelectables;
 import org.efaps.eql2.bldr.AbstractUpdateEQLBuilder;
 import org.efaps.eql2.bldr.AbstractWhereBuilder;
 import org.efaps.eql2.parser.antlr.EQLParser;
@@ -39,6 +40,8 @@ public abstract class EQL
 
     /** The instance. */
     private static EQL INSTANCE;
+
+    private static AbstractSelectables SELECTABLES;
 
     @Inject
     private EQLParser parser;
@@ -78,6 +81,9 @@ public abstract class EQL
      * @return the prints the
      */
     protected abstract AbstractWhereBuilder<?> getWhere();
+
+
+    protected abstract AbstractSelectables getSelectables();
 
     /**
      * Prints the.
@@ -172,6 +178,13 @@ public abstract class EQL
         }
         final IStatement<?> ret = (IStatement<?>) result.getRootASTElement();
         return ret;
+    }
+
+    public static AbstractSelectables sel() {
+        if (SELECTABLES == null) {
+            SELECTABLES = eql().getSelectables();
+        }
+        return SELECTABLES;
     }
 
     /**

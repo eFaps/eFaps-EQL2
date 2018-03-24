@@ -27,6 +27,7 @@ import org.efaps.eql2.ISelect;
 import org.efaps.eql2.ISelectElement;
 import org.efaps.eql2.ISelection;
 import org.efaps.eql2.SimpleSelectElement;
+import org.efaps.eql2.bldr.AbstractSelectables.AbstractLinkto;
 import org.efaps.eql2.impl.PrintQueryStatement;
 
 /**
@@ -363,6 +364,24 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
         final ISelect select = selection.getSelects(selection.getSelectsLength() - 1);
         select.alias(_alias);
+        return getThis();
+    }
+
+    public T select(final ISelectable... _selects) {
+        for (final ISelectable select : _selects) {
+            switch (select.getKey()) {
+                case AbstractLinkto.KEY:
+                    final AbstractLinkto linkto = (AbstractLinkto) select;
+                    linkto(linkto.getLinktoAttr());
+                    attribute(linkto.getAttr());
+                    break;
+                case AbstractSelectables.INSTANCE:
+                    instance();
+                    break;
+                default:
+                    break;
+            }
+        }
         return getThis();
     }
 

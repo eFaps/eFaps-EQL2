@@ -19,6 +19,7 @@ package org.efaps.eql2;
 import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
 import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
 import org.efaps.eql2.bldr.AbstractQueryEQLBuilder;
+import org.efaps.eql2.bldr.AbstractSelectables;
 import org.efaps.eql2.bldr.AbstractUpdateEQLBuilder;
 import org.efaps.eql2.bldr.AbstractWhereBuilder;
 
@@ -60,6 +61,17 @@ public class TestEQL
     {
         return new WhereBuilder();
     }
+
+
+
+    @Override
+    protected AbstractSelectables getSelectables()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
 
     /**
      * The Class PrintEQLBuilder.
@@ -142,5 +154,4 @@ public class TestEQL
             return this;
         }
     }
-
 }
