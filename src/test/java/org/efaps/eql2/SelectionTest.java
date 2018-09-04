@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -67,6 +68,20 @@ public class SelectionTest
                 .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
         verifyStatement(_eqlBase + "select attribute[Name] as alias", _printStmt);
     }
+
+    @Test(dataProvider = "PrintStmtsAndKeyword", description = " select attribute[Name] as KEYWORD")
+    public void attributeAliasIsKeyword(final String _eqlBase,
+                                        final IPrintStatement<?> _printStmt,
+                                        final String _keyword)
+        throws Exception
+    {
+        _printStmt.getSelection()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .setAliasC(_keyword)
+                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
+        verifyStatement(_eqlBase + "select attribute[Name] as " + _keyword, _printStmt);
+    }
+
 
     /**
      * Attribute with alias cap.
@@ -672,6 +687,24 @@ public class SelectionTest
     @DataProvider(name = "PrintStmts")
     public static Iterator<Object[]> printStmts(final ITestContext _context)
     {
+        return getBaseObjects().iterator();
+    }
+
+    @DataProvider(name = "PrintStmtsAndKeyword")
+    public static Iterator<Object[]> printStmtsAndKeyword(final ITestContext _context)
+    {
+        final List<Object[]> ret = new ArrayList<>();
+        final String[] keywords = new String[] { "type", "oid", "instance", "label", "id", "uuid", "name", "class", "value",
+                        "base", "uom", "file", "length", "status", "key" };
+        for (final String keyword: keywords) {
+            for (final Object[] base : getBaseObjects()) {
+                ret.add(ArrayUtils.add(base, keyword));
+            }
+        }
+        return ret.iterator();
+    }
+
+    private static List<Object[]> getBaseObjects() {
         final List<Object[]> ret = new ArrayList<>();
         ret.add(new Object[] { "print obj 123.345 ",
                         IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.345")
@@ -700,6 +733,6 @@ public class SelectionTest
                     .where(IEql2Factory.eINSTANCE.createWhere().addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
                                     .element(IEql2Factory.eINSTANCE.createWhereElement()
                                                     .attribute("DocumentLink").equal().value("4")))))});
-        return ret.iterator();
+        return ret;
     }
 }

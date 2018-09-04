@@ -193,7 +193,7 @@ Limit:
     'limit' value=NUM;
 
 Alias:
-    NAMESTR
+    NAMESTR | KEYWORD
 ;
 
 Type:
@@ -203,6 +203,7 @@ Attribute:
     NAMESTR
 ;
 
+KEYWORD: 'type' | 'oid' | 'instance' | 'label' | 'id' | 'uuid' | 'name' | 'class' | 'value' | 'base' | 'uom' | 'file' | 'length' | 'status' | 'key';
 
 terminal FORMAT:
     'format[' ('a'..'z' | 'A'..'Z' | '_' | '0'..'9' | "-" | "/")+ ']'
