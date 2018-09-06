@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2018 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 package org.efaps.eql2;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,8 +26,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
- * TODO comment!
- *
  * @author The eFaps Team
  */
 public class WhereTest
@@ -155,6 +152,15 @@ public class WhereTest
         verifyStatement(_eqlBase + "DocumentLink < 4", _stmt);
     }
 
+    @Test(dataProvider = "Stmts", description = "where ATTRIBUTE <= NUMBER")
+    public void lessEqNum(final String _eqlBase,
+                        final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere().element().attribute("DocumentLink").lessOrEqual().value("4");
+        verifyStatement(_eqlBase + "DocumentLink <= 4", _stmt);
+    }
+
     /**
      * Greater num.
      *
@@ -169,6 +175,15 @@ public class WhereTest
     {
         _stmt.getQuery().getWhere().element().attribute("DocumentLink").greater().value("4");
         verifyStatement(_eqlBase + "DocumentLink > 4", _stmt);
+    }
+
+    @Test(dataProvider = "Stmts", description = "where ATTRIBUTE >= NUMBER")
+    public void greaterEqNum(final String _eqlBase,
+                           final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere().element().attribute("DocumentLink").greaterOrEqual().value("4");
+        verifyStatement(_eqlBase + "DocumentLink >= 4", _stmt);
     }
 
     /**

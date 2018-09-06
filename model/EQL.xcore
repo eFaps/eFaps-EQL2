@@ -1038,9 +1038,21 @@ class WhereElement
         return this
     }
 
+    op WhereElement lessOrEqual()
+    {
+        setComparison(Comparison.LESSEQ)
+        return this
+    }
+
     op WhereElement greater()
     {
         setComparison(Comparison.GREATER)
+        return this
+    }
+
+    op WhereElement greaterOrEqual()
+    {
+        setComparison(Comparison.GREATEREQ)
         return this
     }
 
@@ -1275,7 +1287,9 @@ enum Comparison
 {
     EQUAL as "=="
     LESS as "<"
+    LESSEQ as "<="
     GREATER as ">"
+    GREATEREQ as ">="
     UNEQUAL as "!="
     LIKE as"like"
     IN as "in"

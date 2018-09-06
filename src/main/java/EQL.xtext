@@ -123,7 +123,7 @@ OID:
     NUM+ "."+ NUM;
 
 enum Comparison:
-    EQUAL='==' | EQUAL='eq' | LESS='<' | GREATER='>' | UNEQUAL='!=' | LIKE='like' | IN='in' | NOTIN='not in';
+    EQUAL='==' | EQUAL='eq' | LESS='<' | LESSEQ='<=' | GREATER='>' | GREATEREQ='>=' | UNEQUAL='!=' | LIKE='like' | IN='in' | NOTIN='not in';
 
 enum Connection:
     AND='and' | OR='or'
