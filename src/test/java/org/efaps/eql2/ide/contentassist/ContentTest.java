@@ -45,18 +45,12 @@ public class ContentTest
     @BeforeClass
     public void setupCINameProvier()
     {
-        EQLProposals.registerCINameProviders(new ICINameProvider()
-        {
-
-            @Override
-            public Set<String> getTypeNames()
-            {
-                final Set<String> ret = new HashSet<>();
-                ret.add("Sales_Invoice");
-                ret.add("Sales_Receipt");
-                ret.add("Contacts_Contact");
-                return ret;
-            }
+        EQLProposals.registerCINameProviders(() -> {
+            final Set<String> ret = new HashSet<>();
+            ret.add("Sales_Invoice");
+            ret.add("Sales_Receipt");
+            ret.add("Contacts_Contact");
+            return ret;
         });
     }
 
@@ -92,7 +86,7 @@ public class ContentTest
 
         ret.add(new Object[] { "print obj 123.456 ", Arrays.asList(new String[] { "select" }) });
 
-        ret.add(new Object[] { "print obj 123.456 select ", Arrays.asList(new String[] { "value", "attribute[",
+        ret.add(new Object[] { "print obj 123.456 select ", Arrays.asList(new String[] { "pattern", "attribute[",
                         "attributeset[", "base", "class", "class[", "exec", "execute", "file", "id",
                         "instance", "key", "label", "length", "linkfrom[", "linkto[", "name",
                         "oid", "status", "type", "uom", "uuid", "value" }) });
@@ -104,7 +98,7 @@ public class ContentTest
                         Arrays.asList(new String[] { }) });
 
         ret.add(new Object[] { "print obj 123.456 select attribute[Attribute]. ",
-                        Arrays.asList(new String[] { "value", "attribute[",
+                        Arrays.asList(new String[] { "pattern", "attribute[",
                                         "attributeset[", "base", "class", "class[", "exec", "execute", "file", "id",
                                         "instance", "key", "label", "length", "linkfrom[", "linkto[", "name",
                                         "oid", "status", "type", "uom", "uuid", "value" }) });

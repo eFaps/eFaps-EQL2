@@ -162,7 +162,7 @@ AttributeSetSelectElement:
 ;
 
 FormatSelectElement:
-    value=FORMAT
+    pattern=FORMAT
 ;
 
 BaseSelectElement:

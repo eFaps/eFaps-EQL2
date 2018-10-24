@@ -680,15 +680,15 @@ class AttributeSetSelectElement extends Named<AttributeSetSelectElement> {
 class FormatSelectElement
     extends SelectElement
 {
-    String value
+    String pattern
 
-     op FormatSelectElement setValueC(String _value) {
-        setValue(_value);
+     op FormatSelectElement setPatternC(String _pattern) {
+        setPattern(_pattern);
         return this
     }
 
     op String eqlStmt() {
-         return "format[" + value + "]"
+         return "format[" + pattern + "]"
     }
 }
 

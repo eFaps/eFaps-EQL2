@@ -384,7 +384,7 @@ public class SelectionTest
         _printStmt.getSelection()
                 .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
-                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")));
+                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setPatternC("YYYY-MM-DD")));
         verifyStatement(_eqlBase + "select attribute[Date].format[YYYY-MM-DD]", _printStmt);
     }
 
@@ -402,7 +402,7 @@ public class SelectionTest
                 .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Algo")
                         .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
-                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")));
+                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setPatternC("YYYY-MM-DD")));
         verifyStatement(_eqlBase + "select attribute[Date].format[YYYY-MM-DD] as Algo", _printStmt);
     }
 
@@ -421,11 +421,11 @@ public class SelectionTest
                 .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Algo")
                         .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
-                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setValueC("YYYY-MM-DD")))
+                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setPatternC("YYYY-MM-DD")))
                 .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .setAliasC("Otro")
                         .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Date"))
-                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setValueC("MM-YYYY/DD")));
+                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setPatternC("MM-YYYY/DD")));
         verifyStatement(_eqlBase + "select attribute[Date].format[YYYY-MM-DD] as Algo, "
                         + "attribute[Date].format[MM-YYYY/DD] as Otro", _printStmt);
     }
