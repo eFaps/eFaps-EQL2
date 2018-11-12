@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2018 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
 package org.efaps.eql2
 
 import org.efaps.eql2.converter.ValueConverters
-import org.eclipse.jface.viewers.ILabelProvider
-import org.eclipse.jface.viewers.ILabelProviderListener
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -28,36 +26,5 @@ class EQLRuntimeModule extends AbstractEQLRuntimeModule
     override bindIValueConverterService()
     {
         return typeof(ValueConverters)
-    }
-
-    static class Fake implements ILabelProvider
-    {
-
-        override getImage(Object element)
-        {
-            null
-        }
-
-        override getText(Object element)
-        {
-            null
-        }
-
-        override addListener(ILabelProviderListener listener)
-        {
-        }
-
-        override dispose()
-        {
-        }
-
-        override isLabelProperty(Object element, String property)
-        {
-            false
-        }
-
-        override removeListener(ILabelProviderListener listener)
-        {
-        }
     }
 }
