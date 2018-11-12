@@ -187,13 +187,13 @@ Order:
     'order' 'by' elements+=OrderElement (',' elements+=OrderElement)*;
 
 OrderElement:
-    key=(Alias | NUM) ('asc' |(desc?=('desc')))?;
+    key=(NAMESTR | KEYWORD | NUM) ('asc' |(desc?=('desc')))?;
 
 Limit:
     'limit' value=NUM;
 
 Alias:
-    NAMESTR | KEYWORD
+    NAMESTR | STRING | KEYWORD
 ;
 
 Type:

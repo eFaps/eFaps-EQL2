@@ -50,56 +50,18 @@ public class SelectionTest
         verifyStatement(_eqlBase + "select attribute[Name]", _printStmt);
     }
 
-    /**
-     * Attribute with alias.
-     *
-     * @param _eqlBase the eql base
-     * @param _printStmt the print stmt
-     * @throws Exception the exception
-     */
-    @Test(dataProvider = "PrintStmts", description = " select attribute[Name] as alias")
+    @Test(dataProvider = "PrintStmtsAndAlias", description = " select attribute[Name] as ALIAS")
     public void attributeAlias(final String _eqlBase,
-                               final IPrintStatement<?> _printStmt)
+                               final IPrintStatement<?> _printStmt,
+                               final String _alias)
         throws Exception
     {
+        String alias = _alias.startsWith("\"") ? _alias.substring(1, _alias.length() - 1) : _alias;
         _printStmt.getSelection()
             .addSelect(IEql2Factory.eINSTANCE.createSelect()
-                .setAliasC("alias")
+                .setAliasC(alias)
                 .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
-        verifyStatement(_eqlBase + "select attribute[Name] as alias", _printStmt);
-    }
-
-    @Test(dataProvider = "PrintStmtsAndKeyword", description = " select attribute[Name] as KEYWORD")
-    public void attributeAliasIsKeyword(final String _eqlBase,
-                                        final IPrintStatement<?> _printStmt,
-                                        final String _keyword)
-        throws Exception
-    {
-        _printStmt.getSelection()
-            .addSelect(IEql2Factory.eINSTANCE.createSelect()
-                .setAliasC(_keyword)
-                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
-        verifyStatement(_eqlBase + "select attribute[Name] as " + _keyword, _printStmt);
-    }
-
-
-    /**
-     * Attribute with alias cap.
-     *
-     * @param _eqlBase the eql base
-     * @param _printStmt the print stmt
-     * @throws Exception the exception
-     */
-    @Test(dataProvider = "PrintStmts", description = "select attribute[Name] as ALIAS")
-    public void attributeWithAliasCap(final String _eqlBase,
-                                      final IPrintStatement<?> _printStmt)
-        throws Exception
-    {
-        _printStmt.getSelection()
-            .addSelect(IEql2Factory.eINSTANCE.createSelect()
-                .setAliasC("ALIAS")
-                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
-        verifyStatement(_eqlBase + "select attribute[Name] as ALIAS", _printStmt);
+        verifyStatement(_eqlBase + "select attribute[Name] as " + _alias, _printStmt);
     }
 
     /**
@@ -690,15 +652,17 @@ public class SelectionTest
         return getBaseObjects().iterator();
     }
 
-    @DataProvider(name = "PrintStmtsAndKeyword")
-    public static Iterator<Object[]> printStmtsAndKeyword(final ITestContext _context)
+    @DataProvider(name = "PrintStmtsAndAlias")
+    public static Iterator<Object[]> printStmtsAndAlias(final ITestContext _context)
     {
         final List<Object[]> ret = new ArrayList<>();
+        String[] aliases = new String[] { "HansWurst", "ONLYCAP", "onlysmall", "numer9", "\"alias with space\"" };
         final String[] keywords = new String[] { "type", "oid", "instance", "label", "id", "uuid", "name", "class", "value",
                         "base", "uom", "file", "length", "status", "key" };
-        for (final String keyword: keywords) {
+        aliases = ArrayUtils.addAll(aliases, keywords);
+        for (final String alias: aliases) {
             for (final Object[] base : getBaseObjects()) {
-                ret.add(ArrayUtils.add(base, keyword));
+                ret.add(ArrayUtils.add(base, alias));
             }
         }
         return ret.iterator();

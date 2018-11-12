@@ -48,7 +48,6 @@ public class FormatterTest
     /** The log. */
     private static Logger LOG = LoggerFactory.getLogger(FormatterTest.class);
 
-
     /** The serializer. */
     @Inject
     private Serializer serializer;
@@ -68,7 +67,6 @@ public class FormatterTest
         EQLStandaloneSetup.doSetup(resource);
 
         resource.load(new LazyStringInputStream(_orig), null);
-
 
         final IParseResult result = resource.getParseResult();
         final EObject obj = result.getRootASTElement();
@@ -94,7 +92,7 @@ public class FormatterTest
             + " select attribute[Name], attribute[Other]"});
 
         ret.add(new Object[] { "  print    query  type  Sales_Invoice where linkto[ TaxId].attribute[CAT] eq \"Demo\" "
-                        + "select attribute[ Name] , attribute[Other] order by demo ,test",
+                        + "select attribute[ Name] , attribute[Other] order by demo , test",
             "print query type Sales_Invoice where linkto[TaxId].attribute[CAT] == \"Demo\""
             + " select attribute[Name], attribute[Other] order by demo, test"});
 

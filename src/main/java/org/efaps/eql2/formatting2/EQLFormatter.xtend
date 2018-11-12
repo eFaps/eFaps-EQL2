@@ -84,7 +84,7 @@ class EQLFormatter extends AbstractFormatter2
         extension IFormattableDocument _document
     )
     {
-        _selection.regionFor.keyword("select").prepend[autowrap]
+        _selection.regionFor.keyword("select").prepend[oneSpace]
         _selection.regionFor.keyword(",").prepend[noSpace].append[oneSpace]
         for (ISelect select : _selection.selects)
         {

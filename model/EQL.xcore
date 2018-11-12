@@ -805,7 +805,7 @@ class Select
     op String eqlStmt() {
         var String ret = super.eqlStmt()
         if (alias !== null) {
-            ret = ret + " as " + alias
+            ret = ret + " as \"" + alias + "\""
         }
         return ret
     }
@@ -831,7 +831,7 @@ class ExecSelectionElement
     op String eqlStmt() {
         var String ret = index
         if (alias !== null) {
-            ret = ret + " as " + alias
+            ret = ret + " as \"" + alias + "\""
         }
         return ret
     }

@@ -36,10 +36,10 @@ class EQLProposals
 {
 
     /** The log. */
-    private static Logger LOG = LoggerFactory.getLogger(typeof(EQLProposals));
+    static Logger LOG = LoggerFactory.getLogger(typeof(EQLProposals));
 
     /** The cinameproviders. */
-    private static Set<ICINameProvider> CINAMEPROVIDERS = new HashSet;
+    static Set<ICINameProvider> CINAMEPROVIDERS = new HashSet;
 
     /**
      * Gets the CI name providers.

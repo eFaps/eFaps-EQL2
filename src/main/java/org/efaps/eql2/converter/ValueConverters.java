@@ -104,4 +104,21 @@ public class ValueConverters
             }
         };
     }
+    
+    @ValueConverter(rule = "Alias")
+    public IValueConverter<String> alias()
+    {
+        return new IDValueConverter()
+        {
+            @Override
+            public String toValue(final String _string,
+                                  final INode _node)
+                throws ValueConverterException
+            {
+                return _string.startsWith("\"") 
+                        ? _string.substring(1, _string.length() - 1) 
+                        : _string;
+            }
+        };
+    }
 }
