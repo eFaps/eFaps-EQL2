@@ -236,6 +236,26 @@
                         <artifactId>org.eclipse.jdt.compiler.tool</artifactId>
                         <version>1.2.300</version>
                    </dependency>
+                    <dependency>
+                        <groupId>org.eclipse.xtext</groupId>
+                        <artifactId>org.eclipse.xtext.util</artifactId>
+                        <version>${xtext-version}</version>
+                   </dependency>
+                    <dependency>
+                        <groupId>org.eclipse.xtext</groupId>
+                        <artifactId>org.eclipse.xtext.xbase</artifactId>
+                        <version>${xtext-version}</version>
+                   </dependency>
+                    <dependency>
+                        <groupId>org.eclipse.xtext</groupId>
+                        <artifactId>org.eclipse.xtext.common.types</artifactId>
+                        <version>${xtext-version}</version>
+                   </dependency>
+                    <dependency>
+                        <groupId>org.eclipse.xtext</groupId>
+                        <artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+                        <version>${xtext-version}</version>
+                   </dependency>
                </dependencies>
             </plugin>
             <plugin>
@@ -254,6 +274,9 @@
                     <javaSourceVersion>1.8</javaSourceVersion>
                     <outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
                     <testOutputDirectory>${basedir}/src/test/xtend-gen</testOutputDirectory>
+                    <generatedAnnotationComment>true</generatedAnnotationComment>
+                    <includeDateInGeneratedAnnotation>true</includeDateInGeneratedAnnotation>
+                    <writeTraceFiles>false</writeTraceFiles>
                 </configuration>
                 <dependencies>
                     <dependency>
