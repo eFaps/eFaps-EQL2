@@ -22,6 +22,7 @@ import java.util.Iterator;
 
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
+import org.efaps.eql2.bldr.AbstractDeleteEQLBuilder;
 import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
 import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
 import org.efaps.eql2.bldr.AbstractQueryEQLBuilder;
@@ -73,6 +74,13 @@ public abstract class EQL
      * @return the prints the
      */
     protected abstract AbstractInsertEQLBuilder<?> getInsert();
+
+    /**
+     * Gets the prints the.
+     *
+     * @return the prints the
+     */
+    protected abstract AbstractDeleteEQLBuilder<?> getDelete();
 
     /**
      * Gets the prints the.
@@ -148,6 +156,17 @@ public abstract class EQL
     public static AbstractInsertEQLBuilder<?> insert(final String _typeName)
     {
         return eql().getInsert().insert(_typeName);
+    }
+
+     /**
+      * Delete.
+      *
+      * @param _oids the oids
+      * @return the abstract update EQL builder
+      */
+     public static AbstractDeleteEQLBuilder<?> delete(final String... _oids)
+    {
+        return eql().getDelete().delete(_oids);
     }
 
     /**

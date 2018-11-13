@@ -16,6 +16,7 @@
  */
 package org.efaps.eql2;
 
+import org.efaps.eql2.bldr.AbstractDeleteEQLBuilder;
 import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
 import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
 import org.efaps.eql2.bldr.AbstractQueryEQLBuilder;
@@ -54,6 +55,13 @@ public class TestEQL
     protected AbstractInsertEQLBuilder<?> getInsert()
     {
         return new InsertEQLBuilder();
+    }
+
+    @Override
+    protected AbstractDeleteEQLBuilder<?> getDelete()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
