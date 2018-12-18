@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2018 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import org.eclipse.xtext.common.services.Ecore2XtextTerminalConverters;
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;
 import org.eclipse.xtext.conversion.ValueConverterException;
-import org.eclipse.xtext.conversion.impl.IDValueConverter;
+import org.eclipse.xtext.conversion.impl.AbstractNullSafeConverter;
 import org.eclipse.xtext.nodemodel.INode;
 
 /**
@@ -31,93 +31,86 @@ import org.eclipse.xtext.nodemodel.INode;
 public class ValueConverters
     extends Ecore2XtextTerminalConverters
 {
-    /**
-     * Format ValueConverter.
-     *
-     * @return the IValueConverter<String>
-     */
     @ValueConverter(rule = "FORMAT")
-    public IValueConverter<String> format()
-    {
-        return new IValueConverter<String>()
-        {
+    public IValueConverter<String> format() {
+        return new AbstractNullSafeConverter<String>() {
 
             @Override
-            public String toValue(final String _string,
-                                  final INode _node)
-                throws ValueConverterException
+            protected String internalToString(final String _value)
             {
                 final String ret;
-                if (_string.startsWith("format[")) {
-                    ret = _string.substring(7, _string.length() - 1);
+                if (_value.startsWith("format[")) {
+                    ret = _value.substring(7, _value.length() - 1);
                 } else {
-                    ret = _string;
+                    ret = _value;
                 }
                 return ret;
             }
 
             @Override
-            public String toString(final String _value)
+            protected String internalToValue(final String _string, final INode _node)
                 throws ValueConverterException
             {
-                return toValue(_value, null);
+                return internalToString(_string);
             }
         };
     }
 
-    /**
-     * Name.
-     *
-     * @return the i value converter< string>
-     */
     @ValueConverter(rule = "Attribute")
-    public IValueConverter<String> name()
-    {
-        return new IDValueConverter()
-        {
+    public IValueConverter<String> attribute() {
+        return new AbstractNullSafeConverter<String>() {
+
             @Override
-            public String toValue(final String _string,
-                                  final INode _node)
+            protected String internalToString(final String _value)
+            {
+                return _value;
+            }
+
+            @Override
+            protected String internalToValue(final String _string, final INode _node)
                 throws ValueConverterException
             {
-                return super.toValue(_string, _node);
+                return _string.startsWith("^") ? _string.substring(1) : _string;
             }
         };
     }
 
-    /**
-     * Clazz name.
-     *
-     * @return the i value converter< string>
-     */
     @ValueConverter(rule = "ClazzName")
-    public IValueConverter<String> clazzName()
-    {
-        return new IDValueConverter()
-        {
+    public IValueConverter<String> clazzName() {
+        return new AbstractNullSafeConverter<String>() {
+
             @Override
-            public String toValue(final String _string,
-                                  final INode _node)
+            protected String internalToString(final String _value)
+            {
+                return _value;
+            }
+
+            @Override
+            protected String internalToValue(final String _string, final INode _node)
                 throws ValueConverterException
             {
-                return super.toValue(_string == null ? null : _string.trim(), _node);
+                return _string.startsWith("^") ? _string.substring(1).trim() : _string.trim();
             }
         };
     }
-    
+
     @ValueConverter(rule = "Alias")
-    public IValueConverter<String> alias()
-    {
-        return new IDValueConverter()
-        {
+    public IValueConverter<String> alias() {
+        return new AbstractNullSafeConverter<String>() {
+
             @Override
-            public String toValue(final String _string,
-                                  final INode _node)
+            protected String internalToString(final String _value)
+            {
+                return _value;
+            }
+
+            @Override
+            protected String internalToValue(final String _string, final INode _node)
                 throws ValueConverterException
             {
-                return _string.startsWith("\"") 
-                        ? _string.substring(1, _string.length() - 1) 
-                        : _string;
+                return _string.startsWith("\"")
+                                ? _string.substring(1, _string.length() - 1)
+                                : _string;
             }
         };
     }
