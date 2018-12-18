@@ -28,6 +28,8 @@ limitations under the License.")
 
 package org.efaps.eql2
 
+import org.eclipse.xtext.common.types.Iterable
+
 interface Statement<T>
     extends EQLElement, Generic<T>
 {
@@ -1013,7 +1015,6 @@ class WhereElement
         return this
     }
 
-
     op WhereElement comparison(Comparison _comparison)
     {
         setComparison(_comparison)
@@ -1068,7 +1069,6 @@ class WhereElement
         return this
     }
 
-
     op WhereElement notin()
     {
         setComparison(Comparison.NOTIN)
@@ -1084,6 +1084,14 @@ class WhereElement
     op WhereElement value(String _value)
     {
         valuesList.add(_value)
+        return this
+    }
+
+    op WhereElement values(Iterable<String> _values)
+    {
+        for (String value :_values) {
+            valuesList.add(value)
+        }
         return this
     }
 
