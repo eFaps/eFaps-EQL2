@@ -737,6 +737,24 @@ class ExecSelectElement
     }
 }
 
+class MsgPhraseSelectElement
+    extends Named<MsgPhraseSelectElement>
+{
+    op MsgPhraseSelectElement setNameC(String _name) {
+        setName(_name)
+        return this
+    }
+
+    op String eqlStmt() {
+        return "msgphrase[" + getName() + "]"
+    }
+
+    op MsgPhraseSelectElement getThis()
+    {
+        return this
+    }
+}
+
 class Selection
     extends EQLElement
 {

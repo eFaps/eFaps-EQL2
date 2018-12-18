@@ -56,7 +56,7 @@ public class SelectionTest
                                final String _alias)
         throws Exception
     {
-        String alias = _alias.startsWith("\"") ? _alias.substring(1, _alias.length() - 1) : _alias;
+        final String alias = _alias.startsWith("\"") ? _alias.substring(1, _alias.length() - 1) : _alias;
         _printStmt.getSelection()
             .addSelect(IEql2Factory.eINSTANCE.createSelect()
                 .setAliasC(alias)
@@ -298,6 +298,22 @@ public class SelectionTest
                 .addSelect(IEql2Factory.eINSTANCE.createSelect()
                         .addElement(IEql2Factory.eINSTANCE.createClassSelectElement().setNameC("CLASS_Name")));
         verifyStatement(_eqlBase + "select class[CLASS_Name]", _printStmt);
+    }
+
+    /**
+     * Object print.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select msgphrase[MsgPhrase_Name]")
+    public void msgPhrase(final String _eqlBase,
+                          final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createMsgPhraseSelectElement().setNameC("MsgPhrase_Name")));
+        verifyStatement(_eqlBase + "select msgphrase[MsgPhrase_Name]", _printStmt);
     }
 
     /**
