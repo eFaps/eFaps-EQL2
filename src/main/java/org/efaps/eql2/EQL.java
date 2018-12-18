@@ -20,8 +20,10 @@ import com.google.inject.Inject;
 
 import java.util.Iterator;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
+import org.eclipse.xtext.serializer.impl.Serializer;
 import org.efaps.eql2.bldr.AbstractDeleteEQLBuilder;
 import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
 import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
@@ -46,6 +48,9 @@ public abstract class EQL
 
     @Inject
     private EQLParser parser;
+
+    @Inject
+    private Serializer serializer;
 
     /**
      * Gets the prints the.
@@ -197,6 +202,16 @@ public abstract class EQL
         }
         final IStatement<?> ret = (IStatement<?>) result.getRootASTElement();
         return ret;
+    }
+
+    /**
+     * To EQL.
+     *
+     * @param _eobj the eobj
+     * @return the string
+     */
+    public static String toEQL(final EObject _eobj) {
+        return eql().serializer.serialize(_eobj);
     }
 
     public static AbstractSelectables sel() {
