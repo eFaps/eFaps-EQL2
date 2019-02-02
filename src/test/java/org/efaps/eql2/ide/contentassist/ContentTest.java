@@ -45,7 +45,7 @@ public class ContentTest
     @BeforeClass
     public void setupCINameProvier()
     {
-        EQLProposals.registerCINameProviders(() -> {
+        EQL2Proposals.registerCINameProviders(() -> {
             final Set<String> ret = new HashSet<>();
             ret.add("Sales_Invoice");
             ret.add("Sales_Receipt");
@@ -66,7 +66,7 @@ public class ContentTest
                           final List<String> _expected)
         throws Exception
     {
-        final List<String> proposals = EQLProposals.getProposalList(_partial);
+        final List<String> proposals = EQL2Proposals.getProposalList(_partial);
         Assert.assertEqualsNoOrder(proposals.toArray(), _expected.toArray());
     }
 

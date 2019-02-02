@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,17 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql2.serializer
+package org.efaps.eql2.ide
+
+import org.eclipse.xtext.ide.editor.contentassist.antlr.IContentAssistParser
+import org.efaps.eql2.ide.contentassist.antlr.PartialEQL2ContentAssistParser
 
 /**
- * The Class EQLSyntacticSequencer.
- *
- * @author The eFaps Team
+ * Use this class to register ide components.
  */
-class EQLSyntacticSequencer
-    extends AbstractEQLSyntacticSequencer
-{
+class EQL2IdeModule extends AbstractEQL2IdeModule {
+
+    override Class<? extends IContentAssistParser> bindIContentAssistParser() {
+        return typeof (PartialEQL2ContentAssistParser);
+    }
 }

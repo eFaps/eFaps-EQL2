@@ -14,16 +14,14 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql2.ide.contentassist
-
-import java.util.Set
+package org.efaps.eql2.serializer
 
 /**
- * The ICINameProvider.
+ * The Class EQLSemanticSequencer.
  *
  * @author The eFaps Team
  */
-interface ICINameProvider
+class EQL2SemanticSequencer
+    extends AbstractEQL2SemanticSequencer
 {
-    def Set<String> getTypeNames()
 }

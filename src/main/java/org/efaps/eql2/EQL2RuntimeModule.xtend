@@ -14,16 +14,17 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql2.ide.contentassist
+package org.efaps.eql2
 
-import java.util.Set
+import org.efaps.eql2.converter.ValueConverters
 
 /**
- * The ICINameProvider.
- *
- * @author The eFaps Team
+ * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-interface ICINameProvider
+class EQL2RuntimeModule extends AbstractEQL2RuntimeModule
 {
-    def Set<String> getTypeNames()
+    override bindIValueConverterService()
+    {
+        return typeof(ValueConverters)
+    }
 }

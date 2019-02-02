@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  *
  */
 package org.efaps.eql2;
+
+import com.google.inject.Inject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,8 +35,6 @@ import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import com.google.inject.Inject;
 
 /**
  * The Class FormatterTest.
@@ -64,7 +64,7 @@ public class FormatterTest
                                   final String _targetFrmtd) throws IOException
     {
         final XtextResource resource = new XtextResource();
-        EQLStandaloneSetup.doSetup(resource);
+        EQL2StandaloneSetup.doSetup(resource);
 
         resource.load(new LazyStringInputStream(_orig), null);
 

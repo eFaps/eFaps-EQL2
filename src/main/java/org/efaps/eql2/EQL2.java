@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2017 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,23 +31,23 @@ import org.efaps.eql2.bldr.AbstractQueryEQLBuilder;
 import org.efaps.eql2.bldr.AbstractSelectables;
 import org.efaps.eql2.bldr.AbstractUpdateEQLBuilder;
 import org.efaps.eql2.bldr.AbstractWhereBuilder;
-import org.efaps.eql2.parser.antlr.EQLParser;
+import org.efaps.eql2.parser.antlr.EQL2Parser;
 
 /**
  * The Class EQL.
  *
  * @author The eFaps Team
  */
-public abstract class EQL
+public abstract class EQL2
 {
 
     /** The instance. */
-    private static EQL INSTANCE;
+    private static EQL2 INSTANCE;
 
     private static AbstractSelectables SELECTABLES;
 
     @Inject
-    private EQLParser parser;
+    private EQL2Parser parser;
 
     @Inject
     private Serializer serializer;
@@ -226,11 +226,11 @@ public abstract class EQL
      *
      * @return the eql
      */
-    protected static EQL eql()
+    protected static EQL2 eql()
     {
         if (INSTANCE == null) {
-            INSTANCE = EQLService.get().getEQL();
-            EQLStandaloneSetup.doSetup(INSTANCE);
+            INSTANCE = EQL2Service.get().getEQL();
+            EQL2StandaloneSetup.doSetup(INSTANCE);
         }
         return INSTANCE;
     }

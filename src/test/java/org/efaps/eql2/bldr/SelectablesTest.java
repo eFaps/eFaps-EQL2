@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2018 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.efaps.eql2.AbstractTest;
-import org.efaps.eql2.EQL;
+import org.efaps.eql2.EQL2;
 import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -38,7 +38,7 @@ public class SelectablesTest
     public void selectables(final String _stmt,
                             final ISelectable[] _selectables)
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL.print("13.46")
+        final AbstractPrintEQLBuilder<?> bldr = EQL2.print("13.46")
                         .select(_selectables);
         verifyStatement(_stmt, bldr.getStmt());
     }

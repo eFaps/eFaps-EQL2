@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package org.efaps.eql2.bldr;
 
 import org.efaps.eql2.AbstractTest;
-import org.efaps.eql2.EQL;
+import org.efaps.eql2.EQL2;
 import org.testng.annotations.Test;
 
 /**
@@ -36,7 +36,7 @@ public class BuilderTest
    // @Test(description = "print query limit")
     public void printQueryLimit()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print()
                         //    .limit(10)
                         .attribute("Attri");
@@ -213,7 +213,7 @@ public class BuilderTest
     @Test(description = "basic update")
     public void update()
     {
-        final AbstractEQLBuilder<?> bldr = EQL.update("123.456")
+        final AbstractEQLBuilder<?> bldr = EQL2.update("123.456")
                             .set("Name", "123");
         final String smt = "update obj 123.456 set Name = 123";
         verifyStatement(smt, bldr.getStmt());
@@ -225,7 +225,7 @@ public class BuilderTest
     @Test(description = "basic update")
     public void updateVarious()
     {
-        final AbstractEQLBuilder<?> bldr = EQL.update("123.456")
+        final AbstractEQLBuilder<?> bldr = EQL2.update("123.456")
                             .set("Name", "123")
                             .set("Attr2", "demo");
         final String smt = "update obj 123.456 set Name = 123, Attr2 = \"demo\"";
@@ -238,7 +238,7 @@ public class BuilderTest
     @Test(description = "basic update")
     public void updateList()
     {
-        final AbstractEQLBuilder<?> bldr = EQL.update("123.456", "789.012")
+        final AbstractEQLBuilder<?> bldr = EQL2.update("123.456", "789.012")
                             .set("Name", "123");
         final String smt = "update list ( 123.456, 789.012 ) set Name = 123";
         verifyStatement(smt, bldr.getStmt());
@@ -250,7 +250,7 @@ public class BuilderTest
     //@Test(description = "query update")
     public void updateQuery()
     {
-        final AbstractEQLBuilder<?> bldr = EQL.update()
+        final AbstractEQLBuilder<?> bldr = EQL2.update()
                             //.query("Sales_Invoice")
                             .set("Name", "123");
         final String smt = "update query type Sales_Invoice set Name = 123";
@@ -263,7 +263,7 @@ public class BuilderTest
     //@Test(description = "query update where")
     public void updateQueryWhere()
     {
-        final AbstractEQLBuilder<?> bldr = EQL.update()
+        final AbstractEQLBuilder<?> bldr = EQL2.update()
                             //.query("Sales_Invoice")
                             //.where()
                            //     .attr("Name").eq("demo")
@@ -278,7 +278,7 @@ public class BuilderTest
     //@Test(description = "query update where")
     public void updateQueryWhereSets()
     {
-        final AbstractEQLBuilder<?> bldr = EQL.update()
+        final AbstractEQLBuilder<?> bldr = EQL2.update()
                             //.query("Sales_Invoice")
                            // .where()
                            //     .attr("Name").eq("demo")
@@ -294,7 +294,7 @@ public class BuilderTest
     @Test(description = "basic insert")
     public void insert()
     {
-        final AbstractEQLBuilder<?> bldr = EQL.insert("Sales_Invoice")
+        final AbstractEQLBuilder<?> bldr = EQL2.insert("Sales_Invoice")
                             .set("Name", "123");
         final String smt = "insert type Sales_Invoice set Name = 123";
         verifyStatement(smt, bldr.getStmt());

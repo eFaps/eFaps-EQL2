@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2017 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,24 +23,24 @@ import java.util.ServiceLoader;
  *
  * @author The eFaps Team
  */
-public final class EQLService
+public final class EQL2Service
 {
 
     /** The instance. */
-    private static EQLService INSTANCE;
+    private static EQL2Service INSTANCE;
 
     /** The loader. */
-    private final ServiceLoader<EQL> loader;
+    private final ServiceLoader<EQL2> loader;
 
     /** The eql. */
-    private EQL eql;
+    private EQL2 eql;
 
     /**
      * Instantiates a new EQL service.
      */
-    private EQLService()
+    private EQL2Service()
     {
-        this.loader = ServiceLoader.load(EQL.class);
+        this.loader = ServiceLoader.load(EQL2.class);
     }
 
     /**
@@ -48,7 +48,7 @@ public final class EQLService
      *
      * @return the eql
      */
-    protected EQL getEQL()
+    protected EQL2 getEQL()
     {
         if (this.eql == null) {
             this.eql = this.loader.iterator().next();
@@ -61,10 +61,10 @@ public final class EQLService
      *
      * @return the EQL service
      */
-    protected static synchronized EQLService get()
+    protected static synchronized EQL2Service get()
     {
         if (INSTANCE == null) {
-            INSTANCE = new EQLService();
+            INSTANCE = new EQL2Service();
         }
         return INSTANCE;
     }

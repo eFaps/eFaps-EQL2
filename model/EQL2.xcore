@@ -1,5 +1,5 @@
-@Ecore(nsURI="http://www.efaps.org/EQL")
-@GenModel(modelName="EQL",
+@Ecore(nsURI="http://www.efaps.org/EQL2")
+@GenModel(modelName="EQL2",
     modelDirectory="EQL2/src/main/xcore-gen",
     arrayAccessors="true",
     dataTypeConverters="true",
@@ -12,7 +12,7 @@
     interfaceNamePattern="I{0}",
     classNamePattern="{0}",
     copyrightFields="true",
-    copyrightText="        Copyright 2003 - 2018 The eFaps Team
+    copyrightText="        Copyright 2003 - 2019 The eFaps Team
 
 Licensed under the Apache License, Version 2.0 (the \"License\");
 you may not use this file except in compliance with the License.

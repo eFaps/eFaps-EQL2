@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2018 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 package org.efaps.eql2.bldr;
 
 import org.efaps.eql2.AbstractTest;
-import org.efaps.eql2.EQL;
+import org.efaps.eql2.EQL2;
 import org.testng.annotations.Test;
 
 /**
@@ -32,7 +32,7 @@ public class PrintObjTest
     @Test(description = "Select one attribute")
     public void printSelAttr()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL.print("13.46")
+        final AbstractPrintEQLBuilder<?> bldr = EQL2.print("13.46")
                         .attribute("ATTRNAME");
         final String stmt =  String.format("print obj 13.46 select attribute[%s]", "ATTRNAME");
         verifyStatement(stmt, bldr.getStmt());
@@ -41,7 +41,7 @@ public class PrintObjTest
     @Test(description = "Select more attribute")
     public void printSelAttrAttr()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .attribute("attr")
                         .attribute("attr2");
@@ -52,7 +52,7 @@ public class PrintObjTest
     @Test(description = "Select more attribute Alias")
     public void printSelAttrAttrAlias()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .attribute("attr")
                         .as("Alias1")
@@ -65,7 +65,7 @@ public class PrintObjTest
     @Test(description = "Select more attribute")
     public void printSelLinko()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .linkto("attr1")
                             .attribute("attr");
@@ -76,7 +76,7 @@ public class PrintObjTest
     @Test(description = "Select more attribute")
     public void printSelLinko2()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .linkto("attr1")
                             .attribute("attr")
@@ -88,7 +88,7 @@ public class PrintObjTest
     @Test(description = "instance")
     public void printSelInstance()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .instance();
         final String smt = "print obj 13.46 select instance";
@@ -98,7 +98,7 @@ public class PrintObjTest
     @Test(description = "linkto instance")
     public void printSelLinkoInstance()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .linkto("attr1")
                         .instance();
@@ -109,7 +109,7 @@ public class PrintObjTest
     @Test(description = "attribute and linkto attribute")
     public void printSelAttributeLinkoInstance()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .attribute("BaseAttribute")
                         .linkto("LinkoAttribute")
@@ -121,7 +121,7 @@ public class PrintObjTest
     @Test(description = "linkfrom instance")
     public void printSelLinkFrom()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .linkfrom("Type_name", "Attr")
                             .instance();
@@ -132,7 +132,7 @@ public class PrintObjTest
     @Test(description = "attribute and linkfrom instance")
     public void printSelAttrbiuteLinkFrom()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .attribute("BaseAttribute")
                         .linkfrom("Type_name", "Attr")
@@ -144,7 +144,7 @@ public class PrintObjTest
     @Test(description = "linkfrom attribute")
     public void printSelLinkFromAttr()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .linkfrom("Type_name", "Attr")
                             .attribute("Attr");
@@ -155,7 +155,7 @@ public class PrintObjTest
     @Test(description = "linkfrom linkto attribute")
     public void printSelLinkFromLinktoAttr()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .linkfrom("Type_name", "Attr")
                             .linkto("LinktoAttr")
@@ -167,7 +167,7 @@ public class PrintObjTest
     @Test(description = "oid")
     public void printSelOID()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .oid();
         final String smt = "print obj 13.46 select oid";
@@ -177,7 +177,7 @@ public class PrintObjTest
    @Test(description = "type")
     public void printSelType()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .type();
         final String smt = "print obj 13.46 select type";
@@ -187,7 +187,7 @@ public class PrintObjTest
     @Test(description = "value")
     public void printSelValue()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .attribute("Attr")
                         .value();
@@ -198,7 +198,7 @@ public class PrintObjTest
    @Test(description = "label")
     public void printSelLabel()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .type()
                         .label();
@@ -209,7 +209,7 @@ public class PrintObjTest
    @Test(description = "id")
     public void printSelID()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .id();
         final String smt = "print obj 13.46 select id";
@@ -219,7 +219,7 @@ public class PrintObjTest
    @Test(description = "name")
     public void printSelName()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .file()
                         .name();
@@ -230,7 +230,7 @@ public class PrintObjTest
    @Test(description = "key")
     public void printSelKey()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .key();
         final String smt = "print obj 13.46 select key";
@@ -240,7 +240,7 @@ public class PrintObjTest
     @Test(description = "status")
     public void printSelStatus()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .status();
         final String smt = "print obj 13.46 select status";
@@ -250,7 +250,7 @@ public class PrintObjTest
     @Test(description = "file")
     public void printSelFile()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .file();
         final String smt = "print obj 13.46 select file";
@@ -260,7 +260,7 @@ public class PrintObjTest
     @Test(description = "length")
     public void printSelLength()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .file()
                         .length();
@@ -271,7 +271,7 @@ public class PrintObjTest
     @Test(description = "base")
     public void printSelBase()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .attribute("Attr")
                         .base();
@@ -282,7 +282,7 @@ public class PrintObjTest
     @Test(description = "uom")
     public void printSelUoM()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .attribute("Attr")
                         .uom();
@@ -293,7 +293,7 @@ public class PrintObjTest
     @Test(description = "class")
     public void printSelClass()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .clazz();
         final String smt = "print obj 13.46 select class";
@@ -303,7 +303,7 @@ public class PrintObjTest
     @Test(description = "uuid")
     public void printSelUUID()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("13.46")
                         .type()
                         .uuid();
@@ -314,7 +314,7 @@ public class PrintObjTest
     @Test(description = "uuid")
     public void printList()
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL
+        final AbstractPrintEQLBuilder<?> bldr = EQL2
                         .print("123.456", "789.012", "345.678")
                         .type()
                         .uuid();

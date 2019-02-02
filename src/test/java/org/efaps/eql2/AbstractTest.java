@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  *
  */
 package org.efaps.eql2;
+
+import com.google.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,11 +36,9 @@ import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
 import org.eclipse.xtext.parser.antlr.Lexer;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.validation.AbstractInjectableValidator;
-import org.efaps.eql2.parser.antlr.EQLParser;
-import org.efaps.eql2.validation.EQLValidator;
+import org.efaps.eql2.parser.antlr.EQL2Parser;
+import org.efaps.eql2.validation.EQL2Validator;
 import org.testng.Assert;
-
-import com.google.inject.Inject;
 
 /**
  * The Class AbstractTest.
@@ -50,7 +50,7 @@ public abstract class AbstractTest
 
     /** The parser. */
     @Inject
-    private EQLParser parser;
+    private EQL2Parser parser;
 
     /** The lexer. */
     @Inject
@@ -62,7 +62,7 @@ public abstract class AbstractTest
 
     /** The validator. */
     @Inject
-    private EQLValidator validator;
+    private EQL2Validator validator;
 
 
     /** The diagnostic. */
@@ -76,7 +76,7 @@ public abstract class AbstractTest
      */
     public AbstractTest()
     {
-        EQLStandaloneSetup.doSetup(this);
+        EQL2StandaloneSetup.doSetup(this);
     }
 
     /**
@@ -84,7 +84,7 @@ public abstract class AbstractTest
      *
      * @return the parser
      */
-    public EQLParser getParser()
+    public EQL2Parser getParser()
     {
         return this.parser;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,25 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql2.scoping
+package org.efaps.eql2.validation
 
 
 /**
- * This class contains custom scoping description.
+ * This class contains custom validation rules.
  *
- * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping
- * on how and when to use it.
+ * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
-class EQLScopeProvider extends AbstractEQLScopeProvider {
+class EQL2Validator extends AbstractEQL2Validator {
+
+//	public static val INVALID_NAME = 'invalidName'
+//
+//	@Check
+//	def checkGreetingStartsWithCapital(Greeting greeting) {
+//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
+//			warning('Name should start with a capital',
+//					EQLPackage.Literals.GREETING__NAME,
+//					INVALID_NAME)
+//		}
+//	}
 
 }

@@ -26,7 +26,7 @@ import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalProvider
  *
  * @author The eFaps Team
  */
-class EQLProposalProvider
+class EQL2ProposalProvider
     extends IdeContentProposalProvider
 {
     override dispatch createProposals(RuleCall _ruleCall,
@@ -53,7 +53,7 @@ class EQLProposalProvider
                 }
                 else
                 {
-                    for (provider : EQLProposals.getCINameProviders())
+                    for (provider : EQL2Proposals.getCINameProviders())
                     {
                         for (type : provider.getTypeNames())
                         {

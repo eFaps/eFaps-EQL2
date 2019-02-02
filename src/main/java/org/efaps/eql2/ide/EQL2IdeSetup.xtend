@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2018 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,20 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql2
+package org.efaps.eql2.ide
 
-import org.efaps.eql2.converter.ValueConverters
+import com.google.inject.Guice
+import org.eclipse.xtext.util.Modules2
+import org.efaps.eql2.EQL2StandaloneSetup
+import org.efaps.eql2.EQL2RuntimeModule
 
 /**
- * Use this class to register components to be used at runtime / without the Equinox extension registry.
+ * Initialization support for running Xtext languages as language servers.
  */
-class EQLRuntimeModule extends AbstractEQLRuntimeModule
-{
-    override bindIValueConverterService()
-    {
-        return typeof(ValueConverters)
+class EQL2IdeSetup extends EQL2StandaloneSetup {
+
+    override createInjector() {
+        Guice.createInjector(Modules2.mixin(new EQL2RuntimeModule, new EQL2IdeModule))
     }
+
 }

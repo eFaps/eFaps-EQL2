@@ -14,16 +14,15 @@
  * limitations under the License.
  *
  */
-package org.efaps.eql2.ide.contentassist
+package org.efaps.eql2.scoping
 
-import java.util.Set
 
 /**
- * The ICINameProvider.
+ * This class contains custom scoping description.
  *
- * @author The eFaps Team
+ * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping
+ * on how and when to use it.
  */
-interface ICINameProvider
-{
-    def Set<String> getTypeNames()
+class EQL2ScopeProvider extends AbstractEQL2ScopeProvider {
+
 }

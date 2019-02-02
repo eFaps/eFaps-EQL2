@@ -34,13 +34,13 @@ import org.eclipse.xtext.util.ITextRegion
  *
  * @author The eFaps Team
  */
-class EQLContentAssistService
+class EQL2ContentAssistService
 {
     @Inject
     Provider<ContentAssistContextFactory> contextFactoryProvider
 
     @Inject
-    EQLProposalProvider proposalProvider
+    EQL2ProposalProvider proposalProvider
 
     def createProposals(XtextResource _resource, String _text, ITextRegion _selection, int _caretOffset, int _limit)
     {

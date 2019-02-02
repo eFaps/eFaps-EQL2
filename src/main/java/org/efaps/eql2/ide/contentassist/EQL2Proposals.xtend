@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,18 +25,18 @@ import org.eclipse.xtext.util.TextRegion
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.eclipse.xtext.util.LazyStringInputStream
-import org.efaps.eql2.ide.EQLIdeSetup
+import org.efaps.eql2.ide.EQL2IdeSetup
 
 /**
  * The Class EQLProposals.
  *
  * @author The eFaps Team
  */
-class EQLProposals
+class EQL2Proposals
 {
 
     /** The log. */
-    static Logger LOG = LoggerFactory.getLogger(typeof(EQLProposals));
+    static Logger LOG = LoggerFactory.getLogger(typeof(EQL2Proposals));
 
     /** The cinameproviders. */
     static Set<ICINameProvider> CINAMEPROVIDERS = new HashSet;
@@ -66,9 +66,9 @@ class EQLProposals
         val List<String> ret = new ArrayList;
         try
         {
-            val resource = EQLIdeSetup.getInstance(XtextResource);
+            val resource = EQL2IdeSetup.getInstance(XtextResource);
             resource.load(new LazyStringInputStream(_text), null);
-            val cas = EQLIdeSetup.getInstance(EQLContentAssistService)
+            val cas = EQL2IdeSetup.getInstance(EQL2ContentAssistService)
             val selection = new TextRegion(_text.length, 0)
             val result2 = cas.createProposals(resource, resource.parseResult.rootNode.text, selection, _text.length,
                 1000)

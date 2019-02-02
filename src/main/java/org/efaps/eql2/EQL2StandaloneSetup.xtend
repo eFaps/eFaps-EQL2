@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@ package org.efaps.eql2
 
 import com.google.inject.Injector
 import org.eclipse.emf.ecore.EPackage
-import org.efaps.eql2.ide.EQLIdeSetup
+import org.efaps.eql2.ide.EQL2IdeSetup
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
-class EQLStandaloneSetup extends EQLStandaloneSetupGenerated
+class EQL2StandaloneSetup extends EQL2StandaloneSetupGenerated
 {
 
     /**
@@ -42,7 +42,7 @@ class EQLStandaloneSetup extends EQLStandaloneSetupGenerated
      */
     def static void doSetup(Object _instance)
     {
-        val injector = new EQLIdeSetup().createInjectorAndDoEMFRegistration();
+        val injector = new EQL2IdeSetup().createInjectorAndDoEMFRegistration();
         if (_instance !== null)
         {
             injector.injectMembers(_instance);
@@ -51,7 +51,7 @@ class EQLStandaloneSetup extends EQLStandaloneSetupGenerated
 
     def static <T> T getInstance(Class<T> _class)
     {
-        val injector = new EQLIdeSetup().createInjectorAndDoEMFRegistration();
+        val injector = new EQL2IdeSetup().createInjectorAndDoEMFRegistration();
         injector.getInstance(_class)
     }
 

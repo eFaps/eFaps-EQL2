@@ -16,9 +16,9 @@
  */
 package org.efaps.eql2.bldr;
 
-import static org.efaps.eql2.EQL.print;
-import static org.efaps.eql2.EQL.query;
-import static org.efaps.eql2.EQL.where;
+import static org.efaps.eql2.EQL2.print;
+import static org.efaps.eql2.EQL2.query;
+import static org.efaps.eql2.EQL2.where;
 
 import org.efaps.eql2.AbstractTest;
 import org.testng.annotations.Test;

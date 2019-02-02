@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2018 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 package org.efaps.eql2.bldr;
 
-import org.efaps.eql2.EQL;
+import org.efaps.eql2.EQL2;
 
 /**
  * The Class AbstractSelectables.
@@ -55,7 +55,7 @@ public abstract class AbstractSelectables
      * @return the attribute
      */
     public static Attribute attribute(final String _attr) {
-        return  EQL.sel().getAttribute(_attr);
+        return EQL2.sel().getAttribute(_attr);
     }
 
     /**
@@ -66,7 +66,7 @@ public abstract class AbstractSelectables
      */
     public static Linkto linkto(final String _linktoAttr)
     {
-        return EQL.sel().getLinkto(_linktoAttr);
+        return EQL2.sel().getLinkto(_linktoAttr);
     }
 
     /**
@@ -205,7 +205,7 @@ public abstract class AbstractSelectables
          */
         public Linkto attribute(final String _attr)
         {
-            this.child = EQL.sel().getAttribute(_attr);
+            this.child = EQL2.sel().getAttribute(_attr);
             return this;
         }
 
