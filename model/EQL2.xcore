@@ -1339,6 +1339,8 @@ enum SimpleSelectElement
     LENGTH as "length"
     STATUS as "status"
     KEY as "key"
+    FIRST as "first"
+    LAST as "last"
 }
 
 

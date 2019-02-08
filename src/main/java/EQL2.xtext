@@ -183,7 +183,8 @@ ClazzName hidden():
 
 enum SimpleSelectElement:
     TYPE='type' | OID='oid' | INSTANCE='instance' | LABEL='label' | ID='id' | UUID='uuid' | NAME='name' |
-    CLASS='class' | VALUE='value' | BASE='base' | UOM='uom' | FILE='file' | LENGTH='length' | STATUS='status' | KEY='key'
+    CLASS='class' | VALUE='value' | BASE='base' | UOM='uom' | FILE='file' | LENGTH='length' | STATUS='status' |
+    KEY='key' | FIRST='first' | LAST='last'
 ;
 
 Order:
@@ -206,7 +207,8 @@ Attribute:
     NAMESTR
 ;
 
-KEYWORD: 'type' | 'oid' | 'instance' | 'label' | 'id' | 'uuid' | 'name' | 'class' | 'value' | 'base' | 'uom' | 'file' | 'length' | 'status' | 'key';
+KEYWORD: 'type' | 'oid' | 'instance' | 'label' | 'id' | 'uuid' | 'name' | 'class' | 'value' | 'base' | 'uom' | 'file' |
+    'length' | 'status' | 'key' | 'first' | 'last';
 
 terminal FORMAT:
     'format[' ('a'..'z' | 'A'..'Z' | '_' | '0'..'9' | "-" | "/")+ ']'

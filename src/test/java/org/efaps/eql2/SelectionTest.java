@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,30 @@ public class SelectionTest
                 .setAliasC(alias)
                 .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name")));
         verifyStatement(_eqlBase + "select attribute[Name] as " + _alias, _printStmt);
+    }
+
+    @Test(dataProvider = "PrintStmts", description = "select attribute[Name].first")
+    public void attributeFirst(final String _eqlBase,
+                               final IPrintStatement<?> _printStmt)
+        throws Exception
+    {
+        _printStmt.getSelection()
+            .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name"))
+                .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement().setElementC(SimpleSelectElement.FIRST)));
+        verifyStatement(_eqlBase + "select attribute[Name].first", _printStmt);
+    }
+
+    @Test(dataProvider = "PrintStmts", description = "select attribute[Name].last")
+    public void attributeLast(final String _eqlBase,
+                               final IPrintStatement<?> _printStmt)
+        throws Exception
+    {
+        _printStmt.getSelection()
+        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name"))
+            .addElement(IEql2Factory.eINSTANCE.createBaseSelectElement().setElementC(SimpleSelectElement.LAST)));
+        verifyStatement(_eqlBase + "select attribute[Name].last", _printStmt);
     }
 
     /**
@@ -674,7 +698,7 @@ public class SelectionTest
         final List<Object[]> ret = new ArrayList<>();
         String[] aliases = new String[] { "HansWurst", "ONLYCAP", "onlysmall", "numer9", "\"alias with space\"" };
         final String[] keywords = new String[] { "type", "oid", "instance", "label", "id", "uuid", "name", "class", "value",
-                        "base", "uom", "file", "length", "status", "key" };
+                        "base", "uom", "file", "length", "status", "key", "first", "last" };
         aliases = ArrayUtils.addAll(aliases, keywords);
         for (final String alias: aliases) {
             for (final Object[] base : getBaseObjects()) {

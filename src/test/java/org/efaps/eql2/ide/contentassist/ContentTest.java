@@ -89,7 +89,7 @@ public class ContentTest
         ret.add(new Object[] { "print obj 123.456 select ", Arrays.asList(new String[] { "pattern", "attribute[",
                         "attributeset[", "base", "class", "class[", "exec", "execute", "file", "id",
                         "instance", "key", "label", "length", "linkfrom[", "linkto[", "msgphrase[", "name",
-                        "oid", "status", "type", "uom", "uuid", "value" }) });
+                        "oid", "status", "type", "uom", "uuid", "value", "first", "last" }) });
 
         ret.add(new Object[] { "print obj 123.456 select attribute[Attribute]",
                         Arrays.asList(new String[] { "as", "order", ",", ".", "]" }) });
@@ -101,7 +101,7 @@ public class ContentTest
                         Arrays.asList(new String[] { "pattern", "attribute[",
                                         "attributeset[", "base", "class", "class[", "exec", "execute", "file", "id",
                                         "instance", "key", "label", "length", "linkfrom[", "linkto[", "msgphrase[",
-                                        "name", "oid", "status", "type", "uom", "uuid", "value" }) });
+                                        "name", "oid", "status", "type", "uom", "uuid", "value", "first", "last" }) });
 
         ret.add(new Object[] { "print query ",
                         Arrays.asList(new String[] { "type" }) });
