@@ -395,6 +395,15 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
         return getThis();
     }
 
+    public T orderBy(final String _key) {
+        return orderBy(_key, false);
+    }
+
+    public T orderBy(final String _key, final boolean _desc) {
+        ((PrintQueryStatement) getStmt()).orderBy(_key, _desc);
+        return getThis();
+    }
+
     /**
      * Inits the select.
      */
