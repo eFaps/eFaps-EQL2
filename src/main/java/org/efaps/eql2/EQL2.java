@@ -95,8 +95,18 @@ public abstract class EQL2
      */
     protected abstract AbstractWhereBuilder<?> getWhere();
 
-
     protected abstract AbstractSelectables getSelectables();
+
+    /**
+     * Prints the.
+     *
+     * @param _oid the oid
+     * @return the abstract print EQL builder<?>
+     */
+    public static AbstractPrintEQLBuilder<?> print()
+    {
+        return eql().getPrint();
+    }
 
     /**
      * Prints the.

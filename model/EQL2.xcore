@@ -1128,7 +1128,12 @@ class WhereElement
          }
          if (getNestedQuery() === null) {
              if (valuesList.size() === 1) {
-                ret = ret + " " + valuesList.get(0)
+                var String value = valuesList.get(0);
+                if (value.matches("-?\\d+(\\.\\d+)?")) {
+                    ret = ret + " " + value
+                } else {
+                    ret = ret + " \"" + value + "\""
+                }
              } else {
                  ret = ret + " ("
                  var boolean first = true
@@ -1138,7 +1143,11 @@ class WhereElement
                      } else {
                         ret = ret + ", "
                      }
-                     ret = ret + value
+                     if (value.matches("-?\\d+(\\.\\d+)?")) {
+                        ret = ret + " " + value
+                     } else {
+                        ret = ret + " \"" + value + "\""
+                     }
                  }
                  ret = ret + ")"
              }
