@@ -464,9 +464,9 @@ class OrderElement
     op String eqlStmt() {
         var String ret = key
         if (desc) {
-            ret = ret + "desc"
+            ret = ret + " desc"
         } else {
-            ret = ret + "asc"
+            ret = ret + " asc"
         }
         return ret
     }
