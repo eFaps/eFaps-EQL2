@@ -32,6 +32,8 @@ import org.efaps.eql2.bldr.AbstractSelectables;
 import org.efaps.eql2.bldr.AbstractUpdateEQLBuilder;
 import org.efaps.eql2.bldr.AbstractWhereBuilder;
 import org.efaps.eql2.parser.antlr.EQL2Parser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class EQL.
@@ -40,6 +42,10 @@ import org.efaps.eql2.parser.antlr.EQL2Parser;
  */
 public abstract class EQL2
 {
+    /**
+     * Logging instance used in this class.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(EQL2.class);
 
     /** The instance. */
     private static EQL2 INSTANCE;
@@ -207,7 +213,7 @@ public abstract class EQL2
             final Iterator<INode> iter = result.getSyntaxErrors().iterator();
             while (iter.hasNext()) {
                 final INode node = iter.next();
-                System.out.println(node.getSyntaxErrorMessage().getMessage());
+                LOG.warn("Syntax Error: {}", node.getSyntaxErrorMessage().getMessage());
             }
         }
         final IStatement<?> ret = (IStatement<?>) result.getRootASTElement();
