@@ -694,6 +694,21 @@ class FormatSelectElement
     }
 }
 
+class JoiningSelectElement
+    extends SelectElement
+{
+    String separator
+
+     op JoiningSelectElement setSeparatorC(String _separator) {
+        setSeparator(_separator);
+        return this
+    }
+
+    op String eqlStmt() {
+        return "joining[" + separator + "]"
+    }
+}
+
 class BaseSelectElement
     extends SelectElement
 {
