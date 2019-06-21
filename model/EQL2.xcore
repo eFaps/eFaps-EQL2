@@ -29,6 +29,7 @@ limitations under the License.")
 package org.efaps.eql2
 
 import org.eclipse.xtext.common.types.Iterable
+import org.apache.commons.lang3.StringUtils
 
 interface Statement<T>
     extends EQLElement, Generic<T>
@@ -690,7 +691,7 @@ class FormatSelectElement
     }
 
     op String eqlStmt() {
-         return "format[" + pattern + "]"
+         return "format[" + getPattern() + "]"
     }
 }
 
@@ -705,7 +706,11 @@ class JoiningSelectElement
     }
 
     op String eqlStmt() {
-        return "joining[" + separator + "]"
+        if (StringUtils.isNumeric(getSeparator())) {
+            return "joining[" + getSeparator() + "]"
+        } else {
+            return "joining[\"" + getSeparator() + "\"]"
+        }
     }
 }
 

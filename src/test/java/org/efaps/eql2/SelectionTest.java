@@ -433,6 +433,88 @@ public class SelectionTest
     }
 
     /**
+     * Object print.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select attribute[SomeAttribute].joining[123]")
+    public void attributeJoiningNUM(final String _eqlBase,
+                                    final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("SomeAttribute"))
+                        .addElement(IEql2Factory.eINSTANCE.createJoiningSelectElement().setSeparatorC("123")));
+        verifyStatement(_eqlBase + "select attribute[SomeAttribute].joining[123]", _printStmt);
+    }
+
+    /**
+     * Object print.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select attribute[SomeAttribute].joining[\", \"]")
+    public void attributeJoiningString(final String _eqlBase,
+                                       final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("SomeAttribute"))
+                        .addElement(IEql2Factory.eINSTANCE.createJoiningSelectElement().setSeparatorC(", ")));
+        verifyStatement(_eqlBase + "select attribute[SomeAttribute].joining[\", \"]", _printStmt);
+    }
+
+    @Test(dataProvider = "PrintStmts", description = "select attribute[SomeAttribute].joining[123] as Algo")
+    public void attributeJoiningAliasNUM(final String _eqlBase,
+                                     final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .setAliasC("Algo")
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("SomeAttribute"))
+                        .addElement(IEql2Factory.eINSTANCE.createJoiningSelectElement().setSeparatorC("123")));
+        verifyStatement(_eqlBase + "select attribute[SomeAttribute].joining[123] as Algo", _printStmt);
+    }
+
+    @Test(dataProvider = "PrintStmts", description = "select attribute[SomeAttribute].joining[\", \"] as Algo")
+    public void attributeJoiningAliasString(final String _eqlBase,
+                                            final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .setAliasC("Algo")
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("SomeAttribute"))
+                        .addElement(IEql2Factory.eINSTANCE.createJoiningSelectElement().setSeparatorC(", ")));
+        verifyStatement(_eqlBase + "select attribute[SomeAttribute].joining[\", \"] as Algo", _printStmt);
+    }
+
+    /**
+     * Object print.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
+    @Test(dataProvider = "PrintStmts", description = "select attribute[SomeAttribute].joining[123] as Algo,"
+                    + "attribute[SomeAttribute].joining[\", \"] as Otro")
+    public void nAttributeJoiningAlias(final String _eqlBase,
+                                      final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .setAliasC("Algo")
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("SomeAttribute"))
+                        .addElement(IEql2Factory.eINSTANCE.createJoiningSelectElement().setSeparatorC("123")))
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .setAliasC("Otro")
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("SomeAttribute"))
+                        .addElement(IEql2Factory.eINSTANCE.createJoiningSelectElement().setSeparatorC(", ")));
+        verifyStatement(_eqlBase + "select attribute[SomeAttribute].joining[123] as Algo, "
+                        + "attribute[SomeAttribute].joining[\", \"] as Otro", _printStmt);
+    }
+
+    /**
      * n Attributes.
      *
      * @param _eqlBase the eql base

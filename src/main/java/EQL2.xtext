@@ -219,7 +219,7 @@ terminal FORMAT:
 ;
 
 terminal JOINING:
-    'joining[' (STRING | NUM)+ ']'
+    'joining['(STRING | NUM)+']'
 ;
 
 terminal BOOLEAN:

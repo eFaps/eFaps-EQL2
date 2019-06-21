@@ -114,4 +114,34 @@ public class ValueConverters
             }
         };
     }
+
+    @ValueConverter(rule = "JOINING")
+    public IValueConverter<String> joining()
+    {
+        return new AbstractNullSafeConverter<String>()
+        {
+
+            @Override
+            protected String internalToString(final String _value)
+            {
+                String ret;
+                if (_value.startsWith("joining[\"")) {
+                    ret = _value.substring(9, _value.length() - 2);
+                } else if (_value.startsWith("joining[")) {
+                    ret = _value.substring(8, _value.length() - 1);
+                } else {
+                    ret = _value;
+                }
+                return ret;
+            }
+
+            @Override
+            protected String internalToValue(final String _string,
+                                             final INode _node)
+                throws ValueConverterException
+            {
+                return internalToString(_string);
+            }
+        };
+    }
 }
