@@ -260,7 +260,18 @@
                         <groupId>org.eclipse.xtext</groupId>
                         <artifactId>org.eclipse.xtext.xbase.lib</artifactId>
                         <version>${xtext-version}</version>
-                   </dependency>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>com.google.guava</groupId>
+                                <artifactId>guava</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                        <version>21.0</version>
+                    </dependency>
                </dependencies>
             </plugin>
             <plugin>
