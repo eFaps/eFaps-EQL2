@@ -179,11 +179,9 @@ BaseSelectElement:
 ExecSelectElement:
     ('exec' | 'execute') className=ClazzName parameters+=(STRING | NUM)(","parameters+=(STRING | NUM))*;
 
-
 ClazzName hidden():
-    NAMESTR('.'NAMESTR)+ (=>WS)
+    NAMESTR('.'NAMESTR | 'select')+ (=>WS)
 ;
-
 
 enum SimpleSelectElement:
     TYPE='type' | OID='oid' | INSTANCE='instance' | LABEL='label' | ID='id' | UUID='uuid' | NAME='name' |

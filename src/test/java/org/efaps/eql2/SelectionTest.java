@@ -582,6 +582,20 @@ public class SelectionTest
         verifyStatement(_eqlBase + "select exec org.efaps.Demo as Test", _printStmt);
     }
 
+    @Test(dataProvider = "PrintStmts", description = "select exec org.efaps.esjp.sales.tax.select.RateTaxSelect \"IGV\" as igv")
+    public void execSelectSelectAsPackageName(final String _eqlBase,
+                                              final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .setAliasC("igv")
+                        .addElement(IEql2Factory.eINSTANCE.createExecSelectElement()
+                                        .setClassNameC("org.efaps.esjp.sales.tax.select.RateTaxSelect")
+                                        .addParameter("IGV")));
+        verifyStatement(_eqlBase + "select exec org.efaps.esjp.sales.tax.select.RateTaxSelect \"IGV\" as igv", _printStmt);
+    }
+
+
     /**
      * Exec two selects.
      *
