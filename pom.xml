@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.efaps</groupId>
         <artifactId>efaps-parent</artifactId>
-        <version>8.0.0-SNAPSHOT</version>
+        <version>11.0.0-SNAPSHOT</version>
     </parent>
     <packaging>jar</packaging>
     <artifactId>efaps-eql2</artifactId>
@@ -142,8 +142,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <compilerSourceLevel>1.8</compilerSourceLevel>
-                    <compilerTargetLevel>1.8</compilerTargetLevel>
+                    <compilerSourceLevel>11</compilerSourceLevel>
+                    <compilerTargetLevel>11</compilerTargetLevel>
                     <languages>
                         <language>
                             <setup>org.eclipse.xtext.ecore.EcoreSupport</setup>
