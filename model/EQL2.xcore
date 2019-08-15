@@ -34,6 +34,29 @@ import org.apache.commons.lang3.StringUtils
 interface Statement<T>
     extends EQLElement, Generic<T>
 {
+    Flag[] flags
+
+    op T addFlag(Flag _flag) {
+        flagsList.add(_flag)
+        return getThis()
+    }
+
+    op String flagStr() {
+        if (getFlagsList().isEmpty()) {
+          return ""
+        }
+        var ret = "with "
+        var first = true
+        for (Flag flag : getFlagsList()) {
+            if (first) {
+                first = false
+            } else {
+                ret = ret + ", "
+            }
+            ret = ret + flag
+        }
+        return ret + " "
+    }
 }
 
 interface ObjectStmt<T>
@@ -148,7 +171,7 @@ class PrintObjectStatement
 {
 
     op String eqlStmt() {
-        var String ret =  "print object " + oid + " "
+        var String ret = flagStr() + "print object " + oid + " "
         if (getSelection() !== null) {
             ret = ret + getSelection().eqlStmt()
         }
@@ -164,7 +187,7 @@ class PrintListStatement
     extends PrintStatement<PrintListStatement>, ListStmt<PrintListStatement>
 {
     op String eqlStmt() {
-        var String ret =  "print list ("
+        var String ret = flagStr() + "print list ("
         var first = true
         for (String oid : getOidsList()) {
             if (first) {
@@ -193,7 +216,7 @@ class PrintQueryStatement
     extends PrintStatement<PrintQueryStatement>, QueryStmt<PrintQueryStatement>
 {
     op String eqlStmt() {
-        var String ret =  "print "
+        var String ret = flagStr() + "print "
         if (getQuery() !== null) {
             ret = ret + getQuery().eqlStmt()
         }
@@ -1372,6 +1395,12 @@ enum SimpleSelectElement
     LAST as "last"
 }
 
+enum Flag
+{
+    TRIGGEROFF as "trigger-off"
+    REQCACHED as "request-cached"
+    COMPANYINDEPENDENT as "company-independent"
+}
 
 interface EQLElement
 {

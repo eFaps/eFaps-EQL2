@@ -132,4 +132,96 @@ public class PrintTest
                                                         .createAttributeSelectElement().setNameC("Name"))));
         verifyStatement("print list (123.456, 223.456, 323.456) select attribute[Name] ", stmt);
     }
+
+    @Test(description = "with trigger-off print obj 123.456 select attribute[Name]")
+    public void objectWithFlag()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .oid("123.456")
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement()
+                                        .setNameC("Name"))));
+
+        verifyStatement("with trigger-off print obj 123.456 select attribute[Name]", stmt);
+    }
+
+    @Test(description = "with trigger-off, request-cached, company-independent print obj 123.456 select attribute[Name]")
+    public void objectWithFlags()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(Flag.REQCACHED)
+                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .oid("123.456")
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement()
+                                        .setNameC("Name"))));
+
+        verifyStatement("with trigger-off, request-cached, company-independent print obj 123.456 select attribute[Name]", stmt);
+    }
+
+    @Test(description = "with trigger-off print list (123.456, 223.456, 323.456) select attribute[Name]")
+    public void listWithFlag()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintListStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addOid("123.456")
+                        .addOid("223.456")
+                        .addOid("323.456")
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement()
+                                        .setNameC("Name"))));
+
+        verifyStatement("with trigger-off print list (123.456, 223.456, 323.456) select attribute[Name]", stmt);
+    }
+
+    @Test(description = "with trigger-off print list (123.456, 223.456, 323.456) select attribute[Name]")
+    public void listWithFlags()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintListStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(Flag.REQCACHED)
+                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addOid("123.456")
+                        .addOid("223.456")
+                        .addOid("323.456")
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement()
+                                        .setNameC("Name"))));
+
+        verifyStatement("with trigger-off, request-cached, company-independent print list (123.456, 223.456, 323.456)"
+                        + " select attribute[Name]", stmt);
+    }
+
+    @Test(description = "with trigger-off print query type EFaps_Type select attribute[Name]")
+    public void queryWithFlag()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                    .addFlag(Flag.TRIGGEROFF)
+                    .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
+                    .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name"))));
+        verifyStatement("with trigger-off print query type EFaps_Type select attribute[Name]", stmt);
+    }
+
+    @Test(description = "with trigger-off, request-cached, company-independent print query type EFaps_Type select attribute[Name]")
+    public void queryWithFlags()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                    .addFlag(Flag.TRIGGEROFF)
+                    .addFlag(Flag.REQCACHED)
+                    .addFlag(Flag.COMPANYINDEPENDENT)
+                    .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
+                    .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("Name"))));
+        verifyStatement("with trigger-off, request-cached, company-independent print query type EFaps_Type select attribute[Name]", stmt);
+    }
+
 }
