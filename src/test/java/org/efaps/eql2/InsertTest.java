@@ -91,4 +91,26 @@ public class InsertTest
         verifyStatement("insert type EFaps_Type set Name = \"Hallo Welt\", "
                         + "Number = 333, Name2 = \"Hallo Welt2\"", stmt);
     }
+
+    @Test(description = "with trigger-off insert type EFaps_Type set Number = 2333")
+    public void setAttrWithFlag()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .typeName("EFaps_Type")
+                        .update("Number", "2333");
+        verifyStatement("with trigger-off insert type EFaps_Type set Number = 2333", stmt);
+    }
+
+    @Test(description = "with trigger-off, request-cached, company-independent insert type EFaps_Type set Number = 2333")
+    public void setAttrWithFlags()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(Flag.REQCACHED)
+                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .typeName("EFaps_Type")
+                        .update("Number", "2333");
+        verifyStatement("with trigger-off, request-cached, company-independent insert type EFaps_Type set Number = 2333", stmt);
+    }
 }

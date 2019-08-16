@@ -242,7 +242,7 @@ class UpdateObjectStatement
     extends UpdateStatement<UpdateObjectStatement>, ObjectStmt<UpdateObjectStatement>
 {
     op String eqlStmt() {
-        var ret = "update object " + getOid()
+        var ret = flagStr() + "update object " + getOid()
         if (updateElementsList.size > 0) {
             ret = ret + super.eqlStmt()
         }
@@ -260,7 +260,7 @@ class UpdateListStatement
     extends UpdateStatement<UpdateListStatement>, ListStmt<UpdateListStatement>
 {
     op String eqlStmt() {
-        var ret = "update list ("
+        var ret = flagStr() + "update list ("
         var first = true
         for (String oid : getOidsList()) {
             if (first) {
@@ -287,7 +287,7 @@ class UpdateQueryStatement
     extends UpdateStatement<UpdateQueryStatement>, QueryStmt<UpdateQueryStatement>
 {
     op String eqlStmt() {
-        var String ret =  "update "
+        var String ret = flagStr() + "update "
         if (getQuery() !== null) {
             ret = ret + getQuery().eqlStmt()
         }
@@ -312,7 +312,7 @@ class DeleteObjectStatement
     extends DeleteStatement<DeleteObjectStatement>, ObjectStmt<DeleteObjectStatement>
 {
     op String eqlStmt() {
-        return "delete object " + oid
+        return flagStr() + "delete object " + oid
     }
 
     op DeleteObjectStatement getThis()
@@ -325,7 +325,7 @@ class DeleteListStatement
     extends DeleteStatement<DeleteListStatement>, ListStmt<DeleteListStatement>
 {
      op String eqlStmt() {
-        var String ret =  "delete list ("
+        var String ret = flagStr() + "delete list ("
         var first = true
         for (String oid : getOidsList()) {
             if (first) {
@@ -349,7 +349,7 @@ class DeleteQueryStatement
     extends DeleteStatement<DeleteQueryStatement>, QueryStmt<DeleteQueryStatement>
 {
     op String eqlStmt() {
-        var String ret =  "delete "
+        var String ret = flagStr() + "delete "
         if (getQuery() !== null) {
             ret = ret + getQuery().eqlStmt()
         }
@@ -366,7 +366,7 @@ class InsertStatement
     extends UpdateElementsStmt<InsertStatement>, Typed<InsertStatement>
 {
     op String eqlStmt() {
-        var ret = "insert type " + getTypeName()
+        var ret = flagStr() + "insert type " + getTypeName()
         if (updateElementsList.size > 0) {
             ret = ret + super.eqlStmt()
         }
@@ -546,7 +546,7 @@ class ExecStatement
     }
 
     op String eqlStmt() {
-        var String ret = "execute " + getClassName()
+        var String ret = flagStr() + "execute " + getClassName()
         var first = true
         for (String para : getParametersList()) {
             if (first) {

@@ -210,4 +210,28 @@ public class ExecuteTest
                                         .index("8"));
         verifyStatement("exec org.efaps.demo.Test \"Param1 with space\", \"ABCDE\" select 1, 2 as demo, 8", stmt);
     }
+
+    @Test(description = "with trigger-off exec org.efaps.demo.Test")
+    public void execWithFlag()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createExecStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .className("org.efaps.demo.Test");
+
+        verifyStatement("with trigger-off exec org.efaps.demo.Test", stmt);
+        verifyStatement("with trigger-off execute org.efaps.demo.Test", stmt);
+    }
+
+    @Test(description = "with trigger-off, request-cached, company-independent  exec org.efaps.demo.Test")
+    public void execWithFlags()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createExecStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(Flag.REQCACHED)
+                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .className("org.efaps.demo.Test");
+
+        verifyStatement("with trigger-off, request-cached, company-independent  exec org.efaps.demo.Test", stmt);
+        verifyStatement("with trigger-off, request-cached, company-independent  execute org.efaps.demo.Test", stmt);
+    }
 }

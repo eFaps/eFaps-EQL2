@@ -200,4 +200,78 @@ public class UpdateTest
                         .update("Name", "001-064056");
         verifyStatement("update obj 5710.4137 set Name = \"001-064056\"", stmt);
     }
+
+    @Test(description = "with trigger-off update obj 124.879 set Name=1234")
+    public void objWithFlag()
+        throws Exception
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateObjectStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .oid("124.879")
+                        .update("Name", "1234");
+        verifyStatement("with trigger-off update obj 124.879 set Name=1234", stmt);
+        verifyStatement("with trigger-off update object 124.879 set Name=1234", stmt);
+    }
+
+    @Test(description = "with trigger-off, request-cached, company-independent update obj 124.879 set Name=1234")
+    public void objWithFlags()
+        throws Exception
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateObjectStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(Flag.REQCACHED)
+                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .oid("124.879")
+                        .update("Name", "1234");
+        verifyStatement("with trigger-off, request-cached, company-independent update obj 124.879 set Name=1234", stmt);
+        verifyStatement("with trigger-off, request-cached, company-independent update object 124.879 set Name=1234", stmt);
+    }
+
+    @Test(description = "with trigger-off update list (124.879) set Code=11")
+    public void listWithFlag()
+        throws Exception
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateListStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addOid("124.879")
+                        .update("Code", "11");
+        verifyStatement("with trigger-off update list (124.879) set Code=11", stmt);
+    }
+
+    @Test(description = "with trigger-off, request-cached, company-independent update list (124.879) set Code=11")
+    public void listWithFlags()
+        throws Exception
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateListStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(Flag.REQCACHED)
+                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addOid("124.879")
+                        .update("Code", "11");
+        verifyStatement("with trigger-off, request-cached, company-independent update list (124.879) set Code=11", stmt);
+    }
+
+    @Test(description = "with trigger-off update query type EFaps_Type set Code2 = 33")
+    public void queryWithFlag()
+        throws Exception
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateQueryStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .query(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
+                        .update("Code2", "33");
+        verifyStatement("with trigger-off update query type EFaps_Type set Code2 = 33", stmt);
+    }
+
+    @Test(description = "with trigger-off, request-cached, company-independent update query type EFaps_Type set Code2 = 33")
+    public void queryWithFlags()
+        throws Exception
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateQueryStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(Flag.REQCACHED)
+                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .query(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
+                        .update("Code2", "33");
+        verifyStatement("with trigger-off, request-cached, company-independent update query type EFaps_Type set Code2 = 33", stmt);
+    }
 }

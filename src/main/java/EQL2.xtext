@@ -27,15 +27,15 @@ UpdateStatement:
 ;
 
 UpdateListStatement:
-    'update' 'list' '(' oids+=OID (',' oids+=OID)* ')'
+    ('with' flags+=Flag (',' flags+=Flag)* 'update' | 'update') 'list' '(' oids+=OID (',' oids+=OID)* ')'
 ;
 
 UpdateObjectStatement:
-    'update' ('obj' | 'object') oid=OID
+    ('with' flags+=Flag (',' flags+=Flag)* 'update' | 'update') ('obj' | 'object') oid=OID
 ;
 
 UpdateQueryStatement:
-    'update' query=Query
+    ('with' flags+=Flag (',' flags+=Flag)* 'update' | 'update') query=Query
 ;
 
 DeleteStatement:
@@ -43,19 +43,19 @@ DeleteStatement:
 ;
 
 DeleteObjectStatement:
-    'delete' ('obj' | 'object') oid=OID
+    ('with' flags+=Flag (',' flags+=Flag)* 'delete' | 'delete') ('obj' | 'object') oid=OID
 ;
 
 DeleteListStatement:
-    'delete' 'list' '(' oids+=OID (',' oids+=OID)* ')'
+    ('with' flags+=Flag (',' flags+=Flag)* 'delete' | 'delete') 'list' '(' oids+=OID (',' oids+=OID)* ')'
 ;
 
 DeleteQueryStatement:
-    'delete' query=Query
+    ('with' flags+=Flag (',' flags+=Flag)* 'delete' | 'delete') query=Query
 ;
 
 InsertStatement:
-    'insert' 'type' typeName=Type 'set' (updateElements+=UpdateElement) (',' updateElements+=UpdateElement)*
+    ('with' flags+=Flag (',' flags+=Flag)* 'insert' | 'insert') 'type' typeName=Type 'set' (updateElements+=UpdateElement) (',' updateElements+=UpdateElement)*
 ;
 
 CIPrintStatement:
@@ -72,7 +72,7 @@ CIPrintFormStatement:
 ;
 
 ExecStatement:
-    ('exec' | 'execute') className=ClazzName (parameters+=(NUM | STRING) (',' parameters+=(NUM | STRING))*)? ('select'
+    ('with' flags+=Flag (',' flags+=Flag)* 'exec' | 'with' flags+=Flag (',' flags+=Flag)* 'execute' | 'exec' | 'execute') className=ClazzName (parameters+=(NUM | STRING) (',' parameters+=(NUM | STRING))*)? ('select'
     selections+=ExecSelectionElement (',' selections+=ExecSelectionElement)*)? (order=Order)?;
 
 

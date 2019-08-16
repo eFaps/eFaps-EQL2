@@ -48,4 +48,51 @@ public class DeleteTest
                         .addOid("123.456").addOid("789.456").addOid("456.123");
         verifyStatement("delete list (123.456, 789.456, 456.123)", stmt);
     }
+
+    @Test(description = "with trigger-off delete obj 123.456")
+    public void objWithFlag()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createDeleteObjectStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .setOidC("123.456");
+        verifyStatement("with trigger-off delete obj 123.456", stmt);
+        verifyStatement("with trigger-off delete object 123.456", stmt);
+    }
+
+    @Test(description = "with trigger-off, request-cached, company-independent delete obj 123.456")
+    public void objWithFlags()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createDeleteObjectStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(Flag.REQCACHED)
+                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .setOidC("123.456");
+        verifyStatement("with trigger-off, request-cached, company-independent delete obj 123.456", stmt);
+        verifyStatement("with trigger-off, request-cached, company-independent delete object 123.456", stmt);
+    }
+
+    @Test(description = "with trigger-off delete list (123.456, 789.456, 456.123)")
+    public void listWithFlag()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createDeleteListStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addOid("123.456")
+                        .addOid("789.456")
+                        .addOid("456.123");
+        verifyStatement("with trigger-off delete list (123.456, 789.456, 456.123)", stmt);
+    }
+
+    @Test(description = "with trigger-off, request-cached, company-independent delete list (123.456, 789.456, 456.123)")
+    public void listWithFlags()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createDeleteListStatement()
+                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(Flag.REQCACHED)
+                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addOid("123.456")
+                        .addOid("789.456")
+                        .addOid("456.123");
+        verifyStatement("with trigger-off, request-cached, company-independent delete list (123.456, 789.456, 456.123)", stmt);
+    }
+
 }
