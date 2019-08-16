@@ -10,15 +10,15 @@ PrintStatement:
     (PrintObjectStatement | PrintListStatement | PrintQueryStatement) selection=Selection (order=Order)?;
 
 PrintObjectStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'print' | 'print') ('obj' | 'object') oid=OID
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'print' | 'print') ('obj' | 'object') oid=OID
 ;
 
 PrintListStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'print' | 'print') 'list' '(' oids+=OID (',' oids+=OID)* ')'
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'print' | 'print') 'list' '(' oids+=OID (',' oids+=OID)* ')'
 ;
 
 PrintQueryStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'print' | 'print') query=Query
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'print' | 'print') query=Query
 ;
 
 UpdateStatement:
@@ -27,15 +27,15 @@ UpdateStatement:
 ;
 
 UpdateListStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'update' | 'update') 'list' '(' oids+=OID (',' oids+=OID)* ')'
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'update' | 'update') 'list' '(' oids+=OID (',' oids+=OID)* ')'
 ;
 
 UpdateObjectStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'update' | 'update') ('obj' | 'object') oid=OID
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'update' | 'update') ('obj' | 'object') oid=OID
 ;
 
 UpdateQueryStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'update' | 'update') query=Query
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'update' | 'update') query=Query
 ;
 
 DeleteStatement:
@@ -43,19 +43,19 @@ DeleteStatement:
 ;
 
 DeleteObjectStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'delete' | 'delete') ('obj' | 'object') oid=OID
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'delete' | 'delete') ('obj' | 'object') oid=OID
 ;
 
 DeleteListStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'delete' | 'delete') 'list' '(' oids+=OID (',' oids+=OID)* ')'
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'delete' | 'delete') 'list' '(' oids+=OID (',' oids+=OID)* ')'
 ;
 
 DeleteQueryStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'delete' | 'delete') query=Query
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'delete' | 'delete') query=Query
 ;
 
 InsertStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'insert' | 'insert') 'type' typeName=Type 'set' (updateElements+=UpdateElement) (',' updateElements+=UpdateElement)*
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'insert' | 'insert') 'type' typeName=Type 'set' (updateElements+=UpdateElement) (',' updateElements+=UpdateElement)*
 ;
 
 CIPrintStatement:
@@ -72,7 +72,7 @@ CIPrintFormStatement:
 ;
 
 ExecStatement:
-    ('with' flags+=Flag (',' flags+=Flag)* 'exec' | 'with' flags+=Flag (',' flags+=Flag)* 'execute' | 'exec' | 'execute') className=ClazzName (parameters+=(NUM | STRING) (',' parameters+=(NUM | STRING))*)? ('select'
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'exec' | 'with' flags+=StmtFlag (',' flags+=StmtFlag)* 'execute' | 'exec' | 'execute') className=ClazzName (parameters+=(NUM | STRING) (',' parameters+=(NUM | STRING))*)? ('select'
     selections+=ExecSelectionElement (',' selections+=ExecSelectionElement)*)? (order=Order)?;
 
 
@@ -128,7 +128,7 @@ enum Connection:
     AND='and' | OR='or'
 ;
 
-enum Flag:
+enum StmtFlag:
     TRIGGEROFF='trigger-off' | REQCACHED='request-cached' | COMPANYINDEPENDENT='company-independent'
 ;
 

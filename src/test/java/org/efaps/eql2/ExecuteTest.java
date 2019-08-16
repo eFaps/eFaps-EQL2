@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -215,7 +215,7 @@ public class ExecuteTest
     public void execWithFlag()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createExecStatement()
-                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(StmtFlag.TRIGGEROFF)
                         .className("org.efaps.demo.Test");
 
         verifyStatement("with trigger-off exec org.efaps.demo.Test", stmt);
@@ -226,9 +226,9 @@ public class ExecuteTest
     public void execWithFlags()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createExecStatement()
-                        .addFlag(Flag.TRIGGEROFF)
-                        .addFlag(Flag.REQCACHED)
-                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addFlag(StmtFlag.TRIGGEROFF)
+                        .addFlag(StmtFlag.REQCACHED)
+                        .addFlag(StmtFlag.COMPANYINDEPENDENT)
                         .className("org.efaps.demo.Test");
 
         verifyStatement("with trigger-off, request-cached, company-independent  exec org.efaps.demo.Test", stmt);

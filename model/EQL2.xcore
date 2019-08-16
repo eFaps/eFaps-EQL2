@@ -34,9 +34,9 @@ import org.apache.commons.lang3.StringUtils
 interface Statement<T>
     extends EQLElement, Generic<T>
 {
-    Flag[] flags
+    StmtFlag[] flags
 
-    op T addFlag(Flag _flag) {
+    op T addFlag(StmtFlag _flag) {
         flagsList.add(_flag)
         return getThis()
     }
@@ -47,7 +47,7 @@ interface Statement<T>
         }
         var ret = "with "
         var first = true
-        for (Flag flag : getFlagsList()) {
+        for (StmtFlag flag : getFlagsList()) {
             if (first) {
                 first = false
             } else {
@@ -1395,7 +1395,7 @@ enum SimpleSelectElement
     LAST as "last"
 }
 
-enum Flag
+enum StmtFlag
 {
     TRIGGEROFF as "trigger-off"
     REQCACHED as "request-cached"

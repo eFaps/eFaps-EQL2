@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -137,7 +137,7 @@ public class PrintTest
     public void objectWithFlag()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement()
-                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(StmtFlag.TRIGGEROFF)
                         .oid("123.456")
                         .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
@@ -151,9 +151,9 @@ public class PrintTest
     public void objectWithFlags()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement()
-                        .addFlag(Flag.TRIGGEROFF)
-                        .addFlag(Flag.REQCACHED)
-                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addFlag(StmtFlag.TRIGGEROFF)
+                        .addFlag(StmtFlag.REQCACHED)
+                        .addFlag(StmtFlag.COMPANYINDEPENDENT)
                         .oid("123.456")
                         .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
@@ -167,7 +167,7 @@ public class PrintTest
     public void listWithFlag()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintListStatement()
-                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(StmtFlag.TRIGGEROFF)
                         .addOid("123.456")
                         .addOid("223.456")
                         .addOid("323.456")
@@ -183,9 +183,9 @@ public class PrintTest
     public void listWithFlags()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintListStatement()
-                        .addFlag(Flag.TRIGGEROFF)
-                        .addFlag(Flag.REQCACHED)
-                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addFlag(StmtFlag.TRIGGEROFF)
+                        .addFlag(StmtFlag.REQCACHED)
+                        .addFlag(StmtFlag.COMPANYINDEPENDENT)
                         .addOid("123.456")
                         .addOid("223.456")
                         .addOid("323.456")
@@ -202,7 +202,7 @@ public class PrintTest
     public void queryWithFlag()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintQueryStatement()
-                    .addFlag(Flag.TRIGGEROFF)
+                    .addFlag(StmtFlag.TRIGGEROFF)
                     .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
                     .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
@@ -214,9 +214,9 @@ public class PrintTest
     public void queryWithFlags()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintQueryStatement()
-                    .addFlag(Flag.TRIGGEROFF)
-                    .addFlag(Flag.REQCACHED)
-                    .addFlag(Flag.COMPANYINDEPENDENT)
+                    .addFlag(StmtFlag.TRIGGEROFF)
+                    .addFlag(StmtFlag.REQCACHED)
+                    .addFlag(StmtFlag.COMPANYINDEPENDENT)
                     .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
                     .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                         .addSelect(IEql2Factory.eINSTANCE.createSelect()

@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ public class DeleteTest
     public void objWithFlag()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createDeleteObjectStatement()
-                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(StmtFlag.TRIGGEROFF)
                         .setOidC("123.456");
         verifyStatement("with trigger-off delete obj 123.456", stmt);
         verifyStatement("with trigger-off delete object 123.456", stmt);
@@ -63,9 +63,9 @@ public class DeleteTest
     public void objWithFlags()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createDeleteObjectStatement()
-                        .addFlag(Flag.TRIGGEROFF)
-                        .addFlag(Flag.REQCACHED)
-                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addFlag(StmtFlag.TRIGGEROFF)
+                        .addFlag(StmtFlag.REQCACHED)
+                        .addFlag(StmtFlag.COMPANYINDEPENDENT)
                         .setOidC("123.456");
         verifyStatement("with trigger-off, request-cached, company-independent delete obj 123.456", stmt);
         verifyStatement("with trigger-off, request-cached, company-independent delete object 123.456", stmt);
@@ -75,7 +75,7 @@ public class DeleteTest
     public void listWithFlag()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createDeleteListStatement()
-                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(StmtFlag.TRIGGEROFF)
                         .addOid("123.456")
                         .addOid("789.456")
                         .addOid("456.123");
@@ -86,9 +86,9 @@ public class DeleteTest
     public void listWithFlags()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createDeleteListStatement()
-                        .addFlag(Flag.TRIGGEROFF)
-                        .addFlag(Flag.REQCACHED)
-                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addFlag(StmtFlag.TRIGGEROFF)
+                        .addFlag(StmtFlag.REQCACHED)
+                        .addFlag(StmtFlag.COMPANYINDEPENDENT)
                         .addOid("123.456")
                         .addOid("789.456")
                         .addOid("456.123");

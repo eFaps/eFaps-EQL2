@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,7 +96,7 @@ public class InsertTest
     public void setAttrWithFlag()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement()
-                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(StmtFlag.TRIGGEROFF)
                         .typeName("EFaps_Type")
                         .update("Number", "2333");
         verifyStatement("with trigger-off insert type EFaps_Type set Number = 2333", stmt);
@@ -106,9 +106,9 @@ public class InsertTest
     public void setAttrWithFlags()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement()
-                        .addFlag(Flag.TRIGGEROFF)
-                        .addFlag(Flag.REQCACHED)
-                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addFlag(StmtFlag.TRIGGEROFF)
+                        .addFlag(StmtFlag.REQCACHED)
+                        .addFlag(StmtFlag.COMPANYINDEPENDENT)
                         .typeName("EFaps_Type")
                         .update("Number", "2333");
         verifyStatement("with trigger-off, request-cached, company-independent insert type EFaps_Type set Number = 2333", stmt);

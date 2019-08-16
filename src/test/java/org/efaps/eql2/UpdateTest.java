@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2016 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -206,7 +206,7 @@ public class UpdateTest
         throws Exception
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateObjectStatement()
-                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(StmtFlag.TRIGGEROFF)
                         .oid("124.879")
                         .update("Name", "1234");
         verifyStatement("with trigger-off update obj 124.879 set Name=1234", stmt);
@@ -218,9 +218,9 @@ public class UpdateTest
         throws Exception
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateObjectStatement()
-                        .addFlag(Flag.TRIGGEROFF)
-                        .addFlag(Flag.REQCACHED)
-                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addFlag(StmtFlag.TRIGGEROFF)
+                        .addFlag(StmtFlag.REQCACHED)
+                        .addFlag(StmtFlag.COMPANYINDEPENDENT)
                         .oid("124.879")
                         .update("Name", "1234");
         verifyStatement("with trigger-off, request-cached, company-independent update obj 124.879 set Name=1234", stmt);
@@ -232,7 +232,7 @@ public class UpdateTest
         throws Exception
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateListStatement()
-                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(StmtFlag.TRIGGEROFF)
                         .addOid("124.879")
                         .update("Code", "11");
         verifyStatement("with trigger-off update list (124.879) set Code=11", stmt);
@@ -243,9 +243,9 @@ public class UpdateTest
         throws Exception
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateListStatement()
-                        .addFlag(Flag.TRIGGEROFF)
-                        .addFlag(Flag.REQCACHED)
-                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addFlag(StmtFlag.TRIGGEROFF)
+                        .addFlag(StmtFlag.REQCACHED)
+                        .addFlag(StmtFlag.COMPANYINDEPENDENT)
                         .addOid("124.879")
                         .update("Code", "11");
         verifyStatement("with trigger-off, request-cached, company-independent update list (124.879) set Code=11", stmt);
@@ -256,7 +256,7 @@ public class UpdateTest
         throws Exception
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateQueryStatement()
-                        .addFlag(Flag.TRIGGEROFF)
+                        .addFlag(StmtFlag.TRIGGEROFF)
                         .query(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
                         .update("Code2", "33");
         verifyStatement("with trigger-off update query type EFaps_Type set Code2 = 33", stmt);
@@ -267,9 +267,9 @@ public class UpdateTest
         throws Exception
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateQueryStatement()
-                        .addFlag(Flag.TRIGGEROFF)
-                        .addFlag(Flag.REQCACHED)
-                        .addFlag(Flag.COMPANYINDEPENDENT)
+                        .addFlag(StmtFlag.TRIGGEROFF)
+                        .addFlag(StmtFlag.REQCACHED)
+                        .addFlag(StmtFlag.COMPANYINDEPENDENT)
                         .query(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"))
                         .update("Code2", "33");
         verifyStatement("with trigger-off, request-cached, company-independent update query type EFaps_Type set Code2 = 33", stmt);
