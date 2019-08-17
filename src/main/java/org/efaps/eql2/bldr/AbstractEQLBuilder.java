@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2017 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package org.efaps.eql2.bldr;
 
 import org.efaps.eql2.IQueryStmt;
 import org.efaps.eql2.IStatement;
+import org.efaps.eql2.StmtFlag;
 
 /**
  * The Class AbstractEQLBuilder.
@@ -30,6 +31,16 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
 
     /** The stmt. */
     private IStatement<?> stmt;
+
+    public T with(final StmtFlag... _flags)
+    {
+        if (stmt != null &&_flags != null) {
+            for (final StmtFlag flag : _flags) {
+                stmt.addFlag(flag);
+            }
+        }
+        return getThis();
+    }
 
     /**
      * Limit.
@@ -68,5 +79,9 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
     protected void setStmt(final IStatement<?> _stmt)
     {
         this.stmt = _stmt;
+    }
+
+    public String build() {
+        return getStmt().eqlStmt();
     }
 }

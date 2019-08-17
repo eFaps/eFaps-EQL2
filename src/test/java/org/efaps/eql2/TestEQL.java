@@ -60,8 +60,7 @@ public class TestEQL
     @Override
     protected AbstractDeleteEQLBuilder<?> getDelete()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new DeleteBuilder();
     }
 
     @Override
@@ -153,6 +152,21 @@ public class TestEQL
 
         @Override
         protected WhereBuilder getThis()
+        {
+            return this;
+        }
+    }
+
+    public static class DeleteBuilder
+        extends AbstractDeleteEQLBuilder<DeleteBuilder>
+    {
+        public DeleteBuilder()
+        {
+            super();
+        }
+
+        @Override
+        protected DeleteBuilder getThis()
         {
             return this;
         }

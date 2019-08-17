@@ -91,7 +91,7 @@ public abstract class EQL2
      *
      * @return the prints the
      */
-    protected abstract AbstractDeleteEQLBuilder<?> getDelete();
+    protected abstract AbstractDeleteEQLBuilder<? extends AbstractDeleteEQLBuilder<?>> getDelete();
 
     /**
      * Gets the prints the.
@@ -179,17 +179,6 @@ public abstract class EQL2
         return eql().getInsert().insert(_typeName);
     }
 
-     /**
-      * Delete.
-      *
-      * @param _oids the oids
-      * @return the abstract update EQL builder
-      */
-     public static AbstractDeleteEQLBuilder<?> delete(final String... _oids)
-    {
-        return eql().getDelete().delete(_oids);
-    }
-
     /**
      * Insert.
      *
@@ -250,4 +239,30 @@ public abstract class EQL2
         }
         return INSTANCE;
     }
+
+    public static EQL2Builder<?> builder() {
+        return new EQL2Builder<>(EQL2.eql());
+    }
+
+    public static class EQL2Builder<T extends EQL2Builder<T>>
+    {
+        private final EQL2 eql2;
+        private StmtFlag[] flags;
+
+        public EQL2Builder(final EQL2 _eql2) {
+            eql2 = _eql2;
+        }
+
+        @SuppressWarnings("unchecked")
+        public T with(final StmtFlag... _flags)
+        {
+            flags = _flags;
+            return (T) this;
+        }
+
+        public AbstractDeleteEQLBuilder<?> delete(final String... _oids) {
+            return eql2.getDelete().delete(_oids).with(flags);
+        }
+    }
+
 }

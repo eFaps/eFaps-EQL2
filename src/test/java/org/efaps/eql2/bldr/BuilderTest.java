@@ -16,8 +16,17 @@
  */
 package org.efaps.eql2.bldr;
 
+import static org.testng.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.efaps.eql2.AbstractTest;
 import org.efaps.eql2.EQL2;
+import org.efaps.eql2.StmtFlag;
+import org.testng.ITestContext;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
@@ -28,8 +37,6 @@ import org.testng.annotations.Test;
 public class BuilderTest
     extends AbstractTest
 {
-    //future id
-    // (print query type Sales_Document select type.label as type ==> ( if (type == invoice ) {  update obj 123.456 set attr=\"\blau" } else {")
     /**
      * Prints the query limit.
      */
@@ -43,169 +50,6 @@ public class BuilderTest
         final String smt = "print query type Sales_Document limit 10 select attribute[Attri]";
         verifyStatement(smt, bldr.getStmt());
     }
-//
-//    /**
-//     * Prints the.
-//     */
-//    @Test(description = "print query ")
-//    public void printWhereEq()
-//    {
-//        final AbstractPrintEQLBuilder<?> bldr = EQL
-//                        .print()
-//                            .query("Sales_Document")
-//                            .where()
-//                                .attr("Name").eq("demo")
-//
-//                                .attribute("Attri");
-//        final String smt = "print query type Sales_Document where Name eq \"demo\" select attribute[Attri]";
-//        verifyStatement(smt, bldr.getStmt());
-//    }
-//
-//    /**
-//     * Prints the.
-//     */
-//    @Test(description = "print query ")
-//    public void printWhereEqValues()
-//    {
-//        final AbstractPrintEQLBuilder<?> bldr = EQL
-//                        .print()
-//                            .query("Sales_Document")
-//                            .where()
-//                                .attr("Name").in("demo", "test")
-//
-//                                .attribute("Attri");
-//        final String smt = "print query type Sales_Document where Name in (\"demo\", \"test\") select attribute[Attri]";
-//        verifyStatement(smt, bldr.getStmt());
-//    }
-//
-//    /**
-//     * Prints the where eq and eq.
-//     */
-//    @Test(description = "print query eq and eq")
-//    public void printWhereEqAndEq()
-//    {
-//        final AbstractPrintEQLBuilder<?> bldr = EQL
-//                        .print()
-//                            .query("Sales_Document")
-//                            .where()
-//                                .attr("Name").eq("demo")
-//                                .and()
-//                                .attr("Attr2").eq("5")
-//
-//                                .attribute("Attri");
-//        final String smt = "print query type Sales_Document where Name eq \"demo\" and Attr2 == 5 "
-//                        + "select attribute[Attri]";
-//        verifyStatement(smt, bldr.getStmt());
-//    }
-//
-//    /**
-//     * Prints the where eq and eq.
-//     */
-//    @Test(description = "print query eq and eq or eq")
-//    public void printWhereEqAndEqOrEq()
-//    {
-//        final AbstractPrintEQLBuilder<?> bldr = EQL
-//                        .print()
-//                            .query("Sales_Document")
-//                            .where()
-//                                .attr("Name").eq("demo")
-//                                .and()
-//                                .attr("Attr2").eq("5")
-//                                .or()
-//                                .attr("Attr3").eq("7")
-//
-//                                .attribute("Attri");
-//        final String smt = "print query type Sales_Document where Name eq \"demo\" and Attr2 == 5 "
-//                        + "or Attr3 == 7 select attribute[Attri]";
-//        verifyStatement(smt, bldr.getStmt());
-//    }
-//
-//
-//    /**
-//     * Prints the.
-//     */
-//    @Test(description = "print query where less")
-//    public void printWhereLess()
-//    {
-//        final AbstractPrintEQLBuilder<?> bldr = EQL
-//                        .print()
-//                            .query("Sales_Document")
-//                            .where()
-//                                .attr("Name").less("demo")
-//
-//                                .attribute("Attri");
-//        final String smt = "print query type Sales_Document where Name < \"demo\" select attribute[Attri]";
-//        verifyStatement(smt, bldr.getStmt());
-//    }
-//
-//    /**
-//     * Prints the.
-//     */
-//    @Test(description = "print query where greater")
-//    public void printWhereGreater()
-//    {
-//        final AbstractPrintEQLBuilder<?> bldr = EQL
-//                        .print()
-//                            .query("Sales_Document")
-//                            .where()
-//                                .attr("Name").greater("demo")
-//
-//                                .attribute("Attri");
-//        final String smt = "print query type Sales_Document where Name > \"demo\" select attribute[Attri]";
-//        verifyStatement(smt, bldr.getStmt());
-//    }
-//
-//    /**
-//     * Prints the.
-//     */
-//    @Test(description = "print query where match")
-//    public void printWhereMatch()
-//    {
-//        final AbstractPrintEQLBuilder<?> bldr = EQL
-//                        .print()
-//                            .query("Sales_Document")
-//                            .where()
-//                                .attr("Name").like("demo")
-//
-//                                .attribute("Attri");
-//        final String smt = "print query type Sales_Document where Name like \"demo\" select attribute[Attri]";
-//        verifyStatement(smt, bldr.getStmt());
-//    }
-//
-//    /**
-//     * Prints the.
-//     */
-//    @Test(description = "print query where not")
-//    public void printWhereNot()
-//    {
-//        final AbstractPrintEQLBuilder<?> bldr = EQL
-//                        .print()
-//                            .query("Sales_Document")
-//                            .where()
-//                                .attr("Name").uneq("demo")
-//
-//                                .attribute("Attri");
-//        final String smt = "print query type Sales_Document where Name != \"demo\" select attribute[Attri]";
-//        verifyStatement(smt, bldr.getStmt());
-//    }
-//
-//    /**
-//     * Prints the.
-//     */
-//    @Test(description = "print query where nots")
-//    public void printWhereNots()
-//    {
-//        final AbstractPrintEQLBuilder<?> bldr = EQL
-//                        .print()
-//                            .query("Sales_Document")
-//                            .where()
-//                                .attr("Name").notin("demo", "test")
-//
-//                                .attribute("Attri");
-//        final String smt = "print query type Sales_Document where Name not in ( \"demo\", \"test\") "
-//                        + "select attribute[Attri]";
-//        verifyStatement(smt, bldr.getStmt());
-//    }
 
     /**
      * Prints the.
@@ -299,4 +143,51 @@ public class BuilderTest
         final String smt = "insert type Sales_Invoice set Name = 123";
         verifyStatement(smt, bldr.getStmt());
     }
+
+    @Test(dataProvider = "DeleteBuilders")
+    public void testDeleteBuilders(final AbstractEQLBuilder<?> _builder, final String _stmt) {
+        assertEquals(_builder.build(), _stmt);
+    }
+
+    @DataProvider(name = "DeleteBuilders")
+    public static Iterator<Object[]> deleteBuilders(final ITestContext _context)
+    {
+        final List<Object[]> ret = new ArrayList<>();
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF)
+                            .delete("123.456"),
+                        "with trigger-off delete object 123.456"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF)
+                            .delete("123.456", "789.123"),
+                        "with trigger-off delete list (123.456, 789.123)"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF, StmtFlag.REQCACHED)
+                            .delete("123.456"),
+                        "with trigger-off, request-cached delete object 123.456"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF, StmtFlag.REQCACHED)
+                            .delete("123.456", "789.123"),
+                        "with trigger-off, request-cached delete list (123.456, 789.123)"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .delete("123.456"),
+                        "delete object 123.456"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .delete("123.456", "789.123"),
+                        "delete list (123.456, 789.123)"
+                            });
+        return ret.iterator();
+    }
+
 }
