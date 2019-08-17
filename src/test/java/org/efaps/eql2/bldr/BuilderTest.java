@@ -37,87 +37,6 @@ import org.testng.annotations.Test;
 public class BuilderTest
     extends AbstractTest
 {
-    /**
-     * Prints the query limit.
-     */
-   // @Test(description = "print query limit")
-    public void printQueryLimit()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL2
-                        .print()
-                        //    .limit(10)
-                        .attribute("Attri");
-        final String smt = "print query type Sales_Document limit 10 select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "basic update")
-    public void update()
-    {
-        final AbstractEQLBuilder<?> bldr = EQL2.update("123.456")
-                            .set("Name", "123");
-        final String smt = "update obj 123.456 set Name = 123";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "basic update")
-    public void updateVarious()
-    {
-        final AbstractEQLBuilder<?> bldr = EQL2.update("123.456")
-                            .set("Name", "123")
-                            .set("Attr2", "demo");
-        final String smt = "update obj 123.456 set Name = 123, Attr2 = \"demo\"";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    @Test(description = "basic update")
-    public void updateList()
-    {
-        final AbstractEQLBuilder<?> bldr = EQL2.update("123.456", "789.012")
-                            .set("Name", "123");
-        final String smt = "update list ( 123.456, 789.012 ) set Name = 123";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    //@Test(description = "query update where")
-    public void updateQueryWhere()
-    {
-        final AbstractEQLBuilder<?> bldr = EQL2.update()
-                            //.query("Sales_Invoice")
-                            //.where()
-                           //     .attr("Name").eq("demo")
-                            .set("Name", "123");
-        final String smt = "update query type Sales_Invoice where Name = \"demo\"set Name = 123";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
-    //@Test(description = "query update where")
-    public void updateQueryWhereSets()
-    {
-        final AbstractEQLBuilder<?> bldr = EQL2.update()
-                            //.query("Sales_Invoice")
-                           // .where()
-                           //     .attr("Name").eq("demo")
-                            .set("Name", "123")
-                            .set("Attr2", "Value2");
-        final String smt = "update query type Sales_Invoice where Name = \"demo\"set Name = 123, Attr2 = \"Value2\"";
-        verifyStatement(smt, bldr.getStmt());
-    }
 
     @Test(dataProvider = "DeleteBuilders")
     public void testDeleteBuilders(final AbstractEQLBuilder<?> _builder, final String _stmt) {
@@ -129,6 +48,10 @@ public class BuilderTest
         assertEquals(_builder.build(), _stmt);
     }
 
+    @Test(dataProvider = "UpdateBuilders")
+    public void testUpdateBuilders(final AbstractEQLBuilder<?> _builder, final String _stmt) {
+        assertEquals(_builder.build(), _stmt);
+    }
 
     @DataProvider(name = "DeleteBuilders")
     public static Iterator<Object[]> deleteBuilders(final ITestContext _context)
@@ -198,4 +121,51 @@ public class BuilderTest
         return ret.iterator();
     }
 
+    @DataProvider(name = "UpdateBuilders")
+    public static Iterator<Object[]> updateBuilders(final ITestContext _context)
+    {
+        final List<Object[]> ret = new ArrayList<>();
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF)
+                            .update("123.456")
+                            .set("Name", "123"),
+                        "with trigger-off update object 123.456 set Name = 123"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF, StmtFlag.REQCACHED)
+                            .update("123.456")
+                            .set("Name", "123"),
+                        "with trigger-off, request-cached update object 123.456 set Name = 123"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .update("123.456")
+                            .set("Name", "123"),
+                        "update object 123.456 set Name = 123"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF)
+                            .update("123.456", "789.123")
+                            .set("Name", "123"),
+                        "with trigger-off update list (123.456, 789.123) set Name = 123"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF, StmtFlag.REQCACHED)
+                            .update("123.456", "789.123")
+                            .set("Name", "123"),
+                        "with trigger-off, request-cached update list (123.456, 789.123) set Name = 123"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .update("123.456", "789.123")
+                            .set("Name", "123"),
+                        "update list (123.456, 789.123) set Name = 123"
+                            });
+
+        return ret.iterator();
+    }
 }

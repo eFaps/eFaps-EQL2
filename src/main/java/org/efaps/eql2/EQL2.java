@@ -148,27 +148,6 @@ public abstract class EQL2
     }
 
     /**
-     * Update.
-     *
-     * @return the abstract EQL builder<?>
-     */
-    public static AbstractUpdateEQLBuilder<?> update()
-    {
-        return eql().getUpdate().update();
-    }
-
-    /**
-     * Update.
-     *
-     * @param _oid the oid
-     * @return the abstract EQL builder<?>
-     */
-    public static AbstractUpdateEQLBuilder<?> update(final String... _oid)
-    {
-        return eql().getUpdate().update(_oid);
-    }
-
-    /**
      * Insert.
      *
      * @param _parent the parent
@@ -257,6 +236,10 @@ public abstract class EQL2
         {
             return eql2.getInsert().insert(_typeName).with(flags);
         }
-    }
 
+        public AbstractUpdateEQLBuilder<?> update(final String... _oid)
+        {
+            return eql2.getUpdate().update(_oid).with(flags);
+        }
+    }
 }
