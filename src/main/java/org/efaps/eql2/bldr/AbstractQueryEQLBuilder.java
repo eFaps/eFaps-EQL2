@@ -17,6 +17,7 @@
 
 package org.efaps.eql2.bldr;
 
+import org.efaps.eql2.EQL2;
 import org.efaps.eql2.IEql2Factory;
 import org.efaps.eql2.IQuery;
 import org.efaps.eql2.impl.PrintQueryStatement;
@@ -64,6 +65,12 @@ public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
     {
         getIQuery().setWhere(_whereBldr.getIWhere());
         return getThis();
+    }
+
+    public AbstractWhereBuilder<?> where() {
+        final AbstractWhereBuilder<?> ret = EQL2.builder().where();
+        ret.setQuery(this);
+        return ret;
     }
 
     /**

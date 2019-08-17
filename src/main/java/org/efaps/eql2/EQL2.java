@@ -162,7 +162,8 @@ public abstract class EQL2
         private final EQL2 eql2;
         private StmtFlag[] flags;
 
-        public EQL2Builder(final EQL2 _eql2) {
+        public EQL2Builder(final EQL2 _eql2)
+        {
             eql2 = _eql2;
         }
 
@@ -173,7 +174,8 @@ public abstract class EQL2
             return (T) this;
         }
 
-        public AbstractDeleteEQLBuilder<?> delete(final String... _oids) {
+        public AbstractDeleteEQLBuilder<?> delete(final String... _oids)
+        {
             return eql2.getDelete().delete(_oids).with(flags);
         }
 
@@ -195,6 +197,11 @@ public abstract class EQL2
         public AbstractQueryEQLBuilder<?> query(final String... _types)
         {
             return eql2.getQuery().query(_types);
+        }
+
+        public AbstractWhereBuilder<?> where()
+        {
+            return eql2.getWhere();
         }
     }
 }

@@ -67,69 +67,16 @@ public class PrintQueryTest
                             .attribute("attr1", "attr2"),
                         "print  query type Sales_Document, Product_Product  select  attribute[attr1],  attribute[attr2]"
                             });
-
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                                .query("Sales_Document")
+                                    .where()
+                                    .attribute("Attri").eq(12)
+                            .select()
+                            .attribute("Name"),
+                        "print  query type Sales_Document where   attribute[Attri] == 12  select  attribute[Name]"
+                            });
         return ret.iterator();
     }
-
-
-
-
-
-
-    /**
-    @Test(description = "print query TYPE where ATTRIBUTE eq NUMBER")
-    public void printQueryWhere()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = EQL2.builder()
-                        .print()
-                        .query("Sales_Document")
-                            .where()
-                            .attribute("Attri").eq(12)
-                        .select()
-                        .attribute("Attri");
-        final String smt = "print query type Sales_Document where attribute[Attri] == 12 select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    @Test(description = "print query TYPE where ATTRIBUTE eq NUMBER and ATTRIBUTE2 eq NUMBER")
-    public void printQueryWhere2()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = print(query("Sales_Document")
-                            .where(where()
-                                    .attribute("Attri1").eq(12)
-                                    .and()
-                                    .attribute("Attri2").eq(22)))
-                        .attribute("Attri");
-        final String smt = "print query type Sales_Document where attribute[Attri1] == 12 and attribute[Attri2] == 22 "
-                        + "select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    @Test(description = "print query TYPE where ATTRIBUTE in (NUMBER1, NUMBER2)")
-    public void printQueryWhereIn()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = print(query("Sales_Document")
-                            .where(where()
-                                    .attribute("Attri1").in(11, 22)))
-                        .attribute("Attri");
-        final String smt = "print query type Sales_Document where attribute[Attri1] in (11, 22) "
-                        + "select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    @Test(description = "print query TYPE where ATTRIBUTE in (NUMBER1, NUMBER2)")
-    public void printQueryWhereIn2()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = print(query("Sales_Document")
-                            .where(where()
-                                    .attribute("Attri1").in(11, 22)
-                                    .and()
-                                    .attribute("Attri2").in(33, 44)))
-                        .attribute("Attri");
-        final String smt = "print query type Sales_Document where attribute[Attri1] in (11, 22) "
-                        + "and attribute[Attri2] in (33, 44)"
-                        + "select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
-    }
-*/
 }

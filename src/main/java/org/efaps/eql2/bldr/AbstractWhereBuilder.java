@@ -36,6 +36,12 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
 
     /** The parent. */
     private IWhere iWhere;
+    private AbstractQueryEQLBuilder<?> query;
+
+    public AbstractPrintEQLBuilder<?> select() {
+        query.getIQuery().setWhere(getIWhere());
+        return query.select();
+    }
 
     /**
      * Attr.
@@ -255,6 +261,11 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
     {
         final IWhereElementTerm whereElementTerm = (IWhereElementTerm) getCurrentTerm();
         return whereElementTerm.element();
+    }
+
+    protected void setQuery(final AbstractQueryEQLBuilder<?> _queryEQLBuilder)
+    {
+        this.query = _queryEQLBuilder;
     }
 
     /**
