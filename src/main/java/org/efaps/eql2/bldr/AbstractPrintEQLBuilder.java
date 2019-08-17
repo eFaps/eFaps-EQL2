@@ -17,6 +17,7 @@
 package org.efaps.eql2.bldr;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.efaps.eql2.EQL2;
 import org.efaps.eql2.IAttributeSelectElement;
 import org.efaps.eql2.IBaseSelectElement;
 import org.efaps.eql2.IEql2Factory;
@@ -48,7 +49,9 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      */
     public T print(final String... _oids)
     {
-        if (_oids.length == 1) {
+        if (_oids == null ||_oids.length == 0) {
+            setStmt(IEql2Factory.eINSTANCE.createPrintQueryStatement());
+        } else if (_oids.length == 1) {
             setStmt(IEql2Factory.eINSTANCE.createPrintObjectStatement().oid(_oids[0]));
         } else {
             setStmt(IEql2Factory.eINSTANCE.createPrintListStatement());
@@ -72,6 +75,12 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
         ((IPrintStatement<?>) getStmt()).selection();
         ((PrintQueryStatement) getStmt()).setQueryC(_queryBuilder.getIQuery());
         return getThis();
+    }
+
+    public AbstractQueryEQLBuilder<?> query(final String... _types) {
+        final AbstractQueryEQLBuilder<?> ret = EQL2.builder().query(_types);
+        ret.setPrint(this);
+        return ret;
     }
 
     /**

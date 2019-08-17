@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2017 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package org.efaps.eql2.bldr;
 
 import org.efaps.eql2.IEql2Factory;
 import org.efaps.eql2.IQuery;
+import org.efaps.eql2.impl.PrintQueryStatement;
 
 /**
  * The Class AbstractQueryEQLBuilder.
@@ -32,6 +33,8 @@ public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
     /** The i query. */
     private IQuery iQuery;
 
+    private AbstractPrintEQLBuilder<?> print;
+
     /**
      * Query.
      *
@@ -44,6 +47,11 @@ public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
             getIQuery().addType(type);
         }
         return getThis();
+    }
+
+    public AbstractPrintEQLBuilder<?> select() {
+        ((PrintQueryStatement) print.getStmt()).setQueryC(getIQuery());
+        return print;
     }
 
     /**
@@ -75,5 +83,10 @@ public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
     protected T getThis()
     {
         return (T) this;
+    }
+
+    protected void setPrint(final AbstractPrintEQLBuilder<?> _printEQLBuilder)
+    {
+        this.print = _printEQLBuilder;
     }
 }

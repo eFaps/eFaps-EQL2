@@ -104,39 +104,6 @@ public abstract class EQL2
     protected abstract AbstractSelectables getSelectables();
 
     /**
-     * Prints the.
-     *
-     * @param _oid the oid
-     * @return the abstract print EQL builder<?>
-     */
-    public static AbstractPrintEQLBuilder<?> print(final AbstractQueryEQLBuilder<?> _queryBuilder)
-    {
-        return eql().getPrint().print(_queryBuilder);
-    }
-
-    /**
-     * Prints the.
-     *
-     * @param _oid the oid
-     * @return the abstract print EQL builder<?>
-     */
-    public static AbstractQueryEQLBuilder<?> query(final String... _types)
-    {
-        return eql().getQuery().query(_types);
-    }
-
-    /**
-     * Insert.
-     *
-     * @param _parent the parent
-     * @return the abstract EQL builder<?>
-     */
-    public static AbstractWhereBuilder<?> where()
-    {
-        return eql().getWhere();
-    }
-
-    /**
      * Parses the statement.
      *
      * @param _stmt the stmt to be parsed
@@ -215,14 +182,19 @@ public abstract class EQL2
             return eql2.getInsert().insert(_typeName).with(flags);
         }
 
-        public AbstractUpdateEQLBuilder<?> update(final String... _oid)
+        public AbstractUpdateEQLBuilder<?> update(final String... _oids)
         {
-            return eql2.getUpdate().update(_oid).with(flags);
+            return eql2.getUpdate().update(_oids).with(flags);
         }
 
-        public AbstractPrintEQLBuilder<?> print(final String... _oid)
+        public AbstractPrintEQLBuilder<?> print(final String... _oids)
         {
-            return eql2.getPrint().print(_oid).with(flags);
+            return eql2.getPrint().print(_oids).with(flags);
+        }
+
+        public AbstractQueryEQLBuilder<?> query(final String... _types)
+        {
+            return eql2.getQuery().query(_types);
         }
     }
 }

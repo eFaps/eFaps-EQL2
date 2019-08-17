@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2017 The eFaps Team
+ * Copyright 2003 - 2019 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,16 @@
  */
 package org.efaps.eql2.bldr;
 
-import static org.efaps.eql2.EQL2.print;
-import static org.efaps.eql2.EQL2.query;
-import static org.efaps.eql2.EQL2.where;
+import static org.testng.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.efaps.eql2.AbstractTest;
+import org.efaps.eql2.EQL2;
+import org.testng.ITestContext;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 /**
  * The Class PrintQueryTest.
@@ -28,29 +33,59 @@ import org.testng.annotations.Test;
 public class PrintQueryTest
     extends AbstractTest
 {
-    @Test(description = "print query ")
-    public void printQuery()
-    {
-        final AbstractPrintEQLBuilder<?> bldr = print(query("Sales_Document"))
-                        .attribute("Attri");
-        final String smt = "print query type Sales_Document select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
+
+    @Test(dataProvider = "Builders")
+    public void testBuilders(final AbstractEQLBuilder<?> _builder, final String _stmt) {
+        assertEquals(_builder.build(), _stmt);
     }
 
-    @Test(description = "print query types")
-    public void printQueryTypes()
+    @DataProvider(name = "Builders")
+    public static Iterator<Object[]> builders(final ITestContext _context)
     {
-        final AbstractPrintEQLBuilder<?> bldr = print(query("Sales_Document", "Sales_Invoice"))
-                        .attribute("Attri");
-        final String smt = "print query type Sales_Document, Sales_Invoice select attribute[Attri]";
-        verifyStatement(smt, bldr.getStmt());
+        final List<Object[]> ret = new ArrayList<>();
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                            .query("Sales_Document")
+                            .select()
+                            .attribute("Name"),
+                        "print  query type Sales_Document  select  attribute[Name]"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                            .query("Sales_Document, Product_Product")
+                            .select()
+                            .attribute("Name"),
+                        "print  query type Sales_Document, Product_Product  select  attribute[Name]"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                            .query("Sales_Document, Product_Product")
+                            .select()
+                            .attribute("attr1", "attr2"),
+                        "print  query type Sales_Document, Product_Product  select  attribute[attr1],  attribute[attr2]"
+                            });
+
+        return ret.iterator();
     }
 
+
+
+
+
+
+    /**
     @Test(description = "print query TYPE where ATTRIBUTE eq NUMBER")
     public void printQueryWhere()
     {
-        final AbstractPrintEQLBuilder<?> bldr = print(query("Sales_Document")
-                            .where(where().attribute("Attri").eq(12)))
+        final AbstractPrintEQLBuilder<?> bldr = EQL2.builder()
+                        .print()
+                        .query("Sales_Document")
+                            .where()
+                            .attribute("Attri").eq(12)
+                        .select()
                         .attribute("Attri");
         final String smt = "print query type Sales_Document where attribute[Attri] == 12 select attribute[Attri]";
         verifyStatement(smt, bldr.getStmt());
@@ -96,5 +131,5 @@ public class PrintQueryTest
                         + "select attribute[Attri]";
         verifyStatement(smt, bldr.getStmt());
     }
-
+*/
 }
