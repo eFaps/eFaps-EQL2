@@ -38,7 +38,8 @@ public class SelectablesTest
     public void selectables(final String _stmt,
                             final ISelectable[] _selectables)
     {
-        final AbstractPrintEQLBuilder<?> bldr = EQL2.print("13.46")
+        final AbstractPrintEQLBuilder<?> bldr = EQL2.builder()
+                        .print("13.46")
                         .select(_selectables);
         verifyStatement(_stmt, bldr.getStmt());
     }

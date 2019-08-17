@@ -30,7 +30,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
- * The Class bldrTest.
+ * Class to test the "with Flag part of the builders".
  *
  * @author The eFaps Team
  */
@@ -50,6 +50,11 @@ public class BuilderTest
 
     @Test(dataProvider = "UpdateBuilders")
     public void testUpdateBuilders(final AbstractEQLBuilder<?> _builder, final String _stmt) {
+        assertEquals(_builder.build(), _stmt);
+    }
+
+    @Test(dataProvider = "PrintBuilders")
+    public void testPrintBuilders(final AbstractEQLBuilder<?> _builder, final String _stmt) {
         assertEquals(_builder.build(), _stmt);
     }
 
@@ -165,7 +170,54 @@ public class BuilderTest
                             .set("Name", "123"),
                         "update list (123.456, 789.123) set Name = 123"
                             });
-
         return ret.iterator();
     }
+
+    @DataProvider(name = "PrintBuilders")
+    public static Iterator<Object[]> printBuilders(final ITestContext _context)
+    {
+        final List<Object[]> ret = new ArrayList<>();
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF)
+                            .print("123.456")
+                            .attribute("Name"),
+                        "with trigger-off print object 123.456  select  attribute[Name]"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF, StmtFlag.REQCACHED)
+                            .print("123.456")
+                            .attribute("Name"),
+                        "with trigger-off, request-cached print object 123.456  select  attribute[Name]"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print("123.456")
+                            .attribute("Name"),
+                        "print object 123.456  select  attribute[Name]"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF)
+                            .print("123.456", "789.123")
+                            .attribute("Name"),
+                        "with trigger-off print list (123.456, 789.123)  select  attribute[Name]"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF, StmtFlag.REQCACHED)
+                            .print("123.456", "789.123")
+                            .attribute("Name"),
+                        "with trigger-off, request-cached print list (123.456, 789.123)  select  attribute[Name]"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print("123.456", "789.123")
+                            .attribute("Name"),
+                        "print list (123.456, 789.123)  select  attribute[Name]"
+                            });
+        return ret.iterator();
+    }
+
 }

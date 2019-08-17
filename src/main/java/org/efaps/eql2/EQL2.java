@@ -109,28 +109,6 @@ public abstract class EQL2
      * @param _oid the oid
      * @return the abstract print EQL builder<?>
      */
-    public static AbstractPrintEQLBuilder<?> print()
-    {
-        return eql().getPrint();
-    }
-
-    /**
-     * Prints the.
-     *
-     * @param _oid the oid
-     * @return the abstract print EQL builder<?>
-     */
-    public static AbstractPrintEQLBuilder<?> print(final String... _oid)
-    {
-        return eql().getPrint().print(_oid);
-    }
-
-    /**
-     * Prints the.
-     *
-     * @param _oid the oid
-     * @return the abstract print EQL builder<?>
-     */
     public static AbstractPrintEQLBuilder<?> print(final AbstractQueryEQLBuilder<?> _queryBuilder)
     {
         return eql().getPrint().print(_queryBuilder);
@@ -240,6 +218,11 @@ public abstract class EQL2
         public AbstractUpdateEQLBuilder<?> update(final String... _oid)
         {
             return eql2.getUpdate().update(_oid).with(flags);
+        }
+
+        public AbstractPrintEQLBuilder<?> print(final String... _oid)
+        {
+            return eql2.getPrint().print(_oid).with(flags);
         }
     }
 }
