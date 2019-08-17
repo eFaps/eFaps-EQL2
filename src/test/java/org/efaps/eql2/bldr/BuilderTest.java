@@ -91,19 +91,6 @@ public class BuilderTest
     /**
      * Prints the.
      */
-    //@Test(description = "query update")
-    public void updateQuery()
-    {
-        final AbstractEQLBuilder<?> bldr = EQL2.update()
-                            //.query("Sales_Invoice")
-                            .set("Name", "123");
-        final String smt = "update query type Sales_Invoice set Name = 123";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
-    /**
-     * Prints the.
-     */
     //@Test(description = "query update where")
     public void updateQueryWhere()
     {
@@ -132,22 +119,16 @@ public class BuilderTest
         verifyStatement(smt, bldr.getStmt());
     }
 
-    /**
-     * Prints the.
-     */
-    @Test(description = "basic insert")
-    public void insert()
-    {
-        final AbstractEQLBuilder<?> bldr = EQL2.insert("Sales_Invoice")
-                            .set("Name", "123");
-        final String smt = "insert type Sales_Invoice set Name = 123";
-        verifyStatement(smt, bldr.getStmt());
-    }
-
     @Test(dataProvider = "DeleteBuilders")
     public void testDeleteBuilders(final AbstractEQLBuilder<?> _builder, final String _stmt) {
         assertEquals(_builder.build(), _stmt);
     }
+
+    @Test(dataProvider = "InsertBuilders")
+    public void testInsertBuilders(final AbstractEQLBuilder<?> _builder, final String _stmt) {
+        assertEquals(_builder.build(), _stmt);
+    }
+
 
     @DataProvider(name = "DeleteBuilders")
     public static Iterator<Object[]> deleteBuilders(final ITestContext _context)
@@ -186,6 +167,33 @@ public class BuilderTest
                         EQL2.builder()
                             .delete("123.456", "789.123"),
                         "delete list (123.456, 789.123)"
+                            });
+        return ret.iterator();
+    }
+
+    @DataProvider(name = "InsertBuilders")
+    public static Iterator<Object[]> insertBuilders(final ITestContext _context)
+    {
+        final List<Object[]> ret = new ArrayList<>();
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF)
+                            .insert("TypeName")
+                            .set("Name", "123"),
+                        "with trigger-off insert type TypeName set Name = 123"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .with(StmtFlag.TRIGGEROFF, StmtFlag.REQCACHED)
+                            .insert("TypeName")
+                            .set("Name", "123"),
+                        "with trigger-off, request-cached insert type TypeName set Name = 123"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .insert("TypeName")
+                            .set("Name", "123"),
+                        "insert type TypeName set Name = 123"
                             });
         return ret.iterator();
     }

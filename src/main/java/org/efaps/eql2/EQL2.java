@@ -171,17 +171,6 @@ public abstract class EQL2
     /**
      * Insert.
      *
-     * @param _typeName the type name
-     * @return the abstract EQL builder<?>
-     */
-    public static AbstractInsertEQLBuilder<?> insert(final String _typeName)
-    {
-        return eql().getInsert().insert(_typeName);
-    }
-
-    /**
-     * Insert.
-     *
      * @param _parent the parent
      * @return the abstract EQL builder<?>
      */
@@ -262,6 +251,11 @@ public abstract class EQL2
 
         public AbstractDeleteEQLBuilder<?> delete(final String... _oids) {
             return eql2.getDelete().delete(_oids).with(flags);
+        }
+
+        public AbstractInsertEQLBuilder<?> insert(final String _typeName)
+        {
+            return eql2.getInsert().insert(_typeName).with(flags);
         }
     }
 
