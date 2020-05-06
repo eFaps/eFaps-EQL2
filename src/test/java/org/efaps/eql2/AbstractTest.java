@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2019 The eFaps Team
+ * Copyright 2003 - 2020 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  *
  */
 package org.efaps.eql2;
-
-import com.google.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,9 +34,12 @@ import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
 import org.eclipse.xtext.parser.antlr.Lexer;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.validation.AbstractInjectableValidator;
+import org.efaps.eql2.parser.EQL2SelectParser;
 import org.efaps.eql2.parser.antlr.EQL2Parser;
 import org.efaps.eql2.validation.EQL2Validator;
 import org.testng.Assert;
+
+import com.google.inject.Inject;
 
 /**
  * The Class AbstractTest.
@@ -51,6 +52,9 @@ public abstract class AbstractTest
     /** The parser. */
     @Inject
     private EQL2Parser parser;
+
+    @Inject
+    private EQL2SelectParser selectParser;
 
     /** The lexer. */
     @Inject
@@ -86,7 +90,17 @@ public abstract class AbstractTest
      */
     public EQL2Parser getParser()
     {
-        return this.parser;
+        return parser;
+    }
+
+    /**
+     * Gets the parser.
+     *
+     * @return the parser
+     */
+    public EQL2SelectParser getSelectParser()
+    {
+        return selectParser;
     }
 
     /**
@@ -99,10 +113,10 @@ public abstract class AbstractTest
                                 final IEQLElement _object)
     {
         final IParseResult result = getParser().doParse(_eqlStmt);
-        this.syntaxErrors.clear();
+        syntaxErrors.clear();
         if (result.hasSyntaxErrors()) {
             for (final INode error : result.getSyntaxErrors()) {
-                this.syntaxErrors.add(error.getSyntaxErrorMessage());
+                syntaxErrors.add(error.getSyntaxErrorMessage());
             }
         }
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
@@ -112,12 +126,12 @@ public abstract class AbstractTest
             setDiagnostic(new BasicDiagnostic());
             final Map<Object, Object> context = new HashMap<>();
             context.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, "org.efaps.eql2.EQL");
-            this.validator.validate(eObject, getDiagnostic(), context);
+            validator.validate(eObject, getDiagnostic(), context);
             final TreeIterator<EObject> iterator = eObject.eAllContents();
             while (iterator.hasNext()) {
                 final EObject nextObj = iterator.next();
                 if (nextObj != null) {
-                    this.validator.validate(nextObj, getDiagnostic(), context);
+                    validator.validate(nextObj, getDiagnostic(), context);
                 }
             }
         }
@@ -133,8 +147,8 @@ public abstract class AbstractTest
     public List<Token> getTokens(final CharSequence _input)
     {
         final CharStream stream = new ANTLRStringStream(_input.toString());
-        this.lexer.setCharStream(stream);
-        final XtextTokenStream tokenStream = new XtextTokenStream(this.lexer, this.tokenDefProvider);
+        lexer.setCharStream(stream);
+        final XtextTokenStream tokenStream = new XtextTokenStream(lexer, tokenDefProvider);
         @SuppressWarnings("unchecked")
         final List<Token> tokens = tokenStream.getTokens();
         return tokens;
@@ -161,7 +175,7 @@ public abstract class AbstractTest
      */
     public String getTokenType(final Token _token)
     {
-        return this.tokenDefProvider.getTokenDefMap().get(_token.getType());
+        return tokenDefProvider.getTokenDefMap().get(_token.getType());
     }
 
     /**
@@ -171,7 +185,7 @@ public abstract class AbstractTest
      */
     public BasicDiagnostic getDiagnostic()
     {
-        return this.diagnostic;
+        return diagnostic;
     }
 
     /**
@@ -181,7 +195,7 @@ public abstract class AbstractTest
      */
     public void setDiagnostic(final BasicDiagnostic _diagnostic)
     {
-        this.diagnostic = _diagnostic;
+        diagnostic = _diagnostic;
     }
 
     /**
@@ -191,6 +205,6 @@ public abstract class AbstractTest
      */
     public List<SyntaxErrorMessage> getSyntaxErrors()
     {
-        return this.syntaxErrors;
+        return syntaxErrors;
     }
 }

@@ -217,7 +217,47 @@ public class BuilderTest
                             .attribute("Name"),
                         "print list (123.456, 789.123)  select  attribute[Name]"
                             });
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print("123.456", "789.123")
+                            .select("attribute[Name]"),
+                        "print list (123.456, 789.123)  select  attribute[Name]"
+                            });
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print("123.456", "789.123")
+                            .attribute("FirstOne")
+                            .select("attribute[SecondOne]"),
+                        "print list (123.456, 789.123)  select  attribute[FirstOne],  attribute[SecondOne]"
+                            });
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print("123.456", "789.123")
+                            .select("attribute[FirstOne]")
+                            .attribute("SecondOne"),
+                        "print list (123.456, 789.123)  select  attribute[FirstOne],  attribute[SecondOne]"
+                            });
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print("123.456", "789.123")
+                            .select("attribute[FirstOne]")
+                            .select("attribute[SecondOne]"),
+                        "print list (123.456, 789.123)  select  attribute[FirstOne],  attribute[SecondOne]"
+                            });
+
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print("123.456", "789.123")
+                            .select("attribute[FirstOne]")
+                            .select("linkto[Something].attribute[SecondOne]"),
+                "print list (123.456, 789.123)  select  attribute[FirstOne],  linkto[Something].attribute[SecondOne]"
+                            });
+
         return ret.iterator();
     }
-
 }

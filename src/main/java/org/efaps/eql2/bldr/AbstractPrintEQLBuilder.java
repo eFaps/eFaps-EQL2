@@ -404,6 +404,16 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
         return getThis();
     }
 
+    public T select(final String... _selects) {
+        for (final var select : _selects) {
+            final var iSelect = EQL2.parseSelect(select);
+            final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
+            selection.addSelect(iSelect);
+        }
+        return getThis();
+    }
+
+
     public T orderBy(final String _key) {
         return orderBy(_key, false);
     }

@@ -16,8 +16,6 @@
  */
 package org.efaps.eql2;
 
-import com.google.inject.Inject;
-
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
@@ -31,9 +29,12 @@ import org.efaps.eql2.bldr.AbstractQueryEQLBuilder;
 import org.efaps.eql2.bldr.AbstractSelectables;
 import org.efaps.eql2.bldr.AbstractUpdateEQLBuilder;
 import org.efaps.eql2.bldr.AbstractWhereBuilder;
+import org.efaps.eql2.parser.EQL2SelectParser;
 import org.efaps.eql2.parser.antlr.EQL2Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.inject.Inject;
 
 /**
  * The Class EQL.
@@ -54,6 +55,9 @@ public abstract class EQL2
 
     @Inject
     private EQL2Parser parser;
+
+    @Inject
+    private EQL2SelectParser selectParser;
 
     @Inject
     private Serializer serializer;
@@ -120,6 +124,11 @@ public abstract class EQL2
         }
         final IStatement<?> ret = (IStatement<?>) result.getRootASTElement();
         return ret;
+    }
+
+    public static ISelect parseSelect(final CharSequence _select) {
+        final var result = eql().selectParser.doParse(_select);
+        return (ISelect) result.getRootASTElement();
     }
 
     /**
