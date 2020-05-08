@@ -379,6 +379,23 @@ public class SelectionTest
      * @param _eqlBase the eql base
      * @param _printStmt the print stmt
      */
+    @Test(dataProvider = "PrintStmts", description = "select linkfrom[First:Second#AttributeName]")
+    public void linkfromAttributeSet(final String _eqlBase,
+                         final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createLinkfromSelectElement()
+                                        .setTypeNameC("First:Second").setAttributeC("AttributeName")));
+        verifyStatement(_eqlBase + "select linkfrom[First:Second#AttributeName]", _printStmt);
+    }
+
+    /**
+     * Object print.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
     @Test(dataProvider = "PrintStmts", description = "select attribute[Date].format[YYYY-MM-DD]")
     public void attributeFormat(final String _eqlBase,
                                 final IPrintStatement<?> _printStmt)

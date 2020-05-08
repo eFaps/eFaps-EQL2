@@ -145,7 +145,7 @@ SelectElement:
 ;
 
 LinkfromSelectElement:
-    'linkfrom['typeName=Type'#'attribute=Attribute']'
+    'linkfrom['typeName=(Type|LinkFromType)'#'attribute=Attribute']'
 ;
 
 ClassSelectElement:
@@ -206,8 +206,13 @@ Alias:
     NAMESTR | STRING | KEYWORD
 ;
 
+LinkFromType:
+    (NAMESTR | UUID)':'Attribute
+;
+
 Type:
-    NAMESTR | UUID;
+    NAMESTR | UUID
+;
 
 Attribute:
     NAMESTR
