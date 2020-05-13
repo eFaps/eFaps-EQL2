@@ -249,7 +249,6 @@ public class BuilderTest
                         "print list (123.456, 789.123)  select  attribute[FirstOne],  attribute[SecondOne]"
                             });
 
-
         ret.add(new Object[] {
                         EQL2.builder()
                             .print("123.456", "789.123")
@@ -257,6 +256,15 @@ public class BuilderTest
                             .select("linkto[Something].attribute[SecondOne]"),
                 "print list (123.456, 789.123)  select  attribute[FirstOne],  linkto[Something].attribute[SecondOne]"
                             });
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print("123.456")
+                            .attribute("Name")
+                            .clazz("Classification")
+                            .attribute("AttributeOnClass"),
+                    "print object 123.456  select  attribute[Name],  class[Classification].attribute[AttributeOnClass]"
+        });
 
         return ret.iterator();
     }
