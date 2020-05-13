@@ -149,7 +149,7 @@ LinkfromSelectElement:
 ;
 
 ClassSelectElement:
-    'class['name=Attribute']'
+    'class['name=Type']'
 ;
 
 LinktoSelectElement:

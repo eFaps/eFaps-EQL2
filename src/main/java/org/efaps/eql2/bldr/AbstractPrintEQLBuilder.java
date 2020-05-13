@@ -195,6 +195,15 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
         return getThis();
     }
 
+    public T clazz(final String _type)
+    {
+        initSelect();
+        final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
+        selection.getSelects(selection.getSelectsLength() - 1)
+                        .addElement(IEql2Factory.eINSTANCE.createClassSelectElement().setNameC(_type));
+        return getThis();
+    }
+
     /**
      * Instance.
      *

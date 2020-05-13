@@ -318,4 +318,26 @@ public class PrintObjTest
         final String smt = "print list (123.456, 789.012, 345.678) select type.uuid";
         verifyStatement(smt, bldr.getStmt());
     }
+
+    @Test(description = "class[Type]")
+    public void printSelClassType()
+    {
+        final AbstractPrintEQLBuilder<?> bldr = EQL2.builder()
+                        .print("13.46")
+                        .clazz("Classification");
+        final String smt = "print obj 13.46 select class[Classification]";
+        verifyStatement(smt, bldr.getStmt());
+    }
+
+    @Test(description = "class[Type].attribute[Attribute]")
+    public void printSelClassTypeAttribute()
+    {
+        final AbstractPrintEQLBuilder<?> bldr = EQL2.builder()
+                        .print("13.46")
+                        .clazz("Classification")
+                        .attribute("OneAttribute");
+        final String smt = "print obj 13.46 select class[Classification].attribute[OneAttribute]";
+        verifyStatement(smt, bldr.getStmt());
+    }
+
 }
