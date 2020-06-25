@@ -376,6 +376,29 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
      *
      * @return the t
      */
+    public T first()
+    {
+        initSelect();
+        final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
+        selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
+                        .createBaseSelectElement().setElementC(SimpleSelectElement.FIRST));
+        return getThis();
+    }
+
+    public T last()
+    {
+        initSelect();
+        final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
+        selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
+                        .createBaseSelectElement().setElementC(SimpleSelectElement.LAST));
+        return getThis();
+    }
+
+    /**
+     * Value.
+     *
+     * @return the t
+     */
     public T value()
     {
         initSelect();
