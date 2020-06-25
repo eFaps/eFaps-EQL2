@@ -77,6 +77,56 @@ public class PrintQueryTest
                             .attribute("Name"),
                         "print  query type Sales_Document where   attribute[Attri] == 12  select  attribute[Name]"
                             });
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                                .query("Sales_Document")
+                                    .where()
+                                    .attribute("Attri").in(
+                                                    EQL2.builder().nestedQuery("SubType")
+                                                    )
+                            .select()
+                            .attribute("Name"),
+                        "print  query type Sales_Document where   attribute[Attri] in(  query type SubType )"
+                        + "  select  attribute[Name]"
+                            });
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                                .query("Sales_Document")
+                                    .where()
+                                    .attribute("Attri").in(
+                                                    EQL2.builder().nestedQuery("SubType")
+                                                        .where()
+                                                        .attr("SubAttribut").eq(333)
+                                                        .up()
+                                                    )
+                            .select()
+                            .attribute("Name"),
+                        "print  query type Sales_Document where   attribute[Attri] in("
+                        + "  query type SubType where   attribute[SubAttribut] == 333 )  select  attribute[Name]"
+                            });
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                                .query("Sales_Document")
+                                    .where()
+                                    .attribute("Attri").in(
+                                                    EQL2.builder().nestedQuery("SubType")
+                                                        .where()
+                                                        .attr("SubAttribut").eq(333)
+                                                        .up()
+                                                        .selectable(AbstractSelectables.attribute("OneAttr"))
+                                                    )
+                            .select()
+                            .attribute("Name"),
+                        "print  query type Sales_Document where   attribute[Attri] in("
+                        + "  query type SubType where   attribute[SubAttribut] == 333 select  attribute[OneAttr] )  "
+                        + "select  attribute[Name]"
+                            });
         return ret.iterator();
     }
 }

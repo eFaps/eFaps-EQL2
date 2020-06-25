@@ -26,6 +26,7 @@ import org.efaps.eql2.ILinkfromSelectElement;
 import org.efaps.eql2.ILinktoSelectElement;
 import org.efaps.eql2.IListStmt;
 import org.efaps.eql2.IPrintStatement;
+import org.efaps.eql2.IQuery;
 import org.efaps.eql2.ISelect;
 import org.efaps.eql2.ISelectElement;
 import org.efaps.eql2.ISelection;
@@ -74,7 +75,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
     {
         setStmt(IEql2Factory.eINSTANCE.createPrintQueryStatement());
         ((IPrintStatement<?>) getStmt()).selection();
-        ((PrintQueryStatement) getStmt()).setQueryC(_queryBuilder.getIQuery());
+        ((PrintQueryStatement) getStmt()).setQueryC((IQuery) _queryBuilder.getQuery());
         return getThis();
     }
 

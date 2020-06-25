@@ -20,6 +20,7 @@ import java.util.Arrays;
 
 import org.efaps.eql2.Comparison;
 import org.efaps.eql2.IEql2Factory;
+import org.efaps.eql2.INestedQuery;
 import org.efaps.eql2.IWhere;
 import org.efaps.eql2.IWhereElement;
 import org.efaps.eql2.IWhereElementTerm;
@@ -36,11 +37,15 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
 
     /** The parent. */
     private IWhere iWhere;
-    private AbstractQueryEQLBuilder<?> query;
+    private AbstractQueryEQLBuilder<?> queryBldr;
 
     public AbstractPrintEQLBuilder<?> select() {
-        query.getIQuery().setWhere(getIWhere());
-        return query.select();
+        queryBldr.getQuery().setWhere(getIWhere());
+        return queryBldr.select();
+    }
+
+    public AbstractQueryEQLBuilder<?> up() {
+        return queryBldr;
     }
 
     /**
@@ -195,6 +200,13 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
                         .toArray(String[]::new));
     }
 
+    public T in(final AbstractQueryEQLBuilder<?> _queryBldr)
+    {
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.IN).nestedQuery((INestedQuery) _queryBldr.getQuery());
+        return getThis();
+    }
+
     /**
      * In.
      *
@@ -265,7 +277,7 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
 
     protected void setQuery(final AbstractQueryEQLBuilder<?> _queryEQLBuilder)
     {
-        this.query = _queryEQLBuilder;
+        queryBldr = _queryEQLBuilder;
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2019 The eFaps Team
+ * Copyright 2003 - 2020 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,14 @@
 package org.efaps.eql2.bldr;
 
 import org.efaps.eql2.EQL2;
+import org.efaps.eql2.IBaseQuery;
 import org.efaps.eql2.IEql2Factory;
+import org.efaps.eql2.INestedQuery;
 import org.efaps.eql2.IQuery;
+import org.efaps.eql2.ISelect;
+import org.efaps.eql2.ISelection;
 import org.efaps.eql2.impl.PrintQueryStatement;
+
 
 /**
  * The Class AbstractQueryEQLBuilder.
@@ -32,9 +37,11 @@ public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
 {
 
     /** The i query. */
-    private IQuery iQuery;
+    private IBaseQuery<?> baseQuery;
 
     private AbstractPrintEQLBuilder<?> print;
+
+    private boolean nested;
 
     /**
      * Query.
@@ -45,31 +52,40 @@ public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
     public AbstractQueryEQLBuilder<?> query(final String... _types)
     {
         for (final String type : _types) {
-            getIQuery().addType(type);
+            getQuery().addType(type);
         }
         return getThis();
     }
 
-    public AbstractPrintEQLBuilder<?> select() {
-        ((PrintQueryStatement) print.getStmt()).setQueryC(getIQuery());
+    public AbstractPrintEQLBuilder<?> select()
+    {
+        ((PrintQueryStatement) print.getStmt()).setQueryC((IQuery) getQuery());
+        return print;
+    }
+
+    public AbstractPrintEQLBuilder<?> nestedSelect()
+    {
+        ((PrintQueryStatement) print.getStmt()).setQueryC((IQuery) getQuery());
         return print;
     }
 
     /**
      * Where attr eq value.
+     *
      * @param _string
      *
      * @return the t
      */
     public T where(final AbstractWhereBuilder<?> _whereBldr)
     {
-        getIQuery().setWhere(_whereBldr.getIWhere());
+        getQuery().setWhere(_whereBldr.getIWhere());
         return getThis();
     }
 
-    public AbstractWhereBuilder<?> where() {
+    public AbstractWhereBuilder<?> where()
+    {
         final AbstractWhereBuilder<?> ret = EQL2.builder().where();
-        this.getIQuery().setWhere(ret.getIWhere());
+        this.getQuery().setWhere(ret.getIWhere());
         ret.setQuery(this);
         return ret;
     }
@@ -79,11 +95,12 @@ public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
      *
      * @return the i query
      */
-    protected IQuery getIQuery() {
-        if (this.iQuery == null) {
-            this.iQuery = IEql2Factory.eINSTANCE.createQuery();
+    protected IBaseQuery<?> getQuery()
+    {
+        if (baseQuery == null) {
+            baseQuery = isNested() ? IEql2Factory.eINSTANCE.createNestedQuery() : IEql2Factory.eINSTANCE.createQuery();
         }
-        return this.iQuery;
+        return baseQuery;
     }
 
     @SuppressWarnings("unchecked")
@@ -96,5 +113,33 @@ public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
     protected void setPrint(final AbstractPrintEQLBuilder<?> _printEQLBuilder)
     {
         this.print = _printEQLBuilder;
+    }
+
+    public boolean isNested()
+    {
+        return nested;
+    }
+
+    public T nested(final boolean _nested)
+    {
+        this.nested = _nested;
+        return getThis();
+    }
+
+    public T selectable(final ISelectable _selectable)
+    {
+        final ISelection selection = IEql2Factory.eINSTANCE.createSelection();
+        switch (_selectable.getKey()) {
+            case AbstractSelectables.Attribute.KEY:
+                final String attrName = ((AbstractSelectables.Attribute) _selectable).getAttr();
+                final ISelect select = IEql2Factory.eINSTANCE.createSelect();
+                selection.addSelect(select);
+                select.addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name(attrName));
+                break;
+            default:
+                break;
+        }
+        ((INestedQuery) getQuery()).setSelection(selection);
+        return getThis();
     }
 }

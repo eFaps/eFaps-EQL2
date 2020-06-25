@@ -208,6 +208,11 @@ public abstract class EQL2
             return eql2.getQuery().query(_types);
         }
 
+        public AbstractQueryEQLBuilder<?> nestedQuery(final String... _types)
+        {
+            return eql2.getQuery().nested(true).query(_types);
+        }
+
         public AbstractWhereBuilder<?> where()
         {
             return eql2.getWhere();
