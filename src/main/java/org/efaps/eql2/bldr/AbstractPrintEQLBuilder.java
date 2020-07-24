@@ -110,6 +110,25 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
         return getThis();
     }
 
+    public T attributeSet(final String... _attrSetName)
+    {
+        initSelect();
+        for (final String attrSetName : _attrSetName) {
+            final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
+            ISelect select = selection.getSelects(selection.getSelectsLength() - 1);
+            if (ArrayUtils.isNotEmpty(select.getElements())) {
+                final ISelectElement lastElement = select.getElements(select.getElementsLength() - 1);
+                if (lastElement instanceof IAttributeSelectElement
+                                || lastElement instanceof IBaseSelectElement) {
+                    ((IPrintStatement<?>) getStmt()).getSelection().addSelect(IEql2Factory.eINSTANCE.createSelect());
+                    select = selection.getSelects(selection.getSelectsLength() - 1);
+                }
+            }
+            select.addElement(IEql2Factory.eINSTANCE.createAttributeSetSelectElement().name(attrSetName));
+        }
+        return getThis();
+    }
+
     /**
      * Linkto.
      *

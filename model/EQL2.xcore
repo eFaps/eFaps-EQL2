@@ -700,7 +700,19 @@ class AttributeSelectElement
     }
 }
 
-class AttributeSetSelectElement extends Named<AttributeSetSelectElement> {
+class AttributeSetSelectElement extends Named<AttributeSetSelectElement>
+{
+    op AttributeSetSelectElement setNameC(String _name) {
+        setName(_name)
+        return this
+    }
+    op String eqlStmt() {
+        return "attributeSet[" + getName() +  "]"
+    }
+    op AttributeSetSelectElement getThis()
+    {
+        return this
+    }
 }
 
 class FormatSelectElement
