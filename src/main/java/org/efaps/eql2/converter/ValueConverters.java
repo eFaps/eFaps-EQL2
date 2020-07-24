@@ -39,7 +39,9 @@ public class ValueConverters
             protected String internalToString(final String _value)
             {
                 final String ret;
-                if (_value.startsWith("format[")) {
+                if (_value.startsWith("format[\"") || _value.startsWith("format['")) {
+                    ret = _value.substring(8, _value.length() - 2);
+                } else if (_value.startsWith("format[")) {
                     ret = _value.substring(7, _value.length() - 1);
                 } else {
                     ret = _value;

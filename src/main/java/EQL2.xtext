@@ -222,7 +222,7 @@ KEYWORD: 'type' | 'oid' | 'instance' | 'label' | 'id' | 'uuid' | 'name' | 'class
     'length' | 'status' | 'key' | 'first' | 'last';
 
 terminal FORMAT:
-    'format[' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | "-" | "/"  | "#" | "," | ".")+ ']'
+    'format[' (('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | "-" | "/"  | "#" | "," | ".") | STRING )+ ']'
 ;
 
 terminal JOINING:

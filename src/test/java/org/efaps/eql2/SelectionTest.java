@@ -443,6 +443,18 @@ public class SelectionTest
         verifyStatement(_eqlBase + "select attribute[RateNetTotal].format[#,##0.00] as Formated", _printStmt);
     }
 
+    @Test(dataProvider = "PrintStmts", description = "attribute[StringValue].format['%s'] as Formated")
+    public void attributeStringFormat(final String _eqlBase,
+                                     final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .setAliasC("Formated")
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("StringValue"))
+                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setPatternC("%s")));
+        verifyStatement(_eqlBase + "select attribute[StringValue].format['%s'] as Formated", _printStmt);
+    }
+
     /**
      * Object print.
      *

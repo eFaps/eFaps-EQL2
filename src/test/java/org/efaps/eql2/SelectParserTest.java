@@ -38,4 +38,24 @@ public class SelectParserTest
         assertEquals(((AttributeSelectElement) select.getElements()[0]).getName(), "RateNetTotal");
         assertEquals(((FormatSelectElement) select.getElements()[1]).getPattern(), "#,##0.00");
     }
+
+    @Test(description = "Attribute with String format")
+    public void attrWithStringFormat()
+    {
+        final var parst = getSelectParser().doParse("attribute[StringAttribute].format[' %s-4 ']");
+        final var select = (ISelect) parst.getRootASTElement();
+        assertEquals(select.getElements().length, 2);
+        assertEquals(((AttributeSelectElement) select.getElements()[0]).getName(), "StringAttribute");
+        assertEquals(((FormatSelectElement) select.getElements()[1]).getPattern(), " %s-4 ");
+    }
+
+    @Test(description = "Attribute with String format quotes")
+    public void attrWithStringFormatQuotes()
+    {
+        final var parst = getSelectParser().doParse("attribute[StringAttribute].format[\" f%s-9s \"]");
+        final var select = (ISelect) parst.getRootASTElement();
+        assertEquals(select.getElements().length, 2);
+        assertEquals(((AttributeSelectElement) select.getElements()[0]).getName(), "StringAttribute");
+        assertEquals(((FormatSelectElement) select.getElements()[1]).getPattern(), " f%s-9s ");
+    }
 }
