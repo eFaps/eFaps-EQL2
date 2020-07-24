@@ -431,6 +431,24 @@ public class SelectionTest
      * @param _eqlBase the eql base
      * @param _printStmt the print stmt
      */
+    @Test(dataProvider = "PrintStmts", description = "attribute[RateNetTotal].format[#,##0.00] as Formated")
+    public void attributeFormatNumberAlias(final String _eqlBase,
+                                           final IPrintStatement<?> _printStmt)
+    {
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .setAliasC("Formated")
+                        .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().setNameC("RateNetTotal"))
+                        .addElement(IEql2Factory.eINSTANCE.createFormatSelectElement().setPatternC("#,##0.00")));
+        verifyStatement(_eqlBase + "select attribute[RateNetTotal].format[#,##0.00] as Formated", _printStmt);
+    }
+
+    /**
+     * Object print.
+     *
+     * @param _eqlBase the eql base
+     * @param _printStmt the print stmt
+     */
     @Test(dataProvider = "PrintStmts", description = "select attribute[Date].format[YYYY-MM-DD] as Algo,"
                     + "attribute[Date].format[MM-YYYY/DD] as Otro")
     public void nAttributeFormatAlias(final String _eqlBase,
