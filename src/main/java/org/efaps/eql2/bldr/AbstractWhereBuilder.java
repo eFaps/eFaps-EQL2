@@ -1,5 +1,5 @@
 /*
- * Copyright 2003 - 2017 The eFaps Team
+ * Copyright 2003 - 2020 The eFaps Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -115,8 +115,21 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T greater(final String _value)
     {
-        //final IWhereElement element = getParent().getCurrentTerm().element();
-        //element.comparison(Comparison.GREATER).addValue(_value);
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.GREATER).addValue(_value);
+        return getThis();
+    }
+
+    /**
+     * Eq.
+     *
+     * @param _value the value
+     * @return the t
+     */
+    public T greaterOrEq(final String _value)
+    {
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.GREATEREQ).addValue(_value);
         return getThis();
     }
 
@@ -128,8 +141,21 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T less(final String _value)
     {
-        //final IWhereElement element = getParent().getCurrentTerm().element();
-        //element.comparison(Comparison.LESS).addValue(_value);
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.LESS).addValue(_value);
+        return getThis();
+    }
+
+    /**
+     * Eq.
+     *
+     * @param _value the value
+     * @return the t
+     */
+    public T lessOrEq(final String _value)
+    {
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.LESSEQ).addValue(_value);
         return getThis();
     }
 
@@ -141,8 +167,8 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T like(final String _value)
     {
-        //final IWhereElement element = getParent().getCurrentTerm().element();
-        //element.comparison(Comparison.LIKE).addValue(_value);
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.LIKE).addValue(_value);
         return getThis();
     }
 
@@ -154,8 +180,8 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T uneq(final String _value)
     {
-        //final IWhereElement element = getParent().getCurrentTerm().element();
-        // element.comparison(Comparison.UNEQUAL).addValue(_value);
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.UNEQUAL).addValue(_value);
         return getThis();
     }
 
@@ -215,11 +241,10 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T notin(final String... _values)
     {
-        //final IWhereElement element = getParent().getCurrentTerm().element();
-        //element.comparison(_values.length == 1 ? Comparison.UNEQUAL : Comparison.NOTIN);
-        //for (final String value : _values) {
-        //element.addValue(value);
-        //}
+        final IWhereElement element = getCurrentElement();
+        for (final String value : _values) {
+            element.comparison(Comparison.NOTIN).addValue(value);
+        }
         return getThis();
     }
 
