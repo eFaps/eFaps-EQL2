@@ -77,7 +77,26 @@ public class PrintQueryTest
                             .attribute("Name"),
                         "print  query type Sales_Document where   attribute[Attri] == 12  select  attribute[Name]"
                             });
-
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                                .query("Sales_Document")
+                                    .where()
+                                    .attribute("Attri").isNull()
+                            .select()
+                            .attribute("Name"),
+                        "print  query type Sales_Document where   attribute[Attri] is null  select  attribute[Name]"
+                            });
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                                .query("Sales_Document")
+                                    .where()
+                                    .attribute("Attri").notIsNull()
+                            .select()
+                            .attribute("Name"),
+                        "print  query type Sales_Document where   attribute[Attri] not is null  select  attribute[Name]"
+                            });
         ret.add(new Object[] {
                         EQL2.builder()
                             .print()

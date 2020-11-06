@@ -248,6 +248,18 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
         return getThis();
     }
 
+    public T isNull() {
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.NULL);
+        return getThis();
+    }
+
+    public T notIsNull() {
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.NOTNULL);
+        return getThis();
+    }
+
     /**
      * And.
      *

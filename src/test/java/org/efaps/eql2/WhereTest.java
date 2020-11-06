@@ -252,6 +252,24 @@ public class WhereTest
         verifyStatement(_eqlBase + "DocumentLink eq \"Blue House\"", _stmt);
     }
 
+    @Test(dataProvider = "Stmts", description = "where ATTRIBUTE is null")
+    public void isNull(final String _eqlBase,
+                         final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere().element().attribute("DocumentLink").isNull();
+        verifyStatement(_eqlBase + "DocumentLink is null", _stmt);
+    }
+
+    @Test(dataProvider = "Stmts", description = "where ATTRIBUTE is not null")
+    public void isNotNull(final String _eqlBase,
+                         final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere().element().attribute("DocumentLink").isNotNull();
+        verifyStatement(_eqlBase + "DocumentLink not is null", _stmt);
+    }
+
     /**
      * Less string.
      *

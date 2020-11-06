@@ -1148,6 +1148,18 @@ class WhereElement
         return this
     }
 
+    op WhereElement isNull()
+    {
+        setComparison(Comparison.NULL)
+        return this
+    }
+
+    op WhereElement isNotNull()
+    {
+        setComparison(Comparison.NOTNULL)
+        return this
+    }
+
     op WhereElement addValue(String _value)
     {
         valuesList.add(_value)
@@ -1182,7 +1194,10 @@ class WhereElement
              ret = ret + comparison.getLiteral()
          }
          if (getNestedQuery() === null) {
-             if (valuesList.size() === 1) {
+            if (Comparison.NULL.equals(comparison) || Comparison.NOTNULL.equals(comparison) ) {
+
+
+            } else if (valuesList.size() === 1) {
                 var String value = valuesList.get(0);
                 if (value.matches("-?\\d+(\\.\\d+)?")) {
                     ret = ret + " " + value
@@ -1384,6 +1399,8 @@ enum Comparison
     LIKE as"like"
     IN as "in"
     NOTIN as "not in"
+    NULL as "is null"
+    NOTNULL as "not is null"
 }
 
 enum SimpleSelectElement
