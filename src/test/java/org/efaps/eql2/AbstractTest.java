@@ -116,7 +116,9 @@ public abstract class AbstractTest
         syntaxErrors.clear();
         if (result.hasSyntaxErrors()) {
             for (final INode error : result.getSyntaxErrors()) {
-                syntaxErrors.add(error.getSyntaxErrorMessage());
+                final var msg = error.getSyntaxErrorMessage();
+                System.out.println(msg);
+                syntaxErrors.add(msg);
             }
         }
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();

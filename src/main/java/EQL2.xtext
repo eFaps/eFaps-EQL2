@@ -55,7 +55,8 @@ DeleteQueryStatement:
 ;
 
 InsertStatement:
-    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'insert' | 'insert') 'type' typeName=Type 'set' (updateElements+=UpdateElement) (',' updateElements+=UpdateElement)*
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'insert' | 'insert') 'type' typeName=Type
+    'set' (updateElements+=UpdateElement) (',' updateElements+=UpdateElement)*
 ;
 
 CIPrintStatement:
@@ -72,8 +73,9 @@ CIPrintFormStatement:
 ;
 
 ExecStatement:
-    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'exec' | 'with' flags+=StmtFlag (',' flags+=StmtFlag)* 'execute' | 'exec' | 'execute') className=ClazzName (parameters+=(NUM | STRING) (',' parameters+=(NUM | STRING))*)? ('select'
-    selections+=ExecSelectionElement (',' selections+=ExecSelectionElement)*)? (order=Order)?;
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'exec' | 'with' flags+=StmtFlag (',' flags+=StmtFlag)*
+    'execute' | 'exec' | 'execute') className=ClazzName (parameters+=(NUM | STRING) (',' parameters+=(NUM | STRING))*)?
+    ('select' selections+=ExecSelectionElement (',' selections+=ExecSelectionElement)*)? (order=Order)?;
 
 
 Query:
@@ -104,8 +106,9 @@ WhereGroupTerm:
 ;
 
 WhereElement:
-    (attribute=Attribute | select = WhereSelect) => comparison=Comparison (values+=(Value | OID | STRING | BOOLEAN) | '(' values+=(Value | OID | STRING | BOOLEAN)
-    ("," values+=(Value | OID | STRING | BOOLEAN))* ')' | nestedQuery=NestedQuery );
+    (attribute=Attribute | select = WhereSelect) => comparison=Comparison (values+=(Value | OID | STRING | BOOLEAN)
+        | '(' values+=(Value | OID | STRING | BOOLEAN) ("," values+=(Value | OID | STRING | BOOLEAN))* ')'
+        | nestedQuery=NestedQuery );
 
 WhereSelect:
     elements+=SelectElement ('.' elements+=SelectElement)*
