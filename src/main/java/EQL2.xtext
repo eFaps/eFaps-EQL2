@@ -93,6 +93,10 @@ Where:
     'where' terms+=(WhereElementTerm | WhereGroupTerm)+
 ;
 
+Filter:
+    'filter' terms+=(WhereElementTerm | WhereGroupTerm)+
+;
+
 WhereTerm:
     WhereElementTerm | WhereGroupTerm
 ;
@@ -149,7 +153,7 @@ SelectElement:
 ;
 
 LinkfromSelectElement:
-    'linkfrom['typeName=(Type|LinkFromType)'#'attribute=Attribute']'
+    'linkfrom['typeName=(Type|LinkFromType)'#'attribute=Attribute ("," filter=Filter)? ']'
 ;
 
 ClassSelectElement:

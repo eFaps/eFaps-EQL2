@@ -373,6 +373,21 @@ public class SelectionTest
         verifyStatement(_eqlBase + "select linkfrom[TypeName#AttributeName]", _printStmt);
     }
 
+    @Test(dataProvider = "PrintStmts", description = "select linkfrom[TypeName#AttributeName, filter attribute[Name] eq true]")
+    public void linkfromWithFilter(final String _eqlBase,
+                         final IPrintStatement<?> _printStmt)
+    {
+        final var filter =(IFilter) IEql2Factory.eINSTANCE.createFilter()
+                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                        .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("Name").equal().value("true")));
+        _printStmt.getSelection()
+                .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                        .addElement(IEql2Factory.eINSTANCE.createLinkfromSelectElement()
+                                        .setTypeNameC("TypeName").setAttributeC("AttributeName")
+                                        .setFilterC(filter)));
+        verifyStatement(_eqlBase + "select linkfrom[TypeName#AttributeName, filter Name eq true]", _printStmt);
+    }
+
     /**
      * Object print.
      *

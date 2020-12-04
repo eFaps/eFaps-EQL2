@@ -625,6 +625,7 @@ class LinkfromSelectElement
     extends SelectElement, Typed<LinkfromSelectElement>
 {
     String attribute
+    contains Filter filter
 
     op LinkfromSelectElement setAttributeC(String _attribute) {
        setAttribute(_attribute)
@@ -636,8 +637,22 @@ class LinkfromSelectElement
        return this;
     }
 
+    op LinkfromSelectElement setFilterC(Filter _filter) {
+       setFilter(_filter)
+       return this;
+    }
+
+    op LinkfromSelectElement filter(Filter _filter) {
+       setFilter(_filter)
+       return this;
+    }
+
     op String eqlStmt() {
-        return "linkfrom[" + typeName + "#" + attribute + "]"
+        var String ret "linkfrom[" + typeName + "#" + attribute
+        if ( getFilter() !== null) {
+            ret += "balal"
+        }
+        return ret + "]"
     }
 
     op LinkfromSelectElement getThis()
@@ -968,6 +983,11 @@ class Where
         return ret
     }
 }
+
+class Filter extends Where {
+
+}
+
 
 abstract class WhereTerm<T>
     extends EQLElement, Generic<T>
