@@ -59,8 +59,8 @@ public class FunctionsTest
                                                                         .withFunction(IEql2Factory.eINSTANCE
                                                                                         .createNowAddFunction()
                                                                                         .withInterval(Interval.DAY)
-                                                                                        .withQuantity(4)))));
-        verifyStatement("print object 123.12 select nowAdd(+4,day)", stmt);
+                                                                                        .withQuantity(14)))));
+        verifyStatement("print object 123.12 select nowAdd(+14,day)", stmt);
     }
 
     @Test
@@ -76,5 +76,60 @@ public class FunctionsTest
                                                                                         .withQuantity(-4)))));
         verifyStatement("print object 123.12 select nowAdd(-4,day)", stmt);
     }
+
+    @Test
+    public void date()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.12")
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                                        .addElement(IEql2Factory.eINSTANCE.createFunctionSelectElement()
+                                                                        .withFunction(IEql2Factory.eINSTANCE
+                                                                                        .createDateFunction()))));
+        verifyStatement("print object 123.12 select date()", stmt);
+    }
+
+    @Test
+    public void dateAdd()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.12")
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                                        .addElement(IEql2Factory.eINSTANCE.createFunctionSelectElement()
+                                                                        .withFunction(IEql2Factory.eINSTANCE
+                                                                                        .createDateAddFunction()
+                                                                                        .withInterval(Interval.DAY)
+                                                                                        .withQuantity(4)))));
+        verifyStatement("print object 123.12 select dateAdd(4,day)", stmt);
+    }
+
+    @Test
+    public void dateAddPositiv()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.12")
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                                        .addElement(IEql2Factory.eINSTANCE.createFunctionSelectElement()
+                                                                        .withFunction(IEql2Factory.eINSTANCE
+                                                                                        .createDateAddFunction()
+                                                                                        .withInterval(Interval.DAY)
+                                                                                        .withQuantity(4)))));
+        verifyStatement("print object 123.12 select dateAdd(+4,day)", stmt);
+    }
+
+    @Test
+    public void dateAddNegative()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.12")
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                                        .addElement(IEql2Factory.eINSTANCE.createFunctionSelectElement()
+                                                                        .withFunction(IEql2Factory.eINSTANCE
+                                                                                        .createDateAddFunction()
+                                                                                        .withInterval(Interval.MONTH)
+                                                                                        .withQuantity(-4)))));
+        verifyStatement("print object 123.12 select dateAdd(-4,month)", stmt);
+    }
+
 
 }

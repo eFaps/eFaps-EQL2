@@ -86,22 +86,11 @@ public class ContentTest
 
         ret.add(new Object[] { "print obj 123.456 ", Arrays.asList(new String[] { "select" }) });
 
-        ret.add(new Object[] { "print obj 123.456 select ", Arrays.asList(new String[] { "pattern", "separator", "attribute[",
-                        "attributeset[", "base", "class", "class[", "exec", "execute", "file", "id",
-                        "instance", "key", "label", "length", "linkfrom[", "linkto[", "msgphrase[", "name",
-                        "oid", "status", "type", "uom", "uuid", "value", "first", "last" }) });
-
         ret.add(new Object[] { "print obj 123.456 select attribute[Attribute]",
                         Arrays.asList(new String[] { "as", "order", ",", ".", "]" }) });
 
         ret.add(new Object[] { "print obj 123.456 select attribute[Attribute] as ",
                         Arrays.asList(new String[] { }) });
-
-        ret.add(new Object[] { "print obj 123.456 select attribute[Attribute]. ",
-                        Arrays.asList(new String[] { "pattern", "separator", "attribute[",
-                                        "attributeset[", "base", "class", "class[", "exec", "execute", "file", "id",
-                                        "instance", "key", "label", "length", "linkfrom[", "linkto[", "msgphrase[",
-                                        "name", "oid", "status", "type", "uom", "uuid", "value", "first", "last" }) });
 
         ret.add(new Object[] { "print query ",
                         Arrays.asList(new String[] { "type" }) });

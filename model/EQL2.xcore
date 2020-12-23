@@ -1472,7 +1472,11 @@ class FunctionSelectElement
     }
 
     op String eqlStmt() {
-        return function.eqlStmt()
+        var ret = ""
+        if (getFunction() !== null) {
+            ret = getFunction() .eqlStmt()
+        }
+        return ret
     }
 }
 
@@ -1490,11 +1494,11 @@ class NowFunction
 class NowAddFunction
     extends Function
 {
-    Integer quantity
+    String quantity
     Interval interval
 
-    op NowAddFunction withQuantity(Integer quantity) {
-        setQuantity(quantity)
+    op NowAddFunction withQuantity(int quantity) {
+        setQuantity(String.valueOf(quantity))
         return this
     }
 
@@ -1504,7 +1508,36 @@ class NowAddFunction
     }
 
     op String eqlStmt() {
-        return "nowAdd(" + quantity + ", " + interval + ")"
+        return "nowAdd(" + Integer.valueOf(quantity) + ", " + interval + ")"
+    }
+}
+
+class DateFunction
+    extends Function
+{
+    op String eqlStmt() {
+        return "date()"
+    }
+}
+
+class DateAddFunction
+    extends Function
+{
+    String quantity
+    Interval interval
+
+    op DateAddFunction withQuantity(int quantity) {
+        setQuantity(String.valueOf(quantity))
+        return this
+    }
+
+     op DateAddFunction withInterval(Interval interval) {
+        setInterval(interval)
+        return this
+    }
+
+    op String eqlStmt() {
+        return "dateAdd(" + Integer.valueOf(quantity) + ", " + interval + ")"
     }
 }
 

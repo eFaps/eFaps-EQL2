@@ -194,7 +194,7 @@ ExecSelectElement:
     ('exec' | 'execute') className=ClazzName parameters+=(STRING | NUM)(","parameters+=(STRING | NUM))*;
 
 FunctionSelectElement:
-    function = (NowFunction | NowAddFunction)
+    function = (NowFunction | NowAddFunction | DateFunction | DateAddFunction)
 ;
 
 ClazzName hidden():
@@ -233,11 +233,19 @@ Attribute:
 ;
 
 NowFunction returns NowFunction:
-    'now()'
+    {NowFunction} 'now()'
 ;
 
 NowAddFunction:
-    'nowAdd(' quantity=INT ',' interval = Interval ')'
+    'nowAdd(' quantity=NUM ',' interval = Interval ')'
+;
+
+DateFunction returns DateFunction:
+    {DateFunction} 'date()'
+;
+
+DateAddFunction:
+    'dateAdd(' quantity=NUM ',' interval = Interval ')'
 ;
 
 enum Interval :
@@ -260,11 +268,8 @@ terminal BOOLEAN:
     'true' | 'false'
 ;
 
-terminal INT returns ecore::EInt:
-    ('+' | '-') NUM+;
-
 terminal NUM:
-    ('0'..'9')+;
+    ('+' | '-')?('0'..'9')+;
 
 terminal fragment HEX:
     ('a'..'f' | '0'..'9');
