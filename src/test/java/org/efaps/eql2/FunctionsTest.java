@@ -17,6 +17,8 @@
 
 package org.efaps.eql2;
 
+import static org.testng.Assert.assertEquals;
+
 import org.testng.annotations.Test;
 
 public class FunctionsTest
@@ -131,5 +133,50 @@ public class FunctionsTest
         verifyStatement("print object 123.12 select dateAdd(-4,month)", stmt);
     }
 
+    @Test
+    public void queryNow()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                        .query(IEql2Factory.eINSTANCE.createQuery().addType("Sales_Invoice")
+                            .where(IEql2Factory.eINSTANCE.createWhere()
+                                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                                        .element(IEql2Factory.eINSTANCE
+                                                    .createWhereElement()
+                                                    .attribute("Date")
+                                                    .comparison(Comparison.LESS)
+                                                    .function(IEql2Factory.eINSTANCE
+                                                                    .createNowFunction())))))
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                                        .addElement(IEql2Factory.eINSTANCE
+                                                                        .createAttributeSelectElement()
+                                                                        .setNameC("Date"))));
+        final var eql = verifyStatement("print query Sales_Invoice where Date < now() select attribute[Date]", stmt);
+        assertEquals(eql, "print  query type Sales_Invoice where   attribute[Date] < now()  select  attribute[Date]");
+    }
+
+    @Test
+    public void queryNowAdd()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintQueryStatement()
+                        .query(IEql2Factory.eINSTANCE.createQuery().addType("Sales_Invoice")
+                            .where(IEql2Factory.eINSTANCE.createWhere()
+                                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                                        .element(IEql2Factory.eINSTANCE
+                                                    .createWhereElement()
+                                                    .attribute("Date")
+                                                    .comparison(Comparison.LESS)
+                                                    .function(IEql2Factory.eINSTANCE
+                                                                    .createNowAddFunction()
+                                                                    .withInterval(Interval.MONTH)
+                                                                    .withQuantity(5))))))
+                        .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                                        .addElement(IEql2Factory.eINSTANCE
+                                                                        .createAttributeSelectElement()
+                                                                        .setNameC("Date"))));
+        final var eql = verifyStatement("print query Sales_Invoice where Date < nowAdd(5,month) select attribute[Date]", stmt);
+        assertEquals(eql, "print  query type Sales_Invoice where   attribute[Date] < nowAdd(5, month)  select  attribute[Date]");
+    }
 
 }

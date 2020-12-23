@@ -109,7 +109,7 @@ public abstract class AbstractTest
      * @param _eqlStmt the eql stmt
      * @param _object the object
      */
-    public void verifyStatement(final String _eqlStmt,
+    public String verifyStatement(final String _eqlStmt,
                                 final IEQLElement _object)
     {
         final IParseResult result = getParser().doParse(_eqlStmt);
@@ -138,6 +138,7 @@ public abstract class AbstractTest
             }
         }
         Assert.assertEquals(eObject.eqlStmt(), _object.eqlStmt());
+        return eObject.eqlStmt();
     }
 
     /**

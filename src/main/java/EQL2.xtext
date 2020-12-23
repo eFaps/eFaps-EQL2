@@ -112,7 +112,8 @@ WhereGroupTerm:
 WhereElement:
     (attribute=Attribute | select = WhereSelect) => comparison=Comparison (values+=(Value | OID | STRING | BOOLEAN)
         | '(' values+=(Value | OID | STRING | BOOLEAN) ("," values+=(Value | OID | STRING | BOOLEAN))* ')'
-        | nestedQuery=NestedQuery );
+        | nestedQuery=NestedQuery
+        | function=(NowFunction| NowAddFunction | DateFunction | DateAddFunction));
 
 WhereSelect:
     elements+=SelectElement ('.' elements+=SelectElement)*

@@ -1085,6 +1085,8 @@ class WhereElement
 
     String[] values
 
+    contains Function function
+
     contains NestedQuery nestedQuery
 
     op WhereElement nestedQuery(NestedQuery _nestedQuery)
@@ -1099,6 +1101,12 @@ class WhereElement
             .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement()
                 .name(_attribute))
         )
+        return this
+    }
+
+    op WhereElement function(Function _function)
+    {
+        setFunction(_function)
         return this
     }
 
@@ -1213,7 +1221,9 @@ class WhereElement
          } else {
              ret = ret + comparison.getLiteral()
          }
-         if (getNestedQuery() === null) {
+         if (getFunction() !== null) {
+            ret = ret + " " + getFunction().eqlStmt()
+         } else if (getNestedQuery() === null) {
             if (Comparison.NULL.equals(comparison) || Comparison.NOTNULL.equals(comparison) ) {
 
 
