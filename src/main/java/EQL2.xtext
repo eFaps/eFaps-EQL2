@@ -251,7 +251,7 @@ terminal DATE_ADD_FUNCTION returns ecore::EString:
 ;
 
 terminal INTERVAL:
-    'hour' | 'day' | 'month' | 'week'
+    'hour' | 'day' | 'week' | 'month' | 'year'
 ;
 
 KEYWORD: 'type' | 'oid' | 'instance' | 'label' | 'id' | 'uuid' | 'name' | 'class' | 'value' | 'base' | 'uom' | 'file' |

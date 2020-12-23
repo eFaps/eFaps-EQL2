@@ -40,6 +40,9 @@ import org.eclipse.xtext.nodemodel.INode;
 public class ValueConverters
     extends Ecore2XtextTerminalConverters
 {
+    private static Pattern NOW_ADD_PATTERN = Pattern.compile("nowAdd\\(((?:\\+|\\-)?\\d+),(\\w+)\\)");
+    private static Pattern DATE_ADD_PATTERN = Pattern.compile("dateAdd\\(((?:\\+|\\-)?\\d+),(\\w+)\\)");
+
     @ValueConverter(rule = "FORMAT")
     public IValueConverter<String> format() {
         return new AbstractNullSafeConverter<String>() {
@@ -187,8 +190,7 @@ public class ValueConverters
             @Override
             protected String internalToString(final String _value)
             {
-                final var pattern = Pattern.compile("nowAdd\\(((?:\\+|\\-)?\\d+),(\\w+)\\)");
-                final var matcher = pattern.matcher(_value);
+                final var matcher = NOW_ADD_PATTERN.matcher(_value);
                 TemporalAmount temporalAmount = Period.ZERO;
                 if (matcher.matches()) {
                     final var quantity  = Integer.valueOf(matcher.group(1));
@@ -254,8 +256,7 @@ public class ValueConverters
             @Override
             protected String internalToString(final String _value)
             {
-                final var pattern = Pattern.compile("dateAdd\\(((?:\\+|\\-)?\\d+),(\\w+)\\)");
-                final var matcher = pattern.matcher(_value);
+                final var matcher = DATE_ADD_PATTERN.matcher(_value);
                 TemporalAmount temporalAmount = Period.ZERO;
                 if (matcher.matches()) {
                     final var quantity  = Integer.valueOf(matcher.group(1));
@@ -270,6 +271,8 @@ public class ValueConverters
                         case "month":
                             temporalAmount = Period.ofMonths(quantity);
                             break;
+                        case "year":
+                            temporalAmount = Period.ofYears(quantity);
                         default:
                             break;
                     }
@@ -286,6 +289,4 @@ public class ValueConverters
             }
         };
     }
-
-
 }

@@ -199,7 +199,6 @@ public class FunctionsTest
                         + datetime.substring(0, 20)));
     }
 
-
     @Test
     public void queryNowAddNegative()
     {
