@@ -147,8 +147,10 @@ Select:
      elements+=SelectElement ('.' elements+=SelectElement)* (=> 'as' alias=Alias)?;
 
 SelectElement:
-    ( AttributeSelectElement | AttributeSetSelectElement | LinktoSelectElement | ExecSelectElement | BaseSelectElement
-        | FormatSelectElement | LinkfromSelectElement | ClassSelectElement | MsgPhraseSelectElement | JoiningSelectElement
+    ( AttributeSelectElement | AttributeSetSelectElement | LinktoSelectElement
+        | ExecSelectElement | BaseSelectElement | FormatSelectElement
+        | LinkfromSelectElement | ClassSelectElement | MsgPhraseSelectElement
+        | JoiningSelectElement | FunctionSelectElement
     )
 ;
 
@@ -191,6 +193,10 @@ BaseSelectElement:
 ExecSelectElement:
     ('exec' | 'execute') className=ClazzName parameters+=(STRING | NUM)(","parameters+=(STRING | NUM))*;
 
+FunctionSelectElement:
+    function = (NowFunction | NowAddFunction)
+;
+
 ClazzName hidden():
     NAMESTR('.'NAMESTR | 'select')+ (=>WS)
 ;
@@ -226,6 +232,19 @@ Attribute:
     NAMESTR
 ;
 
+NowFunction returns NowFunction:
+    'now()'
+;
+
+NowAddFunction:
+    'nowAdd(' quantity=INT ',' interval = Interval ')'
+;
+
+enum Interval :
+    DAY='day' | MONTH = 'month'
+;
+
+
 KEYWORD: 'type' | 'oid' | 'instance' | 'label' | 'id' | 'uuid' | 'name' | 'class' | 'value' | 'base' | 'uom' | 'file' |
     'length' | 'status' | 'key' | 'first' | 'last';
 
@@ -240,6 +259,9 @@ terminal JOINING:
 terminal BOOLEAN:
     'true' | 'false'
 ;
+
+terminal INT returns ecore::EInt:
+    ('+' | '-') NUM+;
 
 terminal NUM:
     ('0'..'9')+;

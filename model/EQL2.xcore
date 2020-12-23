@@ -1461,3 +1461,56 @@ interface Generic<T>
     op T getThis()
 }
 
+class FunctionSelectElement
+    extends SelectElement
+{
+    contains Function function
+
+    op FunctionSelectElement withFunction(Function function) {
+        setFunction(function)
+        return this
+    }
+
+    op String eqlStmt() {
+        return function.eqlStmt()
+    }
+}
+
+interface Function extends EQLElement {
+}
+
+class NowFunction
+    extends Function
+{
+    op String eqlStmt() {
+        return "now()"
+    }
+}
+
+class NowAddFunction
+    extends Function
+{
+    Integer quantity
+    Interval interval
+
+    op NowAddFunction withQuantity(Integer quantity) {
+        setQuantity(quantity)
+        return this
+    }
+
+     op NowAddFunction withInterval(Interval interval) {
+        setInterval(interval)
+        return this
+    }
+
+    op String eqlStmt() {
+        return "nowAdd(" + quantity + ", " + interval + ")"
+    }
+}
+
+enum Interval
+{
+    DAY as "day"
+    MONTH as "month"
+}
+
