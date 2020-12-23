@@ -12,7 +12,7 @@
     interfaceNamePattern="I{0}",
     classNamePattern="{0}",
     copyrightFields="true",
-    copyrightText="        Copyright 2003 - 2019 The eFaps Team
+    copyrightText="        Copyright 2003 - 2020 The eFaps Team
 
 Licensed under the Apache License, Version 2.0 (the \"License\");
 you may not use this file except in compliance with the License.
@@ -28,8 +28,10 @@ limitations under the License.")
 
 package org.efaps.eql2
 
-import org.eclipse.xtext.common.types.Iterable
 import org.apache.commons.lang3.StringUtils
+
+annotation "http://www.eclipse.org/emf/2002/Ecore" as Ecore
+annotation "http://www.eclipse.org/emf/2002/GemModel" as GenModel
 
 interface Statement<T>
     extends EQLElement, Generic<T>
@@ -1506,17 +1508,14 @@ class NowAddFunction
 {
     String quantity
     Interval interval
-
     op NowAddFunction withQuantity(int quantity) {
         setQuantity(String.valueOf(quantity))
         return this
     }
-
-     op NowAddFunction withInterval(Interval interval) {
+    op NowAddFunction withInterval(Interval interval) {
         setInterval(interval)
         return this
     }
-
     op String eqlStmt() {
         return "nowAdd(" + Integer.valueOf(quantity) + ", " + interval + ")"
     }
@@ -1533,19 +1532,16 @@ class DateFunction
 class DateAddFunction
     extends Function
 {
-    String quantity
+    String quantity = "1"
     Interval interval
-
     op DateAddFunction withQuantity(int quantity) {
         setQuantity(String.valueOf(quantity))
         return this
     }
-
-     op DateAddFunction withInterval(Interval interval) {
+    op DateAddFunction withInterval(Interval interval) {
         setInterval(interval)
         return this
     }
-
     op String eqlStmt() {
         return "dateAdd(" + Integer.valueOf(quantity) + ", " + interval + ")"
     }
@@ -1555,5 +1551,8 @@ enum Interval
 {
     DAY as "day"
     MONTH as "month"
+    WEEK as "week"
 }
+
+type Iterable<T> wraps Iterable
 
