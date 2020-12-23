@@ -16,7 +16,9 @@
  */
 package org.efaps.eql2.converter;
 
+import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.Period;
 import java.time.ZoneOffset;
@@ -154,7 +156,7 @@ public class ValueConverters
         };
     }
 
-    @ValueConverter(rule = "NowFunction")
+    @ValueConverter(rule = "NOW_FUNCTION")
     public IValueConverter<String> NowFunction()
     {
         return new AbstractNullSafeConverter<String>()
@@ -192,6 +194,9 @@ public class ValueConverters
                     final var quantity  = Integer.valueOf(matcher.group(1));
                     final var interval  = matcher.group(2);
                     switch (interval) {
+                        case "hour":
+                            temporalAmount = Duration.ofHours(quantity);
+                            break;
                         case "day":
                             temporalAmount = Period.ofDays(quantity);
                             break;
@@ -217,4 +222,70 @@ public class ValueConverters
             }
         };
     }
+
+    @ValueConverter(rule = "DATE_FUNCTION")
+    public IValueConverter<String> DateFunction()
+    {
+        return new AbstractNullSafeConverter<String>()
+        {
+
+            @Override
+            protected String internalToString(final String _value)
+            {
+                return LocalDate.now().toString();
+            }
+
+            @Override
+            protected String internalToValue(final String _string,
+                                             final INode _node)
+                throws ValueConverterException
+            {
+                return internalToString(_string);
+            }
+        };
+    }
+
+    @ValueConverter(rule = "DATE_ADD_FUNCTION")
+    public IValueConverter<String> DateAddFunction()
+    {
+        return new AbstractNullSafeConverter<String>()
+        {
+
+            @Override
+            protected String internalToString(final String _value)
+            {
+                final var pattern = Pattern.compile("dateAdd\\(((?:\\+|\\-)?\\d+),(\\w+)\\)");
+                final var matcher = pattern.matcher(_value);
+                TemporalAmount temporalAmount = Period.ZERO;
+                if (matcher.matches()) {
+                    final var quantity  = Integer.valueOf(matcher.group(1));
+                    final var interval  = matcher.group(2);
+                    switch (interval) {
+                        case "day":
+                            temporalAmount = Period.ofDays(quantity);
+                            break;
+                        case "week":
+                            temporalAmount = Period.ofWeeks(quantity);
+                            break;
+                        case "month":
+                            temporalAmount = Period.ofMonths(quantity);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                return LocalDate.now().plus(temporalAmount).toString();
+            }
+
+            @Override
+            protected String internalToValue(final String _string,
+                                             final INode _node)
+                throws ValueConverterException
+            {
+                return internalToString(_string);
+            }
+        };
+    }
+
+
 }
