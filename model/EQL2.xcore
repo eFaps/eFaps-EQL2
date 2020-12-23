@@ -33,19 +33,16 @@ import org.apache.commons.lang3.StringUtils
 annotation "http://www.eclipse.org/emf/2002/Ecore" as Ecore
 annotation "http://www.eclipse.org/emf/2002/GemModel" as GenModel
 
-interface Statement<T>
-    extends EQLElement, Generic<T>
+interface Statement<T> extends EQLElement, Generic<T>
 {
     StmtFlag[] flags
-
     op T addFlag(StmtFlag _flag) {
         flagsList.add(_flag)
         return getThis()
     }
-
     op String flagStr() {
         if (getFlagsList().isEmpty()) {
-          return ""
+            return ""
         }
         var ret = "with "
         var first = true
@@ -61,82 +58,64 @@ interface Statement<T>
     }
 }
 
-interface ObjectStmt<T>
-    extends Statement<T>
+interface ObjectStmt<T> extends Statement<T>
 {
-    //@GenModel(suppressedSetVisibility="true")
+    // @GenModel(suppressedSetVisibility="true")
     String oid
-
     op T setOidC(String _oid) {
         this.oid = _oid
         return getThis()
     }
-
     op T oid(String _oid) {
         this.oid = _oid
         return getThis()
     }
 }
 
-interface ListStmt<T>
-    extends Statement<T>
+interface ListStmt<T> extends Statement<T>
 {
     String[] oids
-
     op T addOid(String _oid) {
         oidsList.add(_oid)
         return getThis()
     }
 }
 
-interface QueryStmt<T>
-    extends Statement<T>
+interface QueryStmt<T> extends Statement<T>
 {
     contains Query query
-
-    op T setQueryC(Query _query)
-    {
+    op T setQueryC(Query _query) {
         setQuery(_query)
         return getThis()
     }
-
-    op T query()
-    {
+    op T query() {
         if (getQuery() === null) {
             setQuery(IEql2Factory.eINSTANCE.createQuery())
         }
         return getThis()
     }
-
-    op T query(Query _query)
-    {
+    op T query(Query _query) {
         setQuery(_query)
         return getThis()
     }
 }
 
-class UpdateElementsStmt<T>
-    extends Statement<T>
+class UpdateElementsStmt<T> extends Statement<T>
 {
     contains UpdateElement[] updateElements
-
-    op T addUpdateElements(UpdateElement _element)
-    {
+    op T addUpdateElements(UpdateElement _element) {
         updateElementsList.add(_element)
         return getThis()
     }
-
-    op T update(String _attribute, String _value)
-    {
-        var element =  IEql2Factory.eINSTANCE.createUpdateElement()
+    op T update(String _attribute, String _value) {
+        var element = IEql2Factory.eINSTANCE.createUpdateElement()
         updateElementsList.add(element)
         element.attribute(_attribute)
         element.value(_value)
         return getThis()
     }
-
     op String eqlStmt() {
-        var String ret =  " set "
+        var String ret = " set "
         var first = true
         for (IUpdateElement ele : getUpdateElementsList()) {
             if (first) {
@@ -150,16 +129,13 @@ class UpdateElementsStmt<T>
     }
 }
 
-abstract class PrintStatement<T>
-    extends Statement<T>, Ordered<T>
+abstract class PrintStatement<T> extends Statement<T>, Ordered<T>
 {
     contains Selection selection opposite printStatement
-
     op T setSelectionC(Selection _selection) {
         setSelection(_selection)
         return getThis()
     }
-
     op T selection() {
         if (getSelection === null) {
             setSelection(IEql2Factory.eINSTANCE.createSelection)
@@ -171,7 +147,6 @@ abstract class PrintStatement<T>
 class PrintObjectStatement
     extends PrintStatement<PrintObjectStatement>, ObjectStmt<PrintObjectStatement>
 {
-
     op String eqlStmt() {
         var String ret = flagStr() + "print object " + oid + " "
         if (getSelection() !== null) {
@@ -179,7 +154,6 @@ class PrintObjectStatement
         }
         return ret
     }
-
     op PrintObjectStatement getThis() {
         return this
     }
@@ -204,11 +178,10 @@ class PrintListStatement
             ret = ret + " " + getSelection().eqlStmt()
         }
         if (getOrder() !== null) {
-            ret  = ret + getOrder().eqlStmt()
+            ret = ret + getOrder().eqlStmt()
         }
         return ret
     }
-
     op PrintListStatement getThis() {
         return this
     }
@@ -226,11 +199,10 @@ class PrintQueryStatement
             ret = ret + " " + getSelection().eqlStmt()
         }
         if (getOrder() !== null) {
-            ret  = ret + getOrder().eqlStmt()
+            ret = ret + getOrder().eqlStmt()
         }
         return ret
     }
-
     op PrintQueryStatement getThis() {
         return this
     }
@@ -250,13 +222,10 @@ class UpdateObjectStatement
         }
         return ret
     }
-
-    op UpdateObjectStatement getThis()
-    {
+    op UpdateObjectStatement getThis() {
         return this
     }
 }
-
 
 class UpdateListStatement
     extends UpdateStatement<UpdateListStatement>, ListStmt<UpdateListStatement>
@@ -278,9 +247,7 @@ class UpdateListStatement
         }
         return ret
     }
-
-    op UpdateListStatement getThis()
-    {
+    op UpdateListStatement getThis() {
         return this
     }
 }
@@ -298,15 +265,12 @@ class UpdateQueryStatement
         }
         return ret
     }
-
-    op UpdateQueryStatement getThis()
-    {
+    op UpdateQueryStatement getThis() {
         return this
     }
 }
 
-class DeleteStatement<T>
-    extends Statement<T>
+class DeleteStatement<T> extends Statement<T>
 {
 }
 
@@ -316,9 +280,7 @@ class DeleteObjectStatement
     op String eqlStmt() {
         return flagStr() + "delete object " + oid
     }
-
-    op DeleteObjectStatement getThis()
-    {
+    op DeleteObjectStatement getThis() {
         return this
     }
 }
@@ -326,7 +288,7 @@ class DeleteObjectStatement
 class DeleteListStatement
     extends DeleteStatement<DeleteListStatement>, ListStmt<DeleteListStatement>
 {
-     op String eqlStmt() {
+    op String eqlStmt() {
         var String ret = flagStr() + "delete list ("
         var first = true
         for (String oid : getOidsList()) {
@@ -340,9 +302,7 @@ class DeleteListStatement
         ret = ret + ")"
         return ret
     }
-
-    op DeleteListStatement getThis()
-    {
+    op DeleteListStatement getThis() {
         return this
     }
 }
@@ -357,9 +317,7 @@ class DeleteQueryStatement
         }
         return ret
     }
-
-    op DeleteQueryStatement getThis()
-    {
+    op DeleteQueryStatement getThis() {
         return this
     }
 }
@@ -374,15 +332,12 @@ class InsertStatement
         }
         return ret
     }
-
-    op InsertStatement getThis()
-    {
+    op InsertStatement getThis() {
         return this
     }
 }
 
-interface CIPrintStatement<T>
-    extends Statement<T>
+interface CIPrintStatement<T> extends Statement<T>
 {
 }
 
@@ -392,9 +347,7 @@ class CIPrintTypeStatement
     op String eqlStmt() {
         return "print ci type " + getTypeName()
     }
-
-    op CIPrintTypeStatement getThis()
-    {
+    op CIPrintTypeStatement getThis() {
         return this
     }
 }
@@ -405,27 +358,19 @@ class CIPrintFormStatement
     op String eqlStmt() {
         return "print ci form " + getName()
     }
-
-    op CIPrintFormStatement getThis()
-    {
+    op CIPrintFormStatement getThis() {
         return this
     }
 }
 
-
-interface Ordered<T>
-    extends Generic<T>, EQLElement
+interface Ordered<T> extends Generic<T>, EQLElement
 {
     contains Order order
-
-    op T order(Order _order)
-    {
+    op T order(Order _order) {
         setOrder(_order)
         return getThis()
     }
-
-    op T orderBy(String _key, boolean _desc)
-    {
+    op T orderBy(String _key, boolean _desc) {
         if (getOrder() === null) {
             setOrder(IEql2Factory.eINSTANCE.createOrder)
         }
@@ -438,23 +383,18 @@ class Order
     extends EQLElement
 {
     contains OrderElement[] elements
-
-    op Order addElement(OrderElement _element)
-    {
+    op Order addElement(OrderElement _element) {
         elementsList.add(_element)
         return this
     }
-
-    op Order addElement(String _key, boolean _desc)
-    {
+    op Order addElement(String _key, boolean _desc) {
         var ele = IEql2Factory.eINSTANCE.createOrderElement
         ele.key(_key).desc(_desc)
         elementsList.add(ele)
         return this
     }
-
     op String eqlStmt() {
-        var String ret =  " order by "
+        var String ret = " order by "
         var first = true
         for (IOrderElement ele : getElementsList()) {
             if (first) {
@@ -472,21 +412,15 @@ class OrderElement
     extends EQLElement
 {
     String key
-
     boolean desc = "false"
-
-    op OrderElement key(String _key)
-    {
+    op OrderElement key(String _key) {
         setKey(_key)
         return this
     }
-
-    op OrderElement desc(boolean  _desc)
-    {
+    op OrderElement desc(boolean  _desc) {
         setDesc(_desc)
         return this
     }
-
     op String eqlStmt() {
         var String ret = key
         if (desc) {
@@ -502,19 +436,14 @@ class Limit
     extends EQLElement
 {
     String value = "-1"
-
-    op Limit setValueC(String _value)
-    {
+    op Limit setValueC(String _value) {
         setValue(_value)
         return this
     }
-
-    op Limit value(String _value)
-    {
+    op Limit value(String _value) {
         setValue(_value)
         return this
     }
-
     op String eqlStmt() {
         return "limit " + getValue()
     }
@@ -524,29 +453,20 @@ class ExecStatement
     extends Statement<ExecStatement>, Ordered<ExecStatement>
 {
     String className
-
     String[] parameters
-
     contains ExecSelectionElement[] selections
-
-    op ExecStatement className(String _className)
-    {
+    op ExecStatement className(String _className) {
         setClassName(_className)
         return this
     }
-
-    op ExecStatement addParameter(String _parameter)
-    {
+    op ExecStatement addParameter(String _parameter) {
         parametersList.add(_parameter)
         return this
     }
-
-    op ExecStatement addSelection(ExecSelectionElement _selection)
-    {
+    op ExecStatement addSelection(ExecSelectionElement _selection) {
         selectionsList.add(_selection)
         return this
     }
-
     op String eqlStmt() {
         var String ret = flagStr() + "execute " + getClassName()
         var first = true
@@ -571,48 +491,36 @@ class ExecStatement
             }
         }
         if (getOrder() !== null) {
-            ret  = ret + getOrder().eqlStmt()
+            ret = ret + getOrder().eqlStmt()
         }
         return ret
     }
-
-    op ExecStatement getThis()
-    {
+    op ExecStatement getThis() {
         return this
     }
 }
 
-interface Named<T>
-    extends SelectElement, Generic<T>
+interface Named<T> extends SelectElement, Generic<T>
 {
     String name
-
-    op T setNameC(String _name)
-    {
+    op T setNameC(String _name) {
         setName(_name)
         return getThis()
     }
-
-    op T name(String _name)
-    {
+    op T name(String _name) {
         setName(_name)
         return getThis()
     }
 }
 
-interface Typed<T>
-    extends Generic<T>
+interface Typed<T> extends Generic<T>
 {
     String typeName
-
-    op T setTypeNameC(String _typeName)
-    {
+    op T setTypeNameC(String _typeName) {
         setTypeName(_typeName)
         return getThis()
     }
-
-    op T typeName(String _typeName)
-    {
+    op T typeName(String _typeName) {
         setTypeName(_typeName)
         return getThis()
     }
@@ -628,37 +536,31 @@ class LinkfromSelectElement
 {
     String attribute
     contains Filter filter
-
     op LinkfromSelectElement setAttributeC(String _attribute) {
-       setAttribute(_attribute)
-       return this;
+        setAttribute(_attribute)
+        return this;
     }
-
     op LinkfromSelectElement attribute(String _attribute) {
-       setAttribute(_attribute)
-       return this;
+        setAttribute(_attribute)
+        return this;
     }
-
     op LinkfromSelectElement setFilterC(Filter _filter) {
-       setFilter(_filter)
-       return this;
+        setFilter(_filter)
+        return this;
     }
-
     op LinkfromSelectElement filter(Filter _filter) {
-       setFilter(_filter)
-       return this;
+        setFilter(_filter)
+        return this;
     }
-
     op String eqlStmt() {
-        var String ret "linkfrom[" + typeName + "#" + attribute
-        if ( getFilter() !== null) {
+        var String ret
+        "linkfrom[" + typeName + "#" + attribute
+        if (getFilter() !== null) {
             ret += "balal"
         }
         return ret + "]"
     }
-
-    op LinkfromSelectElement getThis()
-    {
+    op LinkfromSelectElement getThis() {
         return this
     }
 }
@@ -670,13 +572,10 @@ class ClassSelectElement
         setName(_name)
         return this
     }
-
     op String eqlStmt() {
         return "class[" + getName() + "]"
     }
-
-    op ClassSelectElement getThis()
-    {
+    op ClassSelectElement getThis() {
         return this
     }
 }
@@ -684,18 +583,14 @@ class ClassSelectElement
 class LinktoSelectElement
     extends Named<LinktoSelectElement>
 {
-
     op LinktoSelectElement setNameC(String _name) {
         setName(_name)
         return this
     }
-
     op String eqlStmt() {
         return "linkto[" + getName() + "]"
     }
-
-    op LinktoSelectElement getThis()
-    {
+    op LinktoSelectElement getThis() {
         return this
     }
 }
@@ -708,11 +603,9 @@ class AttributeSelectElement
         return this
     }
     op String eqlStmt() {
-        return "attribute[" + getName() +  "]"
+        return "attribute[" + getName() + "]"
     }
-
-    op AttributeSelectElement getThis()
-    {
+    op AttributeSelectElement getThis() {
         return this
     }
 }
@@ -724,10 +617,9 @@ class AttributeSetSelectElement extends Named<AttributeSetSelectElement>
         return this
     }
     op String eqlStmt() {
-        return "attributeSet[" + getName() +  "]"
+        return "attributeSet[" + getName() + "]"
     }
-    op AttributeSetSelectElement getThis()
-    {
+    op AttributeSetSelectElement getThis() {
         return this
     }
 }
@@ -736,14 +628,12 @@ class FormatSelectElement
     extends SelectElement
 {
     String pattern
-
-     op FormatSelectElement setPatternC(String _pattern) {
+    op FormatSelectElement setPatternC(String _pattern) {
         setPattern(_pattern);
         return this
     }
-
     op String eqlStmt() {
-         return "format[" + getPattern() + "]"
+        return "format[" + getPattern() + "]"
     }
 }
 
@@ -751,12 +641,10 @@ class JoiningSelectElement
     extends SelectElement
 {
     String separator
-
-     op JoiningSelectElement setSeparatorC(String _separator) {
+    op JoiningSelectElement setSeparatorC(String _separator) {
         setSeparator(_separator);
         return this
     }
-
     op String eqlStmt() {
         if (StringUtils.isNumeric(getSeparator())) {
             return "joining[" + getSeparator() + "]"
@@ -770,14 +658,12 @@ class BaseSelectElement
     extends SelectElement
 {
     SimpleSelectElement element
-
     op BaseSelectElement setElementC(SimpleSelectElement _element) {
         setElement(_element);
         return this
     }
-
     op String eqlStmt() {
-         return element.getLiteral()
+        return element.getLiteral()
     }
 }
 
@@ -785,23 +671,17 @@ class ExecSelectElement
     extends SelectElement
 {
     String className
-
     String[] parameters
-
-    op ExecSelectElement setClassNameC(String _className)
-    {
+    op ExecSelectElement setClassNameC(String _className) {
         setClassName(_className)
         return this
     }
-
-    op ExecSelectElement addParameter(String _parameter)
-    {
+    op ExecSelectElement addParameter(String _parameter) {
         parametersList.add(_parameter)
         return this
     }
-
     op String eqlStmt() {
-        var String ret = "execute " + className ;
+        var String ret = "execute " + className;
         for (String parameter : parametersList) {
             ret = ret + " " + parameter
         }
@@ -816,13 +696,10 @@ class MsgPhraseSelectElement
         setName(_name)
         return this
     }
-
     op String eqlStmt() {
         return "msgphrase[" + getName() + "]"
     }
-
-    op MsgPhraseSelectElement getThis()
-    {
+    op MsgPhraseSelectElement getThis() {
         return this
     }
 }
@@ -830,15 +707,12 @@ class MsgPhraseSelectElement
 class Selection
     extends EQLElement
 {
-    container PrintStatement<?> printStatement opposite selection
-
+    container PrintStatement<?>printStatement opposite selection
     contains Select[] selects
-
     op Selection addSelect(Select _select) {
         selectsList.add(_select)
         return this
     }
-
     op String eqlStmt() {
         var String ret = " select ";
         var first = true
@@ -857,9 +731,8 @@ class Selection
 abstract class AbstractSelect
     extends EQLElement
 {
-     contains SelectElement[] elements
-
-     op String eqlStmt() {
+    contains SelectElement[] elements
+    op String eqlStmt() {
         var String ret = " ";
         var first = true
         for (ISelectElement element : getElementsList()) {
@@ -878,22 +751,18 @@ class Select
     extends AbstractSelect
 {
     String alias
-
     op Select setAliasC(String _alias) {
         setAlias(_alias)
         return this
     }
-
     op Select alias(String _alias) {
         setAlias(_alias)
         return this
     }
-
     op Select addElement(SelectElement _element) {
         elementsList.add(_element)
         return this
     }
-
     op String eqlStmt() {
         var String ret = super.eqlStmt()
         if (alias !== null) {
@@ -907,19 +776,15 @@ class ExecSelectionElement
     extends EQLElement
 {
     String index
-
     String alias
-
     op ExecSelectionElement index(String _index) {
         setIndex(_index)
         return this
     }
-
     op ExecSelectionElement alias(String _alias) {
         setAlias(_alias)
         return this
     }
-
     op String eqlStmt() {
         var String ret = index
         if (alias !== null) {
@@ -933,50 +798,37 @@ class Where
     extends EQLElement
 {
     contains WhereTerm<?>[] terms
-
-    op Where addTerm(WhereTerm<?> _term)
-    {
+    op Where addTerm(WhereTerm<?>_term) {
         termsList.add(_term)
         return this
     }
-
-    op WhereElementTerm term()
-    {
+    op WhereElementTerm term() {
         var IWhereElementTerm ret = IEql2Factory.eINSTANCE.createWhereElementTerm
         termsList.add(ret)
         return ret
     }
-
-    op WhereElement element()
-    {
+    op WhereElement element() {
         var IWhereElementTerm term = term()
         termsList.add(term)
         return term.element()
     }
-
-    op WhereElement and()
-    {
+    op WhereElement and() {
         var IWhereElementTerm term = term()
         termsList.add(term)
         term.and()
         return term.element()
     }
-
-    op WhereElement or()
-    {
+    op WhereElement or() {
         var IWhereElementTerm term = term()
         termsList.add(term)
         term.or()
         return term.element()
     }
-
-    op WhereGroupTerm group()
-    {
+    op WhereGroupTerm group() {
         var IWhereGroupTerm ret = IEql2Factory.eINSTANCE.createWhereGroupTerm
         termsList.add(ret)
         return ret
     }
-
     op String eqlStmt() {
         var String ret = " where "
         for (IWhereTerm<?> term : getTermsList()) {
@@ -987,55 +839,42 @@ class Where
 }
 
 class Filter extends Where {
-
 }
 
-
-abstract class WhereTerm<T>
-    extends EQLElement, Generic<T>
+abstract class WhereTerm<T> extends EQLElement, Generic<T>
 {
-     Connection connection
-
-     op String eqlStmt() {
-          var String ret = ""
-          if (getConnection() !== null) {
-              ret = ret + " " + getConnection().getLiteral()
-          }
-          return ret
-     }
-
-     op T and()
-     {
-         connection = Connection.AND
-         return getThis()
-     }
-
-      op T or()
-     {
-         connection = Connection.OR
-         return getThis()
-     }
+    Connection connection
+    op String eqlStmt() {
+        var String ret = ""
+        if (getConnection() !== null) {
+            ret = ret + " " + getConnection().getLiteral()
+        }
+        return ret
+    }
+    op T and() {
+        connection = Connection.AND
+        return getThis()
+    }
+    op T or() {
+        connection = Connection.OR
+        return getThis()
+    }
 }
 
 class WhereElementTerm
     extends WhereTerm<WhereElementTerm>
 {
     contains WhereElement element
-
-    op WhereElement element()
-    {
+    op WhereElement element() {
         if (getElement() === null) {
             element = IEql2Factory.eINSTANCE.createWhereElement
         }
         return getElement()
     }
-
-    op WhereElementTerm element(WhereElement _element)
-    {
+    op WhereElementTerm element(WhereElement _element) {
         setElement(_element)
         return this
     }
-
     op String eqlStmt() {
         var String ret = super.eqlStmt()
         if (getElement() !== null) {
@@ -1043,10 +882,8 @@ class WhereElementTerm
         }
         return ret
     }
-
-    op WhereElementTerm getThis()
-    {
-       return this
+    op WhereElementTerm getThis() {
+        return this
     }
 }
 
@@ -1054,13 +891,10 @@ class WhereGroupTerm
     extends WhereTerm<WhereGroupTerm>
 {
     contains WhereTerm<?>[] terms
-
-    op WhereGroupTerm addTerm(WhereTerm<?> _term)
-    {
+    op WhereGroupTerm addTerm(WhereTerm<?>_term) {
         termsList.add(_term)
         return this
     }
-
     op String eqlStmt() {
         var String ret = super.eqlStmt() + " ("
         for (IWhereTerm<?> term : getTermsList()) {
@@ -1069,10 +903,8 @@ class WhereGroupTerm
         ret = ret + ")"
         return ret
     }
-
-    op WhereGroupTerm getThis()
-    {
-       return this
+    op WhereGroupTerm getThis() {
+        return this
     }
 }
 
@@ -1080,155 +912,102 @@ class WhereElement
     extends EQLElement
 {
     String attribute
-
     contains WhereSelect select
-
     Comparison comparison
-
     String[] values
-
-    contains Function function
-
     contains NestedQuery nestedQuery
-
-    op WhereElement nestedQuery(NestedQuery _nestedQuery)
-    {
+    op WhereElement nestedQuery(NestedQuery _nestedQuery) {
         setNestedQuery(_nestedQuery)
         return this
     }
-
-    op WhereElement attribute(String _attribute)
-    {
-        setSelect(IEql2Factory.eINSTANCE.createWhereSelect()
-            .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement()
-                .name(_attribute))
+    op WhereElement attribute(String _attribute) {
+        setSelect(
+            IEql2Factory.eINSTANCE.createWhereSelect().addElement(
+                IEql2Factory.eINSTANCE.createAttributeSelectElement().name(_attribute))
         )
         return this
     }
-
-    op WhereElement function(Function _function)
-    {
-        setFunction(_function)
-        return this
-    }
-
-    op WhereElement select(WhereSelect _select)
-    {
+    op WhereElement select(WhereSelect _select) {
         setSelect(_select)
         return this
     }
-
-    op WhereElement comparison(Comparison _comparison)
-    {
+    op WhereElement comparison(Comparison _comparison) {
         setComparison(_comparison)
         return this
     }
-
-    op WhereElement equal()
-    {
+    op WhereElement equal() {
         setComparison(Comparison.EQUAL)
         return this
     }
-
-    op WhereElement unequal()
-    {
+    op WhereElement unequal() {
         setComparison(Comparison.UNEQUAL)
         return this
     }
-
-    op WhereElement less()
-    {
+    op WhereElement less() {
         setComparison(Comparison.LESS)
         return this
     }
-
-    op WhereElement lessOrEqual()
-    {
+    op WhereElement lessOrEqual() {
         setComparison(Comparison.LESSEQ)
         return this
     }
-
-    op WhereElement greater()
-    {
+    op WhereElement greater() {
         setComparison(Comparison.GREATER)
         return this
     }
-
-    op WhereElement greaterOrEqual()
-    {
+    op WhereElement greaterOrEqual() {
         setComparison(Comparison.GREATEREQ)
         return this
     }
-
-    op WhereElement like()
-    {
+    op WhereElement like() {
         setComparison(Comparison.LIKE)
         return this
     }
-
-    op WhereElement in()
-    {
+    op WhereElement in() {
         setComparison(Comparison.IN)
         return this
     }
-
-    op WhereElement notin()
-    {
+    op WhereElement notin() {
         setComparison(Comparison.NOTIN)
         return this
     }
-
-    op WhereElement isNull()
-    {
+    op WhereElement isNull() {
         setComparison(Comparison.NULL)
         return this
     }
-
-    op WhereElement isNotNull()
-    {
+    op WhereElement isNotNull() {
         setComparison(Comparison.NOTNULL)
         return this
     }
-
-    op WhereElement addValue(String _value)
-    {
+    op WhereElement addValue(String _value) {
         valuesList.add(_value)
         return this
     }
-
-    op WhereElement value(String _value)
-    {
+    op WhereElement value(String _value) {
         valuesList.add(_value)
         return this
     }
-
-    op WhereElement values(Iterable<String> _values)
-    {
-        for (String value :_values) {
+    op WhereElement values(Iterable<String>_values) {
+        for (String value : _values) {
             valuesList.add(value)
         }
         return this
     }
-
     op String eqlStmt() {
-         var String ret;
-         if (getAttribute() !== null) {
-             ret = " attribute[" + getAttribute() + "]"
-         } else if (getSelect() !== null) {
-             ret = getSelect().eqlStmt()
-         }
-         ret = ret + " "
-         if (comparison === null) {
-             ret = ret + "eq"
-         } else {
-             ret = ret + comparison.getLiteral()
-         }
-         if (getFunction() !== null) {
-            ret = ret + " " + getFunction().eqlStmt()
-         } else if (getNestedQuery() === null) {
-            if (Comparison.NULL.equals(comparison) || Comparison.NOTNULL.equals(comparison) ) {
-
-
+        var String ret;
+        if (getAttribute() !== null) {
+            ret = " attribute[" + getAttribute() + "]"
+        } else if (getSelect() !== null) {
+            ret = getSelect().eqlStmt()
+        }
+        ret = ret + " "
+        if (comparison === null) {
+            ret = ret + "eq"
+        } else {
+            ret = ret + comparison.getLiteral()
+        }
+        if (getNestedQuery() === null) {
+            if (Comparison.NULL.equals(comparison) || Comparison.NOTNULL.equals(comparison)) {
             } else if (valuesList.size() === 1) {
                 var String value = valuesList.get(0);
                 if (value.matches("-?\\d+(\\.\\d+)?")) {
@@ -1236,34 +1015,34 @@ class WhereElement
                 } else {
                     ret = ret + " \"" + value + "\""
                 }
-             } else {
-                 ret = ret + " ("
-                 var boolean first = true
-                 for (String value : valuesList) {
-                     if (first) {
+            } else {
+                ret = ret + " ("
+                var boolean first = true
+                for (String value : valuesList) {
+                    if (first) {
                         first = false
-                     } else {
+                    } else {
                         ret = ret + ", "
-                     }
-                     if (value.matches("-?\\d+(\\.\\d+)?")) {
+                    }
+                    if (value.matches("-?\\d+(\\.\\d+)?")) {
                         ret = ret + " " + value
-                     } else {
+                    } else {
                         ret = ret + " \"" + value + "\""
-                     }
-                 }
-                 ret = ret + ")"
-             }
-         } else {
-             ret = ret + getNestedQuery().eqlStmt()
-         }
-         return ret
-     }
+                    }
+                }
+                ret = ret + ")"
+            }
+        } else {
+            ret = ret + getNestedQuery().eqlStmt()
+        }
+        return ret
+    }
 }
 
 class WhereSelect
      extends AbstractSelect
 {
-     op WhereSelect addElement(SelectElement _element) {
+    op WhereSelect addElement(SelectElement _element) {
         elementsList.add(_element)
         return this
     }
@@ -1273,53 +1052,37 @@ class UpdateElement
     extends EQLElement
 {
     String attribute
-
     String value
-
-    op UpdateElement attribute(String _attribute)
-    {
+    op UpdateElement attribute(String _attribute) {
         setAttribute(_attribute)
         return this
     }
-
-    op UpdateElement value(String _value)
-    {
+    op UpdateElement value(String _value) {
         setValue(_value)
         return this
     }
-
     op String eqlStmt() {
         return attribute + " = " + value
     }
-
-    op UpdateElement getThis()
-    {
+    op UpdateElement getThis() {
         return this
     }
 }
 
-abstract class BaseQuery<T>
-    extends EQLElement, Generic<T>
+abstract class BaseQuery<T> extends EQLElement, Generic<T>
 {
-
     String[] types
-
     contains Where where
-
-    op T addType(String _type)
-    {
+    op T addType(String _type) {
         typesList.add(_type)
         return getThis
     }
-
-    op T setWhereC(Where _where)
-    {
+    op T setWhereC(Where _where) {
         setWhere(_where)
         return getThis
     }
-
     op String eqlStmt() {
-        var String ret =  " query type "
+        var String ret = " query type "
         var first = true
         for (String aType : typesList) {
             if (first) {
@@ -1334,17 +1097,13 @@ abstract class BaseQuery<T>
         }
         return ret
     }
-
-    op T where()
-    {
+    op T where() {
         if (getWhere() === null) {
-           setWhere(IEql2Factory.eINSTANCE.createWhere())
+            setWhere(IEql2Factory.eINSTANCE.createWhere())
         }
         return getThis
     }
-
-    op T where(Where _where)
-    {
+    op T where(Where _where) {
         setWhere(_where)
         return getThis
     }
@@ -1353,24 +1112,17 @@ abstract class BaseQuery<T>
 class Query
     extends BaseQuery<Query>
 {
-
     contains Limit limit
-
-    op Query limit(String _val)
-    {
+    op Query limit(String _val) {
         var l = IEql2Factory.eINSTANCE.createLimit
         l.value(_val)
         setLimit(l)
         return this
     }
-
-
-    op Query setLimitC(Limit _limit)
-    {
+    op Query setLimitC(Limit _limit) {
         setLimit(_limit)
         return this
     }
-
     op String eqlStmt() {
         var ret = super.eqlStmt()
         if (limit !== null) {
@@ -1378,9 +1130,7 @@ class Query
         }
         return ret
     }
-
-    op Query getThis()
-    {
+    op Query getThis() {
         return this
     }
 }
@@ -1389,22 +1139,17 @@ class NestedQuery
     extends BaseQuery<NestedQuery>
 {
     contains Selection selection
-
-    op NestedQuery selection(Selection _selection)
-    {
+    op NestedQuery selection(Selection _selection) {
         setSelection(_selection)
         return this
     }
-
-    op NestedQuery getThis()
-    {
+    op NestedQuery getThis() {
         return this
     }
-
     op String eqlStmt() {
         var ret = "( " + super.eqlStmt()
         if (getSelection() !== null) {
-            ret = ret + getSelection() .eqlStmt()
+            ret = ret + getSelection().eqlStmt()
         }
         ret = ret + " )"
         return ret
@@ -1414,9 +1159,7 @@ class NestedQuery
 enum Connection
 {
     NONE as ""
-
     AND as "and"
-
     OR as "or"
 }
 
@@ -1468,91 +1211,19 @@ interface EQLElement
     op String eqlStmt()
 }
 
-interface Generic<T>
-{
+interface Generic<T> {
     op T getThis()
-}
-
-class FunctionSelectElement
-    extends SelectElement
-{
-    contains Function function
-
-    op FunctionSelectElement withFunction(Function function) {
-        setFunction(function)
-        return this
-    }
-
-    op String eqlStmt() {
-        var ret = ""
-        if (getFunction() !== null) {
-            ret = getFunction() .eqlStmt()
-        }
-        return ret
-    }
-}
-
-interface Function extends EQLElement {
-}
-
-class NowFunction
-    extends Function
-{
-    op String eqlStmt() {
-        return "now()"
-    }
-}
-
-class NowAddFunction
-    extends Function
-{
-    String quantity
-    Interval interval
-    op NowAddFunction withQuantity(int quantity) {
-        setQuantity(String.valueOf(quantity))
-        return this
-    }
-    op NowAddFunction withInterval(Interval interval) {
-        setInterval(interval)
-        return this
-    }
-    op String eqlStmt() {
-        return "nowAdd(" + Integer.valueOf(quantity) + ", " + interval + ")"
-    }
-}
-
-class DateFunction
-    extends Function
-{
-    op String eqlStmt() {
-        return "date()"
-    }
-}
-
-class DateAddFunction
-    extends Function
-{
-    String quantity = "1"
-    Interval interval
-    op DateAddFunction withQuantity(int quantity) {
-        setQuantity(String.valueOf(quantity))
-        return this
-    }
-    op DateAddFunction withInterval(Interval interval) {
-        setInterval(interval)
-        return this
-    }
-    op String eqlStmt() {
-        return "dateAdd(" + Integer.valueOf(quantity) + ", " + interval + ")"
-    }
-}
-
-enum Interval
-{
-    DAY as "day"
-    MONTH as "month"
-    WEEK as "week"
 }
 
 type Iterable<T> wraps Iterable
 
+class FunctionSelectElement extends SelectElement {
+    String value
+    op FunctionSelectElement value(String _value) {
+        setValue(_value)
+        return this
+    }
+    op String eqlStmt() {
+        return value
+    }
+}

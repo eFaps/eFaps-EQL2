@@ -68,7 +68,6 @@ public abstract class AbstractTest
     @Inject
     private EQL2Validator validator;
 
-
     /** The diagnostic. */
     private BasicDiagnostic diagnostic;
 
@@ -110,7 +109,7 @@ public abstract class AbstractTest
      * @param _object the object
      */
     public String verifyStatement(final String _eqlStmt,
-                                final IEQLElement _object)
+                                  final IEQLElement _object)
     {
         final IParseResult result = getParser().doParse(_eqlStmt);
         syntaxErrors.clear();
@@ -152,8 +151,7 @@ public abstract class AbstractTest
         final CharStream stream = new ANTLRStringStream(_input.toString());
         lexer.setCharStream(stream);
         final XtextTokenStream tokenStream = new XtextTokenStream(lexer, tokenDefProvider);
-        @SuppressWarnings("unchecked")
-        final List<Token> tokens = tokenStream.getTokens();
+        @SuppressWarnings("unchecked") final List<Token> tokens = tokenStream.getTokens();
         return tokens;
     }
 

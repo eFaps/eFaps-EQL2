@@ -110,10 +110,11 @@ WhereGroupTerm:
 ;
 
 WhereElement:
-    (attribute=Attribute | select = WhereSelect) => comparison=Comparison (values+=(Value | OID | STRING | BOOLEAN)
-        | '(' values+=(Value | OID | STRING | BOOLEAN) ("," values+=(Value | OID | STRING | BOOLEAN))* ')'
-        | nestedQuery=NestedQuery
-        | function=(NowFunction| NowAddFunction | DateFunction | DateAddFunction));
+    (attribute=Attribute | select = WhereSelect) => comparison=Comparison (
+        values+=(Value | OID | STRING | BOOLEAN | NowFunction | NOW_ADD_FUNCTION | DateFunction | DateAddFunction)
+            | '(' values+=(Value | OID | STRING | BOOLEAN) ("," values+=(Value | OID | STRING | BOOLEAN))* ')'
+            | nestedQuery=NestedQuery
+        );
 
 WhereSelect:
     elements+=SelectElement ('.' elements+=SelectElement)*
@@ -195,7 +196,7 @@ ExecSelectElement:
     ('exec' | 'execute') className=ClazzName parameters+=(STRING | NUM)(","parameters+=(STRING | NUM))*;
 
 FunctionSelectElement:
-    function = (NowFunction | NowAddFunction | DateFunction | DateAddFunction)
+    value = (NowFunction | NOW_ADD_FUNCTION | DateFunction | DateAddFunction)
 ;
 
 ClazzName hidden():
@@ -233,26 +234,25 @@ Attribute:
     NAMESTR
 ;
 
-NowFunction returns NowFunction:
-    {NowFunction} 'now()'
+NowFunction:
+    'now()'
 ;
 
-NowAddFunction:
-    'nowAdd(' quantity=NUM ',' interval = Interval ')'
+terminal NOW_ADD_FUNCTION returns ecore::EString:
+    'nowAdd(' NUM ',' INTERVAL ')'
 ;
 
-DateFunction returns DateFunction:
-    {DateFunction} 'date()'
+DateFunction:
+    'date()'
 ;
 
-DateAddFunction:
-    'dateAdd(' quantity=NUM ',' interval = Interval ')'
+DateAddFunction returns ecore::EString:
+    'dateAdd(' NUM ',' INTERVAL ')'
 ;
 
-enum Interval :
-    DAY='day' | MONTH = 'month'
+terminal INTERVAL:
+    'day' | 'month' | 'week'
 ;
-
 
 KEYWORD: 'type' | 'oid' | 'instance' | 'label' | 'id' | 'uuid' | 'name' | 'class' | 'value' | 'base' | 'uom' | 'file' |
     'length' | 'status' | 'key' | 'first' | 'last';

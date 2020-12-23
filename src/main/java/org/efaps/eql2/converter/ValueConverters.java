@@ -16,6 +16,13 @@
  */
 package org.efaps.eql2.converter;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.Period;
+import java.time.ZoneOffset;
+import java.time.temporal.TemporalAmount;
+import java.util.regex.Pattern;
+
 import org.eclipse.xtext.common.services.Ecore2XtextTerminalConverters;
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;
@@ -135,6 +142,70 @@ public class ValueConverters
                     ret = _value;
                 }
                 return ret;
+            }
+
+            @Override
+            protected String internalToValue(final String _string,
+                                             final INode _node)
+                throws ValueConverterException
+            {
+                return internalToString(_string);
+            }
+        };
+    }
+
+    @ValueConverter(rule = "NowFunction")
+    public IValueConverter<String> NowFunction()
+    {
+        return new AbstractNullSafeConverter<String>()
+        {
+
+            @Override
+            protected String internalToString(final String _value)
+            {
+                return Instant.now().toString();
+            }
+
+            @Override
+            protected String internalToValue(final String _string,
+                                             final INode _node)
+                throws ValueConverterException
+            {
+                return internalToString(_string);
+            }
+        };
+    }
+
+    @ValueConverter(rule = "NOW_ADD_FUNCTION")
+    public IValueConverter<String> NowAddFunction()
+    {
+        return new AbstractNullSafeConverter<String>()
+        {
+
+            @Override
+            protected String internalToString(final String _value)
+            {
+                final var pattern = Pattern.compile("nowAdd\\(((?:\\+|\\-)?\\d+),(\\w+)\\)");
+                final var matcher = pattern.matcher(_value);
+                TemporalAmount temporalAmount = Period.ZERO;
+                if (matcher.matches()) {
+                    final var quantity  = Integer.valueOf(matcher.group(1));
+                    final var interval  = matcher.group(2);
+                    switch (interval) {
+                        case "day":
+                            temporalAmount = Period.ofDays(quantity);
+                            break;
+                        case "week":
+                            temporalAmount = Period.ofWeeks(quantity);
+                            break;
+                        case "month":
+                            temporalAmount = Period.ofMonths(quantity);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                return OffsetDateTime.now(ZoneOffset.UTC).plus(temporalAmount).toString();
             }
 
             @Override
