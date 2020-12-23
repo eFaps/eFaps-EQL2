@@ -239,7 +239,7 @@ terminal NOW_FUNCTION:
 ;
 
 terminal NOW_ADD_FUNCTION returns ecore::EString:
-    'nowAdd(' NUM ',' INTERVAL ')'
+    'nowAdd(' NUM ',' INTERVAL (',' TEMPORAL_ADJUSTER )? ')'
 ;
 
 terminal DATE_FUNCTION:
@@ -247,11 +247,15 @@ terminal DATE_FUNCTION:
 ;
 
 terminal DATE_ADD_FUNCTION returns ecore::EString:
-    'dateAdd(' NUM ',' INTERVAL ')'
+    'dateAdd(' NUM ',' INTERVAL (',' TEMPORAL_ADJUSTER )? ')'
 ;
 
 terminal INTERVAL:
     'hour' | 'day' | 'week' | 'month' | 'year'
+;
+
+terminal TEMPORAL_ADJUSTER:
+    'firstDayOfWeek' | 'firstDayOfMonth' | 'lastDayOfMonth' | 'firstDayOfYear'| 'lastDayOfYear'
 ;
 
 KEYWORD: 'type' | 'oid' | 'instance' | 'label' | 'id' | 'uuid' | 'name' | 'class' | 'value' | 'base' | 'uom' | 'file' |

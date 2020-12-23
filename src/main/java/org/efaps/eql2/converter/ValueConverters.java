@@ -16,12 +16,15 @@
  */
 package org.efaps.eql2.converter;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.Period;
 import java.time.ZoneOffset;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalAmount;
 import java.util.regex.Pattern;
 
@@ -40,12 +43,15 @@ import org.eclipse.xtext.nodemodel.INode;
 public class ValueConverters
     extends Ecore2XtextTerminalConverters
 {
-    private static Pattern NOW_ADD_PATTERN = Pattern.compile("nowAdd\\(((?:\\+|\\-)?\\d+),(\\w+)\\)");
-    private static Pattern DATE_ADD_PATTERN = Pattern.compile("dateAdd\\(((?:\\+|\\-)?\\d+),(\\w+)\\)");
+
+    private static Pattern NOW_ADD_PATTERN = Pattern.compile("nowAdd\\(((?:\\+|\\-)?\\d+),(\\w+)(?:(?:,)(\\w+))?\\)");
+    private static Pattern DATE_ADD_PATTERN = Pattern.compile("dateAdd\\(((?:\\+|\\-)?\\d+),(\\w+)(?:(?:,)(\\w+))?\\)");
 
     @ValueConverter(rule = "FORMAT")
-    public IValueConverter<String> format() {
-        return new AbstractNullSafeConverter<String>() {
+    public IValueConverter<String> format()
+    {
+        return new AbstractNullSafeConverter<String>()
+        {
 
             @Override
             protected String internalToString(final String _value)
@@ -71,8 +77,10 @@ public class ValueConverters
     }
 
     @ValueConverter(rule = "Attribute")
-    public IValueConverter<String> attribute() {
-        return new AbstractNullSafeConverter<String>() {
+    public IValueConverter<String> attribute()
+    {
+        return new AbstractNullSafeConverter<String>()
+        {
 
             @Override
             protected String internalToString(final String _value)
@@ -90,8 +98,10 @@ public class ValueConverters
     }
 
     @ValueConverter(rule = "ClazzName")
-    public IValueConverter<String> clazzName() {
-        return new AbstractNullSafeConverter<String>() {
+    public IValueConverter<String> clazzName()
+    {
+        return new AbstractNullSafeConverter<String>()
+        {
 
             @Override
             protected String internalToString(final String _value)
@@ -109,8 +119,10 @@ public class ValueConverters
     }
 
     @ValueConverter(rule = "Alias")
-    public IValueConverter<String> alias() {
-        return new AbstractNullSafeConverter<String>() {
+    public IValueConverter<String> alias()
+    {
+        return new AbstractNullSafeConverter<String>()
+        {
 
             @Override
             protected String internalToString(final String _value)
@@ -192,9 +204,10 @@ public class ValueConverters
             {
                 final var matcher = NOW_ADD_PATTERN.matcher(_value);
                 TemporalAmount temporalAmount = Period.ZERO;
+                TemporalAdjuster temporalAdjuster = null;
                 if (matcher.matches()) {
-                    final var quantity  = Integer.valueOf(matcher.group(1));
-                    final var interval  = matcher.group(2);
+                    final var quantity = Integer.valueOf(matcher.group(1));
+                    final var interval = matcher.group(2);
                     switch (interval) {
                         case "hour":
                             temporalAmount = Duration.ofHours(quantity);
@@ -211,8 +224,34 @@ public class ValueConverters
                         default:
                             break;
                     }
+                    final var adjuster = matcher.group(3);
+                    if (adjuster != null) {
+                        switch (adjuster) {
+                            case "firstDayOfMonth":
+                                temporalAdjuster = TemporalAdjusters.firstDayOfMonth();
+                                break;
+                            case "lastDayOfMonth":
+                                temporalAdjuster = TemporalAdjusters.lastDayOfMonth();
+                                break;
+                            case "firstDayOfYear":
+                                temporalAdjuster = TemporalAdjusters.firstDayOfYear();
+                                break;
+                            case "lastDayOfYear":
+                                temporalAdjuster = TemporalAdjusters.lastDayOfYear();
+                                break;
+                            case "firstDayOfWeek":
+                                temporalAdjuster = TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
-                return OffsetDateTime.now(ZoneOffset.UTC).plus(temporalAmount).toString();
+                var ret = OffsetDateTime.now(ZoneOffset.UTC).plus(temporalAmount);
+                if (temporalAdjuster != null) {
+                    ret = ret.with(temporalAdjuster);
+                }
+                return ret.toString();
             }
 
             @Override
@@ -258,9 +297,10 @@ public class ValueConverters
             {
                 final var matcher = DATE_ADD_PATTERN.matcher(_value);
                 TemporalAmount temporalAmount = Period.ZERO;
+                TemporalAdjuster temporalAdjuster = null;
                 if (matcher.matches()) {
-                    final var quantity  = Integer.valueOf(matcher.group(1));
-                    final var interval  = matcher.group(2);
+                    final var quantity = Integer.valueOf(matcher.group(1));
+                    final var interval = matcher.group(2);
                     switch (interval) {
                         case "day":
                             temporalAmount = Period.ofDays(quantity);
@@ -276,8 +316,34 @@ public class ValueConverters
                         default:
                             break;
                     }
+                    final var adjuster = matcher.group(3);
+                    if (adjuster != null) {
+                        switch (adjuster) {
+                            case "firstDayOfMonth":
+                                temporalAdjuster = TemporalAdjusters.firstDayOfMonth();
+                                break;
+                            case "lastDayOfMonth":
+                                temporalAdjuster = TemporalAdjusters.lastDayOfMonth();
+                                break;
+                            case "firstDayOfYear":
+                                temporalAdjuster = TemporalAdjusters.firstDayOfYear();
+                                break;
+                            case "lastDayOfYear":
+                                temporalAdjuster = TemporalAdjusters.lastDayOfYear();
+                                break;
+                            case "firstDayOfWeek":
+                                temporalAdjuster = TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
-                return LocalDate.now().plus(temporalAmount).toString();
+                var ret = LocalDate.now().plus(temporalAmount);
+                if (temporalAdjuster != null) {
+                    ret = ret.with(temporalAdjuster);
+                }
+                return ret.toString();
             }
 
             @Override
