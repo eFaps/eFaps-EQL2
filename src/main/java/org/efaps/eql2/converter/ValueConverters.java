@@ -16,13 +16,13 @@
  */
 package org.efaps.eql2.converter;
 
+import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.Period;
-import java.time.ZoneOffset;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalAmount;
@@ -248,7 +248,7 @@ public class ValueConverters
                         }
                     }
                 }
-                var ret = OffsetDateTime.now(ZoneOffset.UTC).plus(temporalAmount);
+                var ret = OffsetDateTime.now(getClock()).plus(temporalAmount);
                 if (temporalAdjuster != null) {
                     ret = ret.with(temporalAdjuster);
                 }
@@ -288,7 +288,7 @@ public class ValueConverters
     }
 
     @ValueConverter(rule = "DATE_ADD_FUNCTION")
-    public IValueConverter<String> DateAddFunction()
+    public IValueConverter<String> dateAddFunction()
     {
         return new AbstractNullSafeConverter<String>()
         {
@@ -341,7 +341,7 @@ public class ValueConverters
                         }
                     }
                 }
-                var ret = LocalDate.now().plus(temporalAmount);
+                var ret = LocalDate.now(getClock()).plus(temporalAmount);
                 if (temporalAdjuster != null) {
                     ret = ret.with(temporalAdjuster);
                 }
@@ -356,5 +356,9 @@ public class ValueConverters
                 return internalToString(_string);
             }
         };
+    }
+
+    protected Clock getClock() {
+        return Clock.systemUTC();
     }
 }
