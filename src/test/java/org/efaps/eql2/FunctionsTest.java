@@ -29,6 +29,7 @@ import java.time.Period;
 import java.time.ZoneOffset;
 import java.time.temporal.TemporalAdjusters;
 
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
 import org.testng.annotations.Test;
 
@@ -219,7 +220,12 @@ public class FunctionsTest
                                                                         .createAttributeSelectElement()
                                                                         .setNameC("Date"))));
         final IParseResult result = getParser().doParse("print query type Sales_Invoice where "
-                        + "Date > nowAdd(-3,hour) select attribute[Date]");
+                        + "Date > nowAdd(-3, hour) select attribute[Date]");
+        for (final INode error : result.getSyntaxErrors()) {
+            final var msg = error.getSyntaxErrorMessage();
+            System.out.println(msg);
+        }
+
         assertFalse(result.hasSyntaxErrors());
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
         assertTrue(eObject.eqlStmt().startsWith("print  query type Sales_Invoice where   attribute[Date] > \""
@@ -232,21 +238,21 @@ public class FunctionsTest
     {
         final var datetime = OffsetDateTime.now(ZoneOffset.UTC).minusHours(0).with(TemporalAdjusters.lastDayOfMonth()).toString();
 
-        final IParseResult result1 = getParser().doParse("print object 123.12 select nowAdd(0,day,lastDayOfMonth)");
+        final IParseResult result1 = getParser().doParse("print object 123.12 select nowAdd( 0,day,lastDayOfMonth)");
         assertFalse(result1.hasSyntaxErrors());
         final IEQLElement eObject1 = (IEQLElement) result1.getRootASTElement();
         assertTrue(eObject1.eqlStmt().startsWith("print object 123.12  select  " + datetime.substring(0, 20)));
 
         final var localdate = LocalDate.now().minusDays(0).with(TemporalAdjusters.firstDayOfMonth()).toString();
 
-        final IParseResult result = getParser().doParse("print object 123.12 select dateAdd(0,day,firstDayOfMonth)");
+        final IParseResult result = getParser().doParse("print object 123.12 select dateAdd(0, day ,firstDayOfMonth)");
         assertFalse(result.hasSyntaxErrors());
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
         assertEquals(eObject.eqlStmt(),"print object 123.12  select  " + localdate);
 
         final var localdate2= LocalDate.now().minusDays(0).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toString();
 
-        final IParseResult result2 = getParser().doParse("print object 123.12 select dateAdd(0,day,firstDayOfWeek)");
+        final IParseResult result2 = getParser().doParse("print object 123.12 select dateAdd(0,day, firstDayOfWeek )");
         assertFalse(result2.hasSyntaxErrors());
         final IEQLElement eObject2 = (IEQLElement) result2.getRootASTElement();
         assertEquals(eObject2.eqlStmt(), "print object 123.12  select  " + localdate2);

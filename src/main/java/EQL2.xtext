@@ -239,7 +239,7 @@ terminal NOW_FUNCTION:
 ;
 
 terminal NOW_ADD_FUNCTION returns ecore::EString:
-    'nowAdd(' NUM ',' INTERVAL (',' TEMPORAL_ADJUSTER )? ')'
+    'nowAdd(' (' ')* NUM (' ')* ',' (' ')* INTERVAL (' ')* (',' (' ')* TEMPORAL_ADJUSTER (' ')* )? ')'
 ;
 
 terminal DATE_FUNCTION:
@@ -247,7 +247,7 @@ terminal DATE_FUNCTION:
 ;
 
 terminal DATE_ADD_FUNCTION returns ecore::EString:
-    'dateAdd(' NUM ',' INTERVAL (',' TEMPORAL_ADJUSTER )? ')'
+    'dateAdd(' (' ')* NUM (' ')* ',' (' ')* INTERVAL (' ')* (',' (' ')* TEMPORAL_ADJUSTER (' ')* )? ')'
 ;
 
 terminal INTERVAL:

@@ -202,7 +202,8 @@ public class ValueConverters
             @Override
             protected String internalToString(final String _value)
             {
-                final var matcher = NOW_ADD_PATTERN.matcher(_value);
+                final var value = _value.replaceAll(" " , "");
+                final var matcher = NOW_ADD_PATTERN.matcher(value);
                 TemporalAmount temporalAmount = Period.ZERO;
                 TemporalAdjuster temporalAdjuster = null;
                 if (matcher.matches()) {
@@ -295,7 +296,8 @@ public class ValueConverters
             @Override
             protected String internalToString(final String _value)
             {
-                final var matcher = DATE_ADD_PATTERN.matcher(_value);
+                final var value = _value.replaceAll(" " , "");
+                final var matcher = DATE_ADD_PATTERN.matcher(value);
                 TemporalAmount temporalAmount = Period.ZERO;
                 TemporalAdjuster temporalAdjuster = null;
                 if (matcher.matches()) {
