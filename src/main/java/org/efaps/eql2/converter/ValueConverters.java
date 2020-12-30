@@ -19,7 +19,6 @@ package org.efaps.eql2.converter;
 import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.Period;
@@ -172,7 +171,7 @@ public class ValueConverters
     }
 
     @ValueConverter(rule = "NOW_FUNCTION")
-    public IValueConverter<String> NowFunction()
+    public IValueConverter<String> nowFunction()
     {
         return new AbstractNullSafeConverter<String>()
         {
@@ -180,7 +179,7 @@ public class ValueConverters
             @Override
             protected String internalToString(final String _value)
             {
-                return Instant.now().toString();
+                return OffsetDateTime.now(getClock()).toString();
             }
 
             @Override
@@ -194,7 +193,7 @@ public class ValueConverters
     }
 
     @ValueConverter(rule = "NOW_ADD_FUNCTION")
-    public IValueConverter<String> NowAddFunction()
+    public IValueConverter<String> nowAddFunction()
     {
         return new AbstractNullSafeConverter<String>()
         {
@@ -266,7 +265,7 @@ public class ValueConverters
     }
 
     @ValueConverter(rule = "DATE_FUNCTION")
-    public IValueConverter<String> DateFunction()
+    public IValueConverter<String> dateFunction()
     {
         return new AbstractNullSafeConverter<String>()
         {
@@ -274,7 +273,7 @@ public class ValueConverters
             @Override
             protected String internalToString(final String _value)
             {
-                return LocalDate.now().toString();
+                return LocalDate.now(getClock()).toString();
             }
 
             @Override
