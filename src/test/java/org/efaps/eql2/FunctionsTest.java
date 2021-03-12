@@ -21,6 +21,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -110,7 +111,7 @@ public class FunctionsTest
     @Test
     public void date()
     {
-        final var date = LocalDate.now().toString();
+        final var date = LocalDate.now(Clock.systemUTC()).toString();
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.12")
                         .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
@@ -128,7 +129,7 @@ public class FunctionsTest
     @Test
     public void dateAdd()
     {
-        final var date = LocalDate.now().plusWeeks(4).toString();
+        final var date = LocalDate.now(Clock.systemUTC()).plusWeeks(4).toString();
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.12")
                         .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
@@ -145,7 +146,7 @@ public class FunctionsTest
     @Test
     public void dateAddPositiv()
     {
-        final var date = LocalDate.now().plusWeeks(4).toString();
+        final var date = LocalDate.now(Clock.systemUTC()).plusWeeks(4).toString();
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.12")
                         .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
@@ -162,7 +163,7 @@ public class FunctionsTest
     @Test
     public void dateAddNegative()
     {
-        final var date = LocalDate.now().minusDays(24).toString();
+        final var date = LocalDate.now(Clock.systemUTC()).minusDays(24).toString();
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintObjectStatement().setOidC("123.12")
                         .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
