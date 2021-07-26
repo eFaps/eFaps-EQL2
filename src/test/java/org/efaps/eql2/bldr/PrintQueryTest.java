@@ -146,6 +146,33 @@ public class PrintQueryTest
                         + "  query type SubType where   attribute[SubAttribut] == 333 select  attribute[OneAttr] )  "
                         + "select  attribute[Name]"
                             });
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                                .query("Sales_Document")
+                                    .where()
+                                    .linkto("LinktoAttr").attr("Attr2").eq(13)
+                            .select()
+                            .attribute("Name"),
+                        "print  query type Sales_Document where   linkto[LinktoAttr].attribute[Attr2] == 13  "
+                        + "select  attribute[Name]"
+                            });
+
+        ret.add(new Object[] {
+                        EQL2.builder()
+                            .print()
+                                .query("Sales_Document")
+                                    .where()
+                                    .attribute("Attr1").eq(12)
+                                    .and()
+                                    .linkto("LinktoAttr").attr("Attr2").eq(13)
+                            .select()
+                            .attribute("Name"),
+                        "print  query type Sales_Document where   attribute[Attr1] == 12 and "
+                        + "linkto[LinktoAttr].attribute[Attr2] == 13  select  attribute[Name]"
+                            });
+
         return ret.iterator();
     }
 }

@@ -39,12 +39,14 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
     private IWhere iWhere;
     private AbstractQueryEQLBuilder<?> queryBldr;
 
-    public AbstractPrintEQLBuilder<?> select() {
+    public AbstractPrintEQLBuilder<?> select()
+    {
         queryBldr.getQuery().setWhere(getIWhere());
         return queryBldr.select();
     }
 
-    public AbstractQueryEQLBuilder<?> up() {
+    public AbstractQueryEQLBuilder<?> up()
+    {
         return queryBldr;
     }
 
@@ -57,7 +59,14 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
     public T attribute(final String _attr)
     {
         final IWhereElement element = getCurrentElement();
-        element.setAttribute(_attr);
+        // check if we have a WhereSelect
+        if (element.getSelect() != null) {
+            final var attrSel = IEql2Factory.eINSTANCE.createAttributeSelectElement();
+            attrSel.name(_attr);
+            element.getSelect().addElement(attrSel);
+        } else {
+            element.setAttribute(_attr);
+        }
         return getThis();
     }
 
@@ -70,6 +79,24 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
     public T attr(final String _attr)
     {
         return attribute(_attr);
+    }
+
+    /**
+     * Attr.
+     *
+     * @param _attr the attr
+     * @return the t
+     */
+    public T linkto(final String _attr)
+    {
+        final var element = getCurrentElement();
+        if (element.getSelect() == null) {
+            element.setSelect(IEql2Factory.eINSTANCE.createWhereSelect());
+        }
+        final var linktoSel = IEql2Factory.eINSTANCE.createLinktoSelectElement();
+        linktoSel.name(_attr);
+        element.getSelect().addElement(linktoSel);
+        return getThis();
     }
 
     /**
@@ -248,13 +275,15 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
         return getThis();
     }
 
-    public T isNull() {
+    public T isNull()
+    {
         final IWhereElement element = getCurrentElement();
         element.comparison(Comparison.NULL);
         return getThis();
     }
 
-    public T notIsNull() {
+    public T notIsNull()
+    {
         final IWhereElement element = getCurrentElement();
         element.comparison(Comparison.NOTNULL);
         return getThis();
@@ -278,9 +307,11 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T or()
     {
-       /* ((IQueryStmt<?>) this.parent.getStmt()).getQuery().where();
-        final IWhere where = ((IQueryStmt<?>) this.parent.getStmt()).getQuery().getWhere();
-        where.term().or();*/
+        /*
+         * ((IQueryStmt<?>) this.parent.getStmt()).getQuery().where(); final
+         * IWhere where = ((IQueryStmt<?>)
+         * this.parent.getStmt()).getQuery().getWhere(); where.term().or();
+         */
         return getThis();
     }
 

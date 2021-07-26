@@ -53,7 +53,7 @@ public class FunctionsTest
         assertTrue(eObject.eqlStmt().startsWith("print object 123.12  select  "
                         + Instant.now().toString().substring(0, 20)));
         assertTrue(stmt.eqlStmt().startsWith("print object 123.12  select  "
-                            + Instant.now().toString().substring(0, 20)));
+                        + Instant.now().toString().substring(0, 20)));
     }
 
     @Test
@@ -63,14 +63,15 @@ public class FunctionsTest
                         .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
                                                         .addElement(IEql2Factory.eINSTANCE.createFunctionSelectElement()
-                                                            .value(Instant.now().plus(Period.ofDays(4)).toString()))));
+                                                                        .value(Instant.now().plus(Period.ofDays(4))
+                                                                                        .toString()))));
         final IParseResult result = getParser().doParse("print object 123.12 select nowAdd(4,day)");
         assertFalse(result.hasSyntaxErrors());
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
         assertTrue(eObject.eqlStmt().startsWith("print object 123.12  select  "
                         + Instant.now().plus(Period.ofDays(4)).toString().substring(0, 20)));
         assertTrue(stmt.eqlStmt().startsWith("print object 123.12  select  "
-                            + Instant.now().plus(Period.ofDays(4)).toString().substring(0, 20)));
+                        + Instant.now().plus(Period.ofDays(4)).toString().substring(0, 20)));
     }
 
     @Test
@@ -80,14 +81,15 @@ public class FunctionsTest
                         .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
                                                         .addElement(IEql2Factory.eINSTANCE.createFunctionSelectElement()
-                                                            .value(Instant.now().plus(Period.ofDays(4)).toString()))));
+                                                                        .value(Instant.now().plus(Period.ofDays(4))
+                                                                                        .toString()))));
         final IParseResult result = getParser().doParse("print object 123.12 select nowAdd(+4,day)");
         assertFalse(result.hasSyntaxErrors());
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
         assertTrue(eObject.eqlStmt().startsWith("print object 123.12  select  "
                         + Instant.now().plus(Period.ofDays(4)).toString().substring(0, 20)));
         assertTrue(stmt.eqlStmt().startsWith("print object 123.12  select  "
-                            + Instant.now().plus(Period.ofDays(4)).toString().substring(0, 20)));
+                        + Instant.now().plus(Period.ofDays(4)).toString().substring(0, 20)));
     }
 
     @Test
@@ -121,10 +123,9 @@ public class FunctionsTest
         final IParseResult result = getParser().doParse("print object 123.12 select date()");
         assertFalse(result.hasSyntaxErrors());
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
-        assertEquals(eObject.eqlStmt(),"print object 123.12  select  " + date);
-        assertEquals(stmt.eqlStmt(),"print object 123.12  select  " + date);
+        assertEquals(eObject.eqlStmt(), "print object 123.12  select  " + date);
+        assertEquals(stmt.eqlStmt(), "print object 123.12  select  " + date);
     }
-
 
     @Test
     public void dateAdd()
@@ -139,8 +140,8 @@ public class FunctionsTest
         final IParseResult result = getParser().doParse("print object 123.12 select dateAdd(4,week)");
         assertFalse(result.hasSyntaxErrors());
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
-        assertEquals(eObject.eqlStmt(),"print object 123.12  select  " + date);
-        assertEquals(stmt.eqlStmt(),"print object 123.12  select  " + date);
+        assertEquals(eObject.eqlStmt(), "print object 123.12  select  " + date);
+        assertEquals(stmt.eqlStmt(), "print object 123.12  select  " + date);
     }
 
     @Test
@@ -156,8 +157,8 @@ public class FunctionsTest
         final IParseResult result = getParser().doParse("print object 123.12 select dateAdd(+4,week)");
         assertFalse(result.hasSyntaxErrors());
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
-        assertEquals(eObject.eqlStmt(),"print object 123.12  select  " + date);
-        assertEquals(stmt.eqlStmt(),"print object 123.12  select  " + date);
+        assertEquals(eObject.eqlStmt(), "print object 123.12  select  " + date);
+        assertEquals(stmt.eqlStmt(), "print object 123.12  select  " + date);
     }
 
     @Test
@@ -173,8 +174,8 @@ public class FunctionsTest
         final IParseResult result = getParser().doParse("print object 123.12 select dateAdd(-24,day)");
         assertFalse(result.hasSyntaxErrors());
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
-        assertEquals(eObject.eqlStmt(),"print object 123.12  select  " + date);
-        assertEquals(stmt.eqlStmt(),"print object 123.12  select  " + date);
+        assertEquals(eObject.eqlStmt(), "print object 123.12  select  " + date);
+        assertEquals(stmt.eqlStmt(), "print object 123.12  select  " + date);
     }
 
     @Test
@@ -183,18 +184,20 @@ public class FunctionsTest
         final var datetime = OffsetDateTime.now(ZoneOffset.UTC).toString();
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintQueryStatement()
                         .query(IEql2Factory.eINSTANCE.createQuery().addType("Sales_Invoice")
-                            .where(IEql2Factory.eINSTANCE.createWhere()
-                                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
-                                        .element(IEql2Factory.eINSTANCE
-                                                    .createWhereElement()
-                                                    .attribute("Date")
-                                                    .comparison(Comparison.LESS).value(datetime)))))
+                                        .where(IEql2Factory.eINSTANCE.createWhere()
+                                                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                                                                        .element(IEql2Factory.eINSTANCE
+                                                                                        .createWhereElement()
+                                                                                        .attribute("Date")
+                                                                                        .comparison(Comparison.LESS)
+                                                                                        .value(datetime)))))
                         .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
                                                         .addElement(IEql2Factory.eINSTANCE
                                                                         .createAttributeSelectElement()
                                                                         .setNameC("Date"))));
-        final IParseResult result = getParser().doParse("print query type Sales_Invoice where Date < now() select attribute[Date]");
+        final IParseResult result = getParser()
+                        .doParse("print query type Sales_Invoice where Date < now() select attribute[Date]");
         assertFalse(result.hasSyntaxErrors());
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
         assertTrue(eObject.eqlStmt().startsWith("print  query type Sales_Invoice where   attribute[Date] < \""
@@ -209,12 +212,13 @@ public class FunctionsTest
         final var datetime = OffsetDateTime.now(ZoneOffset.UTC).minusHours(3).toString();
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createPrintQueryStatement()
                         .query(IEql2Factory.eINSTANCE.createQuery().addType("Sales_Invoice")
-                            .where(IEql2Factory.eINSTANCE.createWhere()
-                                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
-                                        .element(IEql2Factory.eINSTANCE
-                                                    .createWhereElement()
-                                                    .attribute("Date")
-                                                    .comparison(Comparison.GREATER).value(datetime)))))
+                                        .where(IEql2Factory.eINSTANCE.createWhere()
+                                                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                                                                        .element(IEql2Factory.eINSTANCE
+                                                                                        .createWhereElement()
+                                                                                        .attribute("Date")
+                                                                                        .comparison(Comparison.GREATER)
+                                                                                        .value(datetime)))))
                         .setSelectionC(IEql2Factory.eINSTANCE.createSelection()
                                         .addSelect(IEql2Factory.eINSTANCE.createSelect()
                                                         .addElement(IEql2Factory.eINSTANCE
@@ -234,24 +238,30 @@ public class FunctionsTest
         assertTrue(stmt.eqlStmt().startsWith("print  query type Sales_Invoice where   attribute[Date] > \""
                         + datetime.substring(0, 20)));
     }
+
     @Test
     public void temporalAdjuster()
     {
-        final var datetime = OffsetDateTime.now(ZoneOffset.UTC).minusHours(0).with(TemporalAdjusters.lastDayOfMonth()).toString();
+        final var datetime = OffsetDateTime.now(ZoneOffset.UTC).minusHours(0).with(TemporalAdjusters.lastDayOfMonth())
+                        .toString();
 
         final IParseResult result1 = getParser().doParse("print object 123.12 select nowAdd( 0,day,lastDayOfMonth)");
         assertFalse(result1.hasSyntaxErrors());
         final IEQLElement eObject1 = (IEQLElement) result1.getRootASTElement();
-        assertTrue(eObject1.eqlStmt().startsWith("print object 123.12  select  " + datetime.substring(0, 20)));
+        final var stmt = eObject1.eqlStmt();
+
+        assertEquals(stmt.substring(0, stmt.lastIndexOf(".")),
+                        "print object 123.12  select  " + datetime.substring(0, 19));
 
         final var localdate = LocalDate.now().minusDays(0).with(TemporalAdjusters.firstDayOfMonth()).toString();
 
         final IParseResult result = getParser().doParse("print object 123.12 select dateAdd(0, day ,firstDayOfMonth)");
         assertFalse(result.hasSyntaxErrors());
         final IEQLElement eObject = (IEQLElement) result.getRootASTElement();
-        assertEquals(eObject.eqlStmt(),"print object 123.12  select  " + localdate);
+        assertEquals(eObject.eqlStmt(), "print object 123.12  select  " + localdate);
 
-        final var localdate2= LocalDate.now().minusDays(0).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toString();
+        final var localdate2 = LocalDate.now(Clock.systemUTC()).minusDays(0)
+                        .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toString();
 
         final IParseResult result2 = getParser().doParse("print object 123.12 select dateAdd(0,day, firstDayOfWeek )");
         assertFalse(result2.hasSyntaxErrors());
