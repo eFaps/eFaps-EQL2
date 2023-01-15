@@ -188,7 +188,7 @@ class PrintListStatement
 }
 
 class PrintQueryStatement
-    extends PrintStatement<PrintQueryStatement>, QueryStmt<PrintQueryStatement>
+    extends PrintStatement<PrintQueryStatement>, QueryStmt<PrintQueryStatement>, Pageable<PrintQueryStatement>
 {
     op String eqlStmt() {
         var String ret = flagStr() + "print "
@@ -429,6 +429,18 @@ class OrderElement
             ret = ret + " asc"
         }
         return ret
+    }
+}
+
+interface Pageable <T extends QueryStmt<T>> extends Generic<T>, EQLElement, QueryStmt<T> {
+
+    op T limit(Limit _limit) {
+        getQuery().setLimit(_limit)
+        return getThis()
+    }
+    op T offset(Offset _offset) {
+        getQuery().setOffset(_offset)
+        return getThis()
     }
 }
 

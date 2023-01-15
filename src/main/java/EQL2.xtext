@@ -79,7 +79,7 @@ ExecStatement:
 
 
 Query:
-    'query' ('type' types+=Type) (',' types+=Type)* (where=Where)? (limit=Limit)? (offset=Offset)?;
+    'query' ('type' types+=Type) (',' types+=Type)* (where=Where)? (limit=Limit)? (offset=Offset)? (limit=Limit)?;
 
 UpdateElement:
     attribute=Attribute '=' value=(NUM | STRING)
