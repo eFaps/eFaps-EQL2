@@ -449,6 +449,24 @@ class Limit
     }
 }
 
+class Offset
+    extends EQLElement
+{
+    String value = "-1"
+    op Offset setValueC(String _value) {
+        setValue(_value)
+        return this
+    }
+    op Offset value(String _value) {
+        setValue(_value)
+        return this
+    }
+    op String eqlStmt() {
+        return "offset " + getValue()
+    }
+}
+
+
 class ExecStatement
     extends Statement<ExecStatement>, Ordered<ExecStatement>
 {
@@ -1113,6 +1131,7 @@ class Query
     extends BaseQuery<Query>
 {
     contains Limit limit
+    contains Offset offset
     op Query limit(String _val) {
         var l = IEql2Factory.eINSTANCE.createLimit
         l.value(_val)
@@ -1123,10 +1142,24 @@ class Query
         setLimit(_limit)
         return this
     }
+
+    op Query offset(String _val) {
+        var l = IEql2Factory.eINSTANCE.createOffset
+        l.value(_val)
+        setOffset(l)
+        return this
+    }
+    op Query setOffsetC(Offset _offset) {
+        setOffset(_offset)
+        return this
+    }
     op String eqlStmt() {
         var ret = super.eqlStmt()
         if (limit !== null) {
             ret = ret + " " + limit.eqlStmt()
+        }
+        if (offset !== null) {
+            ret = ret + " " + offset.eqlStmt()
         }
         return ret
     }

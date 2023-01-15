@@ -79,7 +79,7 @@ ExecStatement:
 
 
 Query:
-    'query' ('type' types+=Type) (',' types+=Type)* (where=Where)? (limit=Limit)?;
+    'query' ('type' types+=Type) (',' types+=Type)* (where=Where)? (limit=Limit)? (offset=Offset)?;
 
 UpdateElement:
     attribute=Attribute '=' value=(NUM | STRING)
@@ -217,6 +217,9 @@ OrderElement:
 
 Limit:
     'limit' value=NUM;
+
+Offset:
+    'offset' value=NUM;
 
 Alias:
     NAMESTR | STRING | KEYWORD
