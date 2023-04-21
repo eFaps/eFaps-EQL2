@@ -1249,6 +1249,7 @@ enum StmtFlag
     TRIGGEROFF as "trigger-off"
     REQCACHED as "request-cached"
     COMPANYINDEPENDENT as "company-independent"
+    IGNORECASE as "ignore-case"
 }
 
 interface EQLElement

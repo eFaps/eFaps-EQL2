@@ -307,11 +307,7 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
      */
     public T or()
     {
-        /*
-         * ((IQueryStmt<?>) this.parent.getStmt()).getQuery().where(); final
-         * IWhere where = ((IQueryStmt<?>)
-         * this.parent.getStmt()).getQuery().getWhere(); where.term().or();
-         */
+        getIWhere().term().or();
         return getThis();
     }
 

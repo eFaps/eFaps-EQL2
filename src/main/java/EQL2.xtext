@@ -140,6 +140,7 @@ enum Connection:
 
 enum StmtFlag:
     TRIGGEROFF='trigger-off' | REQCACHED='request-cached' | COMPANYINDEPENDENT='company-independent'
+    | IGNORECASE='ignore-case'
 ;
 
 Selection:
