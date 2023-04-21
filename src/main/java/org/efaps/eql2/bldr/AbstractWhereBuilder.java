@@ -199,6 +199,13 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
         return getThis();
     }
 
+    public T ilike(final String _value)
+    {
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.ILIKE).addValue(_value);
+        return getThis();
+    }
+
     /**
      * Eq.
      *

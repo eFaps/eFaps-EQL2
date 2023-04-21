@@ -131,8 +131,8 @@ OID:
     NUM+ "."+ NUM;
 
 enum Comparison:
-    EQUAL='==' | EQUAL='eq' | LESS='<' | LESSEQ='<=' | GREATER='>' | GREATEREQ='>=' | UNEQUAL='!=' | LIKE='like'
-    | IN='in' | NOTIN='not in' | NULL='is null' | NOTNULL='not is null';
+    EQUAL='==' | EQUAL='eq' | LESS='<' | LESSEQ='<=' | GREATER='>' | GREATEREQ='>=' | UNEQUAL='!='
+    | LIKE='like' | ILIKE='ilike' | IN='in' | NOTIN='not in' | NULL='is null' | NOTNULL='not is null';
 
 enum Connection:
     AND='and' | OR='or'
@@ -140,7 +140,6 @@ enum Connection:
 
 enum StmtFlag:
     TRIGGEROFF='trigger-off' | REQCACHED='request-cached' | COMPANYINDEPENDENT='company-independent'
-    | IGNORECASE='ignore-case'
 ;
 
 Selection:
