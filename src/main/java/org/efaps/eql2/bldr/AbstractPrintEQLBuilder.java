@@ -22,6 +22,7 @@ import org.efaps.eql2.IAttributeSelectElement;
 import org.efaps.eql2.IBaseSelectElement;
 import org.efaps.eql2.IClassSelectElement;
 import org.efaps.eql2.IEql2Factory;
+import org.efaps.eql2.IExecSelectElement;
 import org.efaps.eql2.ILinkfromSelectElement;
 import org.efaps.eql2.ILinktoSelectElement;
 import org.efaps.eql2.IListStmt;
@@ -99,8 +100,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
             ISelect select = selection.getSelects(selection.getSelectsLength() - 1);
             if (ArrayUtils.isNotEmpty(select.getElements())) {
                 final ISelectElement lastElement = select.getElements(select.getElementsLength() - 1);
-                if (lastElement instanceof IAttributeSelectElement
-                                || lastElement instanceof IBaseSelectElement) {
+                if (!connectable(lastElement)) {
                     ((IPrintStatement<?>) getStmt()).getSelection().addSelect(IEql2Factory.eINSTANCE.createSelect());
                     select = selection.getSelects(selection.getSelectsLength() - 1);
                 }
@@ -118,8 +118,7 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
             ISelect select = selection.getSelects(selection.getSelectsLength() - 1);
             if (ArrayUtils.isNotEmpty(select.getElements())) {
                 final ISelectElement lastElement = select.getElements(select.getElementsLength() - 1);
-                if (lastElement instanceof IAttributeSelectElement
-                                || lastElement instanceof IBaseSelectElement) {
+                if (!connectable(lastElement)) {
                     ((IPrintStatement<?>) getStmt()).getSelection().addSelect(IEql2Factory.eINSTANCE.createSelect());
                     select = selection.getSelects(selection.getSelectsLength() - 1);
                 }
@@ -127,6 +126,13 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
             select.addElement(IEql2Factory.eINSTANCE.createAttributeSetSelectElement().name(attrSetName));
         }
         return getThis();
+    }
+
+    protected boolean connectable(final ISelectElement element)
+    {
+        return !(element instanceof IAttributeSelectElement
+                        || element instanceof IBaseSelectElement
+                        || element instanceof IExecSelectElement);
     }
 
     /**
