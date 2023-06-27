@@ -647,7 +647,7 @@ class AttributeSetSelectElement extends Named<AttributeSetSelectElement>
         return this
     }
     op String eqlStmt() {
-        return "attributeSet[" + getName() + "]"
+        return "attributeset[" + getName() + "]"
     }
     op AttributeSetSelectElement getThis() {
         return this
