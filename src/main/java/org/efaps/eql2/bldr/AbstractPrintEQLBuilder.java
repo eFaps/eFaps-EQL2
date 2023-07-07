@@ -349,8 +349,15 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
     {
         initSelect();
         final ISelection selection = ((IPrintStatement<?>) getStmt()).getSelection();
-        selection.getSelects(selection.getSelectsLength() - 1).addElement(IEql2Factory.eINSTANCE
-                        .createBaseSelectElement().setElementC(SimpleSelectElement.STATUS));
+        var select = selection.getSelects(selection.getSelectsLength() - 1);
+        if (ArrayUtils.isNotEmpty(select.getElements())) {
+            final ISelectElement lastElement = select.getElements(select.getElementsLength() - 1);
+            if (!connectable(lastElement)) {
+                ((IPrintStatement<?>) getStmt()).getSelection().addSelect(IEql2Factory.eINSTANCE.createSelect());
+                select = selection.getSelects(selection.getSelectsLength() - 1);
+            }
+        }
+        select.addElement(IEql2Factory.eINSTANCE.createBaseSelectElement().setElementC(SimpleSelectElement.STATUS));
         return getThis();
     }
 
