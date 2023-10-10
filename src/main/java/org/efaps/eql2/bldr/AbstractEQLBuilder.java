@@ -54,6 +54,12 @@ public abstract class AbstractEQLBuilder<T extends AbstractEQLBuilder<T>>
         return getThis();
     }
 
+    public T offset(final int offset)
+    {
+        ((IQueryStmt<?>) this.stmt).getQuery().offset(String.valueOf(offset));
+        return getThis();
+    }
+
     /**
      * Gets the this.
      *

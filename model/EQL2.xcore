@@ -583,8 +583,7 @@ class LinkfromSelectElement
         return this;
     }
     op String eqlStmt() {
-        var String ret
-        "linkfrom[" + typeName + "#" + attribute
+        var String ret = "linkfrom[" + typeName + "#" + attribute
         if (getFilter() !== null) {
             ret += "balal"
         }
