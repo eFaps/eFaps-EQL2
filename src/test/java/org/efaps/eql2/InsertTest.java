@@ -90,6 +90,15 @@ public class InsertTest
         verifyStatement("insert type EFaps_Type set Rate = [1,2,3]", stmt);
     }
 
+    @Test(description = "insert type TYPE set ATTR=ARRAY (with 3 values)")
+    public void setAttributeArrayMany()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement().typeName("EFaps_Type")
+                        .addUpdateElements(IEql2Factory.eINSTANCE.createUpdateElement()
+                                        .attribute("Rate").value(List.<String>of("1", "2", "3")));
+        verifyStatement("insert type EFaps_Type set attribute[Rate] = [1,2,3]", stmt);
+    }
+
     /**
      * Sets the many attr str.
      */
@@ -99,6 +108,15 @@ public class InsertTest
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement().typeName("EFaps_Type")
                         .update("Name", "Hallo Welt").update("Name2", "Hallo Welt2");
         verifyStatement("insert type EFaps_Type set Name = \"Hallo Welt\", Name2 = \"Hallo Welt2\"", stmt);
+    }
+
+
+    @Test(description = "insert type TYPE set ATTR=Str, ATRR=STR2")
+    public void setManyAttributeStr()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement().typeName("EFaps_Type")
+                        .update("Name", "Hallo Welt").update("Name2", "Hallo Welt2");
+        verifyStatement("insert type EFaps_Type set Name = \"Hallo Welt\", attribute[Name2] = \"Hallo Welt2\"", stmt);
     }
 
     /**

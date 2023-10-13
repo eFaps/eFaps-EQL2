@@ -82,7 +82,7 @@ Query:
     'query' ('type' types+=Type) (',' types+=Type)* (where=Where)? ((limit=Limit)? & (offset=Offset)?);
 
 UpdateElement:
-    attribute=Attribute '=' (values+=(NUM | STRING))? & ( arrayValue=ArrayUpdateValue)?
+   ( attribute=Attribute | 'attribute[' attribute = Attribute ']' ) '=' (values+=(NUM | STRING))? & ( arrayValue=ArrayUpdateValue)?
 ;
 
 ArrayUpdateValue:
