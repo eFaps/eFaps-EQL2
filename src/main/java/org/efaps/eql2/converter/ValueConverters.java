@@ -49,7 +49,7 @@ public class ValueConverters
     @ValueConverter(rule = "FORMAT")
     public IValueConverter<String> format()
     {
-        return new AbstractNullSafeConverter<String>()
+        return new AbstractNullSafeConverter<>()
         {
 
             @Override
@@ -78,7 +78,7 @@ public class ValueConverters
     @ValueConverter(rule = "Attribute")
     public IValueConverter<String> attribute()
     {
-        return new AbstractNullSafeConverter<String>()
+        return new AbstractNullSafeConverter<>()
         {
 
             @Override
@@ -99,7 +99,7 @@ public class ValueConverters
     @ValueConverter(rule = "ClazzName")
     public IValueConverter<String> clazzName()
     {
-        return new AbstractNullSafeConverter<String>()
+        return new AbstractNullSafeConverter<>()
         {
 
             @Override
@@ -120,7 +120,7 @@ public class ValueConverters
     @ValueConverter(rule = "Alias")
     public IValueConverter<String> alias()
     {
-        return new AbstractNullSafeConverter<String>()
+        return new AbstractNullSafeConverter<>()
         {
 
             @Override
@@ -140,10 +140,34 @@ public class ValueConverters
         };
     }
 
+    @ValueConverter(rule = "UpdateValue")
+    public IValueConverter<String> updateValue()
+    {
+        return new AbstractNullSafeConverter<>()
+        {
+
+            @Override
+            protected String internalToString(final String _value)
+            {
+                return _value;
+            }
+
+            @Override
+            protected String internalToValue(final String _string, final INode _node)
+                throws ValueConverterException
+            {
+                return _string.startsWith("\"")
+                                ? _string.substring(1, _string.length() - 1)
+                                : _string;
+            }
+        };
+    }
+
+
     @ValueConverter(rule = "JOINING")
     public IValueConverter<String> joining()
     {
-        return new AbstractNullSafeConverter<String>()
+        return new AbstractNullSafeConverter<>()
         {
 
             @Override
@@ -173,7 +197,7 @@ public class ValueConverters
     @ValueConverter(rule = "NOW_FUNCTION")
     public IValueConverter<String> nowFunction()
     {
-        return new AbstractNullSafeConverter<String>()
+        return new AbstractNullSafeConverter<>()
         {
 
             @Override
@@ -195,13 +219,13 @@ public class ValueConverters
     @ValueConverter(rule = "NOW_ADD_FUNCTION")
     public IValueConverter<String> nowAddFunction()
     {
-        return new AbstractNullSafeConverter<String>()
+        return new AbstractNullSafeConverter<>()
         {
 
             @Override
             protected String internalToString(final String _value)
             {
-                final var value = _value.replaceAll(" " , "");
+                final var value = _value.replace(" " , "");
                 final var matcher = NOW_ADD_PATTERN.matcher(value);
                 TemporalAmount temporalAmount = Period.ZERO;
                 TemporalAdjuster temporalAdjuster = null;
@@ -267,7 +291,7 @@ public class ValueConverters
     @ValueConverter(rule = "DATE_FUNCTION")
     public IValueConverter<String> dateFunction()
     {
-        return new AbstractNullSafeConverter<String>()
+        return new AbstractNullSafeConverter<>()
         {
 
             @Override
@@ -289,13 +313,13 @@ public class ValueConverters
     @ValueConverter(rule = "DATE_ADD_FUNCTION")
     public IValueConverter<String> dateAddFunction()
     {
-        return new AbstractNullSafeConverter<String>()
+        return new AbstractNullSafeConverter<>()
         {
 
             @Override
             protected String internalToString(final String _value)
             {
-                final var value = _value.replaceAll(" " , "");
+                final var value = _value.replace(" " , "");
                 final var matcher = DATE_ADD_PATTERN.matcher(value);
                 TemporalAmount temporalAmount = Period.ZERO;
                 TemporalAdjuster temporalAdjuster = null;

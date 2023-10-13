@@ -16,6 +16,8 @@
  */
 package org.efaps.eql2;
 
+import java.util.List;
+
 import org.testng.annotations.Test;
 
 /**
@@ -95,6 +97,15 @@ public class UpdateTest
         verifyStatement("update obj 124.879 set Code=\"Hallo Welt\"", stmt);
     }
 
+    @Test(description = "update 124.879 set ATTR=STR")
+    public void setAttributeStr()
+        throws Exception
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateObjectStatement().oid("124.879")
+                        .update("Code", "Hallo Welt");
+        verifyStatement("update obj 124.879 set attribute[Code]=\"Hallo Welt\"", stmt);
+    }
+
     /**
      * Sets the many attr str.
      *
@@ -143,14 +154,18 @@ public class UpdateTest
      *
      * @throws Exception the exception
      */
-    @Test(description = "update LIST set ATTR=Str,Attr=Num")
+    @Test(description = "update LIST set ATTR=Str,Attr=Num, ATTR=Array")
     public void setListManyAttrStrNum()
         throws Exception
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createUpdateListStatement().addOid("124.879")
                         .addOid("546.234").addOid("646.77")
-                        .update("Code", "Blue Shoes") .update("Code2", "33");
-        verifyStatement("update list (124.879, 546.234, 646.77) set Code=\"Blue Shoes\", Code2 = 33", stmt);
+                        .update("Code", "Blue Shoes")
+                        .addUpdateElements(IEql2Factory.eINSTANCE.createUpdateElement()
+                                        .attribute("Array").value(List.<String>of("Val1", "2", "3")))
+                        .update("Code2", "33");
+        verifyStatement("update list (124.879, 546.234, 646.77) set Code=\"Blue Shoes\", "
+                        + "Array = [ \"Val1\",  2,  3], Code2 = 33", stmt);
     }
 
     /**

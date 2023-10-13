@@ -1081,17 +1081,66 @@ class UpdateElement
     extends EQLElement
 {
     String attribute
-    String value
+    String[] values
+    contains ArrayUpdateValue arrayValue
+
     op UpdateElement attribute(String _attribute) {
         setAttribute(_attribute)
         return this
     }
-    op UpdateElement value(String _value) {
-        setValue(_value)
+    op UpdateElement value(String value) {
+        valuesList.add(value)
         return this
     }
+    op UpdateElement value(Iterable<String> values) {
+        for (String value : values) {
+            valuesList.add(value)
+        }
+        return this
+    }
+
+    op String getValue() {
+        if (valuesList.size > 0) {
+            return valuesList.get(0)
+        }
+        return null
+    }
+
     op String eqlStmt() {
-        return attribute + " = " + value
+        var String ret;
+        ret = attribute + " ="
+
+        if (arrayValue !== null) {
+            value(arrayValue.getValuesList())
+        }
+        if (valuesList.size > 1) {
+            ret = ret + "["
+            var boolean first = true
+            for (String value : valuesList) {
+                if (first) {
+                    first = false
+                } else {
+                    ret = ret + ", "
+                }
+
+                if (value.matches("-?\\d+(\\.\\d+)?")) {
+                    ret = ret + " " + value
+                } else {
+                    ret = ret + " \"" + value + "\""
+                }
+            }
+            ret = ret + "]"
+        } else {
+            var value = valuesList.get(0)
+            if (value !== null) {
+                if (value.matches("-?\\d+(\\.\\d+)?")) {
+                    ret = ret + " " + value
+                } else {
+                    ret = ret + " \"" + value + "\""
+                }
+            }
+        }
+        return ret
     }
     op UpdateElement getThis() {
         return this
@@ -1272,3 +1321,8 @@ class FunctionSelectElement extends SelectElement {
         return value
     }
 }
+
+class ArrayUpdateValue{
+    String[] values
+}
+

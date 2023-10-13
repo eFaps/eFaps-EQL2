@@ -16,6 +16,8 @@
  */
 package org.efaps.eql2;
 
+import java.util.List;
+
 import org.testng.annotations.Test;
 
 /**
@@ -43,7 +45,8 @@ public class InsertTest
     public void setAttrNum()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement().typeName("EFaps_Type")
-                        .update("Number", "2333");
+                        .addUpdateElements(IEql2Factory.eINSTANCE.createUpdateElement()
+                                        .attribute("Number").value("2333"));
         verifyStatement("insert type EFaps_Type set Number = 2333", stmt);
     }
 
@@ -69,6 +72,24 @@ public class InsertTest
         verifyStatement("insert type EFaps_Type set Name = \"Hallo Welt\"", stmt);
     }
 
+
+    @Test(description = "insert type TYPE set ATTR=ARRAY (with one value)")
+    public void setAttrArrayOne()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement().typeName("EFaps_Type")
+                        .update("Rate", "1");
+        verifyStatement("insert type EFaps_Type set Rate = [1]", stmt);
+    }
+
+    @Test(description = "insert type TYPE set ATTR=ARRAY (with 3 values)")
+    public void setAttrArrayMany()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement().typeName("EFaps_Type")
+                        .addUpdateElements(IEql2Factory.eINSTANCE.createUpdateElement()
+                                        .attribute("Rate").value(List.<String>of("1", "2", "3")));
+        verifyStatement("insert type EFaps_Type set Rate = [1,2,3]", stmt);
+    }
+
     /**
      * Sets the many attr str.
      */
@@ -87,9 +108,13 @@ public class InsertTest
     public void setManyAttrMixed()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createInsertStatement().typeName("EFaps_Type")
-                        .update("Name", "Hallo Welt").update("Number", "333").update("Name2", "Hallo Welt2");
+                        .update("Name", "Hallo Welt")
+                        .update("Number", "333")
+                        .addUpdateElements(IEql2Factory.eINSTANCE.createUpdateElement()
+                                        .attribute("Array").value(List.<String>of("Val1", "2", "3")))
+                        .update("Name2", "Hallo Welt2");
         verifyStatement("insert type EFaps_Type set Name = \"Hallo Welt\", "
-                        + "Number = 333, Name2 = \"Hallo Welt2\"", stmt);
+                        + "Number = 333, Array = [ \"Val1\",  2,  3], Name2 = \"Hallo Welt2\"", stmt);
     }
 
     @Test(description = "with trigger-off insert type EFaps_Type set Number = 2333")
