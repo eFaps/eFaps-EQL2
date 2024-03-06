@@ -208,6 +208,21 @@ class PrintQueryStatement
     }
 }
 
+class CountQueryStatement
+    extends QueryStmt<CountQueryStatement>
+{
+    op String eqlStmt() {
+        var String ret = flagStr() + "count "
+        if (getQuery() !== null) {
+            ret = ret + getQuery().eqlStmt()
+        }
+        return ret
+    }
+    op CountQueryStatement getThis() {
+        return this
+    }
+}
+
 class UpdateStatement<T> extends UpdateElementsStmt<T>
 {
 }

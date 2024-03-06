@@ -15,6 +15,7 @@
  */
 package org.efaps.eql2;
 
+import org.efaps.eql2.bldr.AbstractCountEQLBuilder;
 import org.efaps.eql2.bldr.AbstractDeleteEQLBuilder;
 import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
 import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
@@ -42,6 +43,12 @@ public class TestEQL
     protected AbstractQueryEQLBuilder<?> getQuery()
     {
         return new QueryEQLBuilder();
+    }
+
+    @Override
+    protected AbstractCountEQLBuilder<?> getCount()
+    {
+        return new CountEQLBuilder();
     }
 
     @Override
@@ -81,6 +88,7 @@ public class TestEQL
     public static class PrintEQLBuilder
         extends AbstractPrintEQLBuilder<PrintEQLBuilder>
     {
+
         @Override
         protected PrintEQLBuilder getThis()
         {
@@ -95,6 +103,7 @@ public class TestEQL
     public static class QueryEQLBuilder
         extends AbstractQueryEQLBuilder<QueryEQLBuilder>
     {
+
         @Override
         protected QueryEQLBuilder getThis()
         {
@@ -102,6 +111,16 @@ public class TestEQL
         }
     }
 
+    public static class CountEQLBuilder
+        extends AbstractCountEQLBuilder<CountEQLBuilder>
+    {
+
+        @Override
+        protected CountEQLBuilder getThis()
+        {
+            return this;
+        }
+    }
 
     /**
      * The Class PrintEQLBuilder.
@@ -110,6 +129,7 @@ public class TestEQL
     public static class UpdateEQLBuilder
         extends AbstractUpdateEQLBuilder<UpdateEQLBuilder>
     {
+
         @Override
         protected UpdateEQLBuilder getThis()
         {
@@ -124,6 +144,7 @@ public class TestEQL
     public static class InsertEQLBuilder
         extends AbstractInsertEQLBuilder<InsertEQLBuilder>
     {
+
         @Override
         protected InsertEQLBuilder getThis()
         {
@@ -159,6 +180,7 @@ public class TestEQL
     public static class DeleteBuilder
         extends AbstractDeleteEQLBuilder<DeleteBuilder>
     {
+
         public DeleteBuilder()
         {
             super();

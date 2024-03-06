@@ -15,12 +15,11 @@
  */
 package org.efaps.eql2;
 
-import java.util.Iterator;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.serializer.impl.Serializer;
+import org.efaps.eql2.bldr.AbstractCountEQLBuilder;
 import org.efaps.eql2.bldr.AbstractDeleteEQLBuilder;
 import org.efaps.eql2.bldr.AbstractInsertEQLBuilder;
 import org.efaps.eql2.bldr.AbstractPrintEQLBuilder;
@@ -67,6 +66,9 @@ public abstract class EQL2
      * @return the prints the
      */
     protected abstract AbstractPrintEQLBuilder<?> getPrint();
+
+
+    protected abstract AbstractCountEQLBuilder<?> getCount();
 
     /**
      * Gets the query.
@@ -115,9 +117,7 @@ public abstract class EQL2
     public static IStatement<?> parse(final CharSequence _stmt) {
         final IParseResult result = eql().parser.doParse(_stmt);
         if (result.hasSyntaxErrors()) {
-            final Iterator<INode> iter = result.getSyntaxErrors().iterator();
-            while (iter.hasNext()) {
-                final INode node = iter.next();
+            for (final INode node : result.getSyntaxErrors()) {
                 LOG.warn("Syntax Error: {}", node.getSyntaxErrorMessage().getMessage());
             }
         }
@@ -182,6 +182,11 @@ public abstract class EQL2
             return (T) this;
         }
 
+        public AbstractCountEQLBuilder<?> count(final String... _types)
+        {
+            return eql2.getCount().with(flags).query(_types);
+        }
+
         public AbstractDeleteEQLBuilder<?> delete(final String... _oids)
         {
             return eql2.getDelete().delete(_oids).with(flags);
@@ -204,7 +209,7 @@ public abstract class EQL2
 
         public AbstractQueryEQLBuilder<?> query(final String... _types)
         {
-            return eql2.getQuery().query(_types);
+            return eql2.getQuery().query(_types).with(flags);
         }
 
         public AbstractQueryEQLBuilder<?> nestedQuery(final String... _types)

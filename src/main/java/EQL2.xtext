@@ -4,7 +4,7 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://www.efaps.org/EQL2"
 
 Statement:
-     PrintStatement | UpdateStatement | DeleteStatement | InsertStatement | CIPrintStatement | ExecStatement;
+     PrintStatement | CountQueryStatement | UpdateStatement | DeleteStatement | InsertStatement | CIPrintStatement | ExecStatement;
 
 PrintStatement:
     (PrintObjectStatement | PrintListStatement | PrintQueryStatement) selection=Selection (order=Order)?;
@@ -20,6 +20,11 @@ PrintListStatement:
 PrintQueryStatement:
     ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'print' | 'print') query=Query
 ;
+
+CountQueryStatement:
+    ('with' flags+=StmtFlag (',' flags+=StmtFlag)* 'count' | 'count') query=Query
+;
+
 
 UpdateStatement:
     (UpdateObjectStatement | UpdateListStatement | UpdateQueryStatement)
