@@ -17,13 +17,38 @@ package org.efaps.eql2;
 
 import org.testng.annotations.Test;
 
-public class CountTest extends AbstractTest
+public class CountTest
+    extends AbstractTest
 {
+
     @Test(description = "count query type EFaps_Type")
-    public void query()
+    public void query1()
     {
         final IEQLElement stmt = IEql2Factory.eINSTANCE.createCountQueryStatement()
-                    .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"));
+                        .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("EFaps_Type"));
         verifyStatement("count query type EFaps_Type", stmt);
+    }
+
+    @Test(description = "count query type Type1, Type2")
+    public void query2()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createCountQueryStatement()
+                        .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("Type1").addType("Type2"));
+        verifyStatement("count query type Type1, Type2", stmt);
+    }
+
+    @Test(description = "count query type Type1, Type2 where ID > 100")
+    public void query3()
+    {
+        final IEQLElement stmt = IEql2Factory.eINSTANCE.createCountQueryStatement()
+                        .setQueryC(IEql2Factory.eINSTANCE.createQuery().addType("Type1").addType("Type2")
+                                        .setWhereC(IEql2Factory.eINSTANCE.createWhere()
+                                                        .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                                                                        .element(IEql2Factory.eINSTANCE
+                                                                                        .createWhereElement()
+                                                                                        .attribute("ID")
+                                                                                        .comparison(Comparison.GREATER)
+                                                                                        .addValue("100")))));
+        verifyStatement("count  query type Type1, Type2 where   attribute[ID] > 100", stmt);
     }
 }
