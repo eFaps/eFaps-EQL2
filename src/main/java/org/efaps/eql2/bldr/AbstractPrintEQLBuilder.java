@@ -18,6 +18,7 @@ package org.efaps.eql2.bldr;
 import org.apache.commons.lang3.ArrayUtils;
 import org.efaps.eql2.EQL2;
 import org.efaps.eql2.IAttributeSelectElement;
+import org.efaps.eql2.IAttributeSetSelectElement;
 import org.efaps.eql2.IBaseSelectElement;
 import org.efaps.eql2.IClassSelectElement;
 import org.efaps.eql2.IEql2Factory;
@@ -148,7 +149,8 @@ public abstract class AbstractPrintEQLBuilder<T extends AbstractPrintEQLBuilder<
         if (currentSelect.getElementsLength() > 0) {
             final ISelectElement element = currentSelect.getElements()[currentSelect.getElementsLength() - 1];
             if (!(element instanceof ILinktoSelectElement || element instanceof ILinkfromSelectElement
-                            || element instanceof IClassSelectElement)) {
+                            || element instanceof IClassSelectElement
+                            || element instanceof IAttributeSetSelectElement)) {
                 selection.addSelect(IEql2Factory.eINSTANCE.createSelect());
             }
         }
