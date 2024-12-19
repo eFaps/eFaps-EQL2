@@ -263,7 +263,7 @@ terminal DATE_ADD_FUNCTION returns ecore::EString:
 ;
 
 terminal INTERVAL:
-    'hour' | 'day' | 'week' | 'month' | 'year'
+    'minute' | 'hour' | 'day' | 'week' | 'month' | 'year'
 ;
 
 terminal TEMPORAL_ADJUSTER:

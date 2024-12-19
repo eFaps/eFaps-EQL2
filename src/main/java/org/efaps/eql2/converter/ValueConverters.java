@@ -232,6 +232,9 @@ public class ValueConverters
                     final var quantity = Integer.valueOf(matcher.group(1));
                     final var interval = matcher.group(2);
                     switch (interval) {
+                        case "minute":
+                            temporalAmount = Duration.ofMinutes(quantity);
+                            break;
                         case "hour":
                             temporalAmount = Duration.ofHours(quantity);
                             break;
