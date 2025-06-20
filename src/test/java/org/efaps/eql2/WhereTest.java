@@ -374,6 +374,17 @@ public class WhereTest
         verifyStatement(_eqlBase + "DocumentLink in (4,7,12318)", _stmt);
     }
 
+    @Test(dataProvider = "Stmts", description = "where ATTRIBUTE not in (NUMBER,NUMBER,NUMBER)")
+    public void notInNums(final String _eqlBase,
+                       final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere().element().attribute("DocumentLink").notin().addValue("4").addValue("7")
+            .addValue("12318");
+        verifyStatement(_eqlBase + "DocumentLink not in (4,7,12318)", _stmt);
+    }
+
+
     /**
      * In strings.
      *
@@ -391,6 +402,18 @@ public class WhereTest
                 .addValue("das it ein langer text")
                 .addValue("Bla bal bal");
         verifyStatement(_eqlBase + "DocumentLink in (\"4\",\"das it ein langer text\",\"Bla bal bal\")", _stmt);
+    }
+
+    @Test(dataProvider = "Stmts", description = "where ATTRIBUTE not in (STRING,STRING,STRING)")
+    public void notInStrings(final String _eqlBase,
+                          final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere().element().attribute("DocumentLink").notin()
+                .addValue("4")
+                .addValue("das it ein langer text")
+                .addValue("Bla bal bal");
+        verifyStatement(_eqlBase + "DocumentLink not in (\"4\",\"das it ein langer text\",\"Bla bal bal\")", _stmt);
     }
 
     /**
@@ -602,6 +625,18 @@ public class WhereTest
         verifyStatement(_eqlBase + "ID in (1, 6, 7)", _stmt);
     }
 
+    @Test(dataProvider = "Stmts", description = " where ID not in (1, 6, 7)")
+    public void attrNotInList(final String _eqlBase,
+                           final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                    .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("ID").notin().addValue("1")
+                                    .addValue("6").addValue("7")));
+        verifyStatement(_eqlBase + "ID not in (1, 6, 7)", _stmt);
+    }
+
     /**
      * Attr in query.
      *
@@ -625,6 +660,25 @@ public class WhereTest
                                 .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("FromLink")))))));
 
         verifyStatement(_eqlBase + "Invoice in ( query type Sales_Invoice select attribute[FromLink] )", _stmt);
+    }
+
+
+    @Test(dataProvider = "Stmts", description = "where Invoice not in ( query type Sales_Invoice select "
+                    + "attribute[FromLink] )")
+    public void attrNotInQuery(final String _eqlBase,
+                            final IQueryStmt<?> _stmt)
+        throws Exception
+    {
+        _stmt.getQuery().getWhere()
+            .addTerm(IEql2Factory.eINSTANCE.createWhereElementTerm()
+                .element(IEql2Factory.eINSTANCE.createWhereElement().attribute("Invoice").notin()
+                        .nestedQuery(IEql2Factory.eINSTANCE.createNestedQuery()
+                                    .addType("Sales_Invoice").selection(
+                                        IEql2Factory.eINSTANCE.createSelection()
+                                        .addSelect(IEql2Factory.eINSTANCE.createSelect()
+                                .addElement(IEql2Factory.eINSTANCE.createAttributeSelectElement().name("FromLink")))))));
+
+        verifyStatement(_eqlBase + "Invoice not in ( query type Sales_Invoice select attribute[FromLink] )", _stmt);
     }
 
     /**
