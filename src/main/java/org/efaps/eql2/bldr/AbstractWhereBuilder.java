@@ -288,6 +288,27 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
         return getThis();
     }
 
+    public T notin(final Long... _value)
+    {
+        return notin(Arrays.stream(_value)
+                        .map(value -> value.toString())
+                        .toArray(String[]::new));
+    }
+
+    public T notin(final Integer... _value)
+    {
+        return notin(Arrays.stream(_value)
+                        .map(value -> value.toString())
+                        .toArray(String[]::new));
+    }
+
+    public T notin(final AbstractQueryEQLBuilder<?> _queryBldr)
+    {
+        final IWhereElement element = getCurrentElement();
+        element.comparison(Comparison.NOTIN).nestedQuery((INestedQuery) _queryBldr.getQuery());
+        return getThis();
+    }
+
     public T isNull()
     {
         final IWhereElement element = getCurrentElement();
