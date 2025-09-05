@@ -140,6 +140,11 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
         return eq(_value.toString());
     }
 
+    public T eq(final Number value)
+    {
+        return eq(value.toString());
+    }
+
     /**
      * Eq.
      *
