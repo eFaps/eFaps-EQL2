@@ -1314,6 +1314,7 @@ enum StmtFlag
     TRIGGEROFF as "trigger-off"
     REQCACHED as "request-cached"
     COMPANYINDEPENDENT as "company-independent"
+    EVENTOFF as "event-off"
 }
 
 interface EQLElement
