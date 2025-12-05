@@ -24,7 +24,6 @@ import org.efaps.eql2.ISelect;
 import org.efaps.eql2.ISelection;
 import org.efaps.eql2.impl.PrintQueryStatement;
 
-
 /**
  * The Class AbstractQueryEQLBuilder.
  *
@@ -32,6 +31,7 @@ import org.efaps.eql2.impl.PrintQueryStatement;
  */
 public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
     extends AbstractEQLBuilder<T>
+    implements IEQLBuilderWithWhere
 {
 
     /** The i query. */
@@ -80,6 +80,7 @@ public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
         return getThis();
     }
 
+    @Override
     public AbstractWhereBuilder<?> where()
     {
         final AbstractWhereBuilder<?> ret = EQL2.builder().where();

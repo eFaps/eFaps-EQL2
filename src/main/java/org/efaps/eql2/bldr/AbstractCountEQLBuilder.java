@@ -22,7 +22,9 @@ import org.efaps.eql2.IQuery;
 
 public abstract class AbstractCountEQLBuilder<T extends AbstractCountEQLBuilder<T>>
     extends AbstractEQLBuilder<T>
+    implements IEQLBuilderWithWhere
 {
+
     /** The i query. */
     private IQuery query;
 
@@ -44,6 +46,7 @@ public abstract class AbstractCountEQLBuilder<T extends AbstractCountEQLBuilder<
         return query;
     }
 
+    @Override
     public AbstractWhereBuilder<?> where()
     {
         final AbstractWhereBuilder<?> ret = EQL2.builder().where();
