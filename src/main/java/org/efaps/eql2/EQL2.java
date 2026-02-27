@@ -15,6 +15,9 @@
  */
 package org.efaps.eql2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
@@ -128,6 +131,18 @@ public abstract class EQL2
     public static ISelect parseSelect(final CharSequence _select) {
         final var result = eql().selectParser.doParse(_select);
         return (ISelect) result.getRootASTElement();
+    }
+
+
+    public static List<INode> checkSyntax(final CharSequence stmt) {
+        List<INode> syntaxErrors = new ArrayList<>();
+        var result = eql().parser.doParse(stmt);
+        if (result.hasSyntaxErrors()) {
+            result.getSyntaxErrors().forEach(node -> {
+                syntaxErrors.add(node);
+            });
+        }
+        return syntaxErrors;
     }
 
     /**
