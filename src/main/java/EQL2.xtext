@@ -148,7 +148,7 @@ enum Connection:
 ;
 
 enum StmtFlag:
-    TRIGGEROFF='trigger-off' | REQCACHED='request-cached' | COMPANYINDEPENDENT='company-independent' | EVENTOFF='event-off'
+    TRIGGEROFF='trigger-off' | REQCACHED='request-cached' | COMPANYINDEPENDENT='company-independent' | EVENTOFF='event-off' | RAWDATETIME='raw-datetime'
 ;
 
 Selection:
