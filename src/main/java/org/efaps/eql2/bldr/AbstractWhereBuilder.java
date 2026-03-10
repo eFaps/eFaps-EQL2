@@ -15,6 +15,8 @@
  */
 package org.efaps.eql2.bldr;
 
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 
 import org.efaps.eql2.Comparison;
@@ -148,27 +150,47 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
     /**
      * Eq.
      *
-     * @param _value the value
+     * @param value the value
      * @return the t
      */
-    public T greater(final String _value)
+    public T greater(final String value)
     {
         final IWhereElement element = getCurrentElement();
-        element.comparison(Comparison.GREATER).addValue(_value);
+        element.comparison(Comparison.GREATER).addValue(value);
         return getThis();
+    }
+
+    public T greater(final LocalDate localDate)
+    {
+        return greater(localDate.toString());
+    }
+
+    public T greater(final OffsetDateTime offsetDateTime)
+    {
+        return greater(offsetDateTime.toString());
     }
 
     /**
      * Eq.
      *
-     * @param _value the value
+     * @param value the value
      * @return the t
      */
-    public T greaterOrEq(final String _value)
+    public T greaterOrEq(final String value)
     {
         final IWhereElement element = getCurrentElement();
-        element.comparison(Comparison.GREATEREQ).addValue(_value);
+        element.comparison(Comparison.GREATEREQ).addValue(value);
         return getThis();
+    }
+
+    public T greaterOrEq(final LocalDate localDate)
+    {
+        return greaterOrEq(localDate.toString());
+    }
+
+    public T greaterOrEq(final OffsetDateTime offsetDateTime)
+    {
+        return greaterOrEq(offsetDateTime.toString());
     }
 
     /**
@@ -184,6 +206,16 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
         return getThis();
     }
 
+    public T less(final LocalDate localDate)
+    {
+        return less(localDate.toString());
+    }
+
+    public T less(final OffsetDateTime offsetDateTime)
+    {
+        return less(offsetDateTime.toString());
+    }
+
     /**
      * Eq.
      *
@@ -195,6 +227,16 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
         final IWhereElement element = getCurrentElement();
         element.comparison(Comparison.LESSEQ).addValue(_value);
         return getThis();
+    }
+
+    public T lessOrEq(final LocalDate localDate)
+    {
+        return lessOrEq(localDate.toString());
+    }
+
+    public T lessOrEq(final OffsetDateTime offsetDateTime)
+    {
+        return lessOrEq(offsetDateTime.toString());
     }
 
     /**
