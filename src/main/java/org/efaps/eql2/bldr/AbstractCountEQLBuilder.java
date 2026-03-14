@@ -54,4 +54,11 @@ public abstract class AbstractCountEQLBuilder<T extends AbstractCountEQLBuilder<
         ret.setCount(this);
         return ret;
     }
+
+    public T where(final AbstractWhereBuilder<?> whereBldr)
+    {
+        getQuery().setWhere(whereBldr.getIWhere());
+        whereBldr.setCount(this);
+        return getThis();
+    }
 }
