@@ -74,9 +74,10 @@ public class AbstractQueryEQLBuilder<T extends AbstractQueryEQLBuilder<T>>
      *
      * @return the t
      */
-    public T where(final AbstractWhereBuilder<?> _whereBldr)
+    public T where(final AbstractWhereBuilder<?> whereBldr)
     {
-        getQuery().setWhere(_whereBldr.getIWhere());
+        getQuery().setWhere(whereBldr.getIWhere());
+        whereBldr.setQuery(getThis());
         return getThis();
     }
 
