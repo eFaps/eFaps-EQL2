@@ -67,6 +67,7 @@ public abstract class AbstractTest
     @Inject
     private EQL2Validator validator;
 
+
     /** The diagnostic. */
     private BasicDiagnostic diagnostic;
 
@@ -161,8 +162,7 @@ public abstract class AbstractTest
      */
     public void debugTokens(final List<Token> _tokens)
     {
-        for (int i = 0; i < _tokens.size(); i++) {
-            final Token token = _tokens.get(i);
+        for (final Token token : _tokens) {
             System.out.println("Token type=" + getTokenType(token) + " text=" + token.getText());
         }
     }
@@ -206,5 +206,10 @@ public abstract class AbstractTest
     public List<SyntaxErrorMessage> getSyntaxErrors()
     {
         return syntaxErrors;
+    }
+
+    protected EQL2Validator getValidator()
+    {
+        return validator;
     }
 }
