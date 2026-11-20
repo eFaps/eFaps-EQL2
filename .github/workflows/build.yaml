@@ -39,6 +39,7 @@ jobs:
       - name: Run Tests
         run: mvn test -s mySettings.xml -B
       - name: Deploy
+        if: ${{ github.event_name != 'pull_request' }}
         run: mvn deploy -DskipTests -s mySettings.xml
       - name: Run coverage
         run: mvn clover:setup test clover:aggregate clover:clover -s mySettings.xml -B
