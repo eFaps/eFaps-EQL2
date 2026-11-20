@@ -26,6 +26,7 @@ import org.efaps.eql2.IWhere;
 import org.efaps.eql2.IWhereElement;
 import org.efaps.eql2.IWhereElementTerm;
 import org.efaps.eql2.IWhereTerm;
+import org.efaps.eql2.SimpleSelectElement;
 
 /**
  * The Class AbstractWhereBuilder.
@@ -75,6 +76,18 @@ public abstract class AbstractWhereBuilder<T extends AbstractWhereBuilder<T>>
         } else {
             element.setAttribute(_attr);
         }
+        return getThis();
+    }
+
+    public T status()
+    {
+        final IWhereElement element = getCurrentElement();
+        // check if we have a WhereSelect
+        if (element.getSelect() == null) {
+            element.setSelect(IEql2Factory.eINSTANCE.createWhereSelect());
+        }
+        final var statusSel = IEql2Factory.eINSTANCE.createBaseSelectElement().setElementC(SimpleSelectElement.STATUS);
+        element.getSelect().addElement(statusSel);
         return getThis();
     }
 
